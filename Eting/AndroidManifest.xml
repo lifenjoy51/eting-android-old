@@ -1,52 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.gif.eting"
     android:versionCode="1"
-    android:versionName="1.0" xmlns:tools="http://schemas.android.com/tools">
+    android:versionName="1.0" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="17" tools:ignore="OldTargetApi"/>
+        android:targetSdkVersion="17"
+        tools:ignore="OldTargetApi" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
+
         <!-- 인트로화면 -->
-        <activity android:name=".IntroActivity" android:label="@string/app_name">
-            <intent-filter >
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+        <activity
+            android:name=".IntroActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            
         </activity>
-        
+
         <!-- 잠금해제화면 -->
-        <activity android:name=".LockScreenActivity"></activity>
-        
+        <activity
+            android:name=".LockScreenActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
         <!-- 메인화면 -->
-        <activity android:name=".MainActivity"></activity>
-        
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
         <!-- 내 이야기 작성 -->
-        <activity android:name=".WriteStoryActivity"></activity>
-        
+        <activity
+            android:name=".WriteStoryActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
         <!-- 내 이야기 목록 -->
-        <activity android:name=".MyStoryActivity"></activity>
-        
+        <activity
+            android:name=".MyStoryActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
         <!-- 내 이야기 읽기 -->
-        <activity android:name=".ReadMyStoryActivity"></activity>
-        
+        <activity
+            android:name=".ReadMyStoryActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
         <!-- 받은 이야기 보관함 -->
-        <activity android:name=".InboxActivity"></activity>
-        
+        <activity
+            android:name=".InboxActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
         <!-- 환경설정 -->
-        <activity android:name=".SettingActivity"></activity>
-        
+        <activity
+            android:name=".SettingActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
         <!-- 만든사람화면 -->
-        <activity android:name=".CreditActivity"></activity>
-        
+        <activity
+            android:name=".CreditActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/main"
+    android:orientation="vertical" >
+
+    <ImageButton
+        android:id="@+id/menu_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="37dp"
+        android:layout_marginLeft="38dp"
+        android:background="#a0000000"
+        android:contentDescription="메뉴 아이콘"
+        android:src="@drawable/menu_icon" />
+
+    <ImageButton
+        android:id="@+id/read_et_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/menu_icon"
+        android:layout_marginLeft="21dp"
+        android:layout_toRightOf="@+id/write_et_btn"
+        android:background="#a0000000"
+        android:src="@drawable/read_et_btn" />
+
+    <ImageButton
+        android:id="@+id/setting_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/read_et_btn"
+        android:layout_marginLeft="24dp"
+        android:layout_toRightOf="@+id/read_et_btn"
+        android:background="#a0000000"
+        android:src="@drawable/setting_btn" />
+
+    <ImageButton
+        android:id="@+id/write_et_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/read_et_btn"
+        android:layout_marginLeft="22dp"
+        android:layout_toRightOf="@+id/menu_icon"
+        android:background="#a0000000"
+        android:src="@drawable/write_et_btn" />
+
+</RelativeLayout>
