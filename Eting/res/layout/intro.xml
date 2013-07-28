@@ -6,4 +6,4 @@
     android:scaleType="centerCrop"
     android:src="@drawable/intro" >
 
-</ImageView>
+</ImageView> 
