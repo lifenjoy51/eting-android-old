@@ -37,6 +37,11 @@ public class StoryService {
 				myStoryDto.setIdx(Long.parseLong(myStoryId));
 				myStoryDto.setContent(myContent);
 				myStoryDto.setStory_date(myStoryDate);
+
+				Log.i("returned my story",
+						myStoryDto.getIdx() + myStoryDto.getContent() + myStoryDto.getStory_date());
+				
+				
 				saveMyStoryToPhone(myStoryDto); // 폰DB에 내 이야기 저장
 			}
 
@@ -51,6 +56,10 @@ public class StoryService {
 				recievedStoryDto.setIdx(Long.parseLong(recievedStoryId));
 				recievedStoryDto.setContent(recievedContent);
 				recievedStoryDto.setStory_date(recievedStoryDate);
+				
+				Log.i("returned recieved story",
+						recievedStoryDto.getIdx() + recievedStoryDto.getContent() + recievedStoryDto.getStory_date());
+				
 				saveRecievedStoryToPhone(recievedStoryDto); // 폰DB에 받아온 이야기 저장
 			}
 
@@ -77,7 +86,40 @@ public class StoryService {
 		inboxDao.insStory(story);	//입력하고
 		inboxDao.close();	//닫고
 	}
+	
+	//내 이야기 가져오기
+	public List<StoryDTO> getMyStoryList(){
+		StoryDAO storyDao = new StoryDAO(context);
+		storyDao.open();
+		List<StoryDTO> myStoryList = storyDao.getStoryList();
+		storyDao.close();
+		return myStoryList;
+	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 테스트용
 	public void dbTest() {
 		StoryDAO storyDao = new StoryDAO(context);

@@ -51,8 +51,11 @@ public class InboxDAO {
 		}
 		// Make sure to close the cursor
 		cursor.close();
-		
-		Log.i("inbox list",storyList.toString());
+
+		for (StoryDTO story : storyList) {
+			Log.i("inbox story list",
+					story.getIdx() + story.getContent() + story.getStory_date());
+		}
 		
 		return storyList;
 	}

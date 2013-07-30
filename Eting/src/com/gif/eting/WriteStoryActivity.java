@@ -1,6 +1,7 @@
 package com.gif.eting;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -58,8 +59,11 @@ public class WriteStoryActivity extends Activity implements OnClickListener {
 		storyService.saveToPhoneDB(response);
 		storyService.dbTest();
 
-		Toast toast = Toast.makeText(this, response, Toast.LENGTH_SHORT);
+		Toast toast = Toast.makeText(this, "이야기가 전송되었습니다", Toast.LENGTH_SHORT);
 		toast.show();
+		
+		//내 이야기 읽기 화면으로 이동
+		startActivity(new Intent(this, ReadMyStoryActivity.class));
 	}
 
 }

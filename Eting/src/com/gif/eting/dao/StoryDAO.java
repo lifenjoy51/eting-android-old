@@ -51,8 +51,11 @@ public class StoryDAO {
 		}
 		// Make sure to close the cursor
 		cursor.close();
-		
-		Log.i("story list",storyList.toString());
+
+		for (StoryDTO story : storyList) {
+			Log.i("my story list",
+					story.getIdx() + story.getContent() + story.getStory_date());
+		}
 		
 		return storyList;
 	}

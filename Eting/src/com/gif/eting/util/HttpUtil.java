@@ -1,34 +1,39 @@
 package com.gif.eting.util;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class HttpUtil {
 
-	public String doPost(String url, String params) {
+	public String doPost(String urlString, String params) {
 		try {
 			// (1)
-			HttpPost method = new HttpPost(url);
+			URL url = new URL(urlString);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			
+			con.setDefaultUseCaches(false);
+			con.setDoInput(true);
+			con.setDoOutput(true);
+			con.setRequestMethod("POST");
+			con.setRequestProperty("content-type", "application/x-www-form-urlencoded");
+			
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(con.getOutputStream(),"UTF-8"));
+			pw.write(params);
+			pw.flush();
+			
+			BufferedReader bf  = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
+			StringBuilder sb = new StringBuilder();
+			String line;
+			
+			while((line = bf.readLine())!=null){
+				sb.append(line);
+			}
 
-			DefaultHttpClient client = new DefaultHttpClient();
-
-			// (2)POST데이타 설정
-			StringEntity paramEntity = new StringEntity(params);
-			paramEntity.setChunked(false);
-			// (3)
-			paramEntity.setContentType("application/x-www-form-urlencoded");
-			method.setEntity(paramEntity);
-
-			HttpResponse response = client.execute(method);
-			int status = response.getStatusLine().getStatusCode();
-			if (status != HttpStatus.SC_OK)
-				throw new Exception("");
-
-			return EntityUtils.toString(response.getEntity(), "UTF-8");
+			return sb.toString();
 		} catch (Exception e) {
 			return e.toString();
 		}
