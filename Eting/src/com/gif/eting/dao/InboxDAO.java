@@ -79,6 +79,7 @@ public class InboxDAO {
 	// Story ют╥б
 	public Long insStory(StoryDTO story) {
 		ContentValues values = new ContentValues();
+		values.put(InboxDBHelper.COL_IDX, story.getIdx());
 		values.put(InboxDBHelper.COL_CONTENT, story.getContent());
 		values.put(InboxDBHelper.COL_STORY_DATE, story.getStory_date());
 		long insertedId = database.insert(InboxDBHelper.TABLE_INBOX,

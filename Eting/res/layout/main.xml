@@ -5,40 +5,50 @@
     android:background="@drawable/main"
     android:orientation="vertical" >
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <ImageButton
+            android:id="@+id/inbox_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="80dp"
+            android:layout_weight="0.25"
+            android:src="@drawable/menu_icon" />
+
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="200dp"
         android:gravity="bottom"
         android:orientation="horizontal" >
 
         <ImageButton
-            android:id="@+id/menu_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_weight="0.25"
-            android:contentDescription="메뉴 아이콘"
-            android:maxHeight="100dp"
-            android:maxWidth="100dp"
-            android:src="@drawable/menu_icon" />
-
-        <ImageButton
             android:id="@+id/write_et_btn"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:layout_weight="0.25"
             android:src="@drawable/write_et_btn" />
 
         <ImageButton
             android:id="@+id/read_et_btn"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_weight="0.25"
             android:src="@drawable/read_et_btn" />
-        
+
         <ImageButton
             android:id="@+id/setting_btn"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:layout_weight="0.25"
             android:src="@drawable/setting_btn" />
 

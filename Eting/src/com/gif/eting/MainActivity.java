@@ -19,6 +19,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		((ImageButton) findViewById(R.id.write_et_btn)).setOnClickListener(this);
 		((ImageButton) findViewById(R.id.read_et_btn)).setOnClickListener(this);
 		((ImageButton) findViewById(R.id.setting_btn)).setOnClickListener(this);
+		((ImageButton) findViewById(R.id.inbox_btn)).setOnClickListener(this);
 	}
 
 	@Override
@@ -33,6 +34,9 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.setting_btn:
 			startActivity(new Intent(this, SettingActivity.class));
+			break;
+		case R.id.inbox_btn:
+			startActivity(new Intent(this, InboxStoryPopupActivity.class));
 			break;
 		}
 

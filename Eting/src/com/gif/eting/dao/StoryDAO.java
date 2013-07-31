@@ -79,6 +79,7 @@ public class StoryDAO {
 	// Story ют╥б
 	public Long insStory(StoryDTO story) {
 		ContentValues values = new ContentValues();
+		values.put(StoryDBHelper.COL_IDX, story.getIdx());
 		values.put(StoryDBHelper.COL_CONTENT, story.getContent());
 		values.put(StoryDBHelper.COL_STORY_DATE, story.getStory_date());
 		long insertedId = database.insert(StoryDBHelper.TABLE_STORY_MASTER,

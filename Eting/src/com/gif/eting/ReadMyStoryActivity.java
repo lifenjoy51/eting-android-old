@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -43,6 +44,7 @@ public class ReadMyStoryActivity extends Activity implements OnItemClickListener
 	        Map<String,String> item = new HashMap<String,String>();
 			item.put("title", myStory.getStory_date());
 	        item.put("desc", myStory.getContent());
+	        item.put("idx", String.valueOf(myStory.getIdx()));
 	        list.add(item);
 		}
 		
@@ -62,10 +64,23 @@ public class ReadMyStoryActivity extends Activity implements OnItemClickListener
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void onItemClick(AdapterView<?> parentView, View clickedView,
 			int position, long id) {
+		
+		ListAdapter listAdapter = (ListAdapter) parentView.getAdapter();	//ListView에서 Adapter 받아옴
+		Map<String, String> selectedItem = (Map<String, String>) listAdapter.getItem(position);	//선택한 Row에 있는 Object를 받아옴
+		String idx = selectedItem.get("idx");	//Object에서 idx값을 받아옴
+		
+		String toastMessage = idx;
+
+		Intent intent =new Intent(this, MyStoryPopupActivity.class);
+		intent.putExtra("idx", idx);
+		startActivity(intent);
+		
+		/*
 		String toastMessage = ((TwoLineListItem) clickedView).getText1().getText()
-				+ " is selected. position is " + position + ", and id is " + id;
+				+ " is selected. position is " + position + ", and id is " + id;*/
 
 		Toast.makeText(getApplicationContext(), toastMessage,
 				Toast.LENGTH_SHORT).show();
