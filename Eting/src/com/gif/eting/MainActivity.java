@@ -23,14 +23,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.viewpager);
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(new BkPagerAdapter(getApplicationContext()));
-
-		// 버튼이벤트 삽입
-//		((ImageButton) findViewById(R.id.write_et_btn))
-//				.setOnClickListener(this);
-//		((ImageButton) findViewById(R.id.read_et_btn)).setOnClickListener(this);
-//		((ImageButton) findViewById(R.id.setting_btn)).setOnClickListener(this);
-//		((ImageButton) findViewById(R.id.inbox_btn)).setOnClickListener(this);
-//	}
+	}
 
 //	public void onClick(View v) {
 //		// TODO Auto-generated method stub
@@ -48,8 +41,6 @@ public class MainActivity extends Activity {
 //			startActivity(new Intent(this, InboxStoryPopupActivity.class));
 //			break;
 //		}
-
-	}
 
 	public class BkPagerAdapter extends PagerAdapter {
 		private LayoutInflater mInflater;
@@ -111,4 +102,5 @@ public class MainActivity extends Activity {
 		public void startUpdate(View arg0) {
 		}
 	}
+
 }
