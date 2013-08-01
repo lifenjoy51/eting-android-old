@@ -7,20 +7,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.gif.eting.ReadMyStoryActivity;
 import com.gif.eting.dao.InboxDAO;
 import com.gif.eting.dao.StoryDAO;
-import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
+import com.gif.eting.util.AsyncTaskCompleteListener;
 import com.gif.eting.util.HttpUtil;
 import com.gif.eting.util.Installation;
+import com.gif.eting.util.ServiceCompleteListener;
 
 public class StoryService {
 	
+	//private String serverContext = "http://lifenjoys.cafe24.com/eting";	//서버
+	private String serverContext = "http://112.144.52.47:8080/eting";	//개발서버
 	private Context context;
 	private InboxDAO inboxDao;
 	private StoryDAO storyDao;
@@ -32,21 +32,44 @@ public class StoryService {
 	}
 
 	//서버에 저장 후 자료 받아옴
-	public void saveStoryToServer(String content) {
+	public void saveStoryToServer(String content, ServiceCompleteListener<String> callback) {
+		
+		String url = this.serverContext + "/saveStory";	//개발서버주소 URL
 		String phoneId = Installation.id(context);	//기기 고유값
-
-		HttpUtil http = new HttpUtil();
 		String params = "phone_id=" + phoneId+"&content=" + content;	//파라미터 설정
 		
-		//String response = http.doPost("http://lifenjoys.cafe24.com/eting/saveStory", params);	//서버주소
-		String response = http.doPost("http://112.144.52.47:8080/eting/saveStory", params);	//개발서버주소
+		new HttpUtil(url, params,new AfterSaveStoryToServer(callback)).execute(params);	//Http요청. 콜백함수는 아래에
 		
-		Log.i("json response", response);
-		
-		//폰DB에 저장
-		saveToPhoneDB(response);
-		dbTest();
 	}
+	
+	// Http통신 후 처리로직
+	private class AfterSaveStoryToServer implements
+			AsyncTaskCompleteListener<String> {
+		
+		private ServiceCompleteListener<String> callback;
+
+		public AfterSaveStoryToServer(ServiceCompleteListener<String> callback) {
+			super();
+			this.callback = callback;
+		}
+
+		@Override
+		public void onTaskComplete(String response) {
+
+			Log.i("json response", response);	//응답 확인
+
+			// 폰DB에 저장
+			saveToPhoneDB(response);
+			
+			dbTest();	//자료입력되었나 확인하는 테스트함수
+
+			// 호출한 클래스 콜백
+			if (callback != null)
+				callback.onServiceComplete("");	//화면에 무엇을 넘길것인가?
+		}
+
+	}
+	
 
 	//서버에서 받아온 자료 정리
 	public void saveToPhoneDB(String response){
@@ -147,54 +170,96 @@ public class StoryService {
 	
 
 	//서버로 스탬프 찍은 정보 전송
-	public void saveStampToServer(String storyId, String stampId) {
+	public void saveStampToServer(String storyId, String stampId, ServiceCompleteListener<String> callback) {
 		
-		HttpUtil http = new HttpUtil();
+		String url = this.serverContext+"/saveStamp";
 		String params = "story_id=" + storyId+"&stamp_id=" + stampId;	//파라미터 설정
 		
-		//String response = http.doPost("http://lifenjoys.cafe24.com/eting/saveStamp", params);	//서버주소
-		String response = http.doPost("http://112.144.52.47:8080/eting/saveStamp", params);	//개발서버주소
+		new HttpUtil(url, params, new AfterSaveStampToServer(callback, storyId)).execute("");	//Http 요청
+	}
+
+	// Http통신 후 처리로직
+	private class AfterSaveStampToServer implements
+			AsyncTaskCompleteListener<String> {
 		
-		Log.i("json response", response);
-		
-		StoryDTO inboxStory = new StoryDTO();
-		inboxStory.setIdx(Long.parseLong(storyId));
-		
-		//스탬프찍은 이야기 삭제
-		inboxDao.open();
-		inboxDao.delStory(inboxStory);
-		inboxDao.close();
+		private ServiceCompleteListener<String> callback;
+		private String storyId;
+
+		public AfterSaveStampToServer(
+				ServiceCompleteListener<String> callback, String storyId) {
+			super();
+			this.callback = callback;
+			this.storyId = storyId;
+		}
+
+		@Override
+		public void onTaskComplete(String response) {
+
+			Log.i("json response", response);	//응답확인
+
+			StoryDTO inboxStory = new StoryDTO();
+			inboxStory.setIdx(Long.parseLong(storyId));
+
+			// 스탬프찍은 이야기 삭제
+			inboxDao.open();
+			inboxDao.delStory(inboxStory);
+			inboxDao.close();
+			
+			// 호출한 클래스 콜백
+			if (callback != null)
+				callback.onServiceComplete("");	//화면에 무엇을 넘길것인가?
+		}
 	}
 	
 	//서버에서 스탬프 가져오기
-	public String getStampFromServer(String storyId){
-		StringBuffer stamps = new StringBuffer();
-		
-		HttpUtil http = new HttpUtil();
+	public void getStampFromServer(String storyId, ServiceCompleteListener<String> callback){
+		String url = this.serverContext+"/getStamp";
 		String params = "storyId=" + storyId;	//파라미터 설정
-		
-		//String response = http.doPost("http://lifenjoys.cafe24.com/eting/getStamp", params);	//서버주소
-		String response = http.doPost("http://112.144.52.47:8080/eting/getStamp", params);	//개발서버주소
-		try {
-			JSONObject json = new JSONObject(response);
+		new HttpUtil(url, params, new AfterGetStampFromServer(callback));	//Http 요청
+	}
+	
+	// Http통신 후 처리로직
+		private class AfterGetStampFromServer implements
+				AsyncTaskCompleteListener<String> {
+			
+			private ServiceCompleteListener<String> callback;
 
-			if (!json.isNull("stampList")) {
-				JSONArray stampList = json.getJSONArray("stampList");
-				for(int i=0; i<stampList.length(); i++){
-					JSONObject stamp = stampList.getJSONObject(i);
-					stamps.append(stamp.getString("stamp_name"));
-					stamps.append(" , ");
-					
-					Log.i("returned stamp", stamp.getString("stamp_id") + stamp.getString("stamp_name"));
-				}
+			public AfterGetStampFromServer(
+					ServiceCompleteListener<String> callback) {
+				super();
+				this.callback = callback;
 			}
 
+			@Override
+			public void onTaskComplete(String response) {
 
-		} catch (JSONException e) {
-			e.printStackTrace();
+				Log.i("json response", response);	//응답확인
+				
+				StringBuffer stamps = new StringBuffer();
+				
+				try {
+					JSONObject json = new JSONObject(response);
+
+					if (!json.isNull("stampList")) {
+						JSONArray stampList = json.getJSONArray("stampList");
+						for(int i=0; i<stampList.length(); i++){
+							JSONObject stamp = stampList.getJSONObject(i);
+							stamps.append(stamp.getString("stamp_name"));
+							stamps.append(" , ");
+							
+							Log.i("returned stamp", stamp.getString("stamp_id") + stamp.getString("stamp_name"));
+						}
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				
+				// 호출한 클래스 콜백
+				if (callback != null)
+					callback.onServiceComplete(stamps.toString());
+			}
+
 		}
-		return stamps.toString();
-	}
 	
 	
 	

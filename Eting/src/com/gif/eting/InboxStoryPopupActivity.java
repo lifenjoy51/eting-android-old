@@ -1,6 +1,7 @@
 package com.gif.eting;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,11 +12,14 @@ import android.widget.TextView;
 
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
+import com.gif.eting.util.ServiceCompleteListener;
 
 public class InboxStoryPopupActivity extends Activity implements OnClickListener{
 
+	
 	private StoryService storyService;
 	private Long inboxStoryIdx;
+	private ProgressDialog progressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +57,34 @@ public class InboxStoryPopupActivity extends Activity implements OnClickListener
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.stamp1:
+			
+			//전송상태 나타냄
+			progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.app_name), true, true);
+			
 			//스탬프1
-			storyService.saveStampToServer(String.valueOf(inboxStoryIdx), "5");	//스탬프ID 5는 하드코딩 추후 변경필요
-			finish();
+			storyService.saveStampToServer(String.valueOf(inboxStoryIdx), "5", new AfterSaveStampToServer());	//스탬프ID 5는 하드코딩 추후 변경필요
 			break;
 		case R.id.stamp2:
+			
+			//전송상태 나타냄
+			progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.app_name), true, true);
+			
 			//스탬프2
-			storyService.saveStampToServer(String.valueOf(inboxStoryIdx), "6");	//스탬프ID 6는 하드코딩 추후 변경필요
-			finish();
+			storyService.saveStampToServer(String.valueOf(inboxStoryIdx), "6", new AfterSaveStampToServer());	//스탬프ID 6는 하드코딩 추후 변경필요
 			break;
 		}
+	}
+	
+	//스탬프찍기 Http 요청 후 로직
+	private class AfterSaveStampToServer implements ServiceCompleteListener<String>{
+		@Override
+		public void onServiceComplete(String response) {
 
+			if (progressDialog != null)
+				progressDialog.dismiss();
+			
+			finish();
+		}
 	}
 
 }

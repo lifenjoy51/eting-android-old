@@ -3,12 +3,15 @@ package com.gif.eting;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
+import com.gif.eting.util.ServiceCompleteListener;
 
 public class MyStoryPopupActivity extends Activity {
 
@@ -41,10 +44,16 @@ public class MyStoryPopupActivity extends Activity {
 		storyDateView.setText(storyDate);
 		
 		//½ºÅÆÇÁ Âï±â
-		String stamps = storyService.getStampFromServer(idx);
-		TextView stampInfoView = (TextView) findViewById(R.id.stamp_info);
-		stampInfoView.setText(stamps);
-
+		storyService.getStampFromServer(idx, new AfterGetStampFromServer());
+	}
+	
+	//½ºÅÆÇÁÂï±â Http ¿äÃ» ÈÄ ·ÎÁ÷
+	private class AfterGetStampFromServer implements ServiceCompleteListener<String>{
+		@Override
+		public void onServiceComplete(String stamps) {
+			TextView stampInfoView = (TextView) findViewById(R.id.stamp_info);
+			stampInfoView.setText(stamps);	
+		}
 	}
 
 }
