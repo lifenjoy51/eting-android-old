@@ -33,7 +33,7 @@ public class ReadMyStoryActivity extends Activity implements OnItemClickListener
 	}
 	
 	//내 이야기 목록 그리기
-	private void drawMyStoryList(){
+	public void drawMyStoryList(){
 		//StoryService초기화
 		storyService = new StoryService(this.getApplicationContext());
 		List<StoryDTO> myStoryList = storyService.getMyStoryList();

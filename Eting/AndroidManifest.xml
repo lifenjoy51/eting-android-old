@@ -35,6 +35,12 @@
             android:name=".LockScreenActivity"
             android:screenOrientation="portrait" >
         </activity>
+        
+        <!-- 뷰페이져 -->
+        <activity
+            android:name=".ViewPagerActivity"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <!-- 메인화면 -->
         <activity

@@ -27,9 +27,7 @@ public class WriteStoryActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.write_story);
 		this.context = getApplicationContext();
 
-		// 버튼이벤트 삽입
-		((ImageButton) findViewById(R.id.send_story_btn))
-				.setOnClickListener(this);
+		
 	}
 
 	@Override
@@ -55,7 +53,7 @@ public class WriteStoryActivity extends Activity implements OnClickListener{
 		storyService.saveStoryToServer(content, new AfterSendAndSaveStory()); // 서버에 이야기저장, 파라미터로 콜백함수 넘김
 	}
 	
-	private class AfterSendAndSaveStory implements ServiceCompleteListener<String>{
+	public class AfterSendAndSaveStory implements ServiceCompleteListener<String>{
 
 		@Override
 		public void onServiceComplete(String result) {

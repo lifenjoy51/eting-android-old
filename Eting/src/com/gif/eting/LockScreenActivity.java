@@ -48,8 +48,9 @@ public class LockScreenActivity extends Activity implements OnClickListener {
 		// 암호 성공/실패 분기처리
 		if (isValid) {
 			Intent intent = new Intent(LockScreenActivity.this,
-					MainActivity.class);
+					ViewPagerActivity.class);
 			startActivity(intent);
+			finish();
 		} else {
 			// 비밀번호 틀렸을때
 			Toast toast = Toast.makeText(this, "비밀번호가 맞지 않습니다.",
