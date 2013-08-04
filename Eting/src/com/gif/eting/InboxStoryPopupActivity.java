@@ -20,6 +20,7 @@ public class InboxStoryPopupActivity extends Activity implements OnClickListener
 	private StoryService storyService;
 	private Long inboxStoryIdx;
 	private ProgressDialog progressDialog;
+	private String[] stampList = {"좋아요","힘내요"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

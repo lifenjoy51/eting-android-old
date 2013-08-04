@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
@@ -28,6 +29,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.gif.eting.dto.StoryDTO;
+import com.gif.eting.svc.SettingService;
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.util.ServiceCompleteListener;
 
@@ -94,11 +96,15 @@ public class ViewPagerActivity extends Activity implements OnClickListener{
 	        public void onClick(View v) {
 	    		switch (v.getId()) {
 	    		case R.id.inbox_btn:
-	    			startActivity(new Intent(context, InboxStoryPopupActivity.class));
+	    			checkInbox();
 	    			break;
 
 	    		case R.id.send_story_btn:
 	    			sendAndSaveStory();
+	    			break;
+	    			
+		        case R.id.setting_save_pw_btn:
+	    			savePassword();
 	    			break;
 	    		}
 	        }
@@ -151,6 +157,22 @@ public class ViewPagerActivity extends Activity implements OnClickListener{
 		        
 			} else {
 				v = mInflater.inflate(R.layout.setting, null);
+				// 버튼이벤트 삽입
+				((Button) v.findViewById(R.id.setting_save_pw_btn))
+						.setOnClickListener(mPagerListener);
+				
+				/*
+				ImageView imageView = new ImageView(context);
+		        // Set the background color to white
+		        imageView.setBackgroundColor(Color.WHITE);
+		        // Parse the SVG file from the resource
+		        SVG svg = SVGParser.getSVGFromResource(getResources(), R.drawable.gif_design_03);
+		        // Get a drawable from the parsed SVG and set it as the drawable for the ImageView
+		        imageView.setImageDrawable(svg.createPictureDrawable());
+		        // Set the ImageView as the content view for the Activity
+		        v = imageView;
+		        */
+
 			}
 
 			((ViewPager) pager).addView(v, 0);
@@ -254,6 +276,33 @@ public class ViewPagerActivity extends Activity implements OnClickListener{
 				mPager.setCurrentItem(2);
 				
 			}
+		}
+		
+		//받은편지함 개수 확인하고 열지 안열지 체크
+		public void checkInbox(){
+			
+			startActivity(new Intent(context, InboxStoryPopupActivity.class));	//팝업 출력
+		}
+		
+		
+		//세팅화면에서 비밀번호 저장
+		public void savePassword(){
+			View view = mPager.findFocus();
+			
+			EditText et = (EditText) view.findViewById(R.id.setting_pw);
+			String pw = et.getText().toString();	//입력한 비밀번호
+			
+			SettingService svc = new SettingService(context);			
+			svc.savePassword(pw);
+			
+
+			Toast toast = Toast.makeText(context, "저장되었습니다.",
+					Toast.LENGTH_SHORT);
+			toast.show();
+			
+			// 메인화면으로 이동
+			//startActivity(new Intent(context, ReadMyStoryActivity.class));
+			mPager.setCurrentItem(0);
 		}
 		
 	}
