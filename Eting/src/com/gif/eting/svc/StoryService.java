@@ -21,8 +21,8 @@ import com.gif.eting.util.ServiceCompleteListener;
 
 public class StoryService {
 	
-	//private String serverContext = "http://lifenjoys.cafe24.com/eting";	//서버
-	private String serverContext = "http://112.144.52.47:8080/eting";	//개발서버
+	private String serverContext = "http://lifenjoys.cafe24.com/eting";	//서버
+	//private String serverContext = "http://112.144.52.47:8080/eting";	//개발서버
 	private Context context;
 	private InboxDAO inboxDao;
 	private StoryDAO storyDao;
@@ -174,15 +174,24 @@ public class StoryService {
 	//서버로 스탬프 찍은 정보 전송
 	public void saveStampToServer(String storyId, List<String> stampIds, ServiceCompleteListener<String> callback) {
 		
+		
+		
+		
+		String url = this.serverContext+"/saveStamp";
+		String params = "story_id=" + storyId;	//파라미터설정
+		
 		StringBuffer sb = new StringBuffer();
 		for(String stampId : stampIds){
 			sb.append(stampId);
 			sb.append(",");
 		}
-		String stampIdParams = sb.substring(0, sb.length()-1);
 		
-		String url = this.serverContext+"/saveStamp";
-		String params = "story_id=" + storyId+"&stamp_id=" + stampIdParams;	//파라미터 설정
+		if(sb.length()>0){		//스탬프가 있으면
+			String stampIdParams = sb.substring(0, sb.length()-1);	
+			params += "&stamp_id=" + stampIdParams;
+		}
+
+		Log.i("params", params);	//응답확인
 		
 		new HttpUtil(url, params, new AfterSaveStampToServer(callback, storyId)).execute("");	//Http 요청
 	}

@@ -3,11 +3,9 @@ package com.gif.eting;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;

@@ -31,7 +31,6 @@ public class InboxStoryPopupActivity extends Activity implements OnClickListener
 	private StoryService storyService;
 	private Long inboxStoryIdx;
 	private ProgressDialog progressDialog;
-	private String[] stampList;
 	private List<String> stamps = new ArrayList<String>();;
 	
 
@@ -66,12 +65,6 @@ public class InboxStoryPopupActivity extends Activity implements OnClickListener
 		
 		//스탬프 자동완성
 		List<StampDTO> list = storyService.getStampList();
-		List<String> stampNameList = new ArrayList<String>();
-		for(int i=0; i<list.size(); i++){
-			String stampName =  ((StampDTO)list.get(i)).getStamp_name();
-			stampNameList.add(stampName);
-		}	
-		stampList = (String[]) stampNameList.toArray(new String[stampNameList.size()]);
 		
 		AutoCompleteTextView stampAC = (AutoCompleteTextView) findViewById(R.id.stamp_auto_complete);
 		ArrayAdapter<StampDTO> adapter = new ArrayAdapter<StampDTO>(this, android.R.layout.simple_dropdown_item_1line, list);
@@ -112,7 +105,6 @@ public class InboxStoryPopupActivity extends Activity implements OnClickListener
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.inbox_confirm_btn:
 			
