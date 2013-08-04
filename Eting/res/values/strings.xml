@@ -7,5 +7,6 @@
     <string name="_eting">잇힝~</string>
     <string name="password_text">비밀번호</string>
     <string name="save_text">저장</string>
+    <string name="inbox_confirm">확인</string>
 
 </resources>

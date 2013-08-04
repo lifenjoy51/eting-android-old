@@ -1,5 +1,6 @@
 package com.gif.eting.svc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -11,6 +12,7 @@ import android.util.Log;
 
 import com.gif.eting.dao.InboxDAO;
 import com.gif.eting.dao.StoryDAO;
+import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.util.AsyncTaskCompleteListener;
 import com.gif.eting.util.HttpUtil;
@@ -170,10 +172,17 @@ public class StoryService {
 	
 
 	//서버로 스탬프 찍은 정보 전송
-	public void saveStampToServer(String storyId, String stampId, ServiceCompleteListener<String> callback) {
+	public void saveStampToServer(String storyId, List<String> stampIds, ServiceCompleteListener<String> callback) {
+		
+		StringBuffer sb = new StringBuffer();
+		for(String stampId : stampIds){
+			sb.append(stampId);
+			sb.append(",");
+		}
+		String stampIdParams = sb.substring(0, sb.length()-1);
 		
 		String url = this.serverContext+"/saveStamp";
-		String params = "story_id=" + storyId+"&stamp_id=" + stampId;	//파라미터 설정
+		String params = "story_id=" + storyId+"&stamp_id=" + stampIdParams;	//파라미터 설정
 		
 		new HttpUtil(url, params, new AfterSaveStampToServer(callback, storyId)).execute("");	//Http 요청
 	}
@@ -259,6 +268,23 @@ public class StoryService {
 					callback.onServiceComplete(stamps.toString());
 			}
 
+		}
+
+		// 폰에 저장된 스탬프 목록 가져오기
+		public List<StampDTO> getStampList() {
+			List<StampDTO> stampList = new ArrayList<StampDTO>();
+	
+			StampDTO stamp = new StampDTO();
+			stamp.setStamp_id("5");
+			stamp.setStamp_name("좋아요");			
+			stampList.add(stamp);
+			
+			stamp = new StampDTO();
+			stamp.setStamp_id("6");
+			stamp.setStamp_name("힘내요");
+			stampList.add(stamp);
+			
+			return stampList;
 		}
 	
 	

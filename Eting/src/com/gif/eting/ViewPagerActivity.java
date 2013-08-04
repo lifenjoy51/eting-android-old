@@ -194,7 +194,6 @@ public class ViewPagerActivity extends Activity implements OnClickListener{
 
 		@Override
 		public void finishUpdate(ViewGroup container) {
-			Log.i("finishUpdate", String.valueOf(container.getId()));
 			if(container.getId()== R.layout.read_story){
 			}
 		}
