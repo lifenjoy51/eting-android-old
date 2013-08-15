@@ -42,4 +42,11 @@ public class StampDTO {
 		this.stamp_url = stamp_url;
 	}
 
+	@Override
+	public String toString() {
+		return this.stamp_name;
+	}
+	
+	
+
 }

@@ -24,26 +24,33 @@
         android:textColor="#ff000000" />
 
     <LinearLayout
+        android:id="@+id/inbox_stamp_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <Button
-            android:id="@+id/stamp1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="26dp"
-            android:layout_marginLeft="33dp"
-            android:text="좋아요" />
-
-        <Button
-            android:id="@+id/stamp2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="26dp"
-            android:layout_marginLeft="33dp"
-            android:text="힘내요" />
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
     </LinearLayout>
+
+    <AutoCompleteTextView
+        android:id="@+id/stamp_auto_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/popup_content"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:text="" 
+        android:completionThreshold="1">
+
+        <requestFocus />
+    </AutoCompleteTextView>
+
+    <Button
+        android:id="@+id/inbox_confirm_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/stamp_auto_complete"
+        android:layout_below="@+id/stamp_auto_complete"
+        android:text="@string/inbox_confirm" />
 
 </RelativeLayout>

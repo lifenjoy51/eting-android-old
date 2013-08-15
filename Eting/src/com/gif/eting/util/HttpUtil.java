@@ -60,6 +60,7 @@ public class HttpUtil extends AsyncTask<String, String, String> {
 
 			return sb.toString();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return e.toString();
 		}
 	}

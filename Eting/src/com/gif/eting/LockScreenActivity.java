@@ -1,5 +1,7 @@
 package com.gif.eting;
 
+import com.gif.eting.svc.SettingService;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,9 +43,8 @@ public class LockScreenActivity extends Activity implements OnClickListener {
 		Log.i("password", pw);
 
 		// 암호체크 임시로직
-		if (pw.equals("1234")) {
-			isValid = true;
-		}
+		SettingService svc = new SettingService(this);
+		isValid = svc.checkPassword(pw);
 
 		// 암호 성공/실패 분기처리
 		if (isValid) {
