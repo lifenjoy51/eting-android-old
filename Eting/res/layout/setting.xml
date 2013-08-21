@@ -4,45 +4,50 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:orientation="horizontal" >
+        android:text="setting" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:text="@string/password_text" />
+    <ImageButton
+        android:id="@+id/alarm_img_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="알람"/>
 
-        <EditText
-            android:id="@+id/setting_pw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:ems="10"
-            android:inputType="numberPassword" >
+    <ImageButton
+        android:id="@+id/password_img_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="비밀번호설정바꾸기"/>
 
-            <requestFocus
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </EditText>
-    </LinearLayout>
+<!--     <ImageButton -->
+<!--         android:id="@+id/export_img_btn" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:src="@drawable/ic_launcher" /> -->
+    <Button
+        android:id="@+id/btEmail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="첨부파일 이메일 보내기" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="134dp"
-        android:layout_gravity="center"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/setting_save_pw_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/save_text" />
-
-    </LinearLayout>
+    <ImageButton
+        android:id="@+id/credit_img_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Credit"/>
 
 </LinearLayout>
