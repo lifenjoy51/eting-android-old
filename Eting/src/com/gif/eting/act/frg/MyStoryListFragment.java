@@ -1,4 +1,4 @@
-package com.gif.eting.act;
+package com.gif.eting.act.frg;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,20 +20,30 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.gif.eting.R;
+import com.gif.eting.act.ReadMyStoryActivity;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
 
-public class MyStoryList  extends SherlockFragment{
+/**
+ * 내 이야기 목록
+ * 
+ * @author lifenjoy51
+ *
+ */
+public class MyStoryListFragment  extends SherlockFragment{
 
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
      */
-    public static MyStoryList create(int pageNumber) {
-        MyStoryList fragment = new MyStoryList();
+    public static MyStoryListFragment create(int pageNumber) {
+        MyStoryListFragment fragment = new MyStoryListFragment();
         return fragment;
     }
 
-    public MyStoryList() {
+    /**
+     * 생성자
+     */
+    public MyStoryListFragment() {
     }
 
     @Override
@@ -47,14 +57,20 @@ public class MyStoryList  extends SherlockFragment{
         // Inflate the layout containing a title and body text.
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.read_story, container, false);
-        drawMyStoryList(rootView);
+        
+        /**
+         * 내 이야기 목록을 가져와 그린다.
+         */
+        this.drawMyStoryList(rootView);
 
         return rootView;
 	}
 
-	// 내 이야기 목록 그리기
+	/**
+	 *  내 이야기 목록 그리기
+	 * @param view
+	 */
 	public void drawMyStoryList(View view) {
-		Log.i("debug", "drawMyStoryList");
 		// StoryService초기화
 		StoryService storyService = new StoryService(getActivity());
 		List<StoryDTO> myStoryList = storyService.getMyStoryList();
@@ -70,7 +86,8 @@ public class MyStoryList  extends SherlockFragment{
 			list.add(item);
 		}
 
-		// 어댑터에 데이터 포함
+		//TODO 커스텀 리스트뷰를 만들어서 넣어야한다.
+		// 어댑터에 데이터를 넣는다.
 		final String[] fromMapKey = new String[] { "title", "desc" };
 		final int[] toLayoutId = new int[] { android.R.id.text1,
 				android.R.id.text2 };
@@ -80,13 +97,16 @@ public class MyStoryList  extends SherlockFragment{
 		// 리스트뷰에 어댑터 연결
 		ListView listView = (ListView) view.findViewById(R.id.myStoryListView);
 		listView.setAdapter(adapter);
+		
 		// 클릭이벤트 연결
-		 listView.setOnItemClickListener(mOnItemClickListener);
+		listView.setOnItemClickListener(this.mOnItemClickListener);
 	}
 	
-	 //아이템 클릭이벤트
+	/** 
+	 * 아이템 클릭이벤트
+	 */
     private OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
-
+    	
     	@SuppressWarnings("unchecked")
     	public void onItemClick(AdapterView<?> parentView, View clickedView,
     			int position, long id) {
@@ -97,16 +117,12 @@ public class MyStoryList  extends SherlockFragment{
     		
     		String toastMessage = idx;
 
-    		Intent intent =new Intent(getActivity(), ReadMyStory.class);
+    		Intent intent =new Intent(getActivity(), ReadMyStoryActivity.class);
     		intent.putExtra("idx", idx);
-    		startActivity(intent);
-    		
-    		/*
-    		String toastMessage = ((TwoLineListItem) clickedView).getText1().getText()
-    				+ " is selected. position is " + position + ", and id is " + id;*/
-
-    		Toast.makeText(getActivity(), toastMessage,
-    				Toast.LENGTH_SHORT).show();
+			startActivity(intent);
+			
+			Toast.makeText(getActivity(), toastMessage, Toast.LENGTH_SHORT)
+					.show();
     	}
     	
     };

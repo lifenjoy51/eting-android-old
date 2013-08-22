@@ -1,13 +1,34 @@
 package com.gif.eting.dto;
 
+/**
+ * 스탬프 전송용 객체
+ * 
+ * @author lifenjoy51
+ *
+ */
 public class StampDTO {
 
 	public StampDTO() {
 	}
 
+	/**
+	 * 이야기 고유번호
+	 */
 	private String story_id;
+	
+	/**
+	 * 스탬프 고유번호
+	 */
 	private String stamp_id;
+	
+	/**
+	 * 스탬프 이름
+	 */
 	private String stamp_name;
+	
+	/**
+	 * 스탬프 이미지 url (현재 사용 안함)
+	 */
 	private String stamp_url;
 
 	public String getStory_id() {

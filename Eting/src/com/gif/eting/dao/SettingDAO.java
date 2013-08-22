@@ -13,30 +13,49 @@ import android.util.Log;
 import com.gif.eting.db.SettingDBHelper;
 import com.gif.eting.dto.SettingDTO;
 
+/**
+ * 설정값에 대한 정보를 읽고/쓰는 객체. DataAccessObject. 
+ *
+ * @author lifenjoy51
+ *
+ */
 public class SettingDAO {
 
-	// Database fields
+	/**
+	 *  Database fields
+	 */
 	private SQLiteDatabase database;
 	private SettingDBHelper dbHelper;
 	private String[] allColumns = { SettingDBHelper.COL_KEY,
 			SettingDBHelper.COL_VALUE };
 
-	// 생성할때 dbHelper 초기화
+	/**
+	 *  생성할때 dbHelper 초기화
+	 * @param context
+	 */
 	public SettingDAO(Context context) {
 		dbHelper = new SettingDBHelper(context);
 	}
 
-	// 쓰기전에 open해주고
+	/**
+	 *  쓰기전에 open해주고
+	 * @throws SQLException
+	 */
 	public void open() throws SQLException {
 		database = dbHelper.getWritableDatabase();
 	}
 
-	// 다쓰면 close한다
+	/**
+	 *  다쓰면 close한다
+	 */
 	public void close() {
 		dbHelper.close();
 	}
 
-	// setting 리스팅
+	/**
+	 *  setting 리스팅
+	 * @return
+	 */
 	public List<SettingDTO> getsettingList() {
 		List<SettingDTO> settingList = new ArrayList<SettingDTO>();
 
@@ -59,7 +78,11 @@ public class SettingDAO {
 		return settingList;
 	}
 
-	// setting 한개 가져오기
+	/**
+	 *  setting 한개 가져오기
+	 * @param key
+	 * @return
+	 */
 	public SettingDTO getsettingInfo(String key) {
 		Cursor cur = database.query(SettingDBHelper.TABLE_SETTING, allColumns,
 				SettingDBHelper.COL_KEY + " = " + "'"+key+"'", null, null, null, null);
@@ -75,7 +98,9 @@ public class SettingDAO {
 		return returnedsetting;
 	}
 
-	// setting 입력
+	/**
+	 *  setting 입력
+	 */
 	public Long inssetting(SettingDTO setting) {
 		ContentValues values = new ContentValues();
 		values.put(SettingDBHelper.COL_KEY, setting.getKey());
@@ -87,7 +112,11 @@ public class SettingDAO {
 		return insertedId;
 	}
 
-	// setting 수정
+	/**
+	 *  setting 수정
+	 * @param setting
+	 * @return
+	 */
 	public Integer updsetting(SettingDTO setting) {
 		String key = setting.getKey();
 		ContentValues values = new ContentValues();
@@ -99,7 +128,11 @@ public class SettingDAO {
 		return rtn;
 	}
 
-	// setting 삭제
+	/**
+	 *  setting 삭제
+	 * @param key
+	 * @return
+	 */
 	public Integer delsetting(String key) {
 		int rtn = database.delete(SettingDBHelper.TABLE_SETTING,
 				SettingDBHelper.COL_KEY + " = " + "'"+key+"'", null);
@@ -107,7 +140,11 @@ public class SettingDAO {
 		return rtn;
 	}
 
-	// 커서에서 DTO받아오기
+	/**
+	 *  커서에서 DTO받아오기
+	 * @param cursor
+	 * @return
+	 */
 	private SettingDTO getSettingDTO(Cursor cursor) {
 		if (cursor!=null && cursor.getCount()>0) {
 			SettingDTO setting = new SettingDTO(); // 객체 초기화

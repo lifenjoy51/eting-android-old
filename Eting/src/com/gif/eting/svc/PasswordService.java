@@ -6,6 +6,12 @@ import com.gif.eting.dao.SettingDAO;
 import com.gif.eting.dto.SettingDTO;
 import com.gif.eting.util.SecureUtil;
 
+/**
+ * 암호관련 로직 처리
+ * 
+ * @author lifenjoy51
+ *
+ */
 public class PasswordService {
 
 	private SettingDAO settingDao;
@@ -14,7 +20,10 @@ public class PasswordService {
 		this.settingDao = new SettingDAO(context);
 	}
 
-	// 비밀번호 저장
+	/**
+	 *  비밀번호 저장
+	 * @param pw
+	 */
 	public void savePassword(String pw) {
 		SettingDTO setting = new SettingDTO();
 		pw = SecureUtil.toSHA256(pw);
@@ -27,7 +36,11 @@ public class PasswordService {
 		settingDao.close(); // 닫고
 	}
 
-	// 비밀번호 체크
+	/**
+	 *  비밀번호 체크
+	 * @param pw
+	 * @return
+	 */
 	public boolean checkPassword(String pw) {
 		boolean isValid = false;
 		pw = SecureUtil.toSHA256(pw); // 사용자가 입력한 비밀번호

@@ -13,30 +13,49 @@ import android.util.Log;
 import com.gif.eting.db.StoryDBHelper;
 import com.gif.eting.dto.StoryDTO;
 
+/**
+ * 이야기에 대한 정보를 읽고/쓰는 객체. DataAccessObject. 
+ *
+ * @author lifenjoy51
+ *
+ */
 public class StoryDAO {
 
-	// Database fields
+	/**
+	 *  Database fields
+	 */
 	private SQLiteDatabase database;
 	private StoryDBHelper dbHelper;
 	private String[] allColumns = { StoryDBHelper.COL_IDX,
 			StoryDBHelper.COL_CONTENT, StoryDBHelper.COL_STORY_DATE };
 
-	// 생성할때 dbHelper 초기화
+	/**
+	 * 생성할때 dbHelper 초기화
+	 * @param context
+	 */
 	public StoryDAO(Context context) {
 		dbHelper = new StoryDBHelper(context);
 	}
 
-	// 쓰기전에 open해주고
+	/**
+	 * 쓰기전에 open해주고
+	 * @throws SQLException
+	 */
 	public void open() throws SQLException {
 		database = dbHelper.getWritableDatabase();
 	}
 
-	// 다쓰면 close한다
+	/**
+	 *  다쓰면 close한다
+	 */
 	public void close() {
 		dbHelper.close();
 	}
 
-	// Story 리스팅
+	/**
+	 *  내 이야기 목록 조회
+	 * @return
+	 */
 	public List<StoryDTO> getStoryList() {
 		List<StoryDTO> storyList = new ArrayList<StoryDTO>();
 
@@ -49,9 +68,11 @@ public class StoryDAO {
 			storyList.add(story);
 			cursor.moveToNext();
 		}
+		
 		// Make sure to close the cursor
 		cursor.close();
 
+		//확인용 로그
 		for (StoryDTO story : storyList) {
 			Log.i("my story list",
 					story.getIdx() + story.getContent() + story.getStory_date());
@@ -60,9 +81,12 @@ public class StoryDAO {
 		return storyList;
 	}
 
-	// Story 한개 가져오기
-	public StoryDTO getStoryInfo(StoryDTO story) {
-		long idx = story.getIdx();
+	/**
+	 *  Story 한개 가져오기
+	 * @param idx
+	 * @return
+	 */
+	public StoryDTO getStoryInfo(String idx) {
 		Cursor cur = database.query(StoryDBHelper.TABLE_STORY_MASTER,
 				allColumns, StoryDBHelper.COL_IDX + " = " + idx, null, null,
 				null, null);
@@ -76,7 +100,12 @@ public class StoryDAO {
 		return returnedStory;
 	}
 
-	// Story 입력
+	/**
+	 *  Story 입력
+	 *  
+	 * @param story
+	 * @return
+	 */
 	public Long insStory(StoryDTO story) {
 		ContentValues values = new ContentValues();
 		values.put(StoryDBHelper.COL_IDX, story.getIdx());
@@ -88,7 +117,12 @@ public class StoryDAO {
 		return insertedId;
 	}
 
-	// Story 수정
+	/**
+	 *  Story 수정
+	 *  
+	 * @param story
+	 * @return
+	 */
 	public Integer updStory(StoryDTO story) {
 		long idx = story.getIdx();
 		ContentValues values = new ContentValues();
@@ -101,7 +135,12 @@ public class StoryDAO {
 		return rtn;
 	}
 
-	// Story 삭제
+	/**
+	 *  Story 삭제
+	 *  
+	 * @param story
+	 * @return
+	 */
 	public Integer delStory(StoryDTO story) {
 		long idx = story.getIdx();
 		int rtn = database.delete(StoryDBHelper.TABLE_STORY_MASTER,
@@ -110,7 +149,12 @@ public class StoryDAO {
 		return rtn;
 	}
 
-	// 커서에서 DTO받아오기
+	/**
+	 *  커서에서 DTO받아오기
+	 *  
+	 * @param cursor
+	 * @return
+	 */
 	private StoryDTO getStoryDTO(Cursor cursor) {
 		StoryDTO story = new StoryDTO(); // 객체 초기화
 		story.setIdx(cursor.getLong(0));

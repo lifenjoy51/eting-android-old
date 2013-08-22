@@ -1,7 +1,20 @@
 package com.gif.eting.dto;
 
+/**
+ * 설정값 전송용 객체
+ * 
+ * @author lifenjoy51
+ *
+ */
 public class SettingDTO {
+	/**
+	 * 키
+	 */
 	private String key;
+	
+	/**
+	 * 설정값
+	 */
 	private String value;
 
 	public String getKey() {

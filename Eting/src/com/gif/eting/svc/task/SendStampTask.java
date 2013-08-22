@@ -12,15 +12,34 @@ import com.gif.eting.util.AsyncTaskCompleteListener;
 import com.gif.eting.util.Config;
 import com.gif.eting.util.HttpUtil;
 
+/**
+ * 스탬프를 서버에 전송하는 작업
+ * AsyncTask를 상속받았기에 Main쓰레드와 별도로 실행된다.
+ * 
+ * @author lifenjoy51
+ *
+ */
 public class SendStampTask extends AsyncTask<Object, String, String> {
+	/**
+	 * 작업 수행 후 이 클래스를 호출한 객체에서 후속작업을 실행시키기 위한 콜백. 
+	 */
 	private AsyncTaskCompleteListener<String> callback;
+	
 	private String storyId;
 	private Context context;
 	
+	/**
+	 * 생성자로 콜백을 받아온다.
+	 * 
+	 * @param callback
+	 */
 	public SendStampTask(AsyncTaskCompleteListener<String> callback){
 		this.callback = callback;
 	}
-
+	
+	/**
+	 * 실제 실행되는 부분
+	 */
 	@Override
 	protected String doInBackground(Object... params) {
 
@@ -45,10 +64,12 @@ public class SendStampTask extends AsyncTask<Object, String, String> {
 				param += "&stamp_id=" + stampIdParams;
 			}
 			
-			return HttpUtil.doPost(urlStr, param);
+			return HttpUtil.doPost(urlStr, param);	//Http전송
 	}
 	
-
+	/**
+	 * 작업이 끝나면 자동으로 실행된다.
+	 */
 	@Override
 	protected void onPostExecute(String result) {
 
@@ -66,7 +87,7 @@ public class SendStampTask extends AsyncTask<Object, String, String> {
 		
 		// 호출한 클래스 콜백
 		if (callback != null)
-			callback.onTaskComplete("");	//화면에 무엇을 넘길것인가?
+			callback.onTaskComplete("");	//TODO 화면에 무엇을 넘길것인가?
 	}
 
 }

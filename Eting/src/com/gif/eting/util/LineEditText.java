@@ -8,6 +8,12 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
+/**
+ * 줄있는 에디터 View
+ * 
+ * @author lifenjoy51
+ *
+ */
 public class LineEditText extends EditText{
 	// we need this constructor for LayoutInflater
 	public LineEditText(Context context, AttributeSet attrs) {

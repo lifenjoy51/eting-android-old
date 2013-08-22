@@ -16,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,13 +28,37 @@ import com.gif.eting.svc.StampService;
 import com.gif.eting.svc.task.SendStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
 
-public class ReadInbox extends Activity implements OnClickListener{
+/**
+ * 받은편지함 읽기화면
+ * 
+ * @author lifenjoy51
+ *
+ */
+public class ReadInboxActivity extends Activity implements OnClickListener{
 
+	/**
+	 * 받은편지함 관련 로직을 수행하는 서비스
+	 */
 	private InboxService inboxService;
+	
+	/**
+	 * 스탬프관련 로직을 수행하는 서비스
+	 */
 	private StampService stampService;
 	
+	/**
+	 * 받은이야기 고유번호
+	 */
 	private Long inboxStoryIdx;
+	
+	/**
+	 * 프로그래스 동글이
+	 */
 	private ProgressDialog progressDialog;
+	
+	/**
+	 * 받은이야기에 달린 스탬프들
+	 */
 	private List<String> stamps = new ArrayList<String>();;
 	
 
@@ -54,7 +77,7 @@ public class ReadInbox extends Activity implements OnClickListener{
 		inboxService = new InboxService(this.getApplicationContext());
 		stampService = new StampService(this.getApplicationContext());
 		
-		StoryDTO inboxStory = inboxService.getInboxStory();
+		StoryDTO inboxStory = inboxService.getInboxStory();	//받은이야기를 가져온다.
 		Long idx = inboxStory.getIdx();
 		inboxStoryIdx = idx;
 		String content = inboxStory.getContent();
@@ -67,9 +90,11 @@ public class ReadInbox extends Activity implements OnClickListener{
 		storyDateView.setText(storyDate);
 
 		//버튼이벤트 삽입
-		((Button) findViewById(R.id.inbox_confirm_btn)).setOnClickListener(this);
+		findViewById(R.id.inbox_confirm_btn).setOnClickListener(this);
 		
 		//스탬프 자동완성
+		//TODO 스탬프 자동완성기능은 빠진다. 
+		//TODO 스탬프 입력화면을 새로 개발해야한다.
 		List<StampDTO> list = stampService.getStampList();
 		
 		AutoCompleteTextView stampAC = (AutoCompleteTextView) findViewById(R.id.stamp_auto_complete);
@@ -79,7 +104,9 @@ public class ReadInbox extends Activity implements OnClickListener{
 		stampAC.setOnItemClickListener(mOnItemClickListener);
 	}
 	
-	 //아이템 클릭이벤트
+	/**
+	 * 스티커 클릭시 이벤트
+	 */
     private OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
 
     	@SuppressWarnings("unchecked")
@@ -96,10 +123,7 @@ public class ReadInbox extends Activity implements OnClickListener{
     		
     		Log.i("getItem", stampId+stampName);
     		
-    		/*
-    		String toastMessage = ((TwoLineListItem) clickedView).getText1().getText()
-    				+ " is selected. position is " + position + ", and id is " + id;*/
-    		
+    		//스탬프 추가
     		addStamp(stampId, stampName);
     		
     		Toast.makeText(getApplicationContext(), stampId,
@@ -117,13 +141,20 @@ public class ReadInbox extends Activity implements OnClickListener{
 			//전송상태 나타냄
 			progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.app_name), true, true);
 			
-			//스탬프1
-			//storyService.saveStampToServer(String.valueOf(inboxStoryIdx), "5", new AfterSaveStampToServer());	//스탬프ID 5는 하드코딩 추후 변경필요
-			saveStampsToServer();
+			/**
+			 * 다른사람 이야기에 찍은 스탬프 정보를 서버로 전송
+			 */
+			this.saveStampsToServer();
 			break;
 		}
 	}
-	// 스탬프 입력
+	
+	/**
+	 * 스탬프 입력
+	 * 
+	 * @param stampId
+	 * @param stampName
+	 */
 	private void addStamp(String stampId, String stampName) {
 		stamps.add(stampId);
 		LinearLayout stampArea = (LinearLayout) findViewById(R.id.inbox_stamp_area); // 스탬프영역
@@ -136,13 +167,26 @@ public class ReadInbox extends Activity implements OnClickListener{
 
 	}
 
+	/**
+	 * 서버로 스탬프 전송
+	 */
 	private void saveStampsToServer(){
-		new SendStampTask(new AfterSaveStampToServer()).execute(String.valueOf(inboxStoryIdx), stamps, getApplicationContext());
-		//stampService.saveStampToServer(String.valueOf(inboxStoryIdx), stamps, new AfterSaveStampToServer());
+		/**
+		 * 서버로 스탬프 전송
+		 * 
+		 * SendStampTask를 생성할때 파라미터는 SendStampTask가 수행되고 나서 실행될 콜백이다.
+		 * execute의 파라미터가 실제 넘겨줄 자료들.
+		 * parameter[0] = inboxStoryIdx. 받은이야기 고유번호
+		 * parameter[1] = stamps. 전송할 스탬프들
+		 * parameter[2] = getApplicationContext(). Context.
+		 */
+		new SendStampTask(new AfterSendStampTask()).execute(String.valueOf(inboxStoryIdx), stamps, getApplicationContext());
 	}
 	
-	//스탬프찍기 Http 요청 후 로직
-	private class AfterSaveStampToServer implements AsyncTaskCompleteListener<String>{
+	/**
+	 * SendStampTask 수행 후 실행되는 콜백
+	 */
+	private class AfterSendStampTask implements AsyncTaskCompleteListener<String>{
 		@Override
 		public void onTaskComplete(String result) {
 

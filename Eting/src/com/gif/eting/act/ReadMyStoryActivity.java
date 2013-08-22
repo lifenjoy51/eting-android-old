@@ -13,7 +13,13 @@ import com.gif.eting.svc.StoryService;
 import com.gif.eting.svc.task.ReceiveStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
 
-public class ReadMyStory extends Activity {
+/**
+ * 내 이야기 목록에서 선택한 이야기를 읽는 화면
+ * 
+ * @author lifenjoy51
+ *
+ */
+public class ReadMyStoryActivity extends Activity {
 
 	private StoryService storyService;
 
@@ -28,12 +34,12 @@ public class ReadMyStory extends Activity {
 		setContentView(R.layout.popup);
 		
 		Intent intent = getIntent();
-		String idx = intent.getStringExtra("idx");		
+		String idx = intent.getStringExtra("idx");	//파라미터값으로 넘긴 이야기 고유번호
 
 		//Service초기화
 		storyService = new StoryService(this.getApplicationContext());
 		
-		StoryDTO myStory = storyService.getMyStory(idx);
+		StoryDTO myStory = storyService.getMyStory(idx);	//해당하는 이야기 받아오기
 		String content = myStory.getContent();
 		String storyDate = myStory.getStory_date();
 		
@@ -43,16 +49,25 @@ public class ReadMyStory extends Activity {
 		TextView storyDateView = (TextView) findViewById(R.id.popup_date);
 		storyDateView.setText(storyDate);
 		
-		//스탬프 받아오기
-		new ReceiveStampTask(new AfterGetStampFromServer()).execute(idx);
+		/**
+		 * 조회하는 이야기에 찍힌 스탬프 받아오기
+		 * 
+		 * ReceiveStampTask를 생성할때 파라미터는 ReceiveStampTask가 수행되고 나서 실행될 콜백이다.
+		 * execute의 파라미터가 실제 넘겨줄 자료들.
+		 * parameter[0] = idx. 이야기 고유번호.
+		 */
+		new ReceiveStampTask(new AfterReceiveStampTask()).execute(idx);
 		
 	}
 	
-	//스탬프찍기 Http 요청 후 로직
-	private class AfterGetStampFromServer implements AsyncTaskCompleteListener<String>{
+	/**
+	 * ReceiveStampTask 수행 후 실행되는 콜백
+	 */
+	private class AfterReceiveStampTask implements AsyncTaskCompleteListener<String>{
 
 		@Override
 		public void onTaskComplete(String result) {
+			//TODO 스탬프를 어떻게 보여줄것인가 생각해봐야함. 현재는 그냥 텍스트를 집어넣는다.
 			TextView stampInfoView = (TextView) findViewById(R.id.stamp_info);
 			stampInfoView.setText(result);	
 		}

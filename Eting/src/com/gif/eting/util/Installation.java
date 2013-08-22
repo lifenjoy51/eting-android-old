@@ -8,6 +8,12 @@ import java.util.UUID;
 
 import android.content.Context;
 
+/**
+ * 기기 고유번호를 찍어주는 유틸
+ * 
+ * @author lifenjoy51
+ *
+ */
 public class Installation {
 	private static String sID = null;
 	private static final String INSTALLATION = "INSTALLATION";

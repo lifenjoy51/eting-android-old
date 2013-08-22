@@ -12,24 +12,55 @@ import com.gif.eting.dao.InboxDAO;
 import com.gif.eting.dao.StoryDAO;
 import com.gif.eting.dto.StoryDTO;
 
+/**
+ * 이야기 관련 로직을 처리한다.
+ * 
+ * @author lifenjoy51
+ *
+ */
 public class StoryService {
 	
+	/**
+	 * Context
+	 */
 	private Context context;
+	
+	/**
+	 * 받은이야기에 대한 정보를 읽고/쓰는 객체. DataAccessObject.
+	 */
 	private InboxDAO inboxDao;
+	
+	/**
+	 * 이야기에 대한 정보를 읽고/쓰는 객체. DataAccessObject. 
+	 */
 	private StoryDAO storyDao;
 	
+	/**
+	 * 생성자. DAO를 초기화시킨다.
+	 * 
+	 * @param context
+	 */
 	public StoryService(Context context){
 		this.context = context;
 		this.storyDao = new StoryDAO(this.context);
 		this.inboxDao = new InboxDAO(this.context);
 	}
 	
-	//서버에서 받아온 자료 정리
+	/**
+	 * 서버에서 받아온 정보를 폰 DB에 저장한다.
+	 * @param response
+	 */
 	public void saveToPhoneDB(String response){
 
 		try {
-			JSONObject json = new JSONObject(response);
+			/**
+			 * 서버로부터 받은 JSON문자열을 JSON객체로 변환한다.
+			 */
+			JSONObject json = new JSONObject(response);	
 
+			/**
+			 * 내가 작성한 이야기를 처리하는 부분
+			 */
 			if (!json.isNull("myStory")) {
 				JSONObject myStory = json.getJSONObject("myStory");
 
@@ -45,10 +76,12 @@ public class StoryService {
 				Log.i("returned my story",
 						myStoryDto.getIdx() + myStoryDto.getContent() + myStoryDto.getStory_date());
 				
-				
-				saveMyStoryToPhone(myStoryDto); // 폰DB에 내 이야기 저장
+				this.saveMyStoryToPhone(myStoryDto); // 폰DB에 내 이야기 저장
 			}
 
+			/**
+			 * 서버에서 받아온 다른사람의 이야기를 처리하는 부분
+			 */
 			if (!json.isNull("recievedStory")) {
 				JSONObject recievedStory = json.getJSONObject("recievedStory");
 
@@ -64,7 +97,7 @@ public class StoryService {
 				Log.i("returned recieved story",
 						recievedStoryDto.getIdx() + recievedStoryDto.getContent() + recievedStoryDto.getStory_date());
 				
-				saveRecievedStoryToPhone(recievedStoryDto); // 폰DB에 받아온 이야기 저장
+				this.saveRecievedStoryToPhone(recievedStoryDto); // 폰DB에 받아온 이야기 저장
 			}
 
 		} catch (JSONException e) {
@@ -73,21 +106,33 @@ public class StoryService {
 
 	}
 	
-	//내 이야기를 폰에 저장
+	/**
+	 * 내 이야기를 폰에 저장한다
+	 * 
+	 * @param story
+	 */
 	private void saveMyStoryToPhone(StoryDTO story){
 		storyDao.open();	//열고		
 		storyDao.insStory(story);	//입력하고
 		storyDao.close();	//닫고
 	}
 	
-	//받아온 이야기를 폰에 저장
+	/**
+	 * 받아온 이야기를 폰에 저장한다.
+	 * 
+	 * @param story
+	 */
 	private void saveRecievedStoryToPhone(StoryDTO story){
 		inboxDao.open();	//열고		
 		inboxDao.insStory(story);	//입력하고
 		inboxDao.close();	//닫고
 	}
 	
-	//내 이야기 가져오기
+	/**
+	 * 지금까지 작성한 내 이야기를 전부 가져온다.
+	 *  
+	 * @return
+	 */
 	public List<StoryDTO> getMyStoryList(){
 		storyDao.open();
 		List<StoryDTO> myStoryList = storyDao.getStoryList();
@@ -95,13 +140,14 @@ public class StoryService {
 		return myStoryList;
 	}
 	
-	// 내 이야기 가져오기
+	/**
+	 *  key값을 갖고 특정한 이야기를 불러온다.
+	 * @param idx
+	 * @return
+	 */
 	public StoryDTO getMyStory(String idx) {
-		StoryDTO story = new StoryDTO();
-		story.setIdx(Long.parseLong(idx));
-		
 		storyDao.open();
-		StoryDTO myStory = storyDao.getStoryInfo(story);
+		StoryDTO myStory = storyDao.getStoryInfo(idx);
 		storyDao.close();
 		return myStory;
 	}

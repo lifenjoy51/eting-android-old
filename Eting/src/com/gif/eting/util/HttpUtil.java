@@ -7,12 +7,15 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * HTTP통신 유틸
+ * 한글문제 해결
+ */
 public class HttpUtil  {
 
 	public static String doPost(String urlStr, String params) {
 
 		try {
-			// (1)
 			URL url = new URL(urlStr);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 

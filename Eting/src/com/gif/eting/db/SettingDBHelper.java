@@ -5,22 +5,36 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * 설정값을 저장할 Sqlite DB 테이블
+ * 
+ * @author lifenjoy51
+ * 
+ */
 public class SettingDBHelper extends SQLiteOpenHelper {
 
 	public static final String TABLE_SETTING = "setting"; // TABLE이름
 
-	// 컬럼정보
-	public static final String COL_KEY = "key"; // 받아온 이야기의 고유번호
-	public static final String COL_VALUE = "value"; // 받아온 이야기 내용
+	/**
+	 * 컬럼정보 
+	 * COL_KEY 설정값 KEY 
+	 * COL_VALUE 설정값
+	 */
+	public static final String COL_KEY = "key"; // 설정값 KEY
+	public static final String COL_VALUE = "value"; // 설정값
 
 	private static final String DATABASE_NAME = "eting_setting.db";
 	private static final int DATABASE_VERSION = 1;
 
-	// TABLE 생성문
+	/**
+	 *  TABLE 생성문
+	 */
 	private static final String DATABASE_CREATE = "CREATE TABLE " + TABLE_SETTING
 			+ "(" + COL_KEY + " text, " + COL_VALUE + " text " + ");";
 
-	// Constructor
+	/**
+	 *  Constructor
+	 */
 	public SettingDBHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -36,7 +50,7 @@ public class SettingDBHelper extends SQLiteOpenHelper {
 				"Upgrading database from version " + oldVersion + " to "
 						+ newVersion + ", which will destroy all old data");
 
-		// TODO 버젼이 다를때 임시로 처리. 추후 변경 필요.
+		// TODO SettingDBHelper 버젼이 다를때 임시로 처리. 추후 변경 필요.
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SETTING);
 		onCreate(db);
 	}

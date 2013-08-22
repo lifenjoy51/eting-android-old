@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.gif.eting.R;
 import com.gif.eting.svc.PasswordService;
 
-public class PasswordManage extends Activity implements OnClickListener {
+public class PasswordManagementActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

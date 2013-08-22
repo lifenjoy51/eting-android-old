@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 
 import com.gif.eting.R;
 
-public class Setting extends Activity implements OnClickListener {
+public class SettingActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,7 +22,7 @@ public class Setting extends Activity implements OnClickListener {
 	public void onClick(View view) {
 		// 비밀번호관리 버튼 클릭시
 		if (view.getId() == R.id.password_img_btn) {
-			startActivity(new Intent(this, PasswordManage.class));
+			startActivity(new Intent(this, PasswordManagementActivity.class));
 		}
 	}
 

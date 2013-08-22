@@ -13,30 +13,49 @@ import android.util.Log;
 import com.gif.eting.db.InboxDBHelper;
 import com.gif.eting.dto.StoryDTO;
 
+/**
+ * 받은이야기에 대한 정보를 읽고/쓰는 객체. DataAccessObject. 
+ *
+ * @author lifenjoy51
+ *
+ */
 public class InboxDAO {
 
-	// Database fields
+	/**
+	 *  Database fields
+	 */
 	private SQLiteDatabase database;
 	private InboxDBHelper dbHelper;
 	private String[] allColumns = { InboxDBHelper.COL_IDX,
 			InboxDBHelper.COL_CONTENT, InboxDBHelper.COL_STORY_DATE };
 
-	// 생성할때 dbHelper 초기화
+	/**
+	 *  생성할때 dbHelper 초기화
+	 * @param context
+	 */
 	public InboxDAO(Context context) {
 		dbHelper = new InboxDBHelper(context);
 	}
 
-	// 쓰기전에 open해주고
+	/**
+	 *  쓰기전에 open해주고
+	 * @throws SQLException
+	 */
 	public void open() throws SQLException {
 		database = dbHelper.getWritableDatabase();
 	}
 
-	// 다쓰면 close한다
+	/**
+	 *  다쓰면 close한다
+	 */
 	public void close() {
 		dbHelper.close();
 	}
 
-	// Story 리스팅
+	/**
+	 *  Story 리스팅
+	 * @return
+	 */
 	public List<StoryDTO> getStoryList() {
 		List<StoryDTO> storyList = new ArrayList<StoryDTO>();
 
@@ -60,9 +79,12 @@ public class InboxDAO {
 		return storyList;
 	}
 
-	// Story 한개 가져오기
-	public StoryDTO getStoryInfo(StoryDTO story) {
-		long idx = story.getIdx();
+	/**
+	 *  Story 한개 가져오기
+	 * @param story
+	 * @return
+	 */
+	public StoryDTO getStoryInfo(String idx) {
 		Cursor cur = database.query(InboxDBHelper.TABLE_INBOX,
 				allColumns, InboxDBHelper.COL_IDX + " = " + idx, null, null,
 				null, null);
@@ -76,7 +98,11 @@ public class InboxDAO {
 		return returnedStory;
 	}
 
-	// Story 입력
+	/**
+	 *  Story 입력
+	 * @param story
+	 * @return
+	 */
 	public Long insStory(StoryDTO story) {
 		ContentValues values = new ContentValues();
 		values.put(InboxDBHelper.COL_IDX, story.getIdx());
@@ -89,7 +115,11 @@ public class InboxDAO {
 		return insertedId;
 	}
 
-	// Story 수정
+	/**
+	 *  Story 수정
+	 * @param story
+	 * @return
+	 */
 	public Integer updStory(StoryDTO story) {
 		long idx = story.getIdx();
 		ContentValues values = new ContentValues();
@@ -103,7 +133,11 @@ public class InboxDAO {
 		return rtn;
 	}
 
-	// Story 삭제
+	/**
+	 *  Story 삭제
+	 * @param story
+	 * @return
+	 */
 	public Integer delStory(StoryDTO story) {
 		long idx = story.getIdx();
 		int rtn = database.delete(InboxDBHelper.TABLE_INBOX,
@@ -112,7 +146,11 @@ public class InboxDAO {
 		return rtn;
 	}
 
-	// 커서에서 DTO받아오기
+	/**
+	 *  커서에서 DTO받아오기
+	 * @param cursor
+	 * @return
+	 */
 	private StoryDTO getStoryDTO(Cursor cursor) {
 		StoryDTO story = new StoryDTO(); // 객체 초기화
 		story.setIdx(cursor.getLong(0));
