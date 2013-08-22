@@ -1,5 +1,7 @@
 package com.gif.eting.act;
 
-public class Feedback {
+import android.app.Activity;
+
+public class Feedback extends Activity{
 
 }

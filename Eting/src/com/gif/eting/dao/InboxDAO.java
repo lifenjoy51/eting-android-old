@@ -21,22 +21,22 @@ public class InboxDAO {
 	private String[] allColumns = { InboxDBHelper.COL_IDX,
 			InboxDBHelper.COL_CONTENT, InboxDBHelper.COL_STORY_DATE };
 
-	// »ı¼ºÇÒ¶§ dbHelper ÃÊ±âÈ­
+	// ìƒì„±í• ë•Œ dbHelper ì´ˆê¸°í™”
 	public InboxDAO(Context context) {
 		dbHelper = new InboxDBHelper(context);
 	}
 
-	// ¾²±âÀü¿¡ openÇØÁÖ°í
+	// ì“°ê¸°ì „ì— opení•´ì£¼ê³ 
 	public void open() throws SQLException {
 		database = dbHelper.getWritableDatabase();
 	}
 
-	// ´Ù¾²¸é closeÇÑ´Ù
+	// ë‹¤ì“°ë©´ closeí•œë‹¤
 	public void close() {
 		dbHelper.close();
 	}
 
-	// Story ¸®½ºÆÃ
+	// Story ë¦¬ìŠ¤íŒ…
 	public List<StoryDTO> getStoryList() {
 		List<StoryDTO> storyList = new ArrayList<StoryDTO>();
 
@@ -60,15 +60,15 @@ public class InboxDAO {
 		return storyList;
 	}
 
-	// Story ÇÑ°³ °¡Á®¿À±â
+	// Story í•œê°œ ê°€ì ¸ì˜¤ê¸°
 	public StoryDTO getStoryInfo(StoryDTO story) {
 		long idx = story.getIdx();
 		Cursor cur = database.query(InboxDBHelper.TABLE_INBOX,
 				allColumns, InboxDBHelper.COL_IDX + " = " + idx, null, null,
 				null, null);
-		cur.moveToFirst(); // Ä¿¼­ Ã³À½À¸·Î
+		cur.moveToFirst(); // ì»¤ì„œ ì²˜ìŒìœ¼ë¡œ
 
-		StoryDTO returnedStory = getStoryDTO(cur); // ¹İÈ¯ÇÒ °´Ã¼
+		StoryDTO returnedStory = getStoryDTO(cur); // ë°˜í™˜í•  ê°ì²´
 		cur.close();
 		
 		Log.i("inbox info",returnedStory.toString());
@@ -76,7 +76,7 @@ public class InboxDAO {
 		return returnedStory;
 	}
 
-	// Story ÀÔ·Â
+	// Story ì…ë ¥
 	public Long insStory(StoryDTO story) {
 		ContentValues values = new ContentValues();
 		values.put(InboxDBHelper.COL_IDX, story.getIdx());
@@ -89,7 +89,7 @@ public class InboxDAO {
 		return insertedId;
 	}
 
-	// Story ¼öÁ¤
+	// Story ìˆ˜ì •
 	public Integer updStory(StoryDTO story) {
 		long idx = story.getIdx();
 		ContentValues values = new ContentValues();
@@ -103,7 +103,7 @@ public class InboxDAO {
 		return rtn;
 	}
 
-	// Story »èÁ¦
+	// Story ì‚­ì œ
 	public Integer delStory(StoryDTO story) {
 		long idx = story.getIdx();
 		int rtn = database.delete(InboxDBHelper.TABLE_INBOX,
@@ -112,9 +112,9 @@ public class InboxDAO {
 		return rtn;
 	}
 
-	// Ä¿¼­¿¡¼­ DTO¹Ş¾Æ¿À±â
+	// ì»¤ì„œì—ì„œ DTOë°›ì•„ì˜¤ê¸°
 	private StoryDTO getStoryDTO(Cursor cursor) {
-		StoryDTO story = new StoryDTO(); // °´Ã¼ ÃÊ±âÈ­
+		StoryDTO story = new StoryDTO(); // ê°ì²´ ì´ˆê¸°í™”
 		story.setIdx(cursor.getLong(0));
 		story.setContent(cursor.getString(1));
 		story.setStory_date(cursor.getString(2));

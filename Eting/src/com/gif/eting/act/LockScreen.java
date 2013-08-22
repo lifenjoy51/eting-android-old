@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gif.eting.R;
-import com.gif.eting.ViewPagerActivity;
+import com.gif.eting.svc.PasswordService;
 
 public class LockScreen extends Activity implements OnClickListener {
 	@Override
@@ -21,7 +21,7 @@ public class LockScreen extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lock_screen);
 
-		// ¹öÆ° ¿ÂÅ¬¸¯ÀÌº¥Æ® µî·Ï
+		// ë²„íŠ¼ ì˜¨í´ë¦­ì´ë²¤íŠ¸ ë“±ë¡
 		Button btn = (Button) findViewById(R.id.lockScreenButton);
 		btn.setOnClickListener(this);
 	}
@@ -29,7 +29,7 @@ public class LockScreen extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 		Log.i("LickScreenOnClick", String.valueOf(view.getId()));
-		// ¾ÏÈ£È®ÀÎ ¹öÆ° Å¬¸¯½Ã
+		// ì•”í˜¸í™•ì¸ ë²„íŠ¼ í´ë¦­ì‹œ
 		if (view.getId() == R.id.lockScreenButton) {
 			this.checkPassword();
 		}
@@ -38,30 +38,28 @@ public class LockScreen extends Activity implements OnClickListener {
 
 	private void checkPassword() {
 		boolean isValid = false;
-		EditText et = (EditText) findViewById(R.id.lockScreenPassword); // ÀÔ·Â¾ÏÈ£
+		EditText et = (EditText) findViewById(R.id.lockScreenPassword); // ì…ë ¥ì•”í˜¸
 		String pw = et.getText().toString();
 
 		Log.i("password", pw);
 
-		// ¾ÏÈ£Ã¼Å© ÀÓ½Ã·ÎÁ÷
-		if (pw.equals("1234")) {
-			isValid = true;
-		}
+		// ì•”í˜¸ì²´í¬ ì„ì‹œë¡œì§
+		PasswordService svc = new PasswordService(this);
+		isValid = svc.checkPassword(pw);
 
-		// ¾ÏÈ£ ¼º°ø/½ÇÆĞ ºĞ±âÃ³¸®
+		// ì•”í˜¸ ì„±ê³µ/ì‹¤íŒ¨ ë¶„ê¸°ì²˜ë¦¬
 		if (isValid) {
-			Intent intent = new Intent(LockScreen.this,
-					ViewPagerActivity.class);
+			Intent intent = new Intent(this,
+					MainViewPager.class);
 			startActivity(intent);
 			finish();
 		} else {
-			// ºñ¹Ğ¹øÈ£ Æ²·ÈÀ»¶§
-			Toast toast = Toast.makeText(this, "ºñ¹Ğ¹øÈ£°¡ ¸ÂÁö ¾Ê½À´Ï´Ù.",
+			// ë¹„ë°€ë²ˆí˜¸ í‹€ë ¸ì„ë•Œ
+			Toast toast = Toast.makeText(this, "ë¹„ë°€ë²ˆí˜¸ê°€ ë§ì§€ ì•ŠìŠµë‹ˆë‹¤.",
 					Toast.LENGTH_SHORT);
 			toast.show();
 
-			et.setText(""); // ¾ÏÈ£ÀÔ·ÂÇÊµå ÃÊ±âÈ­
+			et.setText(""); // ì•”í˜¸ì…ë ¥í•„ë“œ ì´ˆê¸°í™”
 		}
 	}
-
 }

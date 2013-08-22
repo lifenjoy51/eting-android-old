@@ -7,32 +7,13 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import android.os.AsyncTask;
-import android.util.Log;
+public class HttpUtil  {
 
-public class HttpUtil extends AsyncTask<String, String, String> {
-	
-	private AsyncTaskCompleteListener<String> callback;
-	private String url;
-	private String params;
-
-	
-	public HttpUtil(String urlString, String params) {
-		this(urlString, params, null);
-	}
-	
-	public HttpUtil(String urlString, String params, AsyncTaskCompleteListener<String> callback) {
-		this.url = urlString;
-		this.params = params;
-		this.callback = callback;
-	}
-
-	@Override
-	protected String doInBackground(String... params) {
+	public static String doPost(String urlStr, String params) {
 
 		try {
 			// (1)
-			URL url = new URL(this.url);
+			URL url = new URL(urlStr);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
 			con.setDefaultUseCaches(false);
@@ -44,7 +25,7 @@ public class HttpUtil extends AsyncTask<String, String, String> {
 
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(
 					con.getOutputStream(), "UTF-8"));
-			pw.write(this.params);
+			pw.write(params);
 			pw.flush();
 			pw.close();
 
@@ -65,34 +46,6 @@ public class HttpUtil extends AsyncTask<String, String, String> {
 		}
 	}
 	
-	
-
-	@Override
-	protected void onCancelled() {
-		// TODO Auto-generated method stub
-		Log.i("onCancelled", "");
-		super.onCancelled();
-	}
-
-	@Override
-	protected void onPostExecute(String result) {
-		Log.i("onPostExecute", result);
-		if (callback != null)
-			callback.onTaskComplete(result);
-	}
-
-	@Override
-	protected void onPreExecute() {
-		Log.i("onPreExecute", "");
-		super.onPreExecute();
-	}
-
-	@Override
-	protected void onProgressUpdate(String... values) {
-		Log.i("onProgressUpdate", values.toString());
-		super.onProgressUpdate(values);
-	}
-
 	
 	
 }

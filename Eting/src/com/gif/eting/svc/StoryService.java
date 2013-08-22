@@ -1,9 +1,7 @@
 package com.gif.eting.svc;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,68 +10,21 @@ import android.util.Log;
 
 import com.gif.eting.dao.InboxDAO;
 import com.gif.eting.dao.StoryDAO;
-import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
-import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.eting.util.HttpUtil;
-import com.gif.eting.util.Installation;
-import com.gif.eting.util.ServiceCompleteListener;
 
 public class StoryService {
 	
-	private String serverContext = "http://lifenjoys.cafe24.com/eting";	//¼­¹ö
-	//private String serverContext = "http://112.144.52.47:8080/eting";	//°³¹ß¼­¹ö
 	private Context context;
 	private InboxDAO inboxDao;
 	private StoryDAO storyDao;
 	
 	public StoryService(Context context){
 		this.context = context;
-		this.storyDao = new StoryDAO(context);
-		this.inboxDao = new InboxDAO(context);
-	}
-
-	//¼­¹ö¿¡ ÀúÀå ÈÄ ÀÚ·á ¹Ş¾Æ¿È
-	public void saveStoryToServer(String content, ServiceCompleteListener<String> callback) {
-		
-		String url = this.serverContext + "/saveStory";	//°³¹ß¼­¹öÁÖ¼Ò URL
-		String phoneId = Installation.id(context);	//±â±â °íÀ¯°ª
-		String params = "phone_id=" + phoneId+"&content=" + content;	//ÆÄ¶ó¹ÌÅÍ ¼³Á¤
-		
-		new HttpUtil(url, params,new AfterSaveStoryToServer(callback)).execute(params);	//Http¿äÃ». Äİ¹éÇÔ¼ö´Â ¾Æ·¡¿¡
-		
+		this.storyDao = new StoryDAO(this.context);
+		this.inboxDao = new InboxDAO(this.context);
 	}
 	
-	// HttpÅë½Å ÈÄ Ã³¸®·ÎÁ÷
-	private class AfterSaveStoryToServer implements
-			AsyncTaskCompleteListener<String> {
-		
-		private ServiceCompleteListener<String> callback;
-
-		public AfterSaveStoryToServer(ServiceCompleteListener<String> callback) {
-			super();
-			this.callback = callback;
-		}
-
-		@Override
-		public void onTaskComplete(String response) {
-
-			Log.i("json response", response);	//ÀÀ´ä È®ÀÎ
-
-			// ÆùDB¿¡ ÀúÀå
-			saveToPhoneDB(response);
-			
-			dbTest();	//ÀÚ·áÀÔ·ÂµÇ¾ú³ª È®ÀÎÇÏ´Â Å×½ºÆ®ÇÔ¼ö
-
-			// È£ÃâÇÑ Å¬·¡½º Äİ¹é
-			if (callback != null)
-				callback.onServiceComplete("");	//È­¸é¿¡ ¹«¾ùÀ» ³Ñ±æ°ÍÀÎ°¡?
-		}
-
-	}
-	
-
-	//¼­¹ö¿¡¼­ ¹Ş¾Æ¿Â ÀÚ·á Á¤¸®
+	//ì„œë²„ì—ì„œ ë°›ì•„ì˜¨ ìë£Œ ì •ë¦¬
 	public void saveToPhoneDB(String response){
 
 		try {
@@ -82,7 +33,7 @@ public class StoryService {
 			if (!json.isNull("myStory")) {
 				JSONObject myStory = json.getJSONObject("myStory");
 
-				// ³» ÀÌ¾ß±â
+				// ë‚´ ì´ì•¼ê¸°
 				StoryDTO myStoryDto = new StoryDTO();
 				String myStoryId = myStory.getString("story_id");
 				String myContent = myStory.getString("content");
@@ -95,13 +46,13 @@ public class StoryService {
 						myStoryDto.getIdx() + myStoryDto.getContent() + myStoryDto.getStory_date());
 				
 				
-				saveMyStoryToPhone(myStoryDto); // ÆùDB¿¡ ³» ÀÌ¾ß±â ÀúÀå
+				saveMyStoryToPhone(myStoryDto); // í°DBì— ë‚´ ì´ì•¼ê¸° ì €ì¥
 			}
 
 			if (!json.isNull("recievedStory")) {
 				JSONObject recievedStory = json.getJSONObject("recievedStory");
 
-				// ¹Ş¾Æ¿Â ÀÌ¾ß±â
+				// ë°›ì•„ì˜¨ ì´ì•¼ê¸°
 				StoryDTO recievedStoryDto = new StoryDTO();
 				String recievedStoryId = recievedStory.getString("story_id");
 				String recievedContent = recievedStory.getString("content");
@@ -113,7 +64,7 @@ public class StoryService {
 				Log.i("returned recieved story",
 						recievedStoryDto.getIdx() + recievedStoryDto.getContent() + recievedStoryDto.getStory_date());
 				
-				saveRecievedStoryToPhone(recievedStoryDto); // ÆùDB¿¡ ¹Ş¾Æ¿Â ÀÌ¾ß±â ÀúÀå
+				saveRecievedStoryToPhone(recievedStoryDto); // í°DBì— ë°›ì•„ì˜¨ ì´ì•¼ê¸° ì €ì¥
 			}
 
 		} catch (JSONException e) {
@@ -122,21 +73,21 @@ public class StoryService {
 
 	}
 	
-	//³» ÀÌ¾ß±â¸¦ Æù¿¡ ÀúÀå
+	//ë‚´ ì´ì•¼ê¸°ë¥¼ í°ì— ì €ì¥
 	private void saveMyStoryToPhone(StoryDTO story){
-		storyDao.open();	//¿­°í		
-		storyDao.insStory(story);	//ÀÔ·ÂÇÏ°í
-		storyDao.close();	//´İ°í
+		storyDao.open();	//ì—´ê³ 		
+		storyDao.insStory(story);	//ì…ë ¥í•˜ê³ 
+		storyDao.close();	//ë‹«ê³ 
 	}
 	
-	//¹Ş¾Æ¿Â ÀÌ¾ß±â¸¦ Æù¿¡ ÀúÀå
+	//ë°›ì•„ì˜¨ ì´ì•¼ê¸°ë¥¼ í°ì— ì €ì¥
 	private void saveRecievedStoryToPhone(StoryDTO story){
-		inboxDao.open();	//¿­°í		
-		inboxDao.insStory(story);	//ÀÔ·ÂÇÏ°í
-		inboxDao.close();	//´İ°í
+		inboxDao.open();	//ì—´ê³ 		
+		inboxDao.insStory(story);	//ì…ë ¥í•˜ê³ 
+		inboxDao.close();	//ë‹«ê³ 
 	}
 	
-	//³» ÀÌ¾ß±â °¡Á®¿À±â
+	//ë‚´ ì´ì•¼ê¸° ê°€ì ¸ì˜¤ê¸°
 	public List<StoryDTO> getMyStoryList(){
 		storyDao.open();
 		List<StoryDTO> myStoryList = storyDao.getStoryList();
@@ -144,7 +95,7 @@ public class StoryService {
 		return myStoryList;
 	}
 	
-	// ³» ÀÌ¾ß±â °¡Á®¿À±â
+	// ë‚´ ì´ì•¼ê¸° ê°€ì ¸ì˜¤ê¸°
 	public StoryDTO getMyStory(String idx) {
 		StoryDTO story = new StoryDTO();
 		story.setIdx(Long.parseLong(idx));
@@ -153,182 +104,6 @@ public class StoryService {
 		StoryDTO myStory = storyDao.getStoryInfo(story);
 		storyDao.close();
 		return myStory;
-	}
-
-	// ¹Ş¾Æ¿Â ÀÌ¾ß±â ÇÏ³ª °¡Á®¿À±â
-	public StoryDTO getInboxStory() {
-		inboxDao.open();
-		List<StoryDTO> inboxStoryList = inboxDao.getStoryList();
-		inboxDao.close();
-		
-		StoryDTO returnedStory;
-		if(inboxStoryList.size()>0){
-			returnedStory = inboxStoryList.get(0);
-		}else{
-			returnedStory = new StoryDTO();
-		}
-		return returnedStory;
-	}
-	
-
-	//¼­¹ö·Î ½ºÅÆÇÁ ÂïÀº Á¤º¸ Àü¼Û
-	public void saveStampToServer(String storyId, List<String> stampIds, ServiceCompleteListener<String> callback) {
-		
-		
-		
-		
-		String url = this.serverContext+"/saveStamp";
-		String params = "story_id=" + storyId;	//ÆÄ¶ó¹ÌÅÍ¼³Á¤
-		
-		StringBuffer sb = new StringBuffer();
-		for(String stampId : stampIds){
-			sb.append(stampId);
-			sb.append(",");
-		}
-		
-		if(sb.length()>0){		//½ºÅÆÇÁ°¡ ÀÖÀ¸¸é
-			String stampIdParams = sb.substring(0, sb.length()-1);	
-			params += "&stamp_id=" + stampIdParams;
-		}
-
-		Log.i("params", params);	//ÀÀ´äÈ®ÀÎ
-		
-		new HttpUtil(url, params, new AfterSaveStampToServer(callback, storyId)).execute("");	//Http ¿äÃ»
-	}
-
-	// HttpÅë½Å ÈÄ Ã³¸®·ÎÁ÷
-	private class AfterSaveStampToServer implements
-			AsyncTaskCompleteListener<String> {
-		
-		private ServiceCompleteListener<String> callback;
-		private String storyId;
-
-		public AfterSaveStampToServer(
-				ServiceCompleteListener<String> callback, String storyId) {
-			super();
-			this.callback = callback;
-			this.storyId = storyId;
-		}
-
-		@Override
-		public void onTaskComplete(String response) {
-
-			Log.i("json response", response);	//ÀÀ´äÈ®ÀÎ
-
-			StoryDTO inboxStory = new StoryDTO();
-			inboxStory.setIdx(Long.parseLong(storyId));
-
-			// ½ºÅÆÇÁÂïÀº ÀÌ¾ß±â »èÁ¦
-			inboxDao.open();
-			inboxDao.delStory(inboxStory);
-			inboxDao.close();
-			
-			// È£ÃâÇÑ Å¬·¡½º Äİ¹é
-			if (callback != null)
-				callback.onServiceComplete("");	//È­¸é¿¡ ¹«¾ùÀ» ³Ñ±æ°ÍÀÎ°¡?
-		}
-	}
-	
-	//¼­¹ö¿¡¼­ ½ºÅÆÇÁ °¡Á®¿À±â
-	public void getStampFromServer(String storyId, ServiceCompleteListener<String> callback){
-		String url = this.serverContext+"/getStamp";
-		String params = "storyId=" + storyId;	//ÆÄ¶ó¹ÌÅÍ ¼³Á¤
-		new HttpUtil(url, params, new AfterGetStampFromServer(callback));	//Http ¿äÃ»
-	}
-	
-	// HttpÅë½Å ÈÄ Ã³¸®·ÎÁ÷
-		private class AfterGetStampFromServer implements
-				AsyncTaskCompleteListener<String> {
-			
-			private ServiceCompleteListener<String> callback;
-
-			public AfterGetStampFromServer(
-					ServiceCompleteListener<String> callback) {
-				super();
-				this.callback = callback;
-			}
-
-			@Override
-			public void onTaskComplete(String response) {
-
-				Log.i("json response", response);	//ÀÀ´äÈ®ÀÎ
-				
-				StringBuffer stamps = new StringBuffer();
-				
-				try {
-					JSONObject json = new JSONObject(response);
-
-					if (!json.isNull("stampList")) {
-						JSONArray stampList = json.getJSONArray("stampList");
-						for(int i=0; i<stampList.length(); i++){
-							JSONObject stamp = stampList.getJSONObject(i);
-							stamps.append(stamp.getString("stamp_name"));
-							stamps.append(" , ");
-							
-							Log.i("returned stamp", stamp.getString("stamp_id") + stamp.getString("stamp_name"));
-						}
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-				
-				// È£ÃâÇÑ Å¬·¡½º Äİ¹é
-				if (callback != null)
-					callback.onServiceComplete(stamps.toString());
-			}
-
-		}
-
-		// Æù¿¡ ÀúÀåµÈ ½ºÅÆÇÁ ¸ñ·Ï °¡Á®¿À±â
-		public List<StampDTO> getStampList() {
-			List<StampDTO> stampList = new ArrayList<StampDTO>();
-	
-			StampDTO stamp = new StampDTO();
-			stamp.setStamp_id("5");
-			stamp.setStamp_name("ÁÁ¾Æ¿ä");			
-			stampList.add(stamp);
-			
-			stamp = new StampDTO();
-			stamp.setStamp_id("6");
-			stamp.setStamp_name("Èû³»¿ä");
-			stampList.add(stamp);
-			
-			return stampList;
-		}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// Å×½ºÆ®¿ë
-	public void dbTest() {
-		storyDao.open();
-		List<StoryDTO> myStoryList = storyDao.getStoryList();
-		for (StoryDTO story : myStoryList) {
-			Log.i("my story list",
-					story.getIdx() + story.getContent() + story.getStory_date());
-		}
-		storyDao.close();
-
-		inboxDao.open();
-		List<StoryDTO> recievedStoryList = inboxDao.getStoryList();
-		for (StoryDTO story : recievedStoryList) {
-			Log.i("inbox story list", story.getIdx() + story.getContent()
-					+ story.getStory_date());
-		}
-		inboxDao.close();
 	}
 
 }

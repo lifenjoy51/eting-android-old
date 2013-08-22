@@ -10,7 +10,8 @@ import android.widget.TextView;
 import com.gif.eting.R;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
-import com.gif.eting.util.ServiceCompleteListener;
+import com.gif.eting.svc.task.ReceiveStampTask;
+import com.gif.eting.util.AsyncTaskCompleteListener;
 
 public class ReadMyStory extends Activity {
 
@@ -29,7 +30,7 @@ public class ReadMyStory extends Activity {
 		Intent intent = getIntent();
 		String idx = intent.getStringExtra("idx");		
 
-		//StoryServiceÃÊ±âÈ­
+		//Serviceì´ˆê¸°í™”
 		storyService = new StoryService(this.getApplicationContext());
 		
 		StoryDTO myStory = storyService.getMyStory(idx);
@@ -42,16 +43,18 @@ public class ReadMyStory extends Activity {
 		TextView storyDateView = (TextView) findViewById(R.id.popup_date);
 		storyDateView.setText(storyDate);
 		
-		//½ºÅÆÇÁ Âï±â
-		storyService.getStampFromServer(idx, new AfterGetStampFromServer());
+		//ìŠ¤íƒ¬í”„ ë°›ì•„ì˜¤ê¸°
+		new ReceiveStampTask(new AfterGetStampFromServer()).execute(idx);
+		
 	}
 	
-	//½ºÅÆÇÁÂï±â Http ¿äÃ» ÈÄ ·ÎÁ÷
-	private class AfterGetStampFromServer implements ServiceCompleteListener<String>{
+	//ìŠ¤íƒ¬í”„ì°ê¸° Http ìš”ì²­ í›„ ë¡œì§
+	private class AfterGetStampFromServer implements AsyncTaskCompleteListener<String>{
+
 		@Override
-		public void onServiceComplete(String stamps) {
+		public void onTaskComplete(String result) {
 			TextView stampInfoView = (TextView) findViewById(R.id.stamp_info);
-			stampInfoView.setText(stamps);	
+			stampInfoView.setText(result);	
 		}
 	}
 

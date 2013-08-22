@@ -7,16 +7,16 @@ import android.util.Log;
 
 public class SettingDBHelper extends SQLiteOpenHelper {
 
-	public static final String TABLE_SETTING = "setting"; // TABLEÀÌ¸§
+	public static final String TABLE_SETTING = "setting"; // TABLEì´ë¦„
 
-	// ÄÃ·³Á¤º¸
-	public static final String COL_KEY = "key"; // ¹Ş¾Æ¿Â ÀÌ¾ß±âÀÇ °íÀ¯¹øÈ£
-	public static final String COL_VALUE = "value"; // ¹Ş¾Æ¿Â ÀÌ¾ß±â ³»¿ë
+	// ì»¬ëŸ¼ì •ë³´
+	public static final String COL_KEY = "key"; // ë°›ì•„ì˜¨ ì´ì•¼ê¸°ì˜ ê³ ìœ ë²ˆí˜¸
+	public static final String COL_VALUE = "value"; // ë°›ì•„ì˜¨ ì´ì•¼ê¸° ë‚´ìš©
 
 	private static final String DATABASE_NAME = "eting_setting.db";
 	private static final int DATABASE_VERSION = 1;
 
-	// TABLE »ı¼º¹®
+	// TABLE ìƒì„±ë¬¸
 	private static final String DATABASE_CREATE = "CREATE TABLE " + TABLE_SETTING
 			+ "(" + COL_KEY + " text, " + COL_VALUE + " text " + ");";
 
@@ -27,7 +27,7 @@ public class SettingDBHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
-		database.execSQL(DATABASE_CREATE); // TABLE»ı¼º
+		database.execSQL(DATABASE_CREATE); // TABLEìƒì„±
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class SettingDBHelper extends SQLiteOpenHelper {
 				"Upgrading database from version " + oldVersion + " to "
 						+ newVersion + ", which will destroy all old data");
 
-		// TODO ¹öÁ¯ÀÌ ´Ù¸¦¶§ ÀÓ½Ã·Î Ã³¸®. ÃßÈÄ º¯°æ ÇÊ¿ä.
+		// TODO ë²„ì ¼ì´ ë‹¤ë¥¼ë•Œ ì„ì‹œë¡œ ì²˜ë¦¬. ì¶”í›„ ë³€ê²½ í•„ìš”.
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SETTING);
 		onCreate(db);
 	}

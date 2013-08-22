@@ -21,22 +21,22 @@ public class SettingDAO {
 	private String[] allColumns = { SettingDBHelper.COL_KEY,
 			SettingDBHelper.COL_VALUE };
 
-	// »ı¼ºÇÒ¶§ dbHelper ÃÊ±âÈ­
+	// ìƒì„±í• ë•Œ dbHelper ì´ˆê¸°í™”
 	public SettingDAO(Context context) {
 		dbHelper = new SettingDBHelper(context);
 	}
 
-	// ¾²±âÀü¿¡ openÇØÁÖ°í
+	// ì“°ê¸°ì „ì— opení•´ì£¼ê³ 
 	public void open() throws SQLException {
 		database = dbHelper.getWritableDatabase();
 	}
 
-	// ´Ù¾²¸é closeÇÑ´Ù
+	// ë‹¤ì“°ë©´ closeí•œë‹¤
 	public void close() {
 		dbHelper.close();
 	}
 
-	// setting ¸®½ºÆÃ
+	// setting ë¦¬ìŠ¤íŒ…
 	public List<SettingDTO> getsettingList() {
 		List<SettingDTO> settingList = new ArrayList<SettingDTO>();
 
@@ -59,13 +59,13 @@ public class SettingDAO {
 		return settingList;
 	}
 
-	// setting ÇÑ°³ °¡Á®¿À±â
+	// setting í•œê°œ ê°€ì ¸ì˜¤ê¸°
 	public SettingDTO getsettingInfo(String key) {
 		Cursor cur = database.query(SettingDBHelper.TABLE_SETTING, allColumns,
 				SettingDBHelper.COL_KEY + " = " + "'"+key+"'", null, null, null, null);
-		cur.moveToFirst(); // Ä¿¼­ Ã³À½À¸·Î
+		cur.moveToFirst(); // ì»¤ì„œ ì²˜ìŒìœ¼ë¡œ
 
-		SettingDTO returnedsetting = getSettingDTO(cur); // ¹İÈ¯ÇÒ °´Ã¼
+		SettingDTO returnedsetting = getSettingDTO(cur); // ë°˜í™˜í•  ê°ì²´
 		cur.close();
 		
 		if(returnedsetting!=null){
@@ -75,7 +75,7 @@ public class SettingDAO {
 		return returnedsetting;
 	}
 
-	// setting ÀÔ·Â
+	// setting ì…ë ¥
 	public Long inssetting(SettingDTO setting) {
 		ContentValues values = new ContentValues();
 		values.put(SettingDBHelper.COL_KEY, setting.getKey());
@@ -87,7 +87,7 @@ public class SettingDAO {
 		return insertedId;
 	}
 
-	// setting ¼öÁ¤
+	// setting ìˆ˜ì •
 	public Integer updsetting(SettingDTO setting) {
 		String key = setting.getKey();
 		ContentValues values = new ContentValues();
@@ -99,7 +99,7 @@ public class SettingDAO {
 		return rtn;
 	}
 
-	// setting »èÁ¦
+	// setting ì‚­ì œ
 	public Integer delsetting(String key) {
 		int rtn = database.delete(SettingDBHelper.TABLE_SETTING,
 				SettingDBHelper.COL_KEY + " = " + "'"+key+"'", null);
@@ -107,10 +107,10 @@ public class SettingDAO {
 		return rtn;
 	}
 
-	// Ä¿¼­¿¡¼­ DTO¹Ş¾Æ¿À±â
+	// ì»¤ì„œì—ì„œ DTOë°›ì•„ì˜¤ê¸°
 	private SettingDTO getSettingDTO(Cursor cursor) {
 		if (cursor!=null && cursor.getCount()>0) {
-			SettingDTO setting = new SettingDTO(); // °´Ã¼ ÃÊ±âÈ­
+			SettingDTO setting = new SettingDTO(); // ê°ì²´ ì´ˆê¸°í™”
 			setting.setKey(cursor.getString(0));
 			setting.setValue(cursor.getString(1));
 			return setting;

@@ -24,12 +24,16 @@ import android.widget.Toast;
 import com.gif.eting.R;
 import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
-import com.gif.eting.svc.StoryService;
-import com.gif.eting.util.ServiceCompleteListener;
+import com.gif.eting.svc.InboxService;
+import com.gif.eting.svc.StampService;
+import com.gif.eting.svc.task.SendStampTask;
+import com.gif.eting.util.AsyncTaskCompleteListener;
 
 public class ReadInbox extends Activity implements OnClickListener{
 
-	private StoryService storyService;
+	private InboxService inboxService;
+	private StampService stampService;
+	
 	private Long inboxStoryIdx;
 	private ProgressDialog progressDialog;
 	private List<String> stamps = new ArrayList<String>();;
@@ -46,10 +50,11 @@ public class ReadInbox extends Activity implements OnClickListener{
 		getWindow().setAttributes(layoutParams);
 		setContentView(R.layout.inbox_popup);
 		
-		//StoryServiceÃÊ±âÈ­
-		storyService = new StoryService(this.getApplicationContext());
+		//Serviceì´ˆê¸°í™”
+		inboxService = new InboxService(this.getApplicationContext());
+		stampService = new StampService(this.getApplicationContext());
 		
-		StoryDTO inboxStory = storyService.getInboxStory();
+		StoryDTO inboxStory = inboxService.getInboxStory();
 		Long idx = inboxStory.getIdx();
 		inboxStoryIdx = idx;
 		String content = inboxStory.getContent();
@@ -61,20 +66,20 @@ public class ReadInbox extends Activity implements OnClickListener{
 		TextView storyDateView = (TextView) findViewById(R.id.popup_date);
 		storyDateView.setText(storyDate);
 
-		//¹öÆ°ÀÌº¥Æ® »ğÀÔ
+		//ë²„íŠ¼ì´ë²¤íŠ¸ ì‚½ì…
 		((Button) findViewById(R.id.inbox_confirm_btn)).setOnClickListener(this);
 		
-		//½ºÅÆÇÁ ÀÚµ¿¿Ï¼º
-		List<StampDTO> list = storyService.getStampList();
+		//ìŠ¤íƒ¬í”„ ìë™ì™„ì„±
+		List<StampDTO> list = stampService.getStampList();
 		
 		AutoCompleteTextView stampAC = (AutoCompleteTextView) findViewById(R.id.stamp_auto_complete);
 		ArrayAdapter<StampDTO> adapter = new ArrayAdapter<StampDTO>(this, android.R.layout.simple_dropdown_item_1line, list);
 		stampAC.setAdapter(adapter);
-		// Å¬¸¯ÀÌº¥Æ® ¿¬°á
+		// í´ë¦­ì´ë²¤íŠ¸ ì—°ê²°
 		stampAC.setOnItemClickListener(mOnItemClickListener);
 	}
 	
-	 //¾ÆÀÌÅÛ Å¬¸¯ÀÌº¥Æ®
+	 //ì•„ì´í…œ í´ë¦­ì´ë²¤íŠ¸
     private OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
 
     	@SuppressWarnings("unchecked")
@@ -84,8 +89,8 @@ public class ReadInbox extends Activity implements OnClickListener{
     		Log.i("position",String.valueOf(position));
     		Log.i("id",String.valueOf(id));
 			
-    		ArrayAdapter<StampDTO> adapter = (ArrayAdapter<StampDTO>) parentView.getAdapter();	// Adapter ¹Ş¾Æ¿È
-    		StampDTO stamp = adapter.getItem(position);	//¼±ÅÃÇÑ Row¿¡ ÀÖ´Â StampDTO¸¦ ¹Ş¾Æ¿È
+    		ArrayAdapter<StampDTO> adapter = (ArrayAdapter<StampDTO>) parentView.getAdapter();	// Adapter ë°›ì•„ì˜´
+    		StampDTO stamp = adapter.getItem(position);	//ì„ íƒí•œ Rowì— ìˆëŠ” StampDTOë¥¼ ë°›ì•„ì˜´
     		String stampId = stamp.getStamp_id();
     		String stampName = stamp.getStamp_name();
     		
@@ -109,32 +114,19 @@ public class ReadInbox extends Activity implements OnClickListener{
 		switch (v.getId()) {
 		case R.id.inbox_confirm_btn:
 			
-			//Àü¼Û»óÅÂ ³ªÅ¸³¿
+			//ì „ì†¡ìƒíƒœ ë‚˜íƒ€ëƒ„
 			progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.app_name), true, true);
 			
-			//½ºÅÆÇÁ1
-			//storyService.saveStampToServer(String.valueOf(inboxStoryIdx), "5", new AfterSaveStampToServer());	//½ºÅÆÇÁID 5´Â ÇÏµåÄÚµù ÃßÈÄ º¯°æÇÊ¿ä
+			//ìŠ¤íƒ¬í”„1
+			//storyService.saveStampToServer(String.valueOf(inboxStoryIdx), "5", new AfterSaveStampToServer());	//ìŠ¤íƒ¬í”„ID 5ëŠ” í•˜ë“œì½”ë”© ì¶”í›„ ë³€ê²½í•„ìš”
 			saveStampsToServer();
 			break;
 		}
 	}
-	
-	//½ºÅÆÇÁÂï±â Http ¿äÃ» ÈÄ ·ÎÁ÷
-	private class AfterSaveStampToServer implements ServiceCompleteListener<String>{
-		@Override
-		public void onServiceComplete(String response) {
-
-			if (progressDialog != null)
-				progressDialog.dismiss();
-			
-			finish();
-		}
-	}
-
-	// ½ºÅÆÇÁ ÀÔ·Â
+	// ìŠ¤íƒ¬í”„ ì…ë ¥
 	private void addStamp(String stampId, String stampName) {
 		stamps.add(stampId);
-		LinearLayout stampArea = (LinearLayout) findViewById(R.id.inbox_stamp_area); // ½ºÅÆÇÁ¿µ¿ª
+		LinearLayout stampArea = (LinearLayout) findViewById(R.id.inbox_stamp_area); // ìŠ¤íƒ¬í”„ì˜ì—­
 
 		TextView stampView = new TextView(this);
 		stampView.setText(stampName);
@@ -145,7 +137,22 @@ public class ReadInbox extends Activity implements OnClickListener{
 	}
 
 	private void saveStampsToServer(){
-		storyService.saveStampToServer(String.valueOf(inboxStoryIdx), stamps, new AfterSaveStampToServer());
+		new SendStampTask(new AfterSaveStampToServer()).execute(String.valueOf(inboxStoryIdx), stamps, getApplicationContext());
+		//stampService.saveStampToServer(String.valueOf(inboxStoryIdx), stamps, new AfterSaveStampToServer());
 	}
+	
+	//ìŠ¤íƒ¬í”„ì°ê¸° Http ìš”ì²­ í›„ ë¡œì§
+	private class AfterSaveStampToServer implements AsyncTaskCompleteListener<String>{
+		@Override
+		public void onTaskComplete(String result) {
+
+			if (progressDialog != null)
+				progressDialog.dismiss();
+			
+			finish();
+			
+		}
+	}
+
 
 }

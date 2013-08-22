@@ -5,21 +5,39 @@
     android:background="@drawable/main"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="horizontal" >
 
-        <ImageButton
+         <ImageButton
             android:id="@+id/inbox_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="80dp"
+            android:layout_height="100dp"
             android:layout_weight="0.25"
             android:src="@drawable/menu_icon" />
 
-    </RelativeLayout>
+        <ImageButton
+            android:id="@+id/read_et_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_weight="0.25"
+            android:src="@drawable/read_et_btn" />
+
+        <ImageButton
+            android:id="@+id/write_et_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_weight="0.25"
+            android:src="@drawable/write_et_btn" />
+
+        <ImageButton
+            android:id="@+id/setting_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_weight="0.25"
+            android:src="@drawable/setting_btn" />
+    </LinearLayout>
 
 </LinearLayout>

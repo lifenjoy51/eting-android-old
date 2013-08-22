@@ -1,75 +1,99 @@
 package com.gif.eting.act;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.gif.eting.R;
-import com.gif.eting.ReadMyStoryActivity;
-import com.gif.eting.svc.StoryService;
-import com.gif.eting.util.ServiceCompleteListener;
+import com.gif.eting.svc.task.SendStoryTask;
+import com.gif.eting.util.AsyncTaskCompleteListener;
 
-public class WriteMyStory extends Activity implements OnClickListener{
-	
-	private StoryService storyService;
+public class WriteMyStory extends SherlockFragment implements OnClickListener{
+	private ViewPager mPager;
 	private ProgressDialog progressDialog;
-	private Context context;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.write_story);
-		this.context = getApplicationContext();
 
-		
-	}
+    /**
+     * Factory method for this fragment class. Constructs a new fragment for the given page number.
+     */
+    public static WriteMyStory create(int pageNumber) {
+        WriteMyStory fragment = new WriteMyStory();
+        return fragment;
+    }
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		switch (v.getId()) {
-		case R.id.send_story_btn:
-			sendAndSaveStory();
-			break;
-		}
-	}
-	
+    public WriteMyStory() {
+    }
+
+    public void setViewPager(ViewPager mPager) {
+    	this.mPager = mPager;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        // Inflate the layout containing a title and body text.
+        ViewGroup rootView = (ViewGroup) inflater
+                .inflate(R.layout.write_story, container, false);
+        ((ImageButton) rootView.findViewById(R.id.send_story_btn))
+		.setOnClickListener(this);
+
+
+        return rootView;
+    }
+
+
 	private void sendAndSaveStory(){
+		View view = getView();
 		
-		EditText et = (EditText) findViewById(R.id.story_content);
-		String content = et.getText().toString();	//ÀÌ¾ß±â ³»¿ë
+		EditText et = (EditText) view.findViewById(R.id.story_content);
+		String content = et.getText().toString();	//ì´ì•¼ê¸° ë‚´ìš©
 		
-		//Àü¼Û»óÅÂ ³ªÅ¸³¿
-		progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.app_name), true, true);
+		//ì „ì†¡ìƒíƒœ ë‚˜íƒ€ëƒ„
+		progressDialog = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.app_name), true, true);
 
-		//StoryServiceÃÊ±âÈ­
-		storyService = new StoryService(this.getApplicationContext());
-		storyService.saveStoryToServer(content, new AfterSendAndSaveStory()); // ¼­¹ö¿¡ ÀÌ¾ß±âÀúÀå, ÆÄ¶ó¹ÌÅÍ·Î Äİ¹éÇÔ¼ö ³Ñ±è
+		new SendStoryTask(new AfterSendAndSaveStory()).execute(content, getSherlockActivity());
 	}
 	
-	public class AfterSendAndSaveStory implements ServiceCompleteListener<String>{
+	private class AfterSendAndSaveStory implements AsyncTaskCompleteListener<String>{
 
 		@Override
-		public void onServiceComplete(String result) {
+		public void onTaskComplete(String result) {
 			Log.i("onTaskComplete", result);
 
 			if (progressDialog != null)
 				progressDialog.dismiss();
 
-			Toast toast = Toast.makeText(context, "ÀÌ¾ß±â°¡ Àü¼ÛµÇ¾ú½À´Ï´Ù", Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(getActivity(), "ì´ì•¼ê¸°ê°€ ì „ì†¡ë˜ì—ˆìŠµë‹ˆë‹¤", Toast.LENGTH_SHORT);
 			toast.show();
 
-			// ³» ÀÌ¾ß±â ÀĞ±â È­¸éÀ¸·Î ÀÌµ¿
-			startActivity(new Intent(context, ReadMyStoryActivity.class));
-			
+			// ë‚´ ì´ì•¼ê¸° ì½ê¸° í™”ë©´ìœ¼ë¡œ ì´ë™
+			//startActivity(new Intent(context, ReadMyStoryActivity.class));
+			mPager.setCurrentItem(0);
 		}
 	}
 
+
+	public void onClick(View v) {
+
+		switch (v.getId()) {
+
+		case R.id.send_story_btn:
+			sendAndSaveStory();
+			break;
+		}
+
+	}
 }

@@ -1,264 +1,94 @@
 package com.gif.eting.act;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
-import com.gif.eting.InboxStoryPopupActivity;
-import com.gif.eting.MyStoryPopupActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.gif.eting.R;
-import com.gif.eting.dto.StoryDTO;
-import com.gif.eting.svc.StoryService;
-import com.gif.eting.util.ServiceCompleteListener;
 
-public class MainViewPager extends Activity implements OnClickListener{
-	private final int COUNT = 4; // ∫‰ 4∞≥ µÓ∑œ (main, write, read, setting)
-	private ViewPager mPager; // ∫‰ ∆‰¿Ã¿˙
-	private Context context;
+public class MainViewPager extends SherlockFragmentActivity {
+    /**
+     * The number of pages (wizard steps) to show in this demo.
+     */
+    private static final int NUM_PAGES = 3;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.viewpager);
-		this.context = getApplicationContext();
-		
-		//πˆ∆∞¿Ã∫•∆Æ ª¿‘
-		((ImageButton) findViewById(R.id.write_et_btn)).setOnClickListener(this);
-		((ImageButton) findViewById(R.id.read_et_btn)).setOnClickListener(this);
-		((ImageButton) findViewById(R.id.setting_btn)).setOnClickListener(this);
-		
-		
-		/* «ˆ¡¯√ﬂ∞° */
-		mPager = (ViewPager) findViewById(R.id.pager);
-		mPager.setAdapter(new BkPagerAdapter(getApplicationContext()));
-	}
+    /**
+     * The pager widget, which handles animation and allows swiping horizontally to access previous
+     * and next wizard steps.
+     */
+    private ViewPager mPager;
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		switch (v.getId()) {
-		case R.id.write_et_btn:
-			//startActivity(new Intent(this, WriteStoryActivity.class));
-			mPager.setCurrentItem(1);
-			break;
-		case R.id.read_et_btn:
-			//startActivity(new Intent(this, ReadMyStoryActivity.class));
-			mPager.setCurrentItem(2);
-			break;
-		case R.id.setting_btn:
-			//startActivity(new Intent(this, SettingActivity.class));
-			mPager.setCurrentItem(3);
-			break;
-		}
+    /**
+     * The pager adapter, which provides the pages to the view pager widget.
+     */
+    private PagerAdapter mPagerAdapter;
 
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.viewpager);
 
-	//∆‰¿Ã¡Æ æÓ¥≈Õ
-	public class BkPagerAdapter extends PagerAdapter {
-		private LayoutInflater mInflater;
-		private ProgressDialog progressDialog;
+        // Instantiate a ViewPager and a PagerAdapter.
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+        mPager.setCurrentItem(1);	//Ï¥àÍ∏∞ÌéòÏù¥ÏßÄÏÑ§Ï†ï
+        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                // When changing pages, reset the action bar actions since they are dependent
+                // on which page is currently active. An alternative approach is to have each
+                // fragment expose actions itself (rather than the activity exposing actions),
+                // but for simplicity, the activity provides the actions in this sample.
+                ////supportInvalidateOptionsMenu();
+            }
+        });
+    }
+    
+    public void setPage(int position){
+    	mPager.setCurrentItem(position);
+    }
 
-		public BkPagerAdapter(Context context) {
-			super();
-			mInflater = LayoutInflater.from(context);
+
+    /**
+     * A simple pager adapter
+     */
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
 		}
 
 		@Override
-		public int getCount() {
-			return COUNT;
-		}
-		
-		//∫‰ ≈¨∏Ø¿Ã∫•∆Æ
-		private View.OnClickListener mPagerListener = new View.OnClickListener() {
-	        @Override
-	        public void onClick(View v) {
-	    		switch (v.getId()) {
-	    		case R.id.inbox_btn:
-	    			startActivity(new Intent(context, InboxStoryPopupActivity.class));
-	    			break;
+		public Fragment getItem(int position) {
+			switch (position) {
+			
+			case 0:
+				MyStoryList myStoryList = MyStoryList.create(position);
+				return myStoryList;
 
-	    		case R.id.send_story_btn:
-	    			sendAndSaveStory();
-	    			break;
-	    		}
-	        }
-	    };
-	    
-	    //æ∆¿Ã≈€ ≈¨∏Ø¿Ã∫•∆Æ
-	    private OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
+			case 1:
+				Main main = Main.create();
+				main.setViewPager(mPager);
+				return main;
 
-	    	@SuppressWarnings("unchecked")
-	    	public void onItemClick(AdapterView<?> parentView, View clickedView,
-	    			int position, long id) {
-	    		
-	    		ListAdapter listAdapter = (ListAdapter) parentView.getAdapter();	//ListViewø°º≠ Adapter πﬁæ∆ø»
-	    		Map<String, String> selectedItem = (Map<String, String>) listAdapter.getItem(position);	//º±≈√«— Rowø° ¿÷¥¬ Object∏¶ πﬁæ∆ø»
-	    		String idx = selectedItem.get("idx");	//Objectø°º≠ idx∞™¿ª πﬁæ∆ø»
-	    		
-	    		String toastMessage = idx;
-
-	    		Intent intent =new Intent(context, MyStoryPopupActivity.class);
-	    		intent.putExtra("idx", idx);
-	    		startActivity(intent);
-	    		
-	    		/*
-	    		String toastMessage = ((TwoLineListItem) clickedView).getText1().getText()
-	    				+ " is selected. position is " + position + ", and id is " + id;*/
-
-	    		Toast.makeText(getApplicationContext(), toastMessage,
-	    				Toast.LENGTH_SHORT).show();
-	    	}
-	    	
-	    };
-
-		// ∫‰∆‰¿Ã¿˙ø°º≠ ªÁøÎ«“ ∫‰∞¥√º ª˝º∫/µÓ∑œ
-		@Override
-		public Object instantiateItem(View pager, int position) {
-			View v = null;
-			if (position == 0) {
-				v = mInflater.inflate(R.layout.main, null);
-				//πˆ∆∞¿Ã∫•∆Æ ª¿‘
-				((ImageButton) v.findViewById(R.id.inbox_btn)).setOnClickListener(mPagerListener);
-			} else if (position == 1) {
-				v = mInflater.inflate(R.layout.write_story, null);
-				// πˆ∆∞¿Ã∫•∆Æ ª¿‘
-				((ImageButton) v.findViewById(R.id.send_story_btn))
-						.setOnClickListener(mPagerListener);
-			} else if (position == 2) {
-				v = mInflater.inflate(R.layout.read_story, null);
+			case 2:
+				WriteMyStory writeMyStory = WriteMyStory.create(position);
+				writeMyStory.setViewPager(mPager);
+				return writeMyStory;
 				
-				drawMyStoryList(v);	//¿⁄±‚ ¿Ãæﬂ±‚ ¿–æÓø¿±‚
-		        
-			} else {
-				v = mInflater.inflate(R.layout.setting, null);
-			}
-
-			((ViewPager) pager).addView(v, 0);
-			Log.i("instantiateItem", String.valueOf(v.getId()));
-			return v;
-		}
-
-		// ∫‰ ∞¥√º ªË¡¶
-		@Override
-		public void destroyItem(View pager, int position, Object view) {
-			((ViewPager) pager).removeView((View) view);
-		}
-
-		// instantiateItem∏ﬁº“µÂø°º≠ ª˝º∫«— ∞¥√º∏¶ ¿ÃøÎ«“ ∞Õ¿Œ¡ˆ
-		@Override
-		public boolean isViewFromObject(View view, Object obj) {
-			return view == obj;
-		}
-
-		@Override
-		public void finishUpdate(ViewGroup container) {
-			Log.i("finishUpdate", String.valueOf(container.getId()));
-			if(container.getId()== R.layout.read_story){
-			}
-		}
-
-		@Override
-		public void restoreState(Parcelable arg0, ClassLoader arg1) {
-		}
-
-		@Override
-		public Parcelable saveState() {
-			return null;
-		}
-
-		@Override
-		public void startUpdate(View arg0) {
-		}
-		
-
-		
-		// ≥ª ¿Ãæﬂ±‚ ∏Ò∑œ ±◊∏Æ±‚
-		public void drawMyStoryList(View view) {
-			// StoryService√ ±‚»≠
-			StoryService storyService = new StoryService(
-					context);
-			List<StoryDTO> myStoryList = storyService.getMyStoryList();
-
-			// ∏ÆΩ∫∆Æ∫‰∏¶ ¿ß«— ∫ØºˆµÈ
-			List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-			for (StoryDTO myStory : myStoryList) {
-				Map<String, String> item = new HashMap<String, String>();
-				item.put("title", myStory.getStory_date());
-				item.put("desc", myStory.getContent());
-				item.put("idx", String.valueOf(myStory.getIdx()));
-				list.add(item);
-			}
-
-			// æÓ¥≈Õø° µ•¿Ã≈Õ ∆˜«‘
-			final String[] fromMapKey = new String[] { "title", "desc" };
-			final int[] toLayoutId = new int[] { android.R.id.text1,
-					android.R.id.text2 };
-			ListAdapter adapter = new SimpleAdapter(context, list,
-					android.R.layout.simple_list_item_2, fromMapKey, toLayoutId);
-
-			// ∏ÆΩ∫∆Æ∫‰ø° æÓ¥≈Õ ø¨∞·
-			ListView listView = (ListView) view.findViewById(R.id.myStoryListView);
-			listView.setAdapter(adapter);
-			// ≈¨∏Ø¿Ã∫•∆Æ ø¨∞·
-			listView.setOnItemClickListener(mOnItemClickListener);
-		}
-		
-		private void sendAndSaveStory(){
-			View view = mPager.findFocus();
-			
-			EditText et = (EditText) view.findViewById(R.id.story_content);
-			String content = et.getText().toString();	//¿Ãæﬂ±‚ ≥ªøÎ
-			
-			//¿¸º€ªÛ≈¬ ≥™≈∏≥ø
-			progressDialog = ProgressDialog.show(MainViewPager.this, "", getResources().getString(R.string.app_name), true, true);
-
-			//StoryService√ ±‚»≠
-			StoryService storyService = new StoryService(context);
-			storyService.saveStoryToServer(content, new AfterSendAndSaveStory()); // º≠πˆø° ¿Ãæﬂ±‚¿˙¿Â, ∆ƒ∂ÛπÃ≈Õ∑Œ ƒ›πÈ«‘ºˆ ≥—±Ë
-		}
-		
-		private class AfterSendAndSaveStory implements ServiceCompleteListener<String>{
-
-			@Override
-			public void onServiceComplete(String result) {
-				Log.i("onTaskComplete", result);
-
-				if (progressDialog != null)
-					progressDialog.dismiss();
-
-				Toast toast = Toast.makeText(context, "¿Ãæﬂ±‚∞° ¿¸º€µ«æ˙Ω¿¥œ¥Ÿ", Toast.LENGTH_SHORT);
-				toast.show();
-
-				// ≥ª ¿Ãæﬂ±‚ ¿–±‚ »≠∏È¿∏∑Œ ¿Ãµø
-				//startActivity(new Intent(context, ReadMyStoryActivity.class));
-				mPager.setCurrentItem(2);
+			default:
+				return Main.create();
 				
 			}
 		}
-		
-	}
 
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
+    }
 }

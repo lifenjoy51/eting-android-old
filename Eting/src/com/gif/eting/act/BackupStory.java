@@ -1,5 +1,7 @@
 package com.gif.eting.act;
 
-public class BackupStory {
+import android.app.Activity;
+
+public class BackupStory extends Activity{
 
 }

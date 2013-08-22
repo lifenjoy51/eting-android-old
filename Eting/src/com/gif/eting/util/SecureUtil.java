@@ -5,7 +5,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class SecureUtil {
 
-	// 암호화처리
 	static public String toSHA256(String str) {
 		String SHA = "";
 		try {

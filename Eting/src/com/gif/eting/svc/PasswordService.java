@@ -6,15 +6,15 @@ import com.gif.eting.dao.SettingDAO;
 import com.gif.eting.dto.SettingDTO;
 import com.gif.eting.util.SecureUtil;
 
-public class SettingService {
+public class PasswordService {
 
 	private SettingDAO settingDao;
 
-	public SettingService(Context context) {
+	public PasswordService(Context context) {
 		this.settingDao = new SettingDAO(context);
 	}
 
-	// ºñ¹Ğ¹øÈ£ ÀúÀå
+	// ë¹„ë°€ë²ˆí˜¸ ì €ì¥
 	public void savePassword(String pw) {
 		SettingDTO setting = new SettingDTO();
 		pw = SecureUtil.toSHA256(pw);
@@ -22,24 +22,24 @@ public class SettingService {
 		setting.setKey("password");
 		setting.setValue(pw);
 
-		settingDao.open(); // ¿­°í
+		settingDao.open(); // ì—´ê³ 
 		settingDao.inssetting(setting);
-		settingDao.close(); // ´İ°í
+		settingDao.close(); // ë‹«ê³ 
 	}
 
-	// ºñ¹Ğ¹øÈ£ Ã¼Å©
+	// ë¹„ë°€ë²ˆí˜¸ ì²´í¬
 	public boolean checkPassword(String pw) {
 		boolean isValid = false;
-		pw = SecureUtil.toSHA256(pw); // »ç¿ëÀÚ°¡ ÀÔ·ÂÇÑ ºñ¹Ğ¹øÈ£
+		pw = SecureUtil.toSHA256(pw); // ì‚¬ìš©ìê°€ ì…ë ¥í•œ ë¹„ë°€ë²ˆí˜¸
 
 		SettingDTO setting = new SettingDTO();
 
-		settingDao.open(); // ¿­°í
+		settingDao.open(); // ì—´ê³ 
 		setting = settingDao.getsettingInfo("password");
-		settingDao.close(); // ´İ°í
+		settingDao.close(); // ë‹«ê³ 
 		
 		if(setting == null){
-			isValid = true;	//¼³Á¤µÈ ºñ¹Ğ¹øÈ£°¡ ¾øÀ¸¸é À¯È¿Ã³¸®
+			isValid = true;	//ì„¤ì •ëœ ë¹„ë°€ë²ˆí˜¸ê°€ ì—†ìœ¼ë©´ ìœ íš¨ì²˜ë¦¬
 		}else if (pw.equals(setting.getValue())) {
 			isValid = true;
 		}

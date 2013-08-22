@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
@@ -16,75 +18,96 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import com.gif.eting.MyStoryPopupActivity;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.gif.eting.R;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
 
-public class MyStoryList extends Activity implements OnItemClickListener{
-	
-	private StoryService storyService;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.read_story);
-		
-		drawMyStoryList();	//³» ÀÌ¾ß±â ¸ñ·Ï ±×¸®±â
+public class MyStoryList  extends SherlockFragment{
+
+    /**
+     * Factory method for this fragment class. Constructs a new fragment for the given page number.
+     */
+    public static MyStoryList create(int pageNumber) {
+        MyStoryList fragment = new MyStoryList();
+        return fragment;
+    }
+
+    public MyStoryList() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        // Inflate the layout containing a title and body text.
+        ViewGroup rootView = (ViewGroup) inflater
+                .inflate(R.layout.read_story, container, false);
+        drawMyStoryList(rootView);
+
+        return rootView;
 	}
-	
-	//³» ÀÌ¾ß±â ¸ñ·Ï ±×¸®±â
-	public void drawMyStoryList(){
-		//StoryServiceÃÊ±âÈ­
-		storyService = new StoryService(this.getApplicationContext());
+
+	// ë‚´ ì´ì•¼ê¸° ëª©ë¡ ê·¸ë¦¬ê¸°
+	public void drawMyStoryList(View view) {
+		Log.i("debug", "drawMyStoryList");
+		// StoryServiceì´ˆê¸°í™”
+		StoryService storyService = new StoryService(getActivity());
 		List<StoryDTO> myStoryList = storyService.getMyStoryList();
-		
-		//¸®½ºÆ®ºä¸¦ À§ÇÑ º¯¼öµé
-		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
-		for(StoryDTO myStory:myStoryList){
-	        Map<String,String> item = new HashMap<String,String>();
+
+		// ë¦¬ìŠ¤íŠ¸ë·°ë¥¼ ìœ„í•œ ë³€ìˆ˜ë“¤
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		for (StoryDTO myStory : myStoryList) {
+			Log.i("debug", "myStory");
+			Map<String, String> item = new HashMap<String, String>();
 			item.put("title", myStory.getStory_date());
-	        item.put("desc", myStory.getContent());
-	        item.put("idx", String.valueOf(myStory.getIdx()));
-	        list.add(item);
+			item.put("desc", myStory.getContent());
+			item.put("idx", String.valueOf(myStory.getIdx()));
+			list.add(item);
 		}
-		
-		
-		// ¾î´ğÅÍ¿¡ µ¥ÀÌÅÍ Æ÷ÇÔ
+
+		// ì–´ëŒ‘í„°ì— ë°ì´í„° í¬í•¨
 		final String[] fromMapKey = new String[] { "title", "desc" };
 		final int[] toLayoutId = new int[] { android.R.id.text1,
 				android.R.id.text2 };
-		ListAdapter adapter = new SimpleAdapter(this, list,
+		ListAdapter adapter = new SimpleAdapter(getActivity(), list,
 				android.R.layout.simple_list_item_2, fromMapKey, toLayoutId);
 
-        // ¸®½ºÆ®ºä¿¡ ¾î´ğÅÍ ¿¬°á
-        ListView listView = (ListView)findViewById(R.id.myStoryListView);
-        listView.setAdapter(adapter);
-        //Å¬¸¯ÀÌº¥Æ® ¿¬°á
-        listView.setOnItemClickListener(this);
-
-	}
-
-	@SuppressWarnings("unchecked")
-	public void onItemClick(AdapterView<?> parentView, View clickedView,
-			int position, long id) {
-		
-		ListAdapter listAdapter = (ListAdapter) parentView.getAdapter();	//ListView¿¡¼­ Adapter ¹Ş¾Æ¿È
-		Map<String, String> selectedItem = (Map<String, String>) listAdapter.getItem(position);	//¼±ÅÃÇÑ Row¿¡ ÀÖ´Â Object¸¦ ¹Ş¾Æ¿È
-		String idx = selectedItem.get("idx");	//Object¿¡¼­ idx°ªÀ» ¹Ş¾Æ¿È
-		
-		String toastMessage = idx;
-
-		Intent intent =new Intent(this, MyStoryPopupActivity.class);
-		intent.putExtra("idx", idx);
-		startActivity(intent);
-		
-		/*
-		String toastMessage = ((TwoLineListItem) clickedView).getText1().getText()
-				+ " is selected. position is " + position + ", and id is " + id;*/
-
-		Toast.makeText(getApplicationContext(), toastMessage,
-				Toast.LENGTH_SHORT).show();
+		// ë¦¬ìŠ¤íŠ¸ë·°ì— ì–´ëŒ‘í„° ì—°ê²°
+		ListView listView = (ListView) view.findViewById(R.id.myStoryListView);
+		listView.setAdapter(adapter);
+		// í´ë¦­ì´ë²¤íŠ¸ ì—°ê²°
+		 listView.setOnItemClickListener(mOnItemClickListener);
 	}
 	
+	 //ì•„ì´í…œ í´ë¦­ì´ë²¤íŠ¸
+    private OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
+
+    	@SuppressWarnings("unchecked")
+    	public void onItemClick(AdapterView<?> parentView, View clickedView,
+    			int position, long id) {
+    		
+    		ListAdapter listAdapter = (ListAdapter) parentView.getAdapter();	//ListViewì—ì„œ Adapter ë°›ì•„ì˜´
+    		Map<String, String> selectedItem = (Map<String, String>) listAdapter.getItem(position);	//ì„ íƒí•œ Rowì— ìˆëŠ” Objectë¥¼ ë°›ì•„ì˜´
+    		String idx = selectedItem.get("idx");	//Objectì—ì„œ idxê°’ì„ ë°›ì•„ì˜´
+    		
+    		String toastMessage = idx;
+
+    		Intent intent =new Intent(getActivity(), ReadMyStory.class);
+    		intent.putExtra("idx", idx);
+    		startActivity(intent);
+    		
+    		/*
+    		String toastMessage = ((TwoLineListItem) clickedView).getText1().getText()
+    				+ " is selected. position is " + position + ", and id is " + id;*/
+
+    		Toast.makeText(getActivity(), toastMessage,
+    				Toast.LENGTH_SHORT).show();
+    	}
+    	
+    };
 }

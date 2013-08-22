@@ -7,17 +7,17 @@ import android.util.Log;
 
 public class InboxDBHelper extends SQLiteOpenHelper {
 
-	public static final String TABLE_INBOX = "inbox";	//TABLEÀÌ¸§
+	public static final String TABLE_INBOX = "inbox";	//TABLEì´ë¦„
 	
-	//ÄÃ·³Á¤º¸
-	public static final String COL_IDX = "idx";	//¹Ş¾Æ¿Â ÀÌ¾ß±âÀÇ °íÀ¯¹øÈ£
-	public static final String COL_CONTENT = "content";	//¹Ş¾Æ¿Â ÀÌ¾ß±â ³»¿ë
-	public static final String COL_STORY_DATE = "story_date";	//¹Ş¾Æ¿Â ÀÌ¾ß±â ³¯Â¥
+	//ì»¬ëŸ¼ì •ë³´
+	public static final String COL_IDX = "idx";	//ë°›ì•„ì˜¨ ì´ì•¼ê¸°ì˜ ê³ ìœ ë²ˆí˜¸
+	public static final String COL_CONTENT = "content";	//ë°›ì•„ì˜¨ ì´ì•¼ê¸° ë‚´ìš©
+	public static final String COL_STORY_DATE = "story_date";	//ë°›ì•„ì˜¨ ì´ì•¼ê¸° ë‚ ì§œ
 
 	private static final String DATABASE_NAME = "eting_inbox.db";
 	private static final int DATABASE_VERSION = 1;
 
-	  //TABLE »ı¼º¹®
+	  //TABLE ìƒì„±ë¬¸
 	  private static final String DATABASE_CREATE = 
 			  "CREATE TABLE " + TABLE_INBOX + "(" 
 					  + COL_IDX				+ " integer primary key, " 
@@ -32,7 +32,7 @@ public class InboxDBHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
-		database.execSQL(DATABASE_CREATE); //TABLE»ı¼º
+		database.execSQL(DATABASE_CREATE); //TABLEìƒì„±
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class InboxDBHelper extends SQLiteOpenHelper {
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
 
-		// TODO ¹öÁ¯ÀÌ ´Ù¸¦¶§ ÀÓ½Ã·Î Ã³¸®. ÃßÈÄ º¯°æ ÇÊ¿ä.
+		// TODO ë²„ì ¼ì´ ë‹¤ë¥¼ë•Œ ì„ì‹œë¡œ ì²˜ë¦¬. ì¶”í›„ ë³€ê²½ í•„ìš”.
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_INBOX);
 		onCreate(db);
 	}

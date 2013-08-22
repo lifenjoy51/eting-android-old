@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.gif.eting.LockScreenActivity;
 import com.gif.eting.R;
 
 public class Intro extends Activity {
@@ -18,9 +17,9 @@ public class Intro extends Activity {
 		handler.postDelayed(new Runnable() {
 			public void run() {
 				Intent intent = new Intent(Intro.this,
-						LockScreenActivity.class);
+						LockScreen.class);
 				startActivity(intent);
-				// µÚ·Î°¡±â ÇßÀ»°æ¿ì ¾È³ª¿Àµµ·Ï ¾ø¾ÖÁÖ±â >> finish!!
+				// ë’¤ë¡œê°€ê¸° í–ˆì„ê²½ìš° ì•ˆë‚˜ì˜¤ë„ë¡ ì—†ì• ì£¼ê¸° >> finish!!
 				finish();
 			}
 		}, 2000);
