@@ -14,29 +14,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="알람" />
+        android:text="알람"/>
 
     <ImageButton
         android:id="@+id/password_img_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="비밀번호설정바꾸기" />
+        android:text="비밀번호설정바꾸기"/>
 
-    <!-- <ImageButton -->
-    <!-- android:id="@+id/export_img_btn" -->
-    <!-- android:layout_width="wrap_content" -->
-    <!-- android:layout_height="wrap_content" -->
-    <!-- android:src="@drawable/ic_launcher" /> -->
-
+<!--     <ImageButton -->
+<!--         android:id="@+id/export_img_btn" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:src="@drawable/ic_launcher" /> -->
     <Button
         android:id="@+id/btEmail"
         android:layout_width="fill_parent"
@@ -48,10 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Credit" />
+        android:text="Credit"/>
 
 </LinearLayout>
