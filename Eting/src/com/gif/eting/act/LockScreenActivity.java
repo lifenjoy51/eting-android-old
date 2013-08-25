@@ -3,8 +3,8 @@ package com.gif.eting.act;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,28 +17,34 @@ import com.gif.eting.svc.PasswordService;
  * @author lifenjoy51
  *
  */
-public class LockScreenActivity extends Activity implements OnClickListener {
+public class LockScreenActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lock_screen);
 
-		// 버튼 온클릭이벤트 등록
-		findViewById(R.id.lockScreenButton).setOnClickListener(this);
-	}
 
-	@Override
-	public void onClick(View view) {
-		// 암호확인 버튼 클릭시
-		switch (view.getId()) {
-		case R.id.lockScreenButton:
-			this.checkPassword();			
-			break;
+		//암호입력필드
+		EditText et = (EditText) findViewById(R.id.lockScreenPassword);
+		
+		//암호입력할때 4자리 다 채우면 자동으로 암호검사
+		et.addTextChangedListener(new TextWatcher() {
 
-		default:
-			break;
-		}
+			public void afterTextChanged(Editable s) {
+			}
+
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				if (s.length() == 4) {
+					checkPassword();
+				}
+			}
+		});
 	}
 
 	/**
