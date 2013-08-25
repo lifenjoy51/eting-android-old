@@ -43,7 +43,7 @@ public class IntroActivity extends Activity {
 				startActivity(intent);				
 				finish();	// 뒤로가기 했을경우 안나오도록 없애주기 >> finish!!
 			}
-		}, 5000);	//5초후 이동
+		}, 3000);	//3초후 이동
 	}
 
 	/**
