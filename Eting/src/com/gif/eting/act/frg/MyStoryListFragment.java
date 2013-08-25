@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.gif.eting.R;
 import com.gif.eting.act.ReadMyStoryActivity;
+import com.gif.eting.act.view.MylistAdapter;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
 
@@ -74,7 +75,68 @@ public class MyStoryListFragment  extends SherlockFragment{
 		// StoryService초기화
 		StoryService storyService = new StoryService(getActivity());
 		List<StoryDTO> myStoryList = storyService.getMyStoryList();
+		
+		/**
+		 * 날짜구분선을 위한 작업
+		 */
+		List<StoryDTO> list = new ArrayList<StoryDTO>();
+		String chkDate="";
+		for(StoryDTO story : myStoryList){
+			if(!chkDate.equals(story.getStory_date())){
+				chkDate = story.getStory_date();
+				StoryDTO temp = new StoryDTO();
+				temp.setStory_date(chkDate);
+				temp.setContent("#dateInfo");	//이야기 내용이 아니라 날짜를 구분하는 특수문자를 입력한다.
+				list.add(temp);
+			}
+			
+			list.add(story);
+		}
+		MylistAdapter m_adapter = new MylistAdapter(getActivity(), R.layout.mylist_item, list); // 어댑터 생성
+		
+		// 리스트뷰에 어댑터 연결
+		ListView listView = (ListView) view.findViewById(R.id.myStoryListView);
+		listView.setAdapter(m_adapter);
+		
+		// 클릭이벤트 연결
+		listView.setOnItemClickListener(this.mOnItemClickListener);
+	}
+	
+    
+    /** 
+     * 아이템 클릭이벤트
+     */
+    private OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
+    	
+    	public void onItemClick(AdapterView<?> parentView, View clickedView,
+    			int position, long id) {
+    		
+    		MylistAdapter listAdapter = (MylistAdapter) parentView.getAdapter();	//ListView에서 Adapter 받아옴
+    		StoryDTO selectedItem = (StoryDTO) listAdapter.getItem(position);	//선택한 Row에 있는 Object를 받아옴
+    		String idx = String.valueOf(selectedItem.getIdx());	//Object에서 idx값을 받아옴
+    		
+    		String toastMessage = idx;
+    		
+    		Intent intent =new Intent(getActivity(), ReadMyStoryActivity.class);
+    		intent.putExtra("idx", idx);
+    		startActivity(intent);
+    		
+    		Toast.makeText(getActivity(), toastMessage, Toast.LENGTH_SHORT)
+    		.show();
+    	}
+    	
+    };
 
+	
+	/**
+	 * 이전버젼
+	 * @param view
+	 */
+	public void drawMyStoryListOld(View view) {
+		// StoryService초기화
+		StoryService storyService = new StoryService(getActivity());
+		List<StoryDTO> myStoryList = storyService.getMyStoryList();		
+		
 		// 리스트뷰를 위한 변수들
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		for (StoryDTO myStory : myStoryList) {
@@ -103,9 +165,10 @@ public class MyStoryListFragment  extends SherlockFragment{
 	}
 	
 	/** 
-	 * 아이템 클릭이벤트
+	 * 이전버젼
 	 */
-    private OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
+    @SuppressWarnings("unused")
+	private OnItemClickListener mOnItemClickListenerOld = new OnItemClickListener() {
     	
     	@SuppressWarnings("unchecked")
     	public void onItemClick(AdapterView<?> parentView, View clickedView,
