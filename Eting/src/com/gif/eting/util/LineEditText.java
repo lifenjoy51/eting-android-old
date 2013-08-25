@@ -21,7 +21,7 @@ public class LineEditText extends EditText{
 			mRect = new Rect();
 	        mPaint = new Paint();
 	        mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-	        mPaint.setColor(Color.BLUE);
+	        mPaint.setColor(Color.GRAY);
 	}
 
 	private Rect mRect;
@@ -41,11 +41,12 @@ public class LineEditText extends EditText{
         Rect r = mRect;
         Paint paint = mPaint;
         int baseline = getLineBounds(0, r);
+        baseline = 0;
 
         for (int i = 0; i < count; i++) {
 
             canvas.drawLine(r.left, baseline + 1, r.right, baseline + 1, paint);
-            baseline += getLineHeight();
+            baseline += line_height;
 
         super.onDraw(canvas);
     }

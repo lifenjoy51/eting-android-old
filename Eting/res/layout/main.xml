@@ -1,43 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+        android:id="@+id/main_bg"
+         xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main"
     android:orientation="vertical" >
+    
+    
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_weight="10"  >
 
          <ImageButton
             android:id="@+id/inbox_btn"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:layout_weight="0.25"
-            android:src="@drawable/menu_icon" />
-
-        <ImageButton
-            android:id="@+id/read_et_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_weight="0.25"
-            android:src="@drawable/read_et_btn" />
-
-        <ImageButton
-            android:id="@+id/write_et_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_weight="0.25"
-            android:src="@drawable/write_et_btn" />
+            android:background="@drawable/menu_icon" />
 
         <ImageButton
             android:id="@+id/setting_btn"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:layout_weight="0.25"
-            android:src="@drawable/setting_btn" />
+            android:background="@drawable/setting_btn" />
     </LinearLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/main_today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0000-00-00"
+        android:textSize="30sp" />
+    
+    <TextView
+        android:id="@+id/main_eting_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="99"
+        android:textSize="40sp" />
+    
+    <ImageView 
+        android:id="@+id/main_ufo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/main_ufo"/>
+
+</FrameLayout>

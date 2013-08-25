@@ -2,40 +2,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/write_et_bg"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/write_story_date"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.2"
-        android:text="" />
-    
-    <view
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_weight="100"
+        android:gravity="center"
+        android:text="2013"
+        android:textSize="30sp" >
+
+    </TextView>
+
+    <EditText
         android:id="@+id/story_content"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.7"
-        class="com.gif.eting.util.LineEditText"
+        android:layout_height="316dp"
+        android:layout_weight="105.45"
         android:background="@android:color/transparent"
-        android:fadingEdge="vertical"
-        android:gravity="top"
-        android:scrollbars="vertical"
-        android:textSize="22sp" />
+        android:drawableBottom="@drawable/write_edittext_bottom"
+        android:drawableTop="@drawable/write_edittext_top"
+        android:gravity="start"
+        android:inputType="textMultiLine"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="나랏말싸미 듕귁에달아 문짜와로 서로 사맛디 아니할세"
+        android:textSize="20sp" />
 
-    <ImageButton
-        android:id="@+id/send_story_btn"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.1"
-        android:scaleType="fitCenter"
-        android:src="@drawable/eting_btn" />
-    
-       <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.1"
-        android:text="" />
+        android:layout_weight="20"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="30" >
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/send_story_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:background="@drawable/eting_btn"
+            android:scaleType="fitCenter" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="10" >
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

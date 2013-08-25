@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -53,6 +54,11 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
         // Inflate the layout containing a title and body text.
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.write_story, container, false);
+        
+        //상단에 오늘날짜 설정
+        TextView tv =  (TextView) rootView.findViewById(R.id.write_story_date);
+        String today = "2013-08-25";	//TODO 오늘날짜 받아오는 로직 추가필요
+        tv.setText(today);
         
         //클릭이벤트 설정
 		rootView.findViewById(R.id.send_story_btn).setOnClickListener(this);
@@ -109,6 +115,10 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
 
 			Toast toast = Toast.makeText(getActivity(), "이야기가 전송되었습니다", Toast.LENGTH_SHORT);
 			toast.show();
+			
+			//쓰기화면 초기화
+			EditText et = (EditText) getView().findViewById(R.id.story_content);
+			et.setText("");
 
 			// 내 이야기 읽기 화면으로 이동
 			mPager.setCurrentItem(0);
