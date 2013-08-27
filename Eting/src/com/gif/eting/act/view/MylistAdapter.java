@@ -3,6 +3,7 @@ package com.gif.eting.act.view;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,6 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-
 		/**
 		 * 내 이야기
 		 */
@@ -34,15 +34,16 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 		String storyDate = story.getStory_date();
 		String storyContent = story.getContent();
 		View v = convertView;
+		Log.i("MylistAdapter", "list = "+position+storyDate+storyContent);
 		
+		LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			
+
 		/**
 		 * 날짜구분선 여부를 확인하고 view를 생성한다.
 		 */
 		if("#dateInfo".equals(storyContent)){
-			if (v == null) {
-				LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				v = vi.inflate(R.layout.mylist_line, null);
-			}
+			v = vi.inflate(R.layout.mylist_line, null);
 			
 			/**
 			 * 구분선 날짜
@@ -53,10 +54,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			}
 			
 		}else{
-			if (v == null) {
-				LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				v = vi.inflate(R.layout.mylist_item, null);
-			}
+			v = vi.inflate(R.layout.mylist_item, null);
 				
 			/**
 			 * 이야기 작성일자

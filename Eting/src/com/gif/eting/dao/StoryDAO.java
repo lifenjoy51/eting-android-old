@@ -60,7 +60,7 @@ public class StoryDAO {
 		List<StoryDTO> storyList = new ArrayList<StoryDTO>();
 
 		Cursor cursor = database.query(StoryDBHelper.TABLE_STORY_MASTER,
-				allColumns, null, null, null, null, null);
+				allColumns, null, null, null, null, StoryDBHelper.COL_STORY_DATE+" DESC");
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {

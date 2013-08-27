@@ -42,7 +42,10 @@ public class IntroActivity extends Activity {
 		handler = new Handler();
 		handler.postDelayed(new Runnable() {
 			public void run() {
-				moveToLockScreenActivity();
+				if(cnt==0){
+					moveToLockScreenActivity();
+					cnt++;
+				}
 			}
 		}, 3000);	//3초후 이동
 	}
@@ -57,7 +60,10 @@ public class IntroActivity extends Activity {
 		@Override
 		public void onTaskComplete(String result) {
 			Log.i("AfterCheckStampTask", result);
-			moveToLockScreenActivity();
+			if(cnt==0){
+				moveToLockScreenActivity();
+				cnt++;
+			}
 		}
 	}
 	
@@ -69,7 +75,7 @@ public class IntroActivity extends Activity {
 		Intent intent = new Intent(IntroActivity.this,
 				LockScreenActivity.class);
 		startActivity(intent);				
-		finish();	// 뒤로가기 했을경우 안나오도록 없애주기 >> finish!!
+		finish();	// 뒤로가기 했을경우 안나오도록 없애주기
 		
 	}
 
