@@ -27,9 +27,37 @@ public class StampDTO {
 	private String stamp_name;
 	
 	/**
+	 * 스탬프 종류
+	 */
+	private String stamp_type;
+	
+	/**
+	 * 스탬프 순서
+	 */
+	private String stamp_order;
+	
+	/**
 	 * 스탬프 이미지 url (현재 사용 안함)
 	 */
 	private String stamp_url;
+	
+	
+
+	public String getStamp_type() {
+		return stamp_type;
+	}
+
+	public void setStamp_type(String stamp_type) {
+		this.stamp_type = stamp_type;
+	}
+
+	public String getStamp_order() {
+		return stamp_order;
+	}
+
+	public void setStamp_order(String stamp_order) {
+		this.stamp_order = stamp_order;
+	}
 
 	public String getStory_id() {
 		return story_id;

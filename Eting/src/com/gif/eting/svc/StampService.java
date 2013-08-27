@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 
 import com.gif.eting.dao.InboxDAO;
+import com.gif.eting.dao.StampDAO;
 import com.gif.eting.dao.StoryDAO;
 import com.gif.eting.dto.StampDTO;
 
@@ -23,10 +24,13 @@ public class StampService {
 	@SuppressWarnings("unused")
 	private StoryDAO storyDao;
 	
+	private StampDAO stampDao;	
+	
 	public StampService(Context context){
 		this.context = context;
 		this.storyDao = new StoryDAO(this.context);
 		this.inboxDao = new InboxDAO(this.context);
+		this.stampDao = new StampDAO(this.context);
 	}
 
 	/**
@@ -35,19 +39,32 @@ public class StampService {
 	 */
 	public List<StampDTO> getStampList() {
 		List<StampDTO> stampList = new ArrayList<StampDTO>();
-
-		//TODO 현재는 임시로 하드코딩했다. 스티커목록을 정리해서 DB에 저장하고, 불러와서 사용해야한다. 그렇다면 스티커테이블이 필요?
-		StampDTO stamp = new StampDTO();
-		stamp.setStamp_id("5");
-		stamp.setStamp_name("좋아요");			
-		stampList.add(stamp);
-		
-		stamp = new StampDTO();
-		stamp.setStamp_id("6");
-		stamp.setStamp_name("힘내요");
-		stampList.add(stamp);
+		stampDao.open();
+		stampList = stampDao.getStampList();
+		stampDao.close();
 		
 		return stampList;
+	}
+	
+	/**
+	 * 스탬프ID 최대값 가져오기
+	 */
+	public String getMaxStampId(){
+		stampDao.open();
+		String maxStampId = stampDao.getMaxStampId();
+		stampDao.close();
+		return maxStampId;
+	}
+	
+	/**
+	 * 스탬프 저장하기
+	 */
+	public void saveStamps(List<StampDTO> list){
+		stampDao.open();
+		for(StampDTO stamp : list){
+			stampDao.insStamp(stamp);
+		}
+		stampDao.close();
 	}
 
 }
