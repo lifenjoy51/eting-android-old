@@ -6,6 +6,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.util.SparseArray;
+import android.view.KeyEvent;
+import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.gif.eting.R;
@@ -51,6 +55,16 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
             @Override
             public void onPageSelected(int position) {
             	//페이지 변경됐을때 이벤트처리
+    			Fragment fragment = ((ScreenSlidePagerAdapter) mPagerAdapter)
+    					.getFragment(position);
+
+    			/**
+    			 * 프래그먼트에 따른 조건분기
+    			 */
+    			if (fragment instanceof MainFragment) {
+    				((MainFragment) fragment).setInboxCnt();
+    			}
+            	
             }
         });
     }
@@ -69,6 +83,9 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
      * A simple pager adapter
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    	SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+
+    	
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
 		}
@@ -85,6 +102,7 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 			
 			case 0:
 				MyStoryListFragment myStoryList = MyStoryListFragment.create(position);
+				myStoryList.setViewPager(mPager);
 				return myStoryList;
 
 			case 1:
@@ -110,5 +128,54 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
         public int getCount() {
             return NUM_PAGES;
         }
-    }
+        
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            registeredFragments.put(position, fragment);
+            return fragment;
+        }
+        
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            registeredFragments.remove(position);
+            super.destroyItem(container, position, object);
+        }
+        
+        public Fragment getFragment(int position) {
+            return registeredFragments.get(position);
+        }
+
+	}
+
+	/**
+	 * 뒤로가기 버튼을 눌렀을 때 이벤트 처리를 위한 로직
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		Log.i("onKeyDown Main", String.valueOf(keyCode));
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			int curItem = mPager.getCurrentItem();
+			Fragment fragment = ((ScreenSlidePagerAdapter) mPagerAdapter)
+					.getFragment(curItem);
+
+			/**
+			 * 프래그먼트에 따른 조건분기
+			 */
+			if (fragment instanceof WriteMyStoryFragment) {
+				return ((WriteMyStoryFragment) fragment).onKeyDown(keyCode,
+						event);
+			} else if (fragment instanceof MyStoryListFragment) {
+				return ((MyStoryListFragment) fragment).onKeyDown(keyCode,
+						event);
+			} else if (fragment instanceof MainFragment) {
+				return ((MainFragment) fragment).onKeyDown(keyCode, event);
+			} else {
+				return super.onKeyDown(keyCode, event);
+			}
+		} else {
+			return super.onKeyDown(keyCode, event);
+		}
+	}
 }

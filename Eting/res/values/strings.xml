@@ -11,4 +11,13 @@
     <string name="introbackgroundimage">IntroBackgroundImage</string>
     <string name="mainbackgroundimage">MainBackgroundImage</string>
 
+    <string name="quit">종료</string>
+    <string name="really_quit">정말로 종료하시겠습니까?</string>
+    <string name="yes">예</string>
+    <string name="no">아니오</string>
+    
+    
+    <string name="write_story_validate">한 문자만 입력할 수 없습니다.</string>
+    <string name="write_story_input">내용을 입력해주세요.</string>
+
 </resources>

@@ -1,21 +1,19 @@
 package com.gif.eting.act.frg;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -32,6 +30,7 @@ import com.gif.eting.svc.StoryService;
  *
  */
 public class MyStoryListFragment  extends SherlockFragment{
+	private ViewPager mPager;
 
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
@@ -45,6 +44,10 @@ public class MyStoryListFragment  extends SherlockFragment{
      * 생성자
      */
     public MyStoryListFragment() {
+    }
+
+    public void setViewPager(ViewPager mPager) {
+    	this.mPager = mPager;
     }
 
     @Override
@@ -127,66 +130,16 @@ public class MyStoryListFragment  extends SherlockFragment{
     	
     };
 
-	
 	/**
-	 * 이전버젼
-	 * @param view
+	 * 뒤로가기 눌렀을때 이벤트 처리를 위한 로직
+	 * 
+	 * @param keyCode
+	 * @return
 	 */
-	public void drawMyStoryListOld(View view) {
-		// StoryService초기화
-		StoryService storyService = new StoryService(getActivity());
-		List<StoryDTO> myStoryList = storyService.getMyStoryList();		
-		
-		// 리스트뷰를 위한 변수들
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		for (StoryDTO myStory : myStoryList) {
-			Log.i("debug", "myStory");
-			Map<String, String> item = new HashMap<String, String>();
-			item.put("title", myStory.getStory_date());
-			item.put("desc", myStory.getContent());
-			item.put("idx", String.valueOf(myStory.getIdx()));
-			list.add(item);
-		}
-
-		//TODO 커스텀 리스트뷰를 만들어서 넣어야한다.
-		// 어댑터에 데이터를 넣는다.
-		final String[] fromMapKey = new String[] { "title", "desc" };
-		final int[] toLayoutId = new int[] { android.R.id.text1,
-				android.R.id.text2 };
-		ListAdapter adapter = new SimpleAdapter(getActivity(), list,
-				android.R.layout.simple_list_item_2, fromMapKey, toLayoutId);
-
-		// 리스트뷰에 어댑터 연결
-		ListView listView = (ListView) view.findViewById(R.id.myStoryListView);
-		listView.setAdapter(adapter);
-		
-		// 클릭이벤트 연결
-		listView.setOnItemClickListener(this.mOnItemClickListener);
-	}
-	
-	/** 
-	 * 이전버젼
-	 */
-    @SuppressWarnings("unused")
-	private OnItemClickListener mOnItemClickListenerOld = new OnItemClickListener() {
-    	
-    	@SuppressWarnings("unchecked")
-    	public void onItemClick(AdapterView<?> parentView, View clickedView,
-    			int position, long id) {
-    		
-    		ListAdapter listAdapter = (ListAdapter) parentView.getAdapter();	//ListView에서 Adapter 받아옴
-    		Map<String, String> selectedItem = (Map<String, String>) listAdapter.getItem(position);	//선택한 Row에 있는 Object를 받아옴
-    		String idx = selectedItem.get("idx");	//Object에서 idx값을 받아옴
-    		
-    		String toastMessage = idx;
-
-    		Intent intent =new Intent(getActivity(), ReadMyStoryActivity.class);
-    		intent.putExtra("idx", idx);
-			startActivity(intent);
-			
-			Toast.makeText(getActivity(), toastMessage, Toast.LENGTH_SHORT)
-					.show();
-    	}
-    	
-    };
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	Log.i("onKeyDown SUB", String.valueOf(keyCode));
+    	// 메인 화면으로 이동
+		mPager.setCurrentItem(1);
+        return true;
+    }
 }

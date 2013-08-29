@@ -5,22 +5,21 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gif.eting.R;
+import com.gif.eting.act.view.StampView;
 import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.InboxService;
@@ -92,21 +91,73 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		//버튼이벤트 삽입
 		findViewById(R.id.inbox_confirm_btn).setOnClickListener(this);
 		
-		//스탬프 자동완성
-		//TODO 스탬프 자동완성기능은 빠진다. 
+		//스탬프 자동완성 
 		//TODO 스탬프 입력화면을 새로 개발해야한다.
-		List<StampDTO> list = stampService.getStampList();
 		
+		List<StampDTO> list = stampService.getStampList();
+		RelativeLayout stampArea = (RelativeLayout) findViewById(R.id.inbox_stamp_area); // 스탬프영역
+			
+		//화면 해상도
+		DisplayMetrics metrics = this.getResources().getDisplayMetrics();
+		int width = metrics.widthPixels;
+		int height = metrics.heightPixels;
+		Log.i("display", width + " , " + height);
+		
+		int preX = 0;
+		int preY = 0;
+		for(StampDTO stamp : list){
+			StampView stampView = new StampView(this);
+			stampView.setText(stamp.getStamp_name());
+			stampView.setStamp(stamp);
+			stampView.setGravity(Gravity.CENTER);
+			stampView.setBackgroundResource(R.drawable.stamp_bg);
+			stampView.setTextSize(15);
+			stampView.setOnClickListener(this);
+			
+			//위치조정
+			int objWidth = getResources().getDrawable(R.drawable.stamp_bg).getIntrinsicWidth();
+			int objHeight = getResources().getDrawable(R.drawable.stamp_bg).getIntrinsicHeight();
+			//Log.i("obj size", objWidth + " , " + objHeight);
+			
+			RelativeLayout.LayoutParams stampParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
+			//stampParams.gravity = Gravity.LEFT | Gravity.TOP;
+			
+			int margin = 5;
+			
+			if(preX+objWidth > width){
+				stampParams.leftMargin = 0 + margin; //Your X coordinate
+				stampParams.topMargin = preY+objHeight + margin; //Your Y coordinate
+
+				preX = 0;
+				preX += objWidth;
+				preY += objHeight;
+			}else{
+				
+				stampParams.leftMargin = preX + margin; //Your X coordinate
+				stampParams.topMargin = preY + margin; //Your Y coordinate
+				preX += objWidth;
+			}
+			Log.i("stampParams", stampParams.leftMargin + " , " + stampParams.topMargin);
+			/*stampParams.setMargins(10, 10, 10, 10);*/
+			stampView.setLayoutParams(stampParams);
+			
+			stampArea.addView(stampView);
+		}
+		
+		
+/*
+		//TODO 스탬프 자동완성기능은 빠진다.
 		AutoCompleteTextView stampAC = (AutoCompleteTextView) findViewById(R.id.stamp_auto_complete);
 		ArrayAdapter<StampDTO> adapter = new ArrayAdapter<StampDTO>(this, android.R.layout.simple_dropdown_item_1line, list);
 		stampAC.setAdapter(adapter);
+			
 		// 클릭이벤트 연결
-		stampAC.setOnItemClickListener(mOnItemClickListener);
+		stampAC.setOnItemClickListener(mOnItemClickListener);*/
 	}
-	
-	/**
+/*	
+	*//**
 	 * 스티커 클릭시 이벤트
-	 */
+	 *//*
     private OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
 
     	@SuppressWarnings("unchecked")
@@ -123,20 +174,18 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
     		
     		Log.i("getItem", stampId+stampName);
     		
-    		//스탬프 추가
-    		addStamp(stampId, stampName);
     		
     		Toast.makeText(getApplicationContext(), stampId,
     				Toast.LENGTH_SHORT).show();
     	}
     	
     };
-	
+	*/
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.inbox_confirm_btn:
+		if(v.getId()==R.id.inbox_confirm_btn){
+			
 			
 			//전송상태 나타냄
 			progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.app_name), true, true);
@@ -145,26 +194,30 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 			 * 다른사람 이야기에 찍은 스탬프 정보를 서버로 전송
 			 */
 			this.saveStampsToServer();
-			break;
+		}else if(v  instanceof StampView){	//스탬프 클릭했을때
+			
+			
+			StampDTO stamp = ((StampView) v).getStamp();	//선택한 Row에 있는 StampDTO를 받아옴
+    		String stampId = stamp.getStamp_id();
+    		String stampName = stamp.getStamp_name();
+    		
+    		Log.i("getItem", stampId+stampName);
+    		
+    		//스탬프 추가
+    		if(stamps.contains(stampId)){
+    			//이미 찍은거면 초기화
+    			v.setBackgroundResource(R.drawable.stamp_bg);
+    			stamps.remove(stampId);
+    		}else{
+    			//스탬프찍기
+    			v.setBackgroundResource(R.drawable.stamp_bg_chk);
+    			stamps.add(stampId);
+    		}
+    		
+    		Toast.makeText(getApplicationContext(), stampId,
+    				Toast.LENGTH_SHORT).show();
 		}
-	}
-	
-	/**
-	 * 스탬프 입력
-	 * 
-	 * @param stampId
-	 * @param stampName
-	 */
-	private void addStamp(String stampId, String stampName) {
-		stamps.add(stampId);
-		LinearLayout stampArea = (LinearLayout) findViewById(R.id.inbox_stamp_area); // 스탬프영역
-
-		TextView stampView = new TextView(this);
-		stampView.setText(stampName);
-		stampView.setGravity(Gravity.LEFT);
 		
-		stampArea.addView(stampView);
-
 	}
 
 	/**

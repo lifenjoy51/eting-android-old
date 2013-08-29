@@ -40,7 +40,7 @@ public class ReceiveStampTask extends AsyncTask<String, String, String> {
 	protected String doInBackground(String... params) {
 
 			String urlStr = Config.serverContext+"/getStamp";
-			String param = "storyId=" + params[0];	//파라미터 첫번째값 storyId
+			String param = "story_id=" + params[0];	//파라미터 첫번째값 storyId
 			
 			return HttpUtil.doPost(urlStr, param);	//Http전송
 	}

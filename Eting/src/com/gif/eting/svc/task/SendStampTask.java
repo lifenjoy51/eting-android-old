@@ -46,7 +46,7 @@ public class SendStampTask extends AsyncTask<Object, String, String> {
 			String urlStr = Config.serverContext+"/saveStamp";
 			
 			this.storyId = (String) params[0];
-			String param = "storyId=" + storyId;	//파라미터 첫번째값 storyId
+			String param = "story_id=" + storyId;	//파라미터 첫번째값 storyId
 			
 			@SuppressWarnings("unchecked")
 			List<String> stampIds = (List<String>)params[1];	//파라미터 두번째값 stamp들 #형식 유의

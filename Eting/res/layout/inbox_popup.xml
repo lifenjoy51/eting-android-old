@@ -4,7 +4,8 @@
     android:layout_height="fill_parent"
     android:layout_gravity="center"
     android:layout_margin="20dp"
-    android:background="#CCDDEE" >
+    android:background="#CCDDEE"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/popup_date"
@@ -17,40 +18,36 @@
     <TextView
         android:id="@+id/popup_content"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginBottom="100dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="250dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/popup_date"
         android:gravity="center"
         android:textColor="#ff000000" />
 
-    <LinearLayout
-        android:id="@+id/inbox_stamp_area"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/popup_content"
+        android:background="#AABBCC" >
 
-    </LinearLayout>
-
-    <AutoCompleteTextView
-        android:id="@+id/stamp_auto_complete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/popup_content"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:text="" 
-        android:completionThreshold="1">
-
-        <requestFocus />
-    </AutoCompleteTextView>
+        <RelativeLayout
+            android:id="@+id/inbox_stamp_area"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#11bbFF"
+            android:orientation="horizontal" >
+        </RelativeLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/inbox_confirm_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/stamp_auto_complete"
-        android:layout_below="@+id/stamp_auto_complete"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/scrollView1"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
         android:text="@string/inbox_confirm" />
 
 </RelativeLayout>

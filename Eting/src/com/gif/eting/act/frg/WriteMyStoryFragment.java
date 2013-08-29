@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -74,7 +75,34 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
 
 		switch (v.getId()) {
 		case R.id.send_story_btn:
-			sendAndSaveStory();
+			//입력한 문자 체크로직
+			EditText et = (EditText) getView().findViewById(R.id.story_content);
+			String content = et.getText().toString();	//이야기 내용
+			
+			//입력값이 없으면 처리중단
+			if(content == null || "".equals(content)){
+				//입력해달라고 토스트 알람
+				Toast.makeText(getActivity(), R.string.write_story_input , Toast.LENGTH_SHORT).show();
+				return;
+			}
+			
+			String firstChar = content.substring(0, 1);	//맨 처음 문자
+			boolean chk = false;
+			//동일한 문자로 연속되는지 확인
+			for(int i=0; i<content.length(); i++){
+				if(!firstChar.equals(content.substring(i, i+1))){
+					chk = true;
+					break;
+				}
+			}
+			
+			//문제가 없으면 저장시작
+			if(chk){
+				sendAndSaveStory();
+			}else{
+				//문제있다고 알람
+				Toast.makeText(getActivity(), R.string.write_story_validate, Toast.LENGTH_SHORT).show();
+			}
 			break;
 		}
 
@@ -124,4 +152,17 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
 			mPager.setCurrentItem(0);
 		}
 	}
+    
+	/**
+	 * 뒤로가기 눌렀을때 이벤트 처리를 위한 로직
+	 * 
+	 * @param keyCode
+	 * @return
+	 */
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	Log.i("onKeyDown WriteMyStory", String.valueOf(keyCode));
+    	// 메인 화면으로 이동
+		mPager.setCurrentItem(1);
+        return true;
+    }
 }

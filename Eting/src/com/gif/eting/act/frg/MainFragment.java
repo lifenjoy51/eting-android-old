@@ -1,11 +1,15 @@
 package com.gif.eting.act.frg;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -252,7 +256,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 */
 		ImageView mainUfo = (ImageView) getView().findViewById(R.id.main_ufo);
 		//위치조정
-		int ufoX = width/100*70;
+		int ufoX = width/100*80;
 		int ufoY = height/100*15;
 		FrameLayout.LayoutParams ufoParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		ufoParams.leftMargin = ufoX; //Your X coordinate
@@ -267,9 +271,42 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 			ani = AnimationUtils.loadAnimation(getActivity(), R.anim.twinkle);
 			mainUfo.startAnimation(ani);
 		}else{
+			mainUfo.clearAnimation();
 			mainUfo.setVisibility(View.GONE);
 		}
 	
+	}
+	
+	/**
+	 * 뒤로가기 눌렀을때 이벤트 처리를 위한 로직
+	 * 
+	 * @param keyCode
+	 * @return
+	 */
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+		Log.i("onKeyDown SUB", String.valueOf(keyCode));
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			// Ask the user if they want to quit
+			new AlertDialog.Builder(getActivity())
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setTitle(R.string.quit)
+					.setMessage(R.string.really_quit)
+					.setPositiveButton(R.string.yes,
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+
+									// Stop the activity
+									getActivity().finish();
+								}
+
+							}).setNegativeButton(R.string.no, null).show();
+
+			return true;
+		}
+		return true;
 	}
 
 }
