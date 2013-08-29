@@ -35,7 +35,7 @@
 <!--         android:layout_height="wrap_content" -->
 <!--         android:src="@drawable/ic_launcher" /> -->
     <Button
-        android:id="@+id/btEmail"
+        android:id="@+id/email_btn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="첨부파일 이메일 보내기" />

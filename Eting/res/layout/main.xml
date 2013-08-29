@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_bg"
+    android:id="@+id/main_frame"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main"
     android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/main_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:contentDescription="@string/mainbackgroundimage"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_1" />
 
     <ImageButton
         android:id="@+id/setting_btn"
@@ -18,20 +25,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0000-00-00"
-        android:textSize="30sp" />
+        android:textColor="#4D4D4D"
+        android:textSize="45sp" />
 
     <TextView
         android:id="@+id/main_eting_cnt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="99"
-        android:textColor="#003366"
-        android:textSize="40sp" />
+        android:textColor="#999999"
+        android:textSize="30sp" />
 
     <ImageView
         android:id="@+id/main_ufo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription=""
         android:src="@drawable/main_ufo" />
+    
+    <ImageView
+        android:id="@+id/main_acc_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription=""
+        android:src="@drawable/main_acc_1" />
+    
+    <ImageView
+        android:id="@+id/main_acc_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription=""
+        android:src="@drawable/main_acc_2" />
 
 </FrameLayout>

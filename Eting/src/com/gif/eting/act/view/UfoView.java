@@ -59,8 +59,8 @@ public class UfoView extends View {
 
 		int stPtX = width / 2 - dr.getIntrinsicWidth() / 2;
 		int enPtX = width / 2 - dr.getIntrinsicWidth() / 2;
-		int stPtY = height / 40 * 11;	//수직 위치 시작
-		int enPtY = height / 40 * 15;	//수직 위치 끝
+		int stPtY = height / 100 * 28;	//수직 위치 시작
+		int enPtY = height / 100 * 34;	//수직 위치 끝
 		
 		//처음 실행할때
 		if(cnt==0){

@@ -1,6 +1,7 @@
 package com.gif.eting.act.frg;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -20,7 +21,12 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.gif.eting.R;
 import com.gif.eting.act.ReadInboxActivity;
 import com.gif.eting.act.SettingActivity;
-import com.gif.eting.act.view.CloudView;
+import com.gif.eting.act.view.Cloud1View;
+import com.gif.eting.act.view.Cloud2View;
+import com.gif.eting.act.view.Cloud3View;
+import com.gif.eting.act.view.Cloud4View;
+import com.gif.eting.act.view.EtingLogoView;
+import com.gif.eting.act.view.PlanetView;
 import com.gif.eting.svc.InboxService;
 
 /**
@@ -72,15 +78,25 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		/**
 		 * 애니메이션
 		 */
-		FrameLayout fr = (FrameLayout) rootView.findViewById(R.id.main_bg);
+		FrameLayout fr = (FrameLayout) rootView.findViewById(R.id.main_frame);
 		
-		fr.addView(new CloudView(getActivity(), 1)); // 움직이는 UFO 등록
-		fr.addView(new CloudView(getActivity(), 2)); // 움직이는 UFO 등록
+		fr.addView(new Cloud1View(getActivity())); // 구름애니메이션
+		fr.addView(new Cloud2View(getActivity())); // 구름애니메이션
+		fr.addView(new Cloud3View(getActivity())); // 구름애니메이션
+		fr.addView(new Cloud4View(getActivity())); // 구름애니메이션
+		fr.addView(new PlanetView(getActivity())); // 메인동그라미
+		
+		
 		
 		//스크린크기
 		DisplayMetrics metrics = getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;
 		int height = metrics.heightPixels;
+		
+		/**
+		 * 로고이미지
+		 */
+		fr.addView(new EtingLogoView(getActivity())); // 메인동그라미
 		
 		/**
 		 * 현재날짜
@@ -90,7 +106,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		mainToday.setText(today);
 		//위치조정
 		int dateX = width/100*14;
-		int dateY = height/100*65;
+		int dateY = height/100*75;
 		
 		FrameLayout.LayoutParams dataParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		dataParams.leftMargin = dateX; //Your X coordinate
@@ -103,7 +119,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 */
 		ImageButton settingBtn = (ImageButton) rootView.findViewById(R.id.setting_btn);
 		//위치조정
-		int settingX = width/100*80;
+		int settingX = width/100*97;
 		int settingY = height/100*80;
 		
 		FrameLayout.LayoutParams settingParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
@@ -111,6 +127,32 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		settingParams.topMargin = settingY; //Your Y coordinate
 		settingParams.gravity = Gravity.LEFT | Gravity.TOP;
 		settingBtn.setLayoutParams(settingParams);
+		
+		/**
+		 * 별모양1
+		 */
+		ImageView mainAcc1 = (ImageView) rootView.findViewById(R.id.main_acc_1);
+		//위치조정
+		int mainAcc1X = width/100*10;
+		int mainAcc1Y = height/100*20;
+		FrameLayout.LayoutParams mainAcc1Params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
+		mainAcc1Params.leftMargin = mainAcc1X; //Your X coordinate
+		mainAcc1Params.topMargin = mainAcc1Y; //Your Y coordinate
+		mainAcc1Params.gravity = Gravity.LEFT | Gravity.TOP;
+		mainAcc1.setLayoutParams(mainAcc1Params);
+		
+		/**
+		 * 별모양2
+		 */
+		ImageView mainAcc2 = (ImageView) rootView.findViewById(R.id.main_acc_2);
+		//위치조정
+		int mainAcc2X = width/100*90;
+		int mainAcc2Y = height/100*60;
+		FrameLayout.LayoutParams mainAcc2Params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
+		mainAcc2Params.leftMargin = mainAcc2X; //Your X coordinate
+		mainAcc2Params.topMargin = mainAcc2Y; //Your Y coordinate
+		mainAcc2Params.gravity = Gravity.LEFT | Gravity.TOP;
+		mainAcc2.setLayoutParams(mainAcc2Params);
 
         /**
          * 클릭이벤트 설정
@@ -186,7 +228,10 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		TextView mainEtingCnt =  (TextView) getView().findViewById(R.id.main_eting_cnt);
 		InboxService is = new InboxService(getActivity());
 		int inboxCnt = is.getInboxCnt();
-		mainEtingCnt.setText(String.valueOf(inboxCnt));	
+		mainEtingCnt.setText(String.valueOf(inboxCnt)+ " eting");
+		
+		Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
+		mainEtingCnt.setTypeface(face);
 		
 		//스크린크기
 		DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -194,8 +239,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		int height = metrics.heightPixels;
 				
 		//위치조정
-		int cntX = width/100*16;
-		int cntY = height/100*72;	
+		int cntX = width/100*14;
+		int cntY = height/100*68;	
 		FrameLayout.LayoutParams mainEtingParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		mainEtingParams.leftMargin = cntX; //Your X coordinate
 		mainEtingParams.topMargin = cntY; //Your Y coordinate

@@ -8,5 +8,7 @@
     <string name="password_text">비밀번호</string>
     <string name="save_text">저장</string>
     <string name="inbox_confirm">확인</string>
+    <string name="introbackgroundimage">IntroBackgroundImage</string>
+    <string name="mainbackgroundimage">MainBackgroundImage</string>
 
 </resources>
