@@ -54,7 +54,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			}
 			
 		}else{
-			v = vi.inflate(R.layout.mylist_item, null);
+			v = vi.inflate(R.layout.mylist_item, null);	//TODO 스티커를 받은 이야기는 별표시가 들어가야하는데 아직 기능구현이 안되어있다.
 				
 			/**
 			 * 이야기 작성일자
