@@ -1,5 +1,9 @@
 package com.gif.eting.act.frg;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -57,8 +61,11 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
                 .inflate(R.layout.write_story, container, false);
         
         //상단에 오늘날짜 설정
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+        Date date = new Date();
+        
         TextView tv =  (TextView) rootView.findViewById(R.id.write_story_date);
-        String today = "2013-08-25";	//TODO 오늘날짜 받아오는 로직 추가필요
+        String today = formatter.format(date);	//TODO 오늘날짜 받아오는 로직 추가필요
         tv.setText(today);
         
         //클릭이벤트 설정

@@ -1,5 +1,9 @@
 package com.gif.eting.act.frg;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -79,6 +83,34 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.main,
 				container, false);
 
+		
+		/**
+		 * 시간에따라 배경을 바꾼다 
+		 */
+		SimpleDateFormat sdf = new SimpleDateFormat("HH", Locale.KOREA);
+		String thisHourStr = sdf.format(new Date());
+		int thisHour = Integer.parseInt(thisHourStr);
+		Log.i("currunt hour", thisHourStr);
+		
+		ImageView mainBg = (ImageView) rootView.findViewById(R.id.main_bg);
+		
+		if(thisHour<1 ){
+			mainBg.setImageResource(R.drawable.bg_1);
+		}else if(thisHour<5 ){
+			mainBg.setImageResource(R.drawable.bg_2);
+		}else if(thisHour<9 ){
+			mainBg.setImageResource(R.drawable.bg_3);
+		}else if(thisHour<13 ){
+			mainBg.setImageResource(R.drawable.bg_4);
+		}else if(thisHour<17 ){
+			mainBg.setImageResource(R.drawable.bg_5);
+		}else if(thisHour<21 ){
+			mainBg.setImageResource(R.drawable.bg_6);
+		}else{
+			mainBg.setImageResource(R.drawable.bg_1);
+		}
+		
+		
 		/**
 		 * 애니메이션
 		 */
@@ -106,8 +138,12 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 * 현재날짜
 		 */
 		TextView mainToday =  (TextView) rootView.findViewById(R.id.main_today);
-		String today = "2013-08-25";	//TODO 현재날짜 구해오는 로직 구현필요
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+        Date date = new Date();
+		String today = formatter.format(date);	//TODO 현재날짜 구해오는 로직 구현필요
 		mainToday.setText(today);
+		
 		//위치조정
 		int dateX = width/100*14;
 		int dateY = height/100*75;
@@ -117,6 +153,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		dataParams.topMargin = dateY; //Your Y coordinate
 		dataParams.gravity = Gravity.LEFT | Gravity.TOP;
 		mainToday.setLayoutParams(dataParams);
+
+		
 		
 		/**
 		 * 설정아이콘

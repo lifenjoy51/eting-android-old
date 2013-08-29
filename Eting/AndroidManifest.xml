@@ -71,7 +71,7 @@
         
         <!-- 이야기 백업 -->
         <activity
-            android:name="com.gif.eting.act.BackupStoryActivity"
+            android:name="com.gif.eting.act.ExportEmailActivity"
             android:screenOrientation="portrait" >
         </activity>
 
@@ -86,6 +86,7 @@
             android:name="com.gif.eting.act.FeedbackActivity"
             android:screenOrientation="portrait" >
         </activity>
+        
     </application>
 
 </manifest>
