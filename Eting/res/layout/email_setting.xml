@@ -1,29 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    
+<ImageView 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:src="@drawable/sendemail"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout 
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ET email로 보내기" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="email주소" />
-
+        android:layout_gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical">
     <EditText
         android:id="@+id/email_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="이메일주소를 입력하세요" />
+        android:background="@drawable/setting_blank"
+        android:paddingLeft="20dp"
+        android:maxLength="40"
+        android:hint="E-mail address" />
 
-    <Button
+    </LinearLayout>
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="bottom"
+        >
+    <ImageView
         android:id="@+id/send_email"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SEND Email" />
-
+		android:src="@drawable/send_1"        
+        />
+    
+    <ImageView
+        android:id="@+id/cancel_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:onClick="clear"
+        android:gravity="center"
+        android:src="@drawable/cancel_1"
+        />
+    
+</LinearLayout>
 </LinearLayout>

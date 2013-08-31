@@ -42,6 +42,7 @@ public class InboxService {
 		}
 		return returnedStory;
 	}
+	
 
 	/**
 	 * 현재 저장된 받은이야기 개수 가져오기

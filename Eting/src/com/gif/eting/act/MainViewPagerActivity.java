@@ -44,8 +44,7 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager);
-        //TODO 뒤로가기 눌렀을때 '종료하시겠습니까?' 확인창이 뜨고, 확인시 프로그램을 종료시키는 로직이 필요.
-
+        
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
@@ -164,11 +163,9 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 			 * 프래그먼트에 따른 조건분기
 			 */
 			if (fragment instanceof WriteMyStoryFragment) {
-				return ((WriteMyStoryFragment) fragment).onKeyDown(keyCode,
-						event);
+				return ((WriteMyStoryFragment) fragment).onKeyDown(keyCode, event);
 			} else if (fragment instanceof MyStoryListFragment) {
-				return ((MyStoryListFragment) fragment).onKeyDown(keyCode,
-						event);
+				return ((MyStoryListFragment) fragment).onKeyDown(keyCode, event);
 			} else if (fragment instanceof MainFragment) {
 				return ((MainFragment) fragment).onKeyDown(keyCode, event);
 			} else {

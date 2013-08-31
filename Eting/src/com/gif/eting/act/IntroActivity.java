@@ -25,7 +25,7 @@ public class IntroActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.intro);	//TODO 디자인만 입히면 된다.
+		setContentView(R.layout.intro);	
 		
 		FrameLayout fr = (FrameLayout) findViewById(R.id.intro_layout);
 		fr.addView(new UfoView(this));	//움직이는 UFO 등록

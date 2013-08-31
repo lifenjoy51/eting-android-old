@@ -1,5 +1,8 @@
 package com.gif.eting.svc.task;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,6 +10,7 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.gif.eting.dto.StampDTO;
 import com.gif.eting.util.AsyncTaskCompleteListener;
 import com.gif.eting.util.Config;
 import com.gif.eting.util.HttpUtil;
@@ -22,14 +26,14 @@ public class ReceiveStampTask extends AsyncTask<String, String, String> {
 	/**
 	 * 작업 수행 후 이 클래스를 호출한 객체에서 후속작업을 실행시키기 위한 콜백. 
 	 */
-	private AsyncTaskCompleteListener<String> callback;
+	private AsyncTaskCompleteListener<List<StampDTO>> callback;
 	
 	/**
 	 * 생성자로 콜백을 받아온다.
 	 * 
 	 * @param callback
 	 */
-	public ReceiveStampTask(AsyncTaskCompleteListener<String> callback){
+	public ReceiveStampTask(AsyncTaskCompleteListener<List<StampDTO>> callback){
 		this.callback = callback;
 	}
 
@@ -53,18 +57,19 @@ public class ReceiveStampTask extends AsyncTask<String, String, String> {
 
 		Log.i("json response", result);	//응답확인
 		
-		StringBuffer stamps = new StringBuffer();
+		List<StampDTO> list = new ArrayList<StampDTO>();
 		
 		try {
 			JSONObject json = new JSONObject(result);
 
-			//TODO 현재는 스탬프를 텍스트형태로 붙여서 넘겨주는데 추후 어떻게 할것인지 논의필요함.
 			if (!json.isNull("stampList")) {
 				JSONArray stampList = json.getJSONArray("stampList");
 				for(int i=0; i<stampList.length(); i++){
 					JSONObject stamp = stampList.getJSONObject(i);
-					stamps.append(stamp.getString("stamp_name"));
-					stamps.append(" , ");
+					StampDTO stampDto = new StampDTO();
+					stampDto.setStamp_id(stamp.getString("stamp_id"));
+					stampDto.setStamp_name(stamp.getString("stamp_name"));
+					stampDto.setSender(stamp.getString("sender"));
 					
 					Log.i("returned stamp", stamp.getString("stamp_id") + stamp.getString("stamp_name"));
 				}
@@ -75,7 +80,7 @@ public class ReceiveStampTask extends AsyncTask<String, String, String> {
 		
 		// 호출한 클래스 콜백
 		if (callback != null)
-			callback.onTaskComplete(stamps.toString());	
+			callback.onTaskComplete(list);	
 	}
 
 }

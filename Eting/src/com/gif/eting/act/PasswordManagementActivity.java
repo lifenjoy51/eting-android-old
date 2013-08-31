@@ -3,10 +3,12 @@ package com.gif.eting.act;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.View.OnTouchListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.gif.eting.R;
@@ -14,6 +16,11 @@ import com.gif.eting.svc.PasswordService;
 
 public class PasswordManagementActivity extends Activity implements
 		OnClickListener {
+	private EditText origin_pwd;
+	private EditText setting_pw;
+	private EditText setting_pw2;
+	private ImageView setting_save_pw_btn;
+	private ImageView setting_cancel_pw_ptn;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +28,62 @@ public class PasswordManagementActivity extends Activity implements
 		setContentView(R.layout.password_manage);
 
 		// 버튼 온클릭이벤트 등록
-		((Button) findViewById(R.id.setting_save_pw_btn))
-				.setOnClickListener(this);
+		setting_save_pw_btn = (ImageView) findViewById(R.id.setting_save_pw_btn);
+		setting_cancel_pw_ptn = (ImageView) findViewById(R.id.setting_cancel_pw_ptn);
+		origin_pwd = (EditText) findViewById(R.id.origin_pwd);
+		setting_pw = (EditText) findViewById(R.id.setting_pw);
+		setting_pw2 = (EditText) findViewById(R.id.setting_pw2);
+
+		setting_save_pw_btn.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					setting_save_pw_btn = (ImageView) findViewById(v.getId());
+					setting_save_pw_btn.setImageResource(R.drawable.submit_2);
+				}
+				if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					if (!v.isPressed()) {
+						setting_save_pw_btn
+								.setImageResource(R.drawable.submit_1);
+						return true;
+					}
+
+				}
+
+				if (event.getAction() == MotionEvent.ACTION_UP) {
+					setting_save_pw_btn.setImageResource(R.drawable.submit_1);
+				}
+
+				return false;
+			}
+		});
+		setting_cancel_pw_ptn.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					setting_cancel_pw_ptn = (ImageView) findViewById(v.getId());
+					setting_cancel_pw_ptn.setImageResource(R.drawable.cancel_2);
+				}
+				if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					if (!v.isPressed()) {
+						setting_cancel_pw_ptn
+								.setImageResource(R.drawable.cancel_1);
+						return true;
+					}
+
+				}
+
+				if (event.getAction() == MotionEvent.ACTION_UP) {
+					setting_cancel_pw_ptn.setImageResource(R.drawable.cancel_1);
+				}
+
+				return false;
+			}
+		});
+
+		setting_save_pw_btn.setOnClickListener(this);
+		setting_cancel_pw_ptn.setOnClickListener(this);
+
 	}
 
 	@Override
@@ -31,15 +92,15 @@ public class PasswordManagementActivity extends Activity implements
 		if (view.getId() == R.id.setting_save_pw_btn) {
 			savePassword();
 		}
+		if (view.getId() == R.id.setting_cancel_pw_ptn) {
+			clear(view);
+			finish();
+		}
 	}
 
 	// 세팅화면에서 비밀번호 저장
 	public void savePassword() {
 		boolean isValid = false;
-
-		EditText origin_pwd = (EditText) findViewById(R.id.origin_pwd);
-		EditText setting_pw = (EditText) findViewById(R.id.setting_pw);
-		EditText setting_pw2 = (EditText) findViewById(R.id.setting_pw2);
 
 		String o_pw = origin_pwd.getText().toString(); // 예전 비밀번호
 		String pw = setting_pw.getText().toString(); // 새로입력한 비밀번호
@@ -78,4 +139,9 @@ public class PasswordManagementActivity extends Activity implements
 		// startActivity(new Intent(context, ReadMyStoryActivity.class));
 	}
 
+	public void clear(View view) {
+		origin_pwd.setText("");
+		setting_pw.setText("");
+		setting_pw2.setText("");
+	}
 }

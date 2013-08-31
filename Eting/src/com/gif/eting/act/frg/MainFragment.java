@@ -141,7 +141,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
         Date date = new Date();
-		String today = formatter.format(date);	//TODO 현재날짜 구해오는 로직 구현필요
+		String today = formatter.format(date);	
 		mainToday.setText(today);
 		
 		//위치조정

@@ -151,5 +151,20 @@ public class StoryService {
 		storyDao.close();
 		return myStory;
 	}
+	
+	/**
+	 * 이야기 삭제
+	 * 
+	 * @param storyIdx
+	 * @return
+	 */
+	public Integer delStory(String storyIdx) {
+		storyDao.open();
+		StoryDTO story = new StoryDTO();
+		story.setIdx(Long.parseLong(storyIdx));		
+		Integer result = storyDao.delStory(story);
+		storyDao.close();
+		return result;
+	}
 
 }

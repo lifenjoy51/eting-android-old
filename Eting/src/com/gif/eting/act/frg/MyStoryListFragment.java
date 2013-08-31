@@ -61,13 +61,20 @@ public class MyStoryListFragment  extends SherlockFragment{
         // Inflate the layout containing a title and body text.
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.read_story, container, false);
+
+        return rootView;
+	}
+    
+    
+
+	@Override
+	public void onResume() {
+		super.onResume();
         
         /**
          * 내 이야기 목록을 가져와 그린다.
          */
-        this.drawMyStoryList(rootView);
-
-        return rootView;
+        this.drawMyStoryList(getView());
 	}
 
 	/**

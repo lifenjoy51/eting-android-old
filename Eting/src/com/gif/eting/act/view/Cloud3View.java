@@ -23,7 +23,6 @@ import com.gif.eting.util.AnimateDrawable;
 public class Cloud3View extends View {
 	private AnimateDrawable mDrawable;
 	private boolean chk = false;
-	private int cnt = 0;
 
 	public Cloud3View(Context context) {
 		super(context);

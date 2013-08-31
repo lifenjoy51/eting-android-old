@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -14,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +59,10 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 	 * 받은이야기에 달린 스탬프들
 	 */
 	private List<String> stamps = new ArrayList<String>();;
+	/**
+	 * 보낸사람
+	 */
+	private String sender;
 	
 
 	@Override
@@ -91,9 +95,9 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		//버튼이벤트 삽입
 		findViewById(R.id.inbox_confirm_btn).setOnClickListener(this);
 		
-		//스탬프 자동완성 
-		//TODO 스탬프 입력화면을 새로 개발해야한다.
-		
+		/**
+		 * 스탬프입력창
+		 */
 		List<StampDTO> list = stampService.getStampList();
 		RelativeLayout stampArea = (RelativeLayout) findViewById(R.id.inbox_stamp_area); // 스탬프영역
 			
@@ -145,42 +149,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		}
 		
 		
-/*
-		//TODO 스탬프 자동완성기능은 빠진다.
-		AutoCompleteTextView stampAC = (AutoCompleteTextView) findViewById(R.id.stamp_auto_complete);
-		ArrayAdapter<StampDTO> adapter = new ArrayAdapter<StampDTO>(this, android.R.layout.simple_dropdown_item_1line, list);
-		stampAC.setAdapter(adapter);
-			
-		// 클릭이벤트 연결
-		stampAC.setOnItemClickListener(mOnItemClickListener);*/
 	}
-/*	
-	*//**
-	 * 스티커 클릭시 이벤트
-	 *//*
-    private OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
-
-    	@SuppressWarnings("unchecked")
-		public void onItemClick(AdapterView<?> parentView, View clickedView,
-    			int position, long id) {
-
-    		Log.i("position",String.valueOf(position));
-    		Log.i("id",String.valueOf(id));
-			
-    		ArrayAdapter<StampDTO> adapter = (ArrayAdapter<StampDTO>) parentView.getAdapter();	// Adapter 받아옴
-    		StampDTO stamp = adapter.getItem(position);	//선택한 Row에 있는 StampDTO를 받아옴
-    		String stampId = stamp.getStamp_id();
-    		String stampName = stamp.getStamp_name();
-    		
-    		Log.i("getItem", stampId+stampName);
-    		
-    		
-    		Toast.makeText(getApplicationContext(), stampId,
-    				Toast.LENGTH_SHORT).show();
-    	}
-    	
-    };
-	*/
 
 	@Override
 	public void onClick(View v) {
@@ -225,6 +194,12 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 	 */
 	private void saveStampsToServer(){
 		/**
+		 * 보낸이 설정
+		 */
+		EditText et = (EditText) findViewById(R.id.stamp_sender);
+		sender = et.getText().toString();
+		
+		/**
 		 * 서버로 스탬프 전송
 		 * 
 		 * SendStampTask를 생성할때 파라미터는 SendStampTask가 수행되고 나서 실행될 콜백이다.
@@ -232,8 +207,9 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		 * parameter[0] = inboxStoryIdx. 받은이야기 고유번호
 		 * parameter[1] = stamps. 전송할 스탬프들
 		 * parameter[2] = getApplicationContext(). Context.
+		 * parameter[3] = sender. 보낸사람 이름(별명).
 		 */
-		new SendStampTask(new AfterSendStampTask()).execute(String.valueOf(inboxStoryIdx), stamps, getApplicationContext());
+		new SendStampTask(new AfterSendStampTask()).execute(String.valueOf(inboxStoryIdx), stamps, getApplicationContext(), sender);
 	}
 	
 	/**

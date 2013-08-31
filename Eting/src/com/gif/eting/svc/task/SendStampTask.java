@@ -53,6 +53,8 @@ public class SendStampTask extends AsyncTask<Object, String, String> {
 			
 			this.context = (Context) params[2];	//파라미터 세번째값 context
 			
+			String sender =(String) params[3];	//파라미터 네번째값 sender
+			
 			StringBuffer sbf = new StringBuffer();
 			for(String stampId : stampIds){
 				sbf.append(stampId);
@@ -61,7 +63,8 @@ public class SendStampTask extends AsyncTask<Object, String, String> {
 			
 			if(sbf.length()>0){		//스탬프가 있으면
 				String stampIdParams = sbf.substring(0, sbf.length()-1);	
-				param += "&stamp_id=" + stampIdParams;
+				param += "&stamp_id=" + stampIdParams;				
+				param += "&sender=" + sender;	//보내는이는 서버에서 이야기-스탬프 매핑테이블에 저장될것이기 때문에 스탬프가 없으면 보내는이도 기록하지 못한다. 
 			}
 			
 			return HttpUtil.doPost(urlStr, param);	//Http전송

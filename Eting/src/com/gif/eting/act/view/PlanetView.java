@@ -8,7 +8,6 @@ import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 
@@ -71,8 +70,6 @@ public class PlanetView extends View {
 		// 위아래로 왔다갔다하게하기
 		an = new RotateAnimation (0, 360, objWidth/2, objHeight/2);
 
-		an.setAnimationListener(new AnimationControl(context));
-
 		long duration; // 이동하는 시간
 		duration = 35000;
 
@@ -83,35 +80,5 @@ public class PlanetView extends View {
 		mDrawable = new AnimateDrawable(dr, an);
 		an.startNow();
 
-	}
-
-	/**
-	 * 구름애니메이션 상태를 확인하는 클래스
-	 * 
-	 * @author lifenjoy51
-	 * 
-	 */
-	private class AnimationControl implements AnimationListener {
-		Context context;
-
-		public AnimationControl(Context context) {
-			this.context = context;
-		}
-
-		@Override
-		public void onAnimationEnd(Animation an) {
-		}
-
-		/**
-		 * 애니메이션이 반복될때마다 실행
-		 */
-		@Override
-		public void onAnimationRepeat(Animation an) {
-		}
-
-		@Override
-		public void onAnimationStart(Animation arg0) {
-
-		}
 	}
 }

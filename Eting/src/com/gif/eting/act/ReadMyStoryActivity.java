@@ -1,13 +1,22 @@
 package com.gif.eting.act;
 
+import java.util.List;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gif.eting.R;
+import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.svc.task.ReceiveStampTask;
@@ -19,9 +28,12 @@ import com.gif.eting.util.AsyncTaskCompleteListener;
  * @author lifenjoy51
  *
  */
-public class ReadMyStoryActivity extends Activity {
+public class ReadMyStoryActivity extends Activity implements OnClickListener{
 
 	private StoryService storyService;
+	private String storyIdx;
+	private Context context;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +45,15 @@ public class ReadMyStoryActivity extends Activity {
 		getWindow().setAttributes(layoutParams);
 		setContentView(R.layout.popup);
 		
+		this.context = getApplicationContext();
+		
 		Intent intent = getIntent();
-		String idx = intent.getStringExtra("idx");	//파라미터값으로 넘긴 이야기 고유번호
+		storyIdx = intent.getStringExtra("idx");	//파라미터값으로 넘긴 이야기 고유번호
 
 		//Service초기화
 		storyService = new StoryService(this.getApplicationContext());
 		
-		StoryDTO myStory = storyService.getMyStory(idx);	//해당하는 이야기 받아오기
+		StoryDTO myStory = storyService.getMyStory(storyIdx);	//해당하는 이야기 받아오기
 		String content = myStory.getContent();
 		String storyDate = myStory.getStory_date();
 		
@@ -56,20 +70,59 @@ public class ReadMyStoryActivity extends Activity {
 		 * execute의 파라미터가 실제 넘겨줄 자료들.
 		 * parameter[0] = idx. 이야기 고유번호.
 		 */
-		new ReceiveStampTask(new AfterReceiveStampTask()).execute(idx);
+		new ReceiveStampTask(new AfterReceiveStampTask()).execute(storyIdx);
 		
+		//클릭이벤트 설정
+		findViewById(R.id.del_btn).setOnClickListener(this);
 	}
 	
 	/**
 	 * ReceiveStampTask 수행 후 실행되는 콜백
 	 */
-	private class AfterReceiveStampTask implements AsyncTaskCompleteListener<String>{
+	private class AfterReceiveStampTask implements AsyncTaskCompleteListener<List<StampDTO>>{
 
 		@Override
-		public void onTaskComplete(String result) {
-			//TODO 스탬프를 어떻게 보여줄것인가 생각해봐야함. 현재는 그냥 텍스트를 집어넣는다.
+		public void onTaskComplete(List<StampDTO> list) {
+			//TODO 스탬프DTO들을 받아온다. 화면에 뿌려주는 로직 만들어야함.
 			TextView stampInfoView = (TextView) findViewById(R.id.stamp_info);
-			stampInfoView.setText(result);	
+			if(list.size()>0){
+				StringBuffer sb = new StringBuffer();
+				sb.append(list.get(0).getSender());
+				for(StampDTO stamp : list){
+					sb.append(stamp.getStamp_name());
+					sb.append(" , ");					
+				}
+				stampInfoView.setText(sb.toString());
+			}
+			//stampInfoView.setText(result);	
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		if(v.getId()==R.id.del_btn){
+			// Ask the user if they want to quit
+			new AlertDialog.Builder(this)
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setTitle(R.string.delete_story)
+					.setMessage(R.string.really_delete_story)
+					.setPositiveButton(R.string.yes,
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									
+									//삭제버튼을 클릭했을 때
+									storyService.delStory(storyIdx);
+									
+									//삭제 후 로직
+									Toast.makeText(context, "삭제되었습니다", Toast.LENGTH_SHORT).show();
+									
+									//돌아가기
+									finish();								}
+
+							}).setNegativeButton(R.string.no, null).show();
 		}
 	}
 

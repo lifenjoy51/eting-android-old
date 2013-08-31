@@ -6,10 +6,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.View.OnTouchListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.gif.eting.R;
@@ -20,7 +22,8 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 
 	private Context context;
 	private EditText email_address;
-	private Button send_email;
+	private ImageView send_email;
+	private ImageView cancel_btn;
 
 	private List<StoryDTO> contentArray = null;
 	private StoryService storyService = null;
@@ -34,25 +37,75 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.email_setting);
 
 		email_address = (EditText) findViewById(R.id.email_address);
-		send_email = (Button) findViewById(R.id.send_email);
+		send_email = (ImageView) findViewById(R.id.send_email);
+		cancel_btn = (ImageView) findViewById(R.id.cancel_btn);
+
+		// emailAddress = email_address.getText().toString();
 		
-//		emailAddress = email_address.getText().toString();
-		
+		send_email.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					send_email = (ImageView) findViewById(v.getId());
+					send_email.setImageResource(R.drawable.send_2);
+				}
+				if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					if (!v.isPressed()) {
+						send_email.setImageResource(R.drawable.send_1);
+						return true;
+					}
+
+				}
+
+				if (event.getAction() == MotionEvent.ACTION_UP) { 
+					send_email.setImageResource(R.drawable.send_1);
+				}
+
+				return false;
+			}
+		});
+		cancel_btn.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					cancel_btn = (ImageView) findViewById(v.getId());
+					cancel_btn.setImageResource(R.drawable.cancel_2);
+				}
+				if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					if (!v.isPressed()) {
+						cancel_btn.setImageResource(R.drawable.cancel_1);
+						return true;
+					}
+
+				}
+
+				if (event.getAction() == MotionEvent.ACTION_UP) {
+					cancel_btn.setImageResource(R.drawable.cancel_1);
+				}
+
+				return false;
+			}
+		});
+
+
 		send_email.setOnClickListener(this);
+		cancel_btn.setOnClickListener(this);
 	}
-	
-	
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 	}
 
-
-
-	@Override
 	public void onClick(View v) {
-		sendEmail();
+		if (v.getId() == R.id.send_email) {
+			sendEmail();
+		}
+		if (v.getId() == R.id.cancel_btn) {
+			clear(v);
+			finish();
+		}
+
 	}
 
 	public void sendEmail() {
@@ -75,18 +128,16 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 
 		mailContent = sb.toString();
 
-
 		// 전송할 파일의 경로
-//		String szSendFilePath = Environment.getExternalStorageDirectory()
-//				.getAbsolutePath() + "/myTest.txt";
-//		File f = new File(szSendFilePath);
-//		if (!f.exists()) {
-//			Toast.makeText(this, "파일이 없습니다.", Toast.LENGTH_SHORT).show();
-//		}
+		// String szSendFilePath = Environment.getExternalStorageDirectory()
+		// .getAbsolutePath() + "/myTest.txt";
+		// File f = new File(szSendFilePath);
+		// if (!f.exists()) {
+		// Toast.makeText(this, "파일이 없습니다.", Toast.LENGTH_SHORT).show();
+		// }
 		// File객체로부터 Uri값 생성
-//		fileUri = Uri.fromFile(f);
+		// fileUri = Uri.fromFile(f);
 
-		
 		Intent it = new Intent(Intent.ACTION_SEND);
 		it.setType("plain/text");
 
@@ -107,5 +158,9 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 		}
 
 	}
+	public void clear(View v) {
+		email_address.setText("");
+
+	 } 
 
 }

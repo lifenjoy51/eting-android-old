@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.3" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
+  realizations="true" associations="false" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="com.gif.eting.act.MainViewPagerActivity" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/MainViewPagerActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="154" x="975" y="191"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="com.gif.eting.act.SettingActivity" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/SettingActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="105" x="834" y="422"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="com.gif.eting.act.IntroActivity.AfterCheckStampTask" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/IntroActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="152" x="632" y="114"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="com.gif.eting.act.PasswordManagementActivity" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/PasswordManagementActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="197" x="1049" y="499"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="com.gif.eting.act.ReadInboxActivity" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/ReadInboxActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="125" x="568" y="422"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="com.gif.eting.act.MainViewPagerActivity.ScreenSlidePagerAdapter" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/MainViewPagerActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="172" x="774" y="268"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="com.gif.eting.act.ReadMyStoryActivity" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/ReadMyStoryActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="140" x="1028" y="422"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="com.gif.eting.act.ExportEmailActivity" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/ExportEmailActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="133" x="834" y="499"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="com.gif.eting.act.LockScreenActivity" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/LockScreenActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="134" x="1222" y="114"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="com.gif.eting.act.ReadMyStoryActivity.AfterReceiveStampTask" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/ReadMyStoryActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="161" x="1459" y="499"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.gif.eting.act.IntroActivity" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/IntroActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="91" x="632" y="37"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="com.gif.eting.act.ReadInboxActivity.AfterSendStampTask" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/ReadInboxActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="145" x="458" y="499"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="com.gif.eting.act.frg.MainFragment" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/frg/MainFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="105" x="784" y="345"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="com.gif.eting.act.frg.WriteMyStoryFragment" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/frg/WriteMyStoryFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="155" x="589" y="345"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="com.gif.eting.act.frg.MyStoryListFragment" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/frg/MyStoryListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="145" x="988" y="345"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="com.gif.eting.act.frg.WriteMyStoryFragment.AfterSendStoryTask" project="Eting" 
+    file="/Eting/src/com/gif/eting/act/frg/WriteMyStoryFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="138" x="240" y="422"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="com.gif.eting.svc.StoryService" project="Eting" 
+    file="/Eting/src/com/gif/eting/svc/StoryService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="150" width="240" x="838" y="653"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="com.gif.eting.svc.StampService" project="Eting" 
+    file="/Eting/src/com/gif/eting/svc/StampService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="114" width="197" x="43" y="499"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="com.gif.eting.svc.PasswordService" project="Eting" 
+    file="/Eting/src/com/gif/eting/svc/PasswordService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="96" width="182" x="1459" y="653"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="com.gif.eting.svc.InboxService" project="Eting" 
+    file="/Eting/src/com/gif/eting/svc/InboxService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="96" width="151" x="643" y="499"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="com.gif.eting.dao.InboxDAO" project="Eting" 
+    file="/Eting/src/com/gif/eting/dao/InboxDAO.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="83" x="643" y="843"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="com.gif.eting.dao.StoryDAO" project="Eting" 
+    file="/Eting/src/com/gif/eting/dao/StoryDAO.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="83" x="838" y="843"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="com.gif.eting.dao.StampDAO" project="Eting" 
+    file="/Eting/src/com/gif/eting/dao/StampDAO.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="86" x="43" y="653"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="com.gif.eting.dao.SettingDAO" project="Eting" 
+    file="/Eting/src/com/gif/eting/dao/SettingDAO.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="89" x="1459" y="843"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="com.gif.eting.db.InboxDBHelper" project="Eting" 
+    file="/Eting/src/com/gif/eting/db/InboxDBHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="114" width="155" x="643" y="1033"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="com.gif.eting.db.StampDBHelper" project="Eting" 
+    file="/Eting/src/com/gif/eting/db/StampDBHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="150" width="180" x="43" y="843"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="com.gif.eting.db.StoryDBHelper" project="Eting" 
+    file="/Eting/src/com/gif/eting/db/StoryDBHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="114" width="182" x="838" y="1033"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="com.gif.eting.db.SettingDBHelper" project="Eting" 
+    file="/Eting/src/com/gif/eting/db/SettingDBHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="96" width="140" x="1459" y="1033"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="com.gif.eting.svc.task.CheckStampTask" project="Eting" 
+    file="/Eting/src/com/gif/eting/svc/task/CheckStampTask.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="124" x="43" y="114"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="com.gif.eting.svc.task.SendStampTask" project="Eting" 
+    file="/Eting/src/com/gif/eting/svc/task/SendStampTask.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="117" x="280" y="499"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="com.gif.eting.svc.task.ReceiveStampTask" project="Eting" 
+    file="/Eting/src/com/gif/eting/svc/task/ReceiveStampTask.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="133" x="1286" y="499"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="com.gif.eting.svc.task.SendStoryTask" project="Eting" 
+    file="/Eting/src/com/gif/eting/svc/task/SendStoryTask.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="37" width="110" x="418" y="422"/>    
+    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <dependency id="33">    
+    <bendpoint x="52" y="191"/>    
+    <bendpoint x="52" y="268"/>    
+    <bendpoint x="52" y="345"/>    
+    <bendpoint x="52" y="422"/>    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
+  <dependency id="34">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="32"/>  
+  </dependency>  
+  <dependency id="35">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="36">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <association id="37">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="38" name="dbHelper"/>      
+      <multiplicity id="39" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="40">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="41" name="dbHelper"/>      
+      <multiplicity id="42" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="43">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="3"/>  
+  </nesting>  
+  <dependency id="44">    
+    <bendpoint x="427" y="499"/>    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <association id="45">    
+    <bendpoint x="652" y="653"/>    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="46" name="inboxDao"/>      
+      <multiplicity id="47" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="48">    
+    <bendpoint x="471" y="653"/>    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <nesting id="49">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="12"/>  
+  </nesting>  
+  <nesting id="50">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="6"/>  
+  </nesting>  
+  <dependency id="51">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <association id="52">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="53" name="storyService"/>      
+      <multiplicity id="54" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="55">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="16"/>  
+  </nesting>  
+  <dependency id="56">    
+    <bendpoint x="997" y="268"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <dependency id="57">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="58">    
+    <bendpoint x="997" y="422"/>    
+    <bendpoint x="997" y="499"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <dependency id="59">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <association id="60">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="61" name="inboxService"/>      
+      <multiplicity id="62" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="63">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="30"/>  
+  </dependency>  
+  <dependency id="64">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="31"/>  
+  </dependency>  
+  <association id="65">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="66" name="stampDao"/>      
+      <multiplicity id="67" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="68">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="69" name="inboxDao"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="71">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <association id="72">    
+    <bendpoint x="1018" y="499"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="73" name="storyService"/>      
+      <multiplicity id="74" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="75">    
+    <bendpoint x="976" y="268"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="76">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <nesting id="77">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="10"/>  
+  </nesting>  
+  <dependency id="78">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <association id="79">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="80" name="storyDao"/>      
+      <multiplicity id="81" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="82">    
+    <bendpoint x="1650" y="191"/>    
+    <bendpoint x="1650" y="268"/>    
+    <bendpoint x="1650" y="345"/>    
+    <bendpoint x="1650" y="422"/>    
+    <bendpoint x="1650" y="499"/>    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <dependency id="83">    
+    <bendpoint x="1198" y="422"/>    
+    <bendpoint x="1198" y="345"/>    
+    <bendpoint x="1198" y="268"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="84">    
+    <bendpoint x="723" y="422"/>    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="20"/>  
+  </dependency>  
+  <dependency id="85">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <association id="86">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="87" name="settingDao"/>      
+      <multiplicity id="88" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="89">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="90" name="dbHelper"/>      
+      <multiplicity id="91" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="92">    
+    <bendpoint x="743" y="268"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <association id="93">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="94" name="dbHelper"/>      
+      <multiplicity id="95" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="96">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="97">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="98">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <association id="99">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="100" name="stampService"/>      
+      <multiplicity id="101" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="false" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="false">    
+    <attributes public="false" package="false" protected="false" private="false" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="false" multiplicity="true"/>
+</class-diagram>

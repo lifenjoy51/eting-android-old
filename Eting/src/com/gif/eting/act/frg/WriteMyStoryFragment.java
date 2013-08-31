@@ -50,7 +50,6 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    	//TODO 뒤로가기 눌렀을때 메인페이지로 이동하는 로직 필요.
     }
 
     @Override
@@ -65,7 +64,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
         Date date = new Date();
         
         TextView tv =  (TextView) rootView.findViewById(R.id.write_story_date);
-        String today = formatter.format(date);	//TODO 오늘날짜 받아오는 로직 추가필요
+        String today = formatter.format(date);	
         tv.setText(today);
         
         //클릭이벤트 설정

@@ -2,29 +2,111 @@ package com.gif.eting.act;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.view.View.OnTouchListener;
+import android.widget.ImageView;
 
 import com.gif.eting.R;
 
 public class SettingActivity extends Activity implements OnClickListener {
 
-	private ImageButton password_img_btn;
-	private Button email_btn;
-//	private Uri fileUri;
-	
+	private ImageView alarm_img_btn;
+	private ImageView password_img_btn;
+	private ImageView email_btn;
+	private ImageView credit_img_btn;
+
+	// private Uri fileUri;
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.setting);
-	
+
 		// 버튼 온클릭이벤트 등록
-		password_img_btn = (ImageButton) findViewById(R.id.password_img_btn);
-		email_btn = (Button) findViewById(R.id.email_btn);
+		alarm_img_btn = (ImageView) findViewById(R.id.alarm_img_btn);
+		password_img_btn = (ImageView) findViewById(R.id.password_img_btn);
+		email_btn = (ImageView) findViewById(R.id.email_btn);
+		credit_img_btn = (ImageView) findViewById(R.id.credit_img_btn);
+
+		alarm_img_btn.setImageResource(R.drawable.alram_off);
+
+		password_img_btn.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					password_img_btn = (ImageView) findViewById(v.getId());
+					password_img_btn.setImageResource(R.drawable.changepassword_2);
+				}
+				if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					if (!v.isPressed()) {
+						password_img_btn.setImageResource(R.drawable.changepassword_1);
+						return true;
+					}
+
+				}
+
+				if (event.getAction() == MotionEvent.ACTION_UP) {
+					password_img_btn.setImageResource(R.drawable.changepassword_1);
+				}
+
+				return false;
+			}
+		});
+		email_btn.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					email_btn = (ImageView) findViewById(v.getId());
+					email_btn.setImageResource(R.drawable.sendemail_2);
+				}
+				if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					if (!v.isPressed()) {
+						email_btn.setImageResource(R.drawable.sendemail_1);
+						return true;
+					}
+
+				}
+
+				if (event.getAction() == MotionEvent.ACTION_UP) {
+					email_btn.setImageResource(R.drawable.sendemail_1);
+				}
+
+				return false;
+			}
+		});
+		credit_img_btn.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					credit_img_btn = (ImageView) findViewById(v.getId());
+					credit_img_btn.setImageResource(R.drawable.aboutus_2);
+				}
+				if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					if (!v.isPressed()) {
+						credit_img_btn.setImageResource(R.drawable.aboutus_1);
+						return true;
+					}
+
+				}
+
+				if (event.getAction() == MotionEvent.ACTION_UP) {
+					credit_img_btn.setImageResource(R.drawable.aboutus_1);
+				}
+
+				return false;
+			}
+		});
+
+		alarm_img_btn.setOnClickListener(this);
 		password_img_btn.setOnClickListener(this);
 		email_btn.setOnClickListener(this);
+		credit_img_btn.setOnClickListener(this);
+
 	}
 
 	@Override
@@ -37,6 +119,26 @@ public class SettingActivity extends Activity implements OnClickListener {
 		if (view.getId() == R.id.email_btn) {
 			startActivity(new Intent(this, ExportEmailActivity.class));
 		}
+		if (view.getId() == R.id.credit_img_btn) {
+			startActivity(new Intent(this, CreditActivity.class));
+		}
+		if (view.getId() == R.id.alarm_img_btn) {
+			Drawable tempImg = alarm_img_btn.getDrawable();
+			Drawable tempRes = SettingActivity.this.getResources().getDrawable(
+					R.drawable.alram_on);
+			Bitmap tmpBitmap = ((BitmapDrawable) tempImg).getBitmap();
+			Bitmap tmpBitmapRes = ((BitmapDrawable) tempRes).getBitmap();
+
+			if (tmpBitmap.equals(tmpBitmapRes)) {
+				alarm_img_btn.setImageResource(R.drawable.alram_off);
+				// 로직 수행
+			} else {
+				alarm_img_btn.setImageResource(R.drawable.alram_on);
+				// 로직 수행
+			}
+
+		}
+
 	}
 
 }

@@ -28,26 +28,38 @@
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:layout_below="@+id/popup_content"
-        android:background="#AABBCC" >
+        android:layout_below="@+id/popup_content">
 
         <RelativeLayout
             android:id="@+id/inbox_stamp_area"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#11bbFF"
             android:orientation="horizontal" >
         </RelativeLayout>
     </ScrollView>
-
+        
     <Button
         android:id="@+id/inbox_confirm_btn"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/scrollView1"
-        android:layout_marginRight="30dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/inbox_confirm" />
+
+    <EditText
+        android:hint="@string/enter_you_name"
+        android:id="@+id/stamp_sender"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/scrollView1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:ems="8" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>
