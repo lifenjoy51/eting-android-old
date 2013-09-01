@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.gif.eting.R;
@@ -125,14 +124,11 @@ public class MyStoryListFragment  extends SherlockFragment{
     		StoryDTO selectedItem = (StoryDTO) listAdapter.getItem(position);	//선택한 Row에 있는 Object를 받아옴
     		String idx = String.valueOf(selectedItem.getIdx());	//Object에서 idx값을 받아옴
     		
-    		String toastMessage = idx;
     		
     		Intent intent =new Intent(getActivity(), ReadMyStoryActivity.class);
     		intent.putExtra("idx", idx);
     		startActivity(intent);
     		
-    		Toast.makeText(getActivity(), toastMessage, Toast.LENGTH_SHORT)
-    		.show();
     	}
     	
     };

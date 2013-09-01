@@ -16,7 +16,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gif.eting.R;
 import com.gif.eting.act.view.StampView;
@@ -206,8 +205,6 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
     			stamps.add(stampId);
     		}
     		
-    		Toast.makeText(getApplicationContext(), stampId,
-    				Toast.LENGTH_SHORT).show();
 		}
 		
 	}

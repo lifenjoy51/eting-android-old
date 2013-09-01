@@ -173,27 +173,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		mainAcc2.setLayoutParams(mainAcc2Params);
 		
 
-		/**
-		 * 내 이야기개수 설정
-		 */
-		TextView mainEtingCnt =  (TextView) rootView.findViewById(R.id.main_eting_cnt);
-		StoryService svc = new StoryService(getActivity());
-		int storyCnt = svc.getStoryCnt();
-		mainEtingCnt.setText(String.valueOf(storyCnt)+ " eting");
 		
-		Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
-		mainEtingCnt.setTypeface(face);
-				
-		//위치조정
-		int cntX = width/100*14;
-		int cntY = height/100*68;	
-		FrameLayout.LayoutParams mainEtingParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
-		mainEtingParams.leftMargin = cntX; //Your X coordinate
-		mainEtingParams.topMargin = cntY; //Your Y coordinate
-		mainEtingParams.gravity = Gravity.LEFT | Gravity.TOP;
-		mainEtingCnt.setLayoutParams(mainEtingParams);
-		mainEtingCnt.bringToFront();
-
         /**
          * 클릭이벤트 설정
          */
@@ -266,6 +246,27 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		DisplayMetrics metrics = getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;
 		int height = metrics.heightPixels;
+		
+		/**
+		 * 내 이야기개수 설정
+		 */
+		TextView mainEtingCnt =  (TextView) getView().findViewById(R.id.main_eting_cnt);
+		StoryService svc = new StoryService(getActivity());
+		int storyCnt = svc.getStoryCnt();
+		mainEtingCnt.setText(String.valueOf(storyCnt)+ " eting");
+		
+		Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
+		mainEtingCnt.setTypeface(face);
+				
+		//위치조정
+		int cntX = width/100*14;
+		int cntY = height/100*68;	
+		FrameLayout.LayoutParams mainEtingParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
+		mainEtingParams.leftMargin = cntX; //Your X coordinate
+		mainEtingParams.topMargin = cntY; //Your Y coordinate
+		mainEtingParams.gravity = Gravity.LEFT | Gravity.TOP;
+		mainEtingCnt.setLayoutParams(mainEtingParams);
+		mainEtingCnt.bringToFront();
 				
 		/**
 		 * 받은편지가 있으면 우주선표시
@@ -283,38 +284,35 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		/**
 		 * 받은편지함 개수 설정
 		 */
-		TextView mainEtingCnt =  (TextView) getView().findViewById(R.id.main_inbox_cnt);
+		TextView mainInboxCnt =  (TextView) getView().findViewById(R.id.main_inbox_cnt);
 		InboxService is = new InboxService(getActivity());
 		int inboxCnt = is.getInboxCnt();
-		mainEtingCnt.setText(String.valueOf(inboxCnt));
-		
-		Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
-		mainEtingCnt.setTypeface(face);
+		mainInboxCnt.setText(String.valueOf(inboxCnt));
 		
 		//위치조정
-		int cntX = width/100*80 + mainUfo.getWidth();
-		int cntY = height/100*15 - mainEtingCnt.getHeight()/4*1;	
-		FrameLayout.LayoutParams mainEtingParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
-		mainEtingParams.leftMargin = cntX; //Your X coordinate
-		mainEtingParams.topMargin = cntY; //Your Y coordinate
-		mainEtingParams.gravity = Gravity.LEFT | Gravity.TOP;
-		mainEtingCnt.setLayoutParams(mainEtingParams);
+		int inboxX = width/100*80 + mainUfo.getWidth();
+		int inboxY = height/100*15 - mainInboxCnt.getHeight()/4*1;	
+		FrameLayout.LayoutParams mainInboxParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
+		mainInboxParams.leftMargin = inboxX; //Your X coordinate
+		mainInboxParams.topMargin = inboxY; //Your Y coordinate
+		mainInboxParams.gravity = Gravity.LEFT | Gravity.TOP;
+		mainInboxCnt.setLayoutParams(mainInboxParams);
 		
 		
 		if(inboxCnt>0){
 			mainUfo.setVisibility(View.VISIBLE);
 			mainUfo.bringToFront();
-			mainEtingCnt.setVisibility(View.VISIBLE);
-			mainEtingCnt.bringToFront();
+			mainInboxCnt.setVisibility(View.VISIBLE);
+			mainInboxCnt.bringToFront();
 			Animation ani;
 			ani = AnimationUtils.loadAnimation(getActivity(), R.anim.twinkle);
 			mainUfo.startAnimation(ani);
-			mainEtingCnt.startAnimation(ani);
+			mainInboxCnt.startAnimation(ani);
 		}else{
 			mainUfo.clearAnimation();
 			mainUfo.setVisibility(View.GONE);
-			mainEtingCnt.clearAnimation();
-			mainEtingCnt.setVisibility(View.GONE);
+			mainInboxCnt.clearAnimation();
+			mainInboxCnt.setVisibility(View.GONE);
 		}
 	
 	}

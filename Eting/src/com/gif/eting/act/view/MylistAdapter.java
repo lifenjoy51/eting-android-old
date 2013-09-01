@@ -100,6 +100,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			TextView mystoryContent = (TextView) v.findViewById(R.id.mylist_item_content);
 			if (mystoryContent != null) {
 				String content = storyContent;
+				content = content.replaceAll("\n", " ");
 				int maxLength = 15;	//리스트에 보여줄 문자열 길이
 				if(content.length()>maxLength){	//길이보다 길면
 					content = content.substring(0, maxLength);		//자른다

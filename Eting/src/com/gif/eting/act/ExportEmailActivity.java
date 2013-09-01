@@ -159,6 +159,7 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 			startActivity(Intent.createChooser(it, "메일보냄"));
 		} catch (android.content.ActivityNotFoundException ex) {
 			Toast.makeText(this, "안됨", Toast.LENGTH_SHORT).show();
+			//TODO 메시지 확인필요
 		}
 
 	}

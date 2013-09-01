@@ -64,7 +64,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/mystory_stamp_scroll_area"
         android:layout_margin="10dp"
         android:background="@drawable/del_btn_selector"
         android:contentDescription="@string/delbtn" />

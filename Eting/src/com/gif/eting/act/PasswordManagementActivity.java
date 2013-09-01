@@ -21,6 +21,8 @@ public class PasswordManagementActivity extends Activity implements
 	private EditText setting_pw2;
 	private ImageView setting_save_pw_btn;
 	private ImageView setting_cancel_pw_ptn;
+	private PasswordService isPassword;
+//	private boolean isPass = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,7 @@ public class PasswordManagementActivity extends Activity implements
 		origin_pwd = (EditText) findViewById(R.id.origin_pwd);
 		setting_pw = (EditText) findViewById(R.id.setting_pw);
 		setting_pw2 = (EditText) findViewById(R.id.setting_pw2);
-
+		
 		setting_save_pw_btn.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -116,7 +118,14 @@ public class PasswordManagementActivity extends Activity implements
 		// 암호체크
 		PasswordService svc = new PasswordService(this);
 		isValid = svc.checkPassword(o_pw);
-
+		
+		String s1 = origin_pwd.getText().toString();
+		if (isPassword.checkPassword(s1) == false) {
+			origin_pwd.setClickable(false);
+			origin_pwd.setEnabled(false);
+			origin_pwd.setFocusable(false);
+			origin_pwd.setFocusableInTouchMode(false);
+		}
 		// 암호 성공/실패 분기처리
 		if (isValid) {
 			if (pw.equals(pw2)) {
