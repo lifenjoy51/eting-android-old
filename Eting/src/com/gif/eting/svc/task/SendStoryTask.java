@@ -6,9 +6,9 @@ import android.util.Log;
 
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.eting.util.Config;
 import com.gif.eting.util.HttpUtil;
 import com.gif.eting.util.Installation;
+import com.gif.eting.util.Util;
 
 /**
  * 작성한 이야기를 서버에 전송하는 작업
@@ -47,7 +47,7 @@ public class SendStoryTask extends AsyncTask<Object, String, String> {
 			this.context = (Context) params[1];	//파라미터 두번째값 context
 			String phoneId = Installation.id(context);	//기기 고유값
 			String param = "phone_id=" + phoneId +"&content=" +content;	//서버에 전송할 파라미터 조립
-			String urlStr = Config.serverContext+"/saveStory";
+			String urlStr = Util.serverContext+"/saveStory";
 			
 			return HttpUtil.doPost(urlStr, param);	//Http전송
 	}	

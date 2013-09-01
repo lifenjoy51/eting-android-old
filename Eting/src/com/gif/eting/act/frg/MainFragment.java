@@ -82,34 +82,6 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
         // Inflate the layout containing a title and body text.
 		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.main,
 				container, false);
-
-		
-		/**
-		 * 시간에따라 배경을 바꾼다 
-		 */
-		SimpleDateFormat sdf = new SimpleDateFormat("HH", Locale.KOREA);
-		String thisHourStr = sdf.format(new Date());
-		int thisHour = Integer.parseInt(thisHourStr);
-		Log.i("currunt hour", thisHourStr);
-		
-		ImageView mainBg = (ImageView) rootView.findViewById(R.id.main_bg);
-		
-		if(thisHour<1 ){
-			mainBg.setImageResource(R.drawable.bg_1);
-		}else if(thisHour<5 ){
-			mainBg.setImageResource(R.drawable.bg_2);
-		}else if(thisHour<9 ){
-			mainBg.setImageResource(R.drawable.bg_3);
-		}else if(thisHour<13 ){
-			mainBg.setImageResource(R.drawable.bg_4);
-		}else if(thisHour<17 ){
-			mainBg.setImageResource(R.drawable.bg_5);
-		}else if(thisHour<21 ){
-			mainBg.setImageResource(R.drawable.bg_6);
-		}else{
-			mainBg.setImageResource(R.drawable.bg_1);
-		}
-		
 		
 		/**
 		 * 애니메이션

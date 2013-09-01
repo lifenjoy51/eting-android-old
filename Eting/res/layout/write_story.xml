@@ -2,59 +2,76 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:background="@android:color/transparent"
+    android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/write_story_date"
+    <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="100"
-        android:gravity="center"
-        android:text="2013"
-        android:textSize="30sp" >
+        android:layout_weight="172"
+        android:background="@drawable/write_title_bar" />
 
-    </TextView>
-
-    <EditText
-        android:id="@+id/story_content"
-        android:layout_width="fill_parent"
-        android:layout_height="316dp"
-        android:layout_weight="105.45"
-        android:background="@android:color/transparent"
-        android:drawableBottom="@drawable/write_edittext_bottom"
-        android:drawableTop="@drawable/write_edittext_top"
-        android:gravity="start"
-        android:inputType="textMultiLine"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:textSize="20sp" />
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="20"
-        android:gravity="center"
-        android:orientation="horizontal" >
+        android:layout_marginTop="30dp"
+        android:layout_weight="1598" >
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/story_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:background="@drawable/write_bg_bottom"
+            android:gravity="center_vertical|top|left"
+            android:inputType="textMultiLine"
+            android:paddingBottom="120dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="60dp"
+            android:text="test"
+            android:textSize="20sp" />
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="30" >
-        </LinearLayout>
+            android:layout_gravity="top|center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/write_bg_top" />
+
+        <TextView
+            android:id="@+id/write_story_dt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="50dp"
+            android:background="@android:color/white"
+            android:text="2013-99-99"
+            android:textSize="20sp" >
+        </TextView>
 
         <ImageButton
             android:id="@+id/send_story_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="40dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="10"
-            android:background="@drawable/eting_btn"
+            android:background="@drawable/write_btn_selector"
             android:scaleType="fitCenter" />
+    </FrameLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="10" >
-        </LinearLayout>
-    </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="100"
+        android:background="@android:color/transparent" >
+    </ImageView>
 
 </LinearLayout>

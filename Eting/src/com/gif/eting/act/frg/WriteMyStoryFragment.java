@@ -8,12 +8,15 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +24,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.gif.eting.R;
 import com.gif.eting.svc.task.SendStoryTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
+import com.gif.eting.util.Util;
 
 /**
  * 내 이야기 쓰기
@@ -63,9 +67,29 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
         Date date = new Date();
         
-        TextView tv =  (TextView) rootView.findViewById(R.id.write_story_date);
+        TextView tv =  (TextView) rootView.findViewById(R.id.write_story_dt);
         String today = formatter.format(date);	
         tv.setText(today);
+        
+        /**
+		 * 상단날자 위치조정
+		 */
+        //기준이 될 이야기 입력부분
+		EditText et = (EditText) rootView.findViewById(R.id.story_content);
+		FrameLayout.LayoutParams etParams = (LayoutParams) et.getLayoutParams();
+		
+		int etX = etParams.leftMargin;
+		int etY = etParams.topMargin;
+		
+		//여백설정
+		int marginDp = (int) (30 * getResources().getDisplayMetrics().density);
+		
+		//위치조정		
+		FrameLayout.LayoutParams dataParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
+		dataParams.leftMargin = etX+marginDp; //Your X coordinate
+		dataParams.topMargin = etY+marginDp; //Your Y coordinate
+		dataParams.gravity = Gravity.LEFT | Gravity.TOP;
+		tv.setLayoutParams(dataParams);		
         
         //클릭이벤트 설정
 		rootView.findViewById(R.id.send_story_btn).setOnClickListener(this);
@@ -154,8 +178,8 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
 			EditText et = (EditText) getView().findViewById(R.id.story_content);
 			et.setText("");
 
-			// 내 이야기 읽기 화면으로 이동
-			mPager.setCurrentItem(0);
+			// 메인화면으로 이동 //시연때 성환이형 의견 수렴
+			mPager.setCurrentItem(1);
 		}
 	}
     
@@ -171,4 +195,5 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
 		mPager.setCurrentItem(1);
         return true;
     }
+
 }

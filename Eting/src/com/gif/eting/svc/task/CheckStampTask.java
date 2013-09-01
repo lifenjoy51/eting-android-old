@@ -14,8 +14,8 @@ import android.util.Log;
 import com.gif.eting.dto.StampDTO;
 import com.gif.eting.svc.StampService;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.eting.util.Config;
 import com.gif.eting.util.HttpUtil;
+import com.gif.eting.util.Util;
 
 /**
  * 폰에 저장된 스탬프ID 최대값을 서버에 전송하고
@@ -46,7 +46,7 @@ public class CheckStampTask extends AsyncTask<Object, String, String> {
 	@Override
 	protected String doInBackground(Object... params) {
 
-			String urlStr = Config.serverContext+"/checkStamp";
+			String urlStr = Util.serverContext+"/checkStamp";
 			
 			this.context = (Context) params[0];	//파라미터 context
 			

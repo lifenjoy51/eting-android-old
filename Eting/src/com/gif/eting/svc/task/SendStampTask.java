@@ -9,8 +9,8 @@ import android.util.Log;
 import com.gif.eting.dao.InboxDAO;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.eting.util.Config;
 import com.gif.eting.util.HttpUtil;
+import com.gif.eting.util.Util;
 
 /**
  * 스탬프를 서버에 전송하는 작업
@@ -43,7 +43,7 @@ public class SendStampTask extends AsyncTask<Object, String, String> {
 	@Override
 	protected String doInBackground(Object... params) {
 
-			String urlStr = Config.serverContext+"/saveStamp";
+			String urlStr = Util.serverContext+"/saveStamp";
 			
 			this.storyId = (String) params[0];
 			String param = "story_id=" + storyId;	//파라미터 첫번째값 storyId

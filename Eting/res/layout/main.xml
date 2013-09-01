@@ -3,15 +3,17 @@
     android:id="@+id/main_frame"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@android:color/transparent">
 
+<!-- 
     <ImageView
         android:id="@+id/main_bg"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:contentDescription="@string/mainbackgroundimage"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_1" />
+        android:src="@drawable/bg_1" /> -->
 
     <ImageButton
         android:id="@+id/setting_btn"

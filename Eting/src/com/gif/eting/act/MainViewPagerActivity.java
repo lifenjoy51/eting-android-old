@@ -1,5 +1,9 @@
 package com.gif.eting.act;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -66,6 +70,30 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
             	
             }
         });
+		
+		/**
+		 * 시간에따라 배경을 바꾼다 
+		 */
+		SimpleDateFormat sdf = new SimpleDateFormat("HH", Locale.KOREA);
+		String thisHourStr = sdf.format(new Date());
+		int thisHour = Integer.parseInt(thisHourStr);
+		Log.i("currunt hour", thisHourStr);
+		
+		if(thisHour<1 ){
+			mPager.setBackgroundResource(R.drawable.bg_1);
+		}else if(thisHour<5 ){
+			mPager.setBackgroundResource(R.drawable.bg_2);
+		}else if(thisHour<9 ){
+			mPager.setBackgroundResource(R.drawable.bg_3);
+		}else if(thisHour<13 ){
+			mPager.setBackgroundResource(R.drawable.bg_4);
+		}else if(thisHour<17 ){
+			mPager.setBackgroundResource(R.drawable.bg_5);
+		}else if(thisHour<21 ){
+			mPager.setBackgroundResource(R.drawable.bg_6);
+		}else{
+			mPager.setBackgroundResource(R.drawable.bg_1);
+		}
     }
     
     /**

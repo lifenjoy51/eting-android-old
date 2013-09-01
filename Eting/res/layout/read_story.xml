@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"    
+    android:background="@android:color/transparent" >
 
     <!-- 
     divider, dividerHeight = 리스트뷰에서 아이템과 아이템 사이에 공백을 넣어주는 옵션
@@ -12,7 +13,6 @@
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
         android:padding="10dp" >
     </ListView>

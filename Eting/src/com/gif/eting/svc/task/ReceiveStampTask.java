@@ -12,8 +12,8 @@ import android.util.Log;
 
 import com.gif.eting.dto.StampDTO;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.eting.util.Config;
 import com.gif.eting.util.HttpUtil;
+import com.gif.eting.util.Util;
 
 /**
  * 조회할 이야기에 해당하는 스탬프를 서버에서 받아오는 작업
@@ -43,7 +43,7 @@ public class ReceiveStampTask extends AsyncTask<String, String, String> {
 	@Override
 	protected String doInBackground(String... params) {
 
-			String urlStr = Config.serverContext+"/getStamp";
+			String urlStr = Util.serverContext+"/getStamp";
 			String param = "story_id=" + params[0];	//파라미터 첫번째값 storyId
 			
 			return HttpUtil.doPost(urlStr, param);	//Http전송
