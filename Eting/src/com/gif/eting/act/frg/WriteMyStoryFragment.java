@@ -179,7 +179,9 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
 			et.setText("");
 
 			// 메인화면으로 이동 //시연때 성환이형 의견 수렴
-			mPager.setCurrentItem(1);
+	    	if(mPager!=null){
+	    		mPager.setCurrentItem(1);
+	    	}
 		}
 	}
     
@@ -192,7 +194,9 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
     public boolean onKeyDown(int keyCode, KeyEvent event) {
     	Log.i("onKeyDown WriteMyStory", String.valueOf(keyCode));
     	// 메인 화면으로 이동
-		mPager.setCurrentItem(1);
+    	if(mPager!=null){
+    		mPager.setCurrentItem(1);
+    	}
         return true;
     }
 

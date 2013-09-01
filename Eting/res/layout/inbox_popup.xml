@@ -4,16 +4,20 @@
     android:layout_height="fill_parent"
     android:layout_gravity="center"
     android:layout_margin="20dp"
-    android:background="#CCDDEE"
+    android:background="@drawable/inbox_bg"
+
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/popup_date"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:background="#AABBCC"
-        android:gravity="center"
-        android:textColor="#ff000000" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="40dp"
+        android:gravity="left|center"
+        android:text="2000-00-00"
+        android:textColor="#4D4D4D" />
 
     <TextView
         android:id="@+id/popup_content"
@@ -21,14 +25,20 @@
         android:layout_height="250dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/popup_date"
-        android:gravity="center"
-        android:textColor="#ff000000" />
+        android:gravity="left|top"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="어제 밤에 골목길 걸어가는데 왠 남자가 내 앞으로 작정하고 다가오는게 느껴졌다. 진짜 무서웠는데 술기운에 겁이 사라졌는지, '그래 죽기살기다 싸우자'는 마음으로 걸었는데 스윽 다가오던 그 치한은 오승목.....동네주민 승모기 앞으로는 멀리서부터 반갑게 소리지르며 인사해줘 나 어제 진짜 모골이 송연했어ㅇ느딛ㄴㄱ디시ㅢㅅㅋㅋㅋㅋㅋㅋ"
+        android:textSize="16dp"
+        android:lineSpacingExtra="5dp"
+        android:textColor="#4D4D4D" />
 
     <ScrollView
-        android:id="@+id/scrollView1"
+        android:id="@+id/inbox_stamp_scroll_area"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:layout_below="@+id/popup_content">
+        android:layout_below="@+id/popup_content"
+        android:background="@drawable/feedback_bg">
 
         <RelativeLayout
             android:id="@+id/inbox_stamp_area"
@@ -37,29 +47,31 @@
             android:orientation="horizontal" >
         </RelativeLayout>
     </ScrollView>
+    
+    <EditText
+        android:id="@+id/stamp_sender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/feedback_name"
+        android:ems="8"
+        android:hint="@string/enter_you_name"
+        android:maxLength="10"
+        android:paddingLeft="10dp" >
+    </EditText>
         
     <Button
         android:id="@+id/inbox_confirm_btn"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/scrollView1"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/inbox_confirm" />
-
-    <EditText
-        android:hint="@string/enter_you_name"
-        android:id="@+id/stamp_sender"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/scrollView1"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:ems="8" >
-
-        <requestFocus />
-    </EditText>
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/inbox_btn_selector" />
+    
 
 </RelativeLayout>

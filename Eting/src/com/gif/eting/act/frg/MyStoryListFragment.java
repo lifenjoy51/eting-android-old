@@ -146,7 +146,9 @@ public class MyStoryListFragment  extends SherlockFragment{
     public boolean onKeyDown(int keyCode, KeyEvent event) {
     	Log.i("onKeyDown SUB", String.valueOf(keyCode));
     	// 메인 화면으로 이동
-		mPager.setCurrentItem(1);
+    	if(mPager!=null){
+    		mPager.setCurrentItem(1);
+    	}
         return true;
     }
 }

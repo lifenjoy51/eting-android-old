@@ -37,7 +37,8 @@
             android:screenOrientation="portrait" >
         </activity>
         
-        <!-- 메인화면 -->
+        <!-- 메인화면
+        windowSoftInputMode="adjustPan" 화면 쪼그라드는거 방지-->
         <activity
             android:name="com.gif.eting.act.MainViewPagerActivity"
             android:screenOrientation="portrait" 
@@ -47,14 +48,17 @@
         <!-- 내 이야기 읽기 팝업-->
         <activity
             android:name="com.gif.eting.act.ReadMyStoryActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
 
-        <!-- 받은 이야기 읽기 팝업 -->
+        <!-- 받은 이야기 읽기 팝업 
+        windowSoftInputMode="adjustPan" 화면 쪼그라드는거 방지-->
         <activity
             android:name="com.gif.eting.act.ReadInboxActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Dialog" >
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/Theme.Transparent" >
         </activity>
 
         <!-- 환경설정 -->

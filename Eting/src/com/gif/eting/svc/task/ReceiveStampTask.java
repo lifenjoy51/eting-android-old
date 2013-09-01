@@ -70,6 +70,7 @@ public class ReceiveStampTask extends AsyncTask<String, String, String> {
 					stampDto.setStamp_id(stamp.getString("stamp_id"));
 					stampDto.setStamp_name(stamp.getString("stamp_name"));
 					stampDto.setSender(stamp.getString("sender"));
+					list.add(stampDto);
 					
 					Log.i("returned stamp", stamp.getString("stamp_id") + stamp.getString("stamp_name"));
 				}

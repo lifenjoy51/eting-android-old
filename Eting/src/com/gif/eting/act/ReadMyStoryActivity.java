@@ -1,6 +1,9 @@
 package com.gif.eting.act;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,14 +11,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gif.eting.R;
+import com.gif.eting.act.view.StampView;
 import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
@@ -45,6 +53,31 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		getWindow().setAttributes(layoutParams);
 		setContentView(R.layout.popup);
 		
+
+		/**
+		 * 시간에따라 배경을 바꾼다 
+		 */
+		SimpleDateFormat sdf = new SimpleDateFormat("HH", Locale.KOREA);
+		String thisHourStr = sdf.format(new Date());
+		int thisHour = Integer.parseInt(thisHourStr);
+		Log.i("currunt hour", thisHourStr);
+		
+		if(thisHour<1 ){
+			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_1);
+		}else if(thisHour<5 ){
+			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_2);
+		}else if(thisHour<9 ){
+			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_3);
+		}else if(thisHour<13 ){
+			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_4);
+		}else if(thisHour<17 ){
+			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_5);
+		}else if(thisHour<21 ){
+			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_6);
+		}else{
+			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_1);
+		}
+		
 		this.context = getApplicationContext();
 		
 		Intent intent = getIntent();
@@ -56,12 +89,37 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		StoryDTO myStory = storyService.getMyStory(storyIdx);	//해당하는 이야기 받아오기
 		String content = myStory.getContent();
 		String storyDate = myStory.getStory_date();
+		String storyTime = myStory.getStory_time();
+		if(storyTime == null || storyTime == ""){
+			storyTime = "0";
+		}else{
+			storyTime = storyTime.substring(0,2);
+		}
 		
 		TextView contentView = (TextView) findViewById(R.id.popup_content);
-		contentView.setText(content);
+		contentView.setText(storyDate+"\n"+content);
 		
-		TextView storyDateView = (TextView) findViewById(R.id.popup_date);
-		storyDateView.setText(storyDate);
+		/**
+		 * 작성시간에 맞게 배경화면 변화
+		 */
+		int storyHour = Integer.parseInt(storyTime);
+		Log.i("currunt hour", thisHourStr);
+		
+		if(storyHour<1 ){
+			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_1);
+		}else if(storyHour<5 ){
+			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_2);
+		}else if(storyHour<9 ){
+			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_3);
+		}else if(storyHour<13 ){
+			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_4);
+		}else if(storyHour<17 ){
+			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_5);
+		}else if(storyHour<21 ){
+			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_6);
+		}else{
+			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_1);
+		}
 		
 		/**
 		 * 조회하는 이야기에 찍힌 스탬프 받아오기
@@ -84,16 +142,66 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		@Override
 		public void onTaskComplete(List<StampDTO> list) {
 			//TODO 스탬프DTO들을 받아온다. 화면에 뿌려주는 로직 만들어야함.
-			TextView stampInfoView = (TextView) findViewById(R.id.stamp_info);
-			if(list.size()>0){
-				StringBuffer sb = new StringBuffer();
-				sb.append(list.get(0).getSender());
-				for(StampDTO stamp : list){
-					sb.append(stamp.getStamp_name());
-					sb.append(" , ");					
+			
+			if(list!=null){
+				if(list.size()>0){
+					String sender = list.get(0).getSender();
+					TextView contentView = (TextView) findViewById(R.id.popup_stamp_sender);
+					contentView.setText("From. "+sender);
 				}
-				stampInfoView.setText(sb.toString());
 			}
+			
+			/**
+			 * 스탬프입력창
+			 */
+			RelativeLayout stampArea = (RelativeLayout) findViewById(R.id.mystory_stamp_area); // 스탬프영역
+				
+			//화면 해상도
+			DisplayMetrics metrics = getResources().getDisplayMetrics();
+			int width = metrics.widthPixels * 90 / 100 ;	//팝업창이므로 좀 줄인다
+			int height = metrics.heightPixels;
+			Log.i("display", width + " , " + height);
+			
+			int preX = 0;
+			int preY = 0;
+			for(StampDTO stamp : list){
+				StampView stampView = new StampView(context);
+				stampView.setText(stamp.getStamp_name());
+				stampView.setStamp(stamp);
+				stampView.setGravity(Gravity.CENTER);
+				stampView.setBackgroundResource(R.drawable.feedback);
+				stampView.setTextSize(15);
+				
+				//위치조정
+				int objWidth = getResources().getDrawable(R.drawable.feedback).getIntrinsicWidth();
+				int objHeight = getResources().getDrawable(R.drawable.feedback).getIntrinsicHeight();
+				//Log.i("obj size", objWidth + " , " + objHeight);
+				
+				RelativeLayout.LayoutParams stampParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
+				//stampParams.gravity = Gravity.LEFT | Gravity.TOP;
+				
+				int margin = 10;
+				
+				if(preX+objWidth > width){
+					stampParams.leftMargin = 0 + margin; //Your X coordinate
+					stampParams.topMargin = preY+objHeight + margin + margin; //Your Y coordinate
+
+					preX = 0;
+					preX += objWidth + margin;
+					preY += objHeight + margin;
+				}else{
+					
+					stampParams.leftMargin = preX + margin; //Your X coordinate
+					stampParams.topMargin = preY + margin; //Your Y coordinate
+					preX += objWidth + margin;
+				}
+				Log.i("stampParams", stampParams.leftMargin + " , " + stampParams.topMargin);
+				/*stampParams.setMargins(10, 10, 10, 10);*/
+				stampView.setLayoutParams(stampParams);
+				
+				stampArea.addView(stampView);
+			}
+			
 			//stampInfoView.setText(result);	
 		}
 	}

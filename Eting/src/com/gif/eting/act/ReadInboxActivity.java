@@ -3,6 +3,7 @@ package com.gif.eting.act;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R.color;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -103,7 +104,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 			
 		//화면 해상도
 		DisplayMetrics metrics = this.getResources().getDisplayMetrics();
-		int width = metrics.widthPixels;
+		int width = metrics.widthPixels * 90 / 100 ;	//팝업창이므로 좀 줄인다
 		int height = metrics.heightPixels;
 		Log.i("display", width + " , " + height);
 		
@@ -114,32 +115,32 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 			stampView.setText(stamp.getStamp_name());
 			stampView.setStamp(stamp);
 			stampView.setGravity(Gravity.CENTER);
-			stampView.setBackgroundResource(R.drawable.stamp_bg);
+			stampView.setBackgroundResource(R.drawable.feedback);
 			stampView.setTextSize(15);
 			stampView.setOnClickListener(this);
 			
 			//위치조정
-			int objWidth = getResources().getDrawable(R.drawable.stamp_bg).getIntrinsicWidth();
-			int objHeight = getResources().getDrawable(R.drawable.stamp_bg).getIntrinsicHeight();
+			int objWidth = getResources().getDrawable(R.drawable.feedback).getIntrinsicWidth();
+			int objHeight = getResources().getDrawable(R.drawable.feedback).getIntrinsicHeight();
 			//Log.i("obj size", objWidth + " , " + objHeight);
 			
 			RelativeLayout.LayoutParams stampParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 			//stampParams.gravity = Gravity.LEFT | Gravity.TOP;
 			
-			int margin = 5;
+			int margin = 10;
 			
 			if(preX+objWidth > width){
 				stampParams.leftMargin = 0 + margin; //Your X coordinate
-				stampParams.topMargin = preY+objHeight + margin; //Your Y coordinate
+				stampParams.topMargin = preY+objHeight + margin + margin; //Your Y coordinate
 
 				preX = 0;
-				preX += objWidth;
-				preY += objHeight;
+				preX += objWidth + margin;
+				preY += objHeight + margin;
 			}else{
 				
 				stampParams.leftMargin = preX + margin; //Your X coordinate
 				stampParams.topMargin = preY + margin; //Your Y coordinate
-				preX += objWidth;
+				preX += objWidth + margin;
 			}
 			Log.i("stampParams", stampParams.leftMargin + " , " + stampParams.topMargin);
 			/*stampParams.setMargins(10, 10, 10, 10);*/
@@ -175,11 +176,13 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
     		//스탬프 추가
     		if(stamps.contains(stampId)){
     			//이미 찍은거면 초기화
-    			v.setBackgroundResource(R.drawable.stamp_bg);
+    			//((StampView) v).setTextColor(color.black);
+    			v.setBackgroundResource(R.drawable.feedback);
     			stamps.remove(stampId);
     		}else{
     			//스탬프찍기
-    			v.setBackgroundResource(R.drawable.stamp_bg_chk);
+    			//((StampView) v).setTextColor(color.white);
+    			v.setBackgroundResource(R.drawable.feedback_chk);
     			stamps.add(stampId);
     		}
     		
