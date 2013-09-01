@@ -24,16 +24,22 @@ public class StoryDBHelper extends SQLiteOpenHelper {
 	public static final String COL_IDX = "idx";
 	public static final String COL_CONTENT = "content";
 	public static final String COL_STORY_DATE = "story_date";
+	public static final String COL_STORY_TIME = "story_time";
+	public static final String COL_STAMP_YN= "stamp_yn";
 
 	private static final String DATABASE_NAME = "eting_mystory.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	/**
 	 *  TABLE 생성문
 	 */
 	private static final String DATABASE_CREATE = "CREATE TABLE "
-			+ TABLE_STORY_MASTER + "(" + COL_IDX + " integer primary key, "
-			+ COL_CONTENT + " text not null, " + COL_STORY_DATE + " text "
+			+ TABLE_STORY_MASTER + "(" 
+			+ COL_IDX + " integer primary key, "
+			+ COL_CONTENT + " text not null, " 
+			+ COL_STORY_DATE + " text, "
+			+ COL_STORY_TIME + " text, "
+			+ COL_STAMP_YN + " text "
 			+ ");";
 
 	/**

@@ -1,6 +1,8 @@
 package com.gif.eting.svc;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,9 +71,11 @@ public class StoryService {
 				String myStoryId = myStory.getString("story_id");
 				String myContent = myStory.getString("content");
 				String myStoryDate = myStory.getString("story_date");
+				String myStoryTime = myStory.getString("story_time");
 				myStoryDto.setIdx(Long.parseLong(myStoryId));
 				myStoryDto.setContent(myContent);
 				myStoryDto.setStory_date(myStoryDate);
+				myStoryDto.setStory_time(myStoryTime);
 
 				Log.i("returned my story",
 						myStoryDto.getIdx() + myStoryDto.getContent() + myStoryDto.getStory_date());
@@ -90,9 +94,11 @@ public class StoryService {
 				String recievedStoryId = recievedStory.getString("story_id");
 				String recievedContent = recievedStory.getString("content");
 				String recievedStoryDate = recievedStory.getString("story_date");
+				String recievedStoryTime = recievedStory.getString("story_time");
 				recievedStoryDto.setIdx(Long.parseLong(recievedStoryId));
 				recievedStoryDto.setContent(recievedContent);
 				recievedStoryDto.setStory_date(recievedStoryDate);
+				recievedStoryDto.setStory_time(recievedStoryTime);
 				
 				Log.i("returned recieved story",
 						recievedStoryDto.getIdx() + recievedStoryDto.getContent() + recievedStoryDto.getStory_date());
@@ -165,6 +171,20 @@ public class StoryService {
 		Integer result = storyDao.delStory(story);
 		storyDao.close();
 		return result;
+	}
+	
+	/**
+	 * 스탬프찍힌 이야기 업데이트
+	 * @param stampedStoryList
+	 */
+	public void updStoryStampYn(List<String> stampedStoryList){
+		storyDao.open();
+		Set<String> set = new HashSet<String>(stampedStoryList);
+		for(String storyId : set){
+			storyDao.updStoryStampYn(storyId);
+		}
+		storyDao.close();
+		
 	}
 
 }

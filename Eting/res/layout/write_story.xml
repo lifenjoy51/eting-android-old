@@ -8,14 +8,12 @@
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="172"
         android:background="@drawable/write_title_bar" />
 
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_weight="1598" >
+        android:layout_marginTop="30dp" >
 
         <EditText
             android:id="@+id/story_content"

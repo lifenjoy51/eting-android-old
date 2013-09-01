@@ -27,7 +27,8 @@ public class StoryDAO {
 	private SQLiteDatabase database;
 	private StoryDBHelper dbHelper;
 	private String[] allColumns = { StoryDBHelper.COL_IDX,
-			StoryDBHelper.COL_CONTENT, StoryDBHelper.COL_STORY_DATE };
+			StoryDBHelper.COL_CONTENT, StoryDBHelper.COL_STORY_DATE,
+			StoryDBHelper.COL_STORY_TIME, StoryDBHelper.COL_STAMP_YN };
 
 	/**
 	 * 생성할때 dbHelper 초기화
@@ -111,6 +112,7 @@ public class StoryDAO {
 		values.put(StoryDBHelper.COL_IDX, story.getIdx());
 		values.put(StoryDBHelper.COL_CONTENT, story.getContent());
 		values.put(StoryDBHelper.COL_STORY_DATE, story.getStory_date());
+		values.put(StoryDBHelper.COL_STORY_TIME, story.getStory_time());
 		long insertedId = database.insert(StoryDBHelper.TABLE_STORY_MASTER,
 				null, values);
 		Log.i("story is inserted",String.valueOf(insertedId));
@@ -128,9 +130,27 @@ public class StoryDAO {
 		ContentValues values = new ContentValues();
 		values.put(StoryDBHelper.COL_CONTENT, story.getContent());
 		values.put(StoryDBHelper.COL_STORY_DATE, story.getStory_date());
+		values.put(StoryDBHelper.COL_STORY_TIME, story.getStory_time());
 		int rtn = database.update(StoryDBHelper.TABLE_STORY_MASTER, values,
 				StoryDBHelper.COL_IDX + " = " + idx, null);
 		Log.i("story is updated",String.valueOf(rtn));
+
+		return rtn;
+	}
+	
+	/**
+	 *  스탬프여부 수정
+	 *  
+	 * @param story
+	 * @return
+	 */
+	public Integer updStoryStampYn(String storyId) {
+		long idx = Long.parseLong(storyId);
+		ContentValues values = new ContentValues();
+		values.put(StoryDBHelper.COL_STAMP_YN, "Y");
+		int rtn = database.update(StoryDBHelper.TABLE_STORY_MASTER, values,
+				StoryDBHelper.COL_IDX + " = " + idx, null);
+		Log.i("updStoryStampYn is updated",String.valueOf(rtn));
 
 		return rtn;
 	}
@@ -160,6 +180,8 @@ public class StoryDAO {
 		story.setIdx(cursor.getLong(0));
 		story.setContent(cursor.getString(1));
 		story.setStory_date(cursor.getString(2));
+		story.setStory_time(cursor.getString(3));
+		story.setStamp_yn(cursor.getString(4));
 		return story;
 	}
 }

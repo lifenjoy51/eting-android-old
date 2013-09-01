@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gif.eting.R;
@@ -33,6 +34,8 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 		StoryDTO story = items.get(position);
 		String storyDate = story.getStory_date();
 		String storyContent = story.getContent();
+		String storyTime = story.getStory_time();
+		String stampYn = story.getStamp_yn();
 		View v = convertView;
 		Log.i("MylistAdapter", "list = "+position+storyDate+storyContent);
 		
@@ -55,6 +58,33 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			
 		}else{
 			v = vi.inflate(R.layout.mylist_item, null);	//TODO 스티커를 받은 이야기는 별표시가 들어가야하는데 아직 기능구현이 안되어있다.
+			
+			/**
+			 * 작성시간에 맞게 배경변화 
+			 */
+			if (storyTime != null) {
+				if(storyTime.length()>2){
+					String thisHourStr = storyTime.substring(0,2);
+					int thisHour = Integer.parseInt(thisHourStr);
+					if(thisHour<1 ){
+						v.setBackgroundResource(R.drawable.list_1);
+					}else if(thisHour<5 ){
+						v.setBackgroundResource(R.drawable.list_2);
+					}else if(thisHour<9 ){
+						v.setBackgroundResource(R.drawable.list_3);
+					}else if(thisHour<13 ){
+						v.setBackgroundResource(R.drawable.list_4);
+					}else if(thisHour<17 ){
+						v.setBackgroundResource(R.drawable.list_5);
+					}else if(thisHour<21 ){
+						v.setBackgroundResource(R.drawable.list_6);
+					}else{
+						v.setBackgroundResource(R.drawable.list_1);
+					}
+					
+				}
+			}
+			
 				
 			/**
 			 * 이야기 작성일자
@@ -76,6 +106,16 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 					content += "...";
 				}
 				mystoryContent.setText(content);
+			}
+			
+			/**
+			 * 스탬프여부
+			 */
+			ImageView star = (ImageView) v.findViewById(R.id.star);
+			if (stampYn != null) {
+				if("Y".equals(stampYn)){
+					star.setImageResource(R.drawable.star_2);
+				}
 			}
 			
 		}
