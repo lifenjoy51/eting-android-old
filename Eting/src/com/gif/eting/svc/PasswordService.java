@@ -59,5 +59,21 @@ public class PasswordService {
 
 		return isValid;
 	}
+	
+	/**
+	 * 패스워드 유무 확인
+	 * @return
+	 */
+	public boolean isPassword() {
+		settingDao.open(); // 열고
+		SettingDTO setting = settingDao.getsettingInfo("password");
+		settingDao.close(); // 닫고
+
+		if (setting == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 }

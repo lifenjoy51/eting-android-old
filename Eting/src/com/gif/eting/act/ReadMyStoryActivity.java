@@ -51,7 +51,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
 		layoutParams.dimAmount = 0.7f;
 		getWindow().setAttributes(layoutParams);
-		setContentView(R.layout.popup);
+		setContentView(R.layout.read_mystory_popup);
 		
 
 		/**
@@ -141,7 +141,6 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 
 		@Override
 		public void onTaskComplete(List<StampDTO> list) {
-			//TODO 스탬프DTO들을 받아온다. 화면에 뿌려주는 로직 만들어야함.
 			
 			if(list!=null){
 				if(list.size()>0){
@@ -157,14 +156,32 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			RelativeLayout stampArea = (RelativeLayout) findViewById(R.id.mystory_stamp_area); // 스탬프영역
 				
 			//화면 해상도
-			DisplayMetrics metrics = getResources().getDisplayMetrics();
-			int width = metrics.widthPixels * 90 / 100 ;	//팝업창이므로 좀 줄인다
+			DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+			int width = metrics.widthPixels;	//팝업창이므로 좀 줄인다
 			int height = metrics.heightPixels;
+
+			
 			Log.i("display", width + " , " + height);
 			
 			int preX = 0;
 			int preY = 0;
+			
+			//스탬프크기
+			int objWidth = getResources().getDrawable(R.drawable.feedback).getIntrinsicWidth();
+			int objHeight = getResources().getDrawable(R.drawable.feedback).getIntrinsicHeight();
+			
+			//여백		
+			int margin = 10;
+			
+			//한줄에 3개씩 넣었을대 필요한 너비
+			int cntPerRow = 3;
+			
+			//처음 시작위치 설정
+			preX = margin;
+			int chk = 0;
+			
 			for(StampDTO stamp : list){
+				
 				StampView stampView = new StampView(context);
 				stampView.setText(stamp.getStamp_name());
 				stampView.setStamp(stamp);
@@ -172,17 +189,9 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 				stampView.setBackgroundResource(R.drawable.feedback);
 				stampView.setTextSize(15);
 				
-				//위치조정
-				int objWidth = getResources().getDrawable(R.drawable.feedback).getIntrinsicWidth();
-				int objHeight = getResources().getDrawable(R.drawable.feedback).getIntrinsicHeight();
-				//Log.i("obj size", objWidth + " , " + objHeight);
-				
 				RelativeLayout.LayoutParams stampParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
-				//stampParams.gravity = Gravity.LEFT | Gravity.TOP;
-				
-				int margin = 10;
-				
-				if(preX+objWidth > width){
+							
+				if(chk++ % cntPerRow == 0){
 					stampParams.leftMargin = 0 + margin; //Your X coordinate
 					stampParams.topMargin = preY+objHeight + margin + margin; //Your Y coordinate
 
@@ -195,6 +204,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 					stampParams.topMargin = preY + margin; //Your Y coordinate
 					preX += objWidth + margin;
 				}
+				
 				Log.i("stampParams", stampParams.leftMargin + " , " + stampParams.topMargin);
 				/*stampParams.setMargins(10, 10, 10, 10);*/
 				stampView.setLayoutParams(stampParams);

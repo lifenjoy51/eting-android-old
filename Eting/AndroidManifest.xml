@@ -49,16 +49,17 @@
         <activity
             android:name="com.gif.eting.act.ReadMyStoryActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Dialog" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
         </activity>
 
         <!-- 받은 이야기 읽기 팝업 
         windowSoftInputMode="adjustPan" 화면 쪼그라드는거 방지-->
         <activity
             android:name="com.gif.eting.act.ReadInboxActivity"
+            android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/Theme.Transparent" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|adjustPan" >
         </activity>
 
         <!-- 환경설정 -->

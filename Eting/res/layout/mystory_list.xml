@@ -8,9 +8,11 @@
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/list_myeting" />
+        android:background="@drawable/list_myeting"
+        android:contentDescription="@string/listmyeting" />
 
-<!--     divider, dividerHeight = 리스트뷰에서 아이템과 아이템 사이에 공백을 넣어주는 옵션 -->
+<!--     divider, dividerHeight = 리스트뷰에서 아이템과 아이템 사이에 공백을 넣어주는 옵션
+ -->
 
     <ListView
         android:id="@+id/myStoryListView"

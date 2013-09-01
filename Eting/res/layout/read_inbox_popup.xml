@@ -7,6 +7,26 @@
     android:background="@drawable/inbox_bg"
 
     android:orientation="vertical" >
+    
+    <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+    <!--
+     :nextFocusUp and :nextFocusLeft have been set to the id of this component
+     to prevent the dummy from receiving focus again
+    -->
+    <AutoCompleteTextView
+        android:id="@+id/autotext"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:nextFocusLeft="@id/autotext"
+        android:nextFocusUp="@id/autotext" />
+    </LinearLayout>
+    
 
     <TextView
         android:id="@+id/popup_date"
@@ -16,7 +36,6 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="40dp"
         android:gravity="left|center"
-        android:text="2000-00-00"
         android:textColor="#4D4D4D" />
 
     <TextView
@@ -28,8 +47,7 @@
         android:gravity="left|top"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:text="어제 밤에 골목길 걸어가는데 왠 남자가 내 앞으로 작정하고 다가오는게 느껴졌다. 진짜 무서웠는데 술기운에 겁이 사라졌는지, '그래 죽기살기다 싸우자'는 마음으로 걸었는데 스윽 다가오던 그 치한은 오승목.....동네주민 승모기 앞으로는 멀리서부터 반갑게 소리지르며 인사해줘 나 어제 진짜 모골이 송연했어ㅇ느딛ㄴㄱ디시ㅢㅅㅋㅋㅋㅋㅋㅋ"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:lineSpacingExtra="5dp"
         android:textColor="#4D4D4D" />
 
@@ -72,6 +90,4 @@
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/inbox_btn_selector" />
-    
-
 </RelativeLayout>

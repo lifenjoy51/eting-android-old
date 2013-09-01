@@ -22,5 +22,19 @@
     <string name="enter_you_name">Enter you name</string>
     <string name="delete_story">이야기 삭제</string>
     <string name="really_delete_story">이야기를 삭제하시겠습니까?</string>
+    <string name="settingbutton">settingButton</string>
+    <string name="mainufo">mainUfo</string>
+    <string name="mainacc1">mainAcc1</string>
+    <string name="mainacc2">mainAcc2</string>
+    <string name="mylistitemdate">mylistItemDate</string>
+    <string name="mylistitemcontent">mylistItemContent</string>
+    <string name="star">star</string>
+    <string name="delbtn">delBtn</string>
+    <string name="popuptitle">popupTitle</string>
+    <string name="listmyeting">listMyeting</string>
+    <string name="writetitlebar">writeTitleBar</string>
+    <string name="writebgtop">writeBgTop</string>
+    <string name="blank">blank</string>
+    <string name="sendstorybutton">sendStoryButton</string>
 
 </resources>

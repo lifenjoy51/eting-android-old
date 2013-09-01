@@ -60,7 +60,7 @@ public class MyStoryListFragment  extends SherlockFragment{
             Bundle savedInstanceState) {
         // Inflate the layout containing a title and body text.
         ViewGroup rootView = (ViewGroup) inflater
-                .inflate(R.layout.read_story, container, false);
+                .inflate(R.layout.mystory_list, container, false);
 
         return rootView;
 	}

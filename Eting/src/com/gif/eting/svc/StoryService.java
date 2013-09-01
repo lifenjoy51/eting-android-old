@@ -186,5 +186,21 @@ public class StoryService {
 		storyDao.close();
 		
 	}
+	
+	/**
+	 * 내 이야기 개수
+	 * 
+	 * @return
+	 */
+	public Integer getStoryCnt(){
+		storyDao.open();
+		List<StoryDTO> myStoryList = storyDao.getStoryList();
+		storyDao.close();
+		if(myStoryList != null){
+			return myStoryList.size();			
+		}else{
+			return 0;
+		}
+	}
 
 }

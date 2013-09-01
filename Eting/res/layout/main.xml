@@ -19,14 +19,17 @@
         android:id="@+id/setting_btn"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="30dp"
         android:background="@drawable/setting_btn"
+        android:contentDescription="@string/settingbutton"
         android:gravity="bottom" />
 
     <TextView
         android:id="@+id/main_today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0000-00-00"
         android:textColor="#4D4D4D"
         android:textSize="45sp" />
 
@@ -34,29 +37,40 @@
         android:id="@+id/main_eting_cnt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="99"
         android:textColor="#999999"
         android:textSize="30sp" />
+    
+    <TextView
+        android:id="@+id/main_inbox_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#CC2323"
+        android:textStyle="bold"
+        android:textColorHighlight="#FFFFFF"
+        android:textSize="30sp"
+        android:rotation="-45"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp" />
 
     <ImageView
         android:id="@+id/main_ufo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription=""
+        android:contentDescription="@string/mainufo"
         android:src="@drawable/main_ufo" />
     
     <ImageView
         android:id="@+id/main_acc_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription=""
+        android:contentDescription="@string/mainacc1"
         android:src="@drawable/main_acc_1" />
     
     <ImageView
         android:id="@+id/main_acc_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription=""
+        android:contentDescription="@string/mainacc2"
         android:src="@drawable/main_acc_2" />
 
 </FrameLayout>

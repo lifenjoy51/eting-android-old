@@ -32,7 +32,6 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.email_setting);
 
@@ -41,7 +40,7 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 		cancel_btn = (ImageView) findViewById(R.id.cancel_btn);
 
 		// emailAddress = email_address.getText().toString();
-		
+
 		send_email.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -57,7 +56,7 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 
 				}
 
-				if (event.getAction() == MotionEvent.ACTION_UP) { 
+				if (event.getAction() == MotionEvent.ACTION_UP) {
 					send_email.setImageResource(R.drawable.send_1);
 				}
 
@@ -87,7 +86,6 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 			}
 		});
 
-
 		send_email.setOnClickListener(this);
 		cancel_btn.setOnClickListener(this);
 	}
@@ -99,11 +97,17 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 
 	public void onClick(View v) {
 		if (v.getId() == R.id.send_email) {
-			sendEmail();
+			String s = email_address.getText().toString();
+			if (s == null || "".equals(s)) {
+				Toast.makeText(this, "이메일주소를 입력해주세요", Toast.LENGTH_SHORT).show();
+				return;
+			} else {
+				sendEmail();
+			}
+
 		}
 		if (v.getId() == R.id.cancel_btn) {
 			clear(v);
-			finish();
 		}
 
 	}
@@ -158,9 +162,10 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 		}
 
 	}
+
 	public void clear(View v) {
 		email_address.setText("");
 
-	 } 
+	}
 
 }

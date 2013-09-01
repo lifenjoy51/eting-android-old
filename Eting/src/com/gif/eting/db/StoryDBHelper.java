@@ -28,7 +28,7 @@ public class StoryDBHelper extends SQLiteOpenHelper {
 	public static final String COL_STAMP_YN= "stamp_yn";
 
 	private static final String DATABASE_NAME = "eting_mystory.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 1;
 
 	/**
 	 *  TABLE 생성문

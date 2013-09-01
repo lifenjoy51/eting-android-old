@@ -93,6 +93,8 @@ public class SettingDAO {
 		
 		if(returnedsetting!=null){
 			Log.i("setting info", returnedsetting.toString());
+		}else{
+			return null;
 		}
 
 		return returnedsetting;

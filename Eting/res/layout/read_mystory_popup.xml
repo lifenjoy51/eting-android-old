@@ -15,7 +15,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/list_myeting" />
+        android:background="@drawable/list_myeting"
+        android:contentDescription="@string/popuptitle" />
 
     <TextView
         android:id="@+id/popup_content"
@@ -27,9 +28,8 @@
         android:lineSpacingExtra="5dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:text="어제 밤에 골목길 걸어가는데 왠 남자가 내 앞으로 작정하고 다가오는게 느껴졌다. 진짜 무서웠는데 술기운에 겁이 사라졌는지, &apos;그래 죽기살기다 싸우자&apos;는 마음으로 걸었는데 스윽 다가오던 그 치한은 오승목.....동네주민 승모기 앞으로는 멀리서부터 반갑게 소리지르며 인사해줘 나 어제 진짜 모골이 송연했어ㅇ느딛ㄴㄱ디시ㅢㅅㅋㅋㅋㅋㅋㅋ"
         android:textColor="#4D4D4D"
-        android:textSize="16dp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/popup_stamp_sender"
@@ -40,14 +40,13 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:drawableBottom="@drawable/mylist_line"
-        android:text="2013-08-25"
         android:textColor="@android:color/white"
-        android:textSize="12dp" />
+        android:textSize="12sp" />
 
     <ScrollView
         android:id="@+id/mystory_stamp_scroll_area"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
         android:layout_below="@+id/popup_stamp_sender"
         android:background="@drawable/feedback_bg" >
 
@@ -65,6 +64,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/setting_btn" />
+        android:layout_below="@+id/mystory_stamp_scroll_area"
+        android:layout_margin="10dp"
+        android:background="@drawable/del_btn_selector"
+        android:contentDescription="@string/delbtn" />
 
 </RelativeLayout>

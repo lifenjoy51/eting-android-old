@@ -90,11 +90,18 @@ public class PasswordManagementActivity extends Activity implements
 	public void onClick(View view) {
 		// 암호확인 버튼 클릭시
 		if (view.getId() == R.id.setting_save_pw_btn) {
-			savePassword();
+			String s1 = origin_pwd.getText().toString();
+			String s2 = setting_pw.getText().toString();
+			String s3 = setting_pw2.getText().toString();
+			if ((s1 == null || "".equals(s1))||(s2 == null || "".equals(s2))||(s3 == null || "".equals(s3))) {
+				Toast.makeText(this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+				return;
+			} else {
+				savePassword();
+			}
 		}
 		if (view.getId() == R.id.setting_cancel_pw_ptn) {
 			clear(view);
-			finish();
 		}
 	}
 

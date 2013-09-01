@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 
 import com.gif.eting.R;
 import com.gif.eting.act.view.UfoView;
+import com.gif.eting.svc.PasswordService;
 import com.gif.eting.svc.task.CheckStampTask;
 import com.gif.eting.svc.task.CheckStampedStoryTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
@@ -98,17 +99,21 @@ public class IntroActivity extends Activity {
 			}
 		}
 	}
-	
+
 	/**
 	 * 화면이동
 	 */
-	private void moveToLockScreenActivity(){
-		//TODO 비밀번호가 세팅되어있지 않다면 메인페이지로 바로 이동해야하는거 아닌가?
-		Intent intent = new Intent(IntroActivity.this,
-				LockScreenActivity.class);
-		startActivity(intent);				
-		finish();	// 뒤로가기 했을경우 안나오도록 없애주기
-		
+	private void moveToLockScreenActivity() {
+		PasswordService psvc = new PasswordService(this);
+		if (psvc.isPassword()) {
+			Intent intent = new Intent(IntroActivity.this,
+					LockScreenActivity.class);
+			startActivity(intent);
+		} else {
+			startActivity(new Intent(this, MainViewPagerActivity.class));
+		}
+		finish(); // 뒤로가기 했을경우 안나오도록 없애주기
+
 	}
 
 }
