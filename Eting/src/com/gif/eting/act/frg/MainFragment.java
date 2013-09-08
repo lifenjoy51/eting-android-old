@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.gif.eting.R;
 import com.gif.eting.act.ReadInboxActivity;
 import com.gif.eting.act.SettingActivity;
 import com.gif.eting.act.view.Cloud1View;
@@ -37,6 +36,9 @@ import com.gif.eting.act.view.EtingLogoView;
 import com.gif.eting.act.view.PlanetView;
 import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StoryService;
+import com.gif.etingdev.R;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 /**
  * 메인화면
@@ -88,12 +90,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 * 애니메이션
 		 */
 		FrameLayout fr = (FrameLayout) rootView.findViewById(R.id.main_frame);
-		
-		fr.addView(new Cloud1View(getActivity())); // 구름애니메이션
-		fr.addView(new Cloud2View(getActivity())); // 구름애니메이션
-		fr.addView(new Cloud3View(getActivity())); // 구름애니메이션
-		fr.addView(new Cloud4View(getActivity())); // 구름애니메이션
 		fr.addView(new PlanetView(getActivity())); // 메인동그라미
+		fr.bringToFront();
 		
 		
 		
@@ -198,6 +196,13 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 * 받은편지함 관련 정보 설정(개수, 우주선)
 		 */
 		setInboxCnt();
+		
+		/**
+		 * gcm test
+		 */
+		int gcmChk = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity().getApplicationContext());
+		ConnectionResult cr = new ConnectionResult(gcmChk, null);
+		System.out.println(cr.toString());
 	}
 
 	/**

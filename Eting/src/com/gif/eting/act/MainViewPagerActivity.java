@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,12 +15,17 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.gif.eting.R;
 import com.gif.eting.act.frg.MainFragment;
 import com.gif.eting.act.frg.MyStoryListFragment;
 import com.gif.eting.act.frg.WriteMyStoryFragment;
+import com.gif.eting.act.view.Cloud1View;
+import com.gif.eting.act.view.Cloud2View;
+import com.gif.eting.act.view.Cloud3View;
+import com.gif.eting.act.view.Cloud4View;
+import com.gif.etingdev.R;
 
 /**
  * 메인 뷰페이져
@@ -48,6 +54,13 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager);
+        
+
+		FrameLayout fr = (FrameLayout) findViewById(R.id.mainviewpager_frame);
+		fr.addView(new Cloud1View(this)); // 구름애니메이션
+		fr.addView(new Cloud2View(this)); // 구름애니메이션
+		fr.addView(new Cloud3View(this)); // 구름애니메이션
+		fr.addView(new Cloud4View(this)); // 구름애니메이션
         
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -93,6 +106,25 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 			mPager.setBackgroundResource(R.drawable.bg_6);
 		}else{
 			mPager.setBackgroundResource(R.drawable.bg_1);
+		}
+        
+		/**
+		 * GCM으로 받은경우 페이지이동
+		 */
+        Intent intent = getIntent();
+		boolean isGcm = intent.getBooleanExtra("GCM", false);	//GCM여부
+		if(isGcm){
+			String storyId = intent.getStringExtra("storyId");
+			//내목록화면으로 이동
+			setPage(0);
+			Fragment fragment = ((ScreenSlidePagerAdapter) mPagerAdapter).getItem(0);
+			if(fragment != null){
+				 if (fragment instanceof MyStoryListFragment) {
+					 ((MyStoryListFragment)fragment).readMyStoryPopup(this, storyId);
+				 }
+			}
+			
+			
 		}
     }
     

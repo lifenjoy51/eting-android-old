@@ -8,10 +8,11 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 
-import com.gif.eting.R;
 import com.gif.eting.util.AnimateDrawable;
+import com.gif.etingdev.R;
 
 /**
  * 움직이는 구름
@@ -36,7 +37,7 @@ public class Cloud2View extends View {
 	protected void onDraw(Canvas canvas) {
 		mDrawable.draw(canvas);
 
-		invalidate();
+		//invalidate();
 	}
 
 	/**
@@ -61,44 +62,58 @@ public class Cloud2View extends View {
 		int enPtX; // 수평 위치 끝
 		int stPtY; // 수직 위치 시작
 		int enPtY; // 수직 위치 끝
-		long duration=13000; // 이동하는 시간
+		long duration = 28000; // 이동하는 시간
+		
+		int stX1 = -20;	//첫번째 애니메이션 시작위치
+		int enX1 = 100;	//첫번째 애니메이션 끝 위치
+		int stX2 = -100;	//두번째 애니메이션 시작위치
+		int enX2 = stX1;	//두번째 애니메이션 끝 위치
+		int lenX1 = enX1 - stX1;	//첫번째 애니메이션 이동길이
+		int lenX2 = enX2 - stX2;	//두번째 애니메이션 이동길이
+		int lenTot = lenX1 + lenX2;	//전체 이동길이
+		int posY = 30;
 		
 		// 위아래로 왔다갔다하게하기
 		if (chk) {
 			System.out.println("chk" + chk);
 
-			stPtX = width / 10 * 8;
-			enPtX = width / 10 * 10;
-			stPtY = height / 10 * 3;
-			enPtY = height / 10 * 3;
+			stPtX = width * stX1 / 100;
+			enPtX = width * enX1 / 100;
+			stPtY = height * posY / 100;
+			enPtY = height * posY / 100;
 
 			System.out.println(stPtX + "," + enPtX + "," + stPtY + "," + enPtY);
-
+			
 			an = new TranslateAnimation(stPtX, enPtX, stPtY, enPtY);
 			chk = false;
-			duration = duration/100*20;
+
+			duration = duration*lenX1/lenTot;
+			
 		} else {
 			System.out.println("chk" + chk);
 
-			stPtX = width / 10 * 0;
-			enPtX = width / 10 * 8;
-			stPtY = height / 10 * 3;
-			enPtY = height / 10 * 3;
+			stPtX = width * stX2/ 100;
+			enPtX = width * enX2 / 100;
+			stPtY = height * posY / 100;
+			enPtY = height * posY / 100;
 
 			System.out.println(stPtX + "," + enPtX + "," + stPtY + "," + enPtY);
 			
 			an = new TranslateAnimation(stPtX, enPtX, stPtY, enPtY);
 			chk = true;
-			duration = duration/100*80;
+
+			duration = duration*lenX2/lenTot;
 		}
 
 		an.setAnimationListener(new AnimationControl(context));
 		an.setDuration(duration);
 		an.setRepeatCount(-1);
+		an.setInterpolator(new LinearInterpolator());
 		an.initialize(objWidth, objHeight, width, height);
 
 		mDrawable = new AnimateDrawable(dr, an);
 		an.startNow();
+
 
 	}
 

@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.gif.eting.R;
 import com.gif.eting.act.view.StampView;
 import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
@@ -25,6 +24,7 @@ import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StampService;
 import com.gif.eting.svc.task.SendStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
+import com.gif.etingdev.R;
 
 /**
  * 받은편지함 읽기화면

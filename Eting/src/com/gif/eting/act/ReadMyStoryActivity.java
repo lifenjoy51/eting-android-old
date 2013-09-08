@@ -22,13 +22,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gif.eting.R;
 import com.gif.eting.act.view.StampView;
 import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.svc.task.ReceiveStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
+import com.gif.etingdev.R;
 
 /**
  * 내 이야기 목록에서 선택한 이야기를 읽는 화면

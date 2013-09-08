@@ -36,5 +36,7 @@
     <string name="writebgtop">writeBgTop</string>
     <string name="blank">blank</string>
     <string name="sendstorybutton">sendStoryButton</string>
+    <string name="send">send</string>
+    <string name="clear">clear</string>
 
 </resources>

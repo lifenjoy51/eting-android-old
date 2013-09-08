@@ -19,10 +19,16 @@ public class HttpUtil  {
 			URL url = new URL(urlStr);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
+			
 			con.setDefaultUseCaches(false);
 			con.setDoInput(true);
 			con.setDoOutput(true);
 			con.setRequestMethod("POST");
+			
+			/**
+			 * GCM위한 설정값
+			 */
+			con.addRequestProperty("Authorization", "");
 			con.setRequestProperty("content-type",
 					"application/x-www-form-urlencoded");
 

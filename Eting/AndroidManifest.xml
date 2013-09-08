@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.gif.eting"
+    package="com.gif.etingdev"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+	<uses-permission android:name="android.permission.VIBRATE"/>
+    
+    <permission android:name="com.gif.etingdev.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.gif.etingdev.permission.C2D_MESSAGE" />
+    
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17"
@@ -92,6 +101,20 @@
             android:screenOrientation="portrait" >
         </activity>
         
-    </application>
+        
+        <!-- GCM Setting -->
+        <receiver
+            android:name="com.gif.eting.svc.gcm.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.gif.etingdev" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.gif.eting.svc.gcm.GcmIntentService" />
+        
+</application>
 
 </manifest>

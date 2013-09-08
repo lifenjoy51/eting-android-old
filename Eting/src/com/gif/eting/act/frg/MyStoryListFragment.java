@@ -3,6 +3,7 @@ package com.gif.eting.act.frg;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -16,11 +17,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.gif.eting.R;
 import com.gif.eting.act.ReadMyStoryActivity;
 import com.gif.eting.act.view.MylistAdapter;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
+import com.gif.etingdev.R;
 
 /**
  * 내 이야기 목록
@@ -124,14 +125,20 @@ public class MyStoryListFragment  extends SherlockFragment{
     		StoryDTO selectedItem = (StoryDTO) listAdapter.getItem(position);	//선택한 Row에 있는 Object를 받아옴
     		String idx = String.valueOf(selectedItem.getIdx());	//Object에서 idx값을 받아옴
     		
-    		
-    		Intent intent =new Intent(getActivity(), ReadMyStoryActivity.class);
-    		intent.putExtra("idx", idx);
-    		startActivity(intent);
-    		
+    		readMyStoryPopup(getActivity(), idx);    		
     	}
     	
     };
+    
+    /**
+     * 내이야기 보기 화면 호출
+     * @param storyId
+     */
+    public void readMyStoryPopup(Context context, String storyId){		
+		Intent intent =new Intent(context, ReadMyStoryActivity.class);
+		intent.putExtra("idx", storyId);
+		context.startActivity(intent);
+    }
 
 	/**
 	 * 뒤로가기 눌렀을때 이벤트 처리를 위한 로직

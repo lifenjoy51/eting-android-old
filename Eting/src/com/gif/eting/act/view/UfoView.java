@@ -9,8 +9,8 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
 
-import com.gif.eting.R;
 import com.gif.eting.util.AnimateDrawable;
+import com.gif.etingdev.R;
 
 
 
