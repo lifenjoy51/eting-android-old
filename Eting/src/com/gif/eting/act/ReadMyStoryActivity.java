@@ -28,7 +28,7 @@ import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.svc.task.ReceiveStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.etingdev.R;
+import com.gif.eting.R;
 
 /**
  * 내 이야기 목록에서 선택한 이야기를 읽는 화면

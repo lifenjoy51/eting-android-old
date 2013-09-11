@@ -24,7 +24,7 @@ import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StampService;
 import com.gif.eting.svc.task.SendStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.etingdev.R;
+import com.gif.eting.R;
 
 /**
  * 받은편지함 읽기화면

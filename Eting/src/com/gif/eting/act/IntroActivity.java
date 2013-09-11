@@ -21,7 +21,7 @@ import com.gif.eting.svc.task.CheckStampTask;
 import com.gif.eting.svc.task.CheckStampedStoryTask;
 import com.gif.eting.svc.task.RegistrationTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.etingdev.R;
+import com.gif.eting.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -96,6 +96,8 @@ public class IntroActivity extends Activity {
 
             if ("".equals(regid)) {
                 registerInBackground();
+            }else{
+            	sendRegistrationIdToBackend();	//TODO 임시로 만들어놓은거.
             }
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
@@ -310,13 +312,12 @@ public class IntroActivity extends Activity {
      * to a server that echoes back the message using the 'from' address in the message.
      */
     private void sendRegistrationIdToBackend() {
-    	String regId = getRegistrationId(context);
-    	Log.i("sendRegistrationIdToBackend", regId);
+    	Log.i("sendRegistrationIdToBackend", regid);
     	
     	/**
     	 * 폰고유ID와 메세지를 받기위한 고유ID를 서버에 전송
     	 */
-    	new RegistrationTask().execute(regId, context);
+    	new RegistrationTask().execute(regid, context);
     }
 
 }

@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gif.eting.svc.PasswordService;
-import com.gif.etingdev.R;
+import com.gif.eting.R;
 
 /**
  * 비밀번호 화면

@@ -3,7 +3,7 @@ package com.gif.eting.act;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.gif.etingdev.R;
+import com.gif.eting.R;
 
 public class CreditActivity extends Activity {
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.gif.etingdev"
+    package="com.gif.eting"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -12,9 +12,9 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 	<uses-permission android:name="android.permission.VIBRATE"/>
     
-    <permission android:name="com.gif.etingdev.permission.C2D_MESSAGE"
+    <permission android:name="com.gif.eting.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="com.gif.etingdev.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.gif.eting.permission.C2D_MESSAGE" />
     
     <uses-sdk
         android:minSdkVersion="8"
@@ -109,7 +109,7 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-                <category android:name="com.gif.etingdev" />
+                <category android:name="com.gif.eting" />
             </intent-filter>
         </receiver>
 

@@ -13,7 +13,7 @@ import android.util.Log;
 
 import com.gif.eting.act.MainViewPagerActivity;
 import com.gif.eting.svc.task.CheckStampedStoryTask;
-import com.gif.etingdev.R;
+import com.gif.eting.R;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 /**
