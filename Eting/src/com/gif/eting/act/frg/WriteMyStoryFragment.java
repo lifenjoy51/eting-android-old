@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -34,6 +35,10 @@ import com.gif.eting.R;
 public class WriteMyStoryFragment extends SherlockFragment implements OnClickListener{
 	private ViewPager mPager;
 	private ProgressDialog progressDialog;
+	private TextView send_textview;
+	private TextView tv;
+	private Typeface nanum;
+	
 
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
@@ -62,11 +67,18 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.write_story, container, false);
         
+        nanum = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
+
+//        send_textview = (TextView) rootView.findViewById(R.id.myeting_textview);
+        tv =  (TextView) rootView.findViewById(R.id.write_story_dt);
+//        send_textview.setTypeface(nanum);
+        tv.setTypeface(nanum);
+        
+        
         //상단에 오늘날짜 설정
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
         Date date = new Date();
         
-        TextView tv =  (TextView) rootView.findViewById(R.id.write_story_dt);
         String today = formatter.format(date);	
         tv.setText(today);
         

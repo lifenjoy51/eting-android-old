@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -31,6 +34,9 @@ import com.gif.eting.R;
  */
 public class MyStoryListFragment  extends SherlockFragment{
 	private ViewPager mPager;
+	private TextView myeting_textview;
+	private Typeface nanum;
+	
 
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
@@ -61,6 +67,8 @@ public class MyStoryListFragment  extends SherlockFragment{
         // Inflate the layout containing a title and body text.
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.mystory_list, container, false);
+        nanum = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
+
 
         return rootView;
 	}
@@ -85,6 +93,9 @@ public class MyStoryListFragment  extends SherlockFragment{
 		// StoryService초기화
 		StoryService storyService = new StoryService(getActivity());
 		List<StoryDTO> myStoryList = storyService.getMyStoryList();
+        myeting_textview = (TextView) getView().findViewById(R.id.myeting_textview);
+        myeting_textview.setTypeface(nanum);
+        myeting_textview.setPaintFlags(myeting_textview.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 		
 		/**
 		 * 날짜구분선을 위한 작업

@@ -30,15 +30,15 @@
         android:id="@+id/main_today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#4D4D4D"
-        android:textSize="45sp" />
+        android:textColor="#4d4d4d"
+        android:textSize="46sp" />
 
     <TextView
         android:id="@+id/main_eting_cnt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#999999"
-        android:textSize="30sp" />
+        android:textColor="#777777"
+        android:textSize="28sp" />
     
     <TextView
         android:id="@+id/main_inbox_cnt"
@@ -47,8 +47,8 @@
         android:textColor="#CC2323"
         android:textStyle="bold"
         android:textColorHighlight="#FFFFFF"
-        android:textSize="30sp"
-        android:rotation="-45"
+        android:textSize="18sp"
+        android:rotation="-30"
         android:layout_marginBottom="5dp"
         android:layout_marginRight="5dp" />
 

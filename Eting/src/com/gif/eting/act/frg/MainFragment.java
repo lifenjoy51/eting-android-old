@@ -7,6 +7,7 @@ import java.util.Locale;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -49,10 +50,15 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 public class MainFragment extends SherlockFragment implements OnClickListener {
 	@SuppressWarnings("unused")
 	private ViewPager mPager;
+	
+	private TextView mainToday;
+	private TextView mainEtingCnt;
+	private TextView mainInboxCnt;
+	private Typeface nanum;
 
 	/**
 	 * Factory method for this fragment class. Constructs a new fragment for the
-	 * given page number.
+	 * given page number.fl
 	 */
 	public static MainFragment create() {
 		MainFragment fragment = new MainFragment();
@@ -77,6 +83,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 	}
 
 	@Override
@@ -86,6 +93,9 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.main,
 				container, false);
 		
+		nanum = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
+
+
 		/**
 		 * 애니메이션
 		 */
@@ -108,16 +118,18 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		/**
 		 * 현재날짜
 		 */
-		TextView mainToday =  (TextView) rootView.findViewById(R.id.main_today);
+		mainToday =  (TextView) rootView.findViewById(R.id.main_today);
+
+		mainToday.setTypeface(nanum);
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA);
         Date date = new Date();
 		String today = formatter.format(date);	
 		mainToday.setText(today);
 		
 		//위치조정
 		int dateX = width/100*14;
-		int dateY = height/100*75;
+		int dateY = height/100*85;
 		
 		FrameLayout.LayoutParams dataParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		dataParams.leftMargin = dateX; //Your X coordinate
@@ -252,34 +264,41 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		int width = metrics.widthPixels;
 		int height = metrics.heightPixels;
 		
+//		Typeface boldtYoon = Typeface.createFromAsset(this.getAssets(), "fonts/yoon530_TT.ttf");
+		
+		
 		/**
 		 * 내 이야기개수 설정
 		 */
-		TextView mainEtingCnt =  (TextView) getView().findViewById(R.id.main_eting_cnt);
+//		etingTextView = (TextView) getView().findViewById(R.id.eting_textview);
+		mainEtingCnt =  (TextView) getView().findViewById(R.id.main_eting_cnt);
+		mainEtingCnt.setTypeface(nanum);
+//		etingTextView.setTypeface(nanum);
+		mainEtingCnt.setPaintFlags(mainEtingCnt.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 		StoryService svc = new StoryService(getActivity());
 		int storyCnt = svc.getStoryCnt();
-		mainEtingCnt.setText(String.valueOf(storyCnt)+ " eting");
+		mainEtingCnt.setText(String.valueOf(storyCnt) + "  eting");
 		
 		Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
 		mainEtingCnt.setTypeface(face);
 				
 		//위치조정
 		int cntX = width/100*14;
-		int cntY = height/100*68;	
+		int cntY = height/100*77;	
 		FrameLayout.LayoutParams mainEtingParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		mainEtingParams.leftMargin = cntX; //Your X coordinate
 		mainEtingParams.topMargin = cntY; //Your Y coordinate
 		mainEtingParams.gravity = Gravity.LEFT | Gravity.TOP;
 		mainEtingCnt.setLayoutParams(mainEtingParams);
 		mainEtingCnt.bringToFront();
-				
+
 		/**
 		 * 받은편지가 있으면 우주선표시
 		 */
 		ImageView mainUfo = (ImageView) getView().findViewById(R.id.main_ufo);
 		//위치조정
-		int ufoX = width/100*80;
-		int ufoY = height/100*15;
+		int ufoX = width/100*76;
+		int ufoY = height/100*13;
 		FrameLayout.LayoutParams ufoParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		ufoParams.leftMargin = ufoX; //Your X coordinate
 		ufoParams.topMargin = ufoY; //Your Y coordinate
@@ -289,14 +308,15 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		/**
 		 * 받은편지함 개수 설정
 		 */
-		TextView mainInboxCnt =  (TextView) getView().findViewById(R.id.main_inbox_cnt);
+		mainInboxCnt =  (TextView) getView().findViewById(R.id.main_inbox_cnt);
+		mainInboxCnt.setTypeface(nanum);
 		InboxService is = new InboxService(getActivity());
 		int inboxCnt = is.getInboxCnt();
-		mainInboxCnt.setText(String.valueOf(inboxCnt));
+		mainInboxCnt.setText("New " + String.valueOf(inboxCnt));
 		
 		//위치조정
-		int inboxX = width/100*80 + mainUfo.getWidth();
-		int inboxY = height/100*15 - mainInboxCnt.getHeight()/4*1;	
+		int inboxX = width/100*58 + mainUfo.getWidth();
+		int inboxY = height/100*8 - mainInboxCnt.getHeight()/4*1;	
 		FrameLayout.LayoutParams mainInboxParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		mainInboxParams.leftMargin = inboxX; //Your X coordinate
 		mainInboxParams.topMargin = inboxY; //Your Y coordinate

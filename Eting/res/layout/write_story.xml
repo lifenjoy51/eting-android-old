@@ -5,11 +5,22 @@
     android:background="@android:color/transparent"
     android:orientation="vertical" >
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/write_title_bar"
-        android:contentDescription="@string/writetitlebar" />
+<!--     <ImageView -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:background="@drawable/write_title_bar" -->
+<!--         android:contentDescription="@string/writetitlebar" /> -->
+
+<TextView
+    android:id="@+id/send_textview" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Send Eting"
+    android:layout_marginTop="20dp"
+    android:textSize="26sp"
+    android:textColor="#4d4d4d"
+    android:layout_gravity="center"
+    />
 
     <FrameLayout
         android:layout_width="fill_parent"

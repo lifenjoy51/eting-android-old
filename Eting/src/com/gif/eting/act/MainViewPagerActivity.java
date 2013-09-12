@@ -119,7 +119,7 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 			setPage(0);
 			Fragment fragment = ((ScreenSlidePagerAdapter) mPagerAdapter).getItem(0);
 			if(fragment != null){
-				 if (fragment instanceof MyStoryListFragment) {
+				if (fragment instanceof MyStoryListFragment) {
 					 ((MyStoryListFragment)fragment).readMyStoryPopup(this, storyId);
 				 }
 			}
