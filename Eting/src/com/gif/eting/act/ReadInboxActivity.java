@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -63,6 +64,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 	 */
 	private String sender;
 	
+	private Typeface nanum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,8 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		View pop = inflater.inflate(R.layout.inbox_popup, null, false);*/
 		setContentView(R.layout.read_inbox_popup);
 		
+		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
+		
 		//Service초기화
 		inboxService = new InboxService(this.getApplicationContext());
 		stampService = new StampService(this.getApplicationContext());
@@ -91,9 +95,11 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		String storyDate = inboxStory.getStory_date();
 		
 		TextView contentView = (TextView) findViewById(R.id.popup_content);
+		contentView.setTypeface(nanum);
 		contentView.setText(content);
 		
 		TextView storyDateView = (TextView) findViewById(R.id.popup_date);
+		storyDateView.setTypeface(nanum);
 		storyDateView.setText(storyDate);
 
 		//버튼이벤트 삽입
@@ -217,6 +223,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		 * 보낸이 설정
 		 */
 		EditText et = (EditText) findViewById(R.id.stamp_sender);
+		et.setTypeface(nanum);
 		sender = et.getText().toString();
 		
 		/**

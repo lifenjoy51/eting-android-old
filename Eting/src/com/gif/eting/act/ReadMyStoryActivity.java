@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 	private StoryService storyService;
 	private String storyIdx;
 	private Context context;
+	private Typeface nanum;
 	
 
 	@Override
@@ -52,6 +54,8 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		layoutParams.dimAmount = 0.7f;
 		getWindow().setAttributes(layoutParams);
 		setContentView(R.layout.read_mystory_popup);
+		
+		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
 		
 
 		/**
@@ -97,6 +101,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		}
 		
 		TextView contentView = (TextView) findViewById(R.id.popup_content);
+		contentView.setTypeface(nanum);
 		contentView.setText(storyDate+"\n"+content);
 		
 		/**
@@ -146,6 +151,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 				if(list.size()>0){
 					String sender = list.get(0).getSender();
 					TextView contentView = (TextView) findViewById(R.id.popup_stamp_sender);
+					contentView.setTypeface(nanum);
 					contentView.setText("From. "+sender);
 				}
 			}

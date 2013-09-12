@@ -2,6 +2,8 @@ package com.gif.eting.act;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,21 +22,45 @@ public class PasswordManagementActivity extends Activity implements
 	private EditText setting_pw;
 	private EditText setting_pw2;
 	private ImageView setting_save_pw_btn;
-	private ImageView setting_cancel_pw_ptn;
-	private PasswordService isPassword;
-//	private boolean isPass = false;
+	private boolean isValid = false;
+	private String o_pw;
+	private PasswordService svc;
+	private Typeface nanum;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.password_manage);
-
+		
+		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
+		
 		// 버튼 온클릭이벤트 등록
 		setting_save_pw_btn = (ImageView) findViewById(R.id.setting_save_pw_btn);
-		setting_cancel_pw_ptn = (ImageView) findViewById(R.id.setting_cancel_pw_ptn);
 		origin_pwd = (EditText) findViewById(R.id.origin_pwd);
 		setting_pw = (EditText) findViewById(R.id.setting_pw);
 		setting_pw2 = (EditText) findViewById(R.id.setting_pw2);
+		
+		origin_pwd.setTypeface(nanum);
+		setting_pw.setTypeface(nanum);
+		setting_pw2.setTypeface(nanum);
+		
+		o_pw = origin_pwd.getText().toString(); // 예전 비밀번호
+
+		// 암호체크
+		svc = new PasswordService(this);
+		isValid = svc.checkPassword(o_pw);
+		
+		if (isValid == true) {
+			origin_pwd.setClickable(false);
+			origin_pwd.setEnabled(false);
+			origin_pwd.setFocusable(false);
+			origin_pwd.setFocusableInTouchMode(false);
+			origin_pwd.setHintTextColor(Color.BLACK);
+			origin_pwd.setHint("Don't have password!!");
+			
+		}
+
 		
 		setting_save_pw_btn.setOnTouchListener(new OnTouchListener() {
 			@Override
@@ -59,52 +85,36 @@ public class PasswordManagementActivity extends Activity implements
 				return false;
 			}
 		});
-		setting_cancel_pw_ptn.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					setting_cancel_pw_ptn = (ImageView) findViewById(v.getId());
-					setting_cancel_pw_ptn.setImageResource(R.drawable.cancel_2);
-				}
-				if (event.getAction() == MotionEvent.ACTION_MOVE) {
-					if (!v.isPressed()) {
-						setting_cancel_pw_ptn
-								.setImageResource(R.drawable.cancel_1);
-						return true;
-					}
-
-				}
-
-				if (event.getAction() == MotionEvent.ACTION_UP) {
-					setting_cancel_pw_ptn.setImageResource(R.drawable.cancel_1);
-				}
-
-				return false;
-			}
-		});
 
 		setting_save_pw_btn.setOnClickListener(this);
-		setting_cancel_pw_ptn.setOnClickListener(this);
 
 	}
 
 	@Override
 	public void onClick(View view) {
-		// 암호확인 버튼 클릭시
-		if (view.getId() == R.id.setting_save_pw_btn) {
-			String s1 = origin_pwd.getText().toString();
-			String s2 = setting_pw.getText().toString();
-			String s3 = setting_pw2.getText().toString();
+		String s1 = origin_pwd.getText().toString();
+		String s2 = setting_pw.getText().toString();
+		String s3 = setting_pw2.getText().toString();
+		
+		if(isValid == true) {
+			if((s2 == null || "".equals(s2))||(s3 == null || "".equals(s3))) {
+				Toast.makeText(this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			 else {
+					savePassword();
+				}
+		}
+		else {
 			if ((s1 == null || "".equals(s1))||(s2 == null || "".equals(s2))||(s3 == null || "".equals(s3))) {
 				Toast.makeText(this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
 				return;
 			} else {
 				savePassword();
 			}
+
 		}
-		if (view.getId() == R.id.setting_cancel_pw_ptn) {
-			clear(view);
-		}
+		
 	}
 
 	// 세팅화면에서 비밀번호 저장
@@ -118,14 +128,14 @@ public class PasswordManagementActivity extends Activity implements
 		// 암호체크
 		PasswordService svc = new PasswordService(this);
 		isValid = svc.checkPassword(o_pw);
-		
-		String s1 = origin_pwd.getText().toString();
-		if (isPassword.checkPassword(s1) == false) {
-			origin_pwd.setClickable(false);
-			origin_pwd.setEnabled(false);
-			origin_pwd.setFocusable(false);
-			origin_pwd.setFocusableInTouchMode(false);
-		}
+//		
+//		String s1 = origin_pwd.getText().toString();
+//		if (isValid == false) {
+//			origin_pwd.setClickable(false);
+//			origin_pwd.setEnabled(false);
+//			origin_pwd.setFocusable(false);
+//			origin_pwd.setFocusableInTouchMode(false);
+//		}
 		// 암호 성공/실패 분기처리
 		if (isValid) {
 			if (pw.equals(pw2)) {

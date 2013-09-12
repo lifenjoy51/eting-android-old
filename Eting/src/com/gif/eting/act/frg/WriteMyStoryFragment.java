@@ -69,9 +69,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
         
         nanum = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
 
-//        send_textview = (TextView) rootView.findViewById(R.id.myeting_textview);
         tv =  (TextView) rootView.findViewById(R.id.write_story_dt);
-//        send_textview.setTypeface(nanum);
         tv.setTypeface(nanum);
         
         
@@ -87,6 +85,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
 		 */
         //기준이 될 이야기 입력부분
 		EditText et = (EditText) rootView.findViewById(R.id.story_content);
+		et.setTypeface(nanum);
 		FrameLayout.LayoutParams etParams = (LayoutParams) et.getLayoutParams();
 		
 		int etX = etParams.leftMargin;
@@ -118,6 +117,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
 		case R.id.send_story_btn:
 			//입력한 문자 체크로직
 			EditText et = (EditText) getView().findViewById(R.id.story_content);
+			et.setTypeface(nanum);
 			String content = et.getText().toString();	//이야기 내용
 			
 			//입력값이 없으면 처리중단
@@ -154,6 +154,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements OnClickLis
      */
 	private void sendAndSaveStory(){		
 		EditText et = (EditText) getView().findViewById(R.id.story_content);
+		et.setTypeface(nanum);
 		String content = et.getText().toString();	//이야기 내용
 		
 		//전송상태 나타냄
