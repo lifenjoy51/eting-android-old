@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
@@ -126,6 +127,7 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 			
 			
 		}
+		
     }
     
     /**
@@ -144,7 +146,6 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     	SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
-    	
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
 		}
@@ -195,16 +196,15 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
             return fragment;
         }
         
+        public Fragment getFragment(int position) {
+            return registeredFragments.get(position);
+        }
+
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             registeredFragments.remove(position);
             super.destroyItem(container, position, object);
         }
-        
-        public Fragment getFragment(int position) {
-            return registeredFragments.get(position);
-        }
-
 	}
 
 	/**

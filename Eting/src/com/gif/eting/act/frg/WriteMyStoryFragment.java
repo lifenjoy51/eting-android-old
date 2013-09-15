@@ -1,13 +1,15 @@
 package com.gif.eting.act.frg;
 
-import java.security.PublicKey;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -47,6 +49,9 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 	private ViewGroup rootView;
 	private Handler handle = new Handler();
 	private Runnable mMyTask;
+	private UfoView ufo;
+	private View backgroundimage;
+	private Drawable background;
 
 	/**
 	 * Factory method for this fragment class. Constructs a new fragment for the
@@ -84,13 +89,16 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		send_textview = (TextView) rootView.findViewById(R.id.send_textview);
 		tv.setTypeface(nanum);
 		send_textview.setTypeface(nanum);
+		backgroundimage = rootView.findViewById(R.id.background);
+
+		background = backgroundimage.getBackground();
 
 		// 상단에 오늘날짜 설정
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd",
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd",
 				Locale.KOREA);
 		Date date = new Date();
-
 		String today = formatter.format(date);
+		tv.setPaintFlags(tv.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 		tv.setText(today);
 
 		/**
@@ -174,40 +182,51 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 	/**
 	 * 작성한 이야기를 서버에 전송하고 자신의 폰에 저장한다.
 	 */
-	private void sendAndSaveStory(){		
+	private void sendAndSaveStory() {
 		EditText et = (EditText) getView().findViewById(R.id.story_content);
 		et.setTypeface(nanum);
-		String content = et.getText().toString();	//이야기 내용
-		
-		//전송상태 나타냄
-//		progressDialog = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.app_name), true, true);	//TODO 전송메세지가 임시값으로 설정되어있다.
-		//애니메이션 시작
-        UfoView ufo = new UfoView(context);     
-        ufo.bringToFront();
-        rootView.addView(ufo);	//움직이는 UFO 등록
-//        handle.postDelayed(mMyTask, 3000);
-        
+		final String content = et.getText().toString(); // 이야기 내용
+		ufo = new UfoView(context);
+
+		// 전송상태 나타냄
+		// progressDialog = ProgressDialog.show(getActivity(), "",
+		// getResources().getString(R.string.app_name), true, true); //TODO
+		// 전송메세지가 임시값으로 설정되어있다.
+		// 애니메이션 시작
+
+		backgroundimage.setBackgroundColor(Color.BLACK);
+		background.setAlpha(150);
+		backgroundimage.bringToFront();
+		ufo.bringToFront();
+		rootView.addView(ufo); // 움직이는 UFO 등록
+
 		/**
 		 * 서버로 이야기 전송
 		 * 
-		 * SendStoryTask생성할때 파라미터는 SendStoryTask가 수행되고 나서 실행될 콜백이다.
-		 * execute의 파라미터가 실제 넘겨줄 자료들.
-		 * parameter[0] = content. 이야기 내용
-		 * parameter[1] = getSherlockActivity(). Context.
+		 * SendStoryTask생성할때 파라미터는 SendStoryTask가 수행되고 나서 실행될 콜백이다. execute의
+		 * 파라미터가 실제 넘겨줄 자료들. parameter[0] = content. 이야기 내용 parameter[1] =
+		 * getSherlockActivity(). Context.
 		 */
-//        Runnable mMyTask = new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				// TODO Auto-generated method stub
-//				new SendStoryTask(new AfterSendStoryTask()).execute(getActivity().getIntent(), getSherlockActivity());
-//			}
-//		};
-		
-		
-			new SendStoryTask(new AfterSendStoryTask()).execute(content, getSherlockActivity());
+		Runnable mMyTask = new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				new SendStoryTask(new AfterSendStoryTask()).execute(content,
+						getSherlockActivity());
+			}
+		};
+		handle = new Handler();
 
+		handle.postDelayed(mMyTask, 3000);
+		onDestroy();
 	}
+
+	public void onDestroy() {
+		Log.i("test", "onDstory()");
+		handle.removeCallbacks(mMyTask);
+		super.onDestroy();
+	}
+
 	/**
 	 * SendStoryTask수행 후 실행되는 콜백
 	 */
@@ -217,8 +236,11 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		@Override
 		public void onTaskComplete(String result) {
 			Log.i("onTaskComplete", result);
-
+			
 			// 애니메이션 끝
+			rootView.removeViewInLayout(backgroundimage);
+			rootView.removeView(ufo);
+
 			if (progressDialog != null)
 				progressDialog.dismiss();
 
