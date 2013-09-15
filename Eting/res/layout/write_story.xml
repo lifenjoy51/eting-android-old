@@ -10,90 +10,89 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@android:color/transparent"
-        android:orientation="vertical"  >
-        </LinearLayout>
+        android:orientation="vertical" >
+    </LinearLayout>
 
-        <!-- <ImageView -->
-        <!-- android:layout_width="fill_parent" -->
-        <!-- android:layout_height="wrap_content" -->
-        <!-- android:background="@drawable/write_title_bar" -->
-        <!-- android:contentDescription="@string/writetitlebar" /> -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/send_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="20dp"
+            android:layout_gravity="center"
             android:text="Send Eting"
             android:textColor="#4d4d4d"
             android:textSize="26sp" />
+    </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@android:color/transparent" >
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:background="@android:color/transparent" >
 
-            <EditText
-                android:id="@+id/story_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_margin="20dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:background="@drawable/write_bg_bottom"
-                android:ems="4"
-                android:gravity="center_vertical|top|left"
-                android:inputType="textMultiLine"
-                android:paddingBottom="90dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:paddingTop="80dp"
-                android:textSize="20sp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/write_bg_top"
-                android:contentDescription="@string/writebgtop" />
-
-            <TextView
-                android:id="@+id/write_story_dt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center"
-                android:layout_marginRight="60dp"
-                android:layout_marginTop="50dp"
-                android:background="@android:color/white"
-                android:textSize="20sp" >
-            </TextView>
-
-            <ImageButton
-                android:id="@+id/send_story_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
-                android:layout_marginBottom="50dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/write_btn_selector"
-                android:contentDescription="@string/sendstorybutton"
-                android:scaleType="fitCenter" />
-        </FrameLayout>
+        <EditText
+            android:id="@+id/story_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/write_bg_bottom"
+            android:ems="4"
+            android:gravity="center_vertical|top|left"
+            android:inputType="textMultiLine"
+            android:paddingBottom="90dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="80dp"
+            android:textSize="20sp" />
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="50"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/blank" >
-        </ImageView>
-    
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/write_bg_top"
+            android:contentDescription="@string/writebgtop" />
+
+        <TextView
+            android:id="@+id/write_story_dt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="50dp"
+            android:background="@android:color/white"
+            android:textSize="20sp" >
+        </TextView>
+
+        <ImageButton
+            android:id="@+id/send_story_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/write_btn_selector"
+            android:contentDescription="@string/sendstorybutton"
+            android:scaleType="fitCenter" />
+    </FrameLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="50"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/blank" >
+    </ImageView>
 
 </FrameLayout>
