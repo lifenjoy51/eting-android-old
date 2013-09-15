@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.gif.eting.svc.task.SendStoryTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 내 이야기 쓰기

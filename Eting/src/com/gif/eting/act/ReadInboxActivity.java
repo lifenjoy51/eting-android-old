@@ -6,15 +6,15 @@ import java.util.List;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gif.eting.act.view.StampView;
@@ -24,7 +24,7 @@ import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StampService;
 import com.gif.eting.svc.task.SendStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 받은편지함 읽기화면
@@ -74,10 +74,6 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		layoutParams.dimAmount = 0.7f;
 		getWindow().setAttributes(layoutParams);
 
-		/*LayoutInflater inflater = (LayoutInflater) this
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-		View pop = inflater.inflate(R.layout.inbox_popup, null, false);*/
 		setContentView(R.layout.read_inbox_popup);
 		
 		//Service초기화
@@ -103,38 +99,18 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		 * 스탬프입력창
 		 */
 		List<StampDTO> list = stampService.getStampList();
-		RelativeLayout stampArea = (RelativeLayout) findViewById(R.id.inbox_stamp_area); // 스탬프영역
+		LinearLayout stampArea = (LinearLayout) findViewById(R.id.inbox_stamp_area); // 스탬프영역
 			
-		//화면 해상도
-		DisplayMetrics metrics = this.getResources().getDisplayMetrics();
-		int width = metrics.widthPixels;	//팝업창이므로 좀 줄인다
-		int height = metrics.heightPixels;
-
-		//pop.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-		//int width = pop.getMeasuredWidth();
-		//int height = pop.getMeasuredHeight();
-		
-		Log.i("display", width + " , " + height);
-		
-		int preX = 0;
-		int preY = 0;
-		
-		//스탬프크기
-		int objWidth = getResources().getDrawable(R.drawable.feedback).getIntrinsicWidth();
-		int objHeight = getResources().getDrawable(R.drawable.feedback).getIntrinsicHeight();
-		
 		//여백		
 		int margin = 10;
 		
 		//한줄에 3개씩 넣었을대 필요한 너비
 		int cntPerRow = 3;
-		int widthPerRow = (objWidth+margin)*cntPerRow;		
-		int leftMargin = (width - widthPerRow) / 2 /2;
 		
 		//처음 시작위치 설정
-		preX = leftMargin - margin;
-		int chk = 0;
-		
+		int chk = 1;
+
+		LinearLayout stampInnerLayout = initLayout();
 		for(StampDTO stamp : list){
 			
 			StampView stampView = new StampView(this);
@@ -145,30 +121,36 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 			stampView.setTextSize(15);
 			stampView.setOnClickListener(this);
 			
-			RelativeLayout.LayoutParams stampParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
-						
-			if(chk++ % cntPerRow == 0){
-				stampParams.leftMargin = leftMargin + margin; //Your X coordinate
-				stampParams.topMargin = preY+objHeight + margin + margin; //Your Y coordinate
-
-				preX = leftMargin;
-				preX += objWidth + margin;
-				preY += objHeight + margin;
-			}else{
-				
-				stampParams.leftMargin = preX + margin; //Your X coordinate
-				stampParams.topMargin = preY + margin; //Your Y coordinate
-				preX += objWidth + margin;
-			}
-			
-			Log.i("stampParams", stampParams.leftMargin + " , " + stampParams.topMargin);
-			/*stampParams.setMargins(10, 10, 10, 10);*/
+			LinearLayout.LayoutParams stampParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
+			stampParams.leftMargin =  margin;
+			stampParams.topMargin =  margin;
+			stampParams.rightMargin =  margin;
+			stampParams.bottomMargin =  margin;
 			stampView.setLayoutParams(stampParams);
 			
-			stampArea.addView(stampView);
+			if(chk != 0 && chk % cntPerRow == 0){
+				stampInnerLayout.addView(stampView);
+				stampArea.addView(stampInnerLayout);
+				stampInnerLayout = initLayout();
+				System.out.println("new stampInnerLayout");
+			}else{
+				stampInnerLayout.addView(stampView);
+			}
+			chk++;
 		}
 		
+		//출력해줌
+		if (chk != 0 && chk % cntPerRow != 0) {
+			stampArea.addView(stampInnerLayout);				
+		}
 		
+	}
+	
+	private LinearLayout initLayout(){
+		LinearLayout stampInnerLayout = new LinearLayout(this);
+		stampInnerLayout.setGravity(Gravity.CENTER);
+		stampInnerLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		return stampInnerLayout;
 	}
 
 	@Override

@@ -37,7 +37,7 @@ import com.gif.eting.act.view.EtingLogoView;
 import com.gif.eting.act.view.PlanetView;
 import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StoryService;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -92,7 +92,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
         // Inflate the layout containing a title and body text.
 		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.main,
 				container, false);
-		
+		rootView.setAnimationCacheEnabled(true);
+		rootView.setDrawingCacheEnabled(true);
 		nanum = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
 
 
@@ -128,8 +129,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		mainToday.setText(today);
 		
 		//위치조정
-		int dateX = width/100*14;
-		int dateY = height/100*85;
+		int dateX = width*14/100;
+		int dateY = height*85/100;
 		
 		FrameLayout.LayoutParams dataParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		dataParams.leftMargin = dateX; //Your X coordinate
@@ -161,8 +162,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 */
 		ImageView mainAcc1 = (ImageView) rootView.findViewById(R.id.main_acc_1);
 		//위치조정
-		int mainAcc1X = width/100*10;
-		int mainAcc1Y = height/100*20;
+		int mainAcc1X = width*10/100;
+		int mainAcc1Y = height*20/100;
 		FrameLayout.LayoutParams mainAcc1Params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		mainAcc1Params.leftMargin = mainAcc1X; //Your X coordinate
 		mainAcc1Params.topMargin = mainAcc1Y; //Your Y coordinate
@@ -174,8 +175,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 */
 		ImageView mainAcc2 = (ImageView) rootView.findViewById(R.id.main_acc_2);
 		//위치조정
-		int mainAcc2X = width/100*90;
-		int mainAcc2Y = height/100*60;
+		int mainAcc2X = width*90/100;
+		int mainAcc2Y = height*60/100;
 		FrameLayout.LayoutParams mainAcc2Params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		mainAcc2Params.leftMargin = mainAcc2X; //Your X coordinate
 		mainAcc2Params.topMargin = mainAcc2Y; //Your Y coordinate
@@ -283,8 +284,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		mainEtingCnt.setTypeface(face);
 				
 		//위치조정
-		int cntX = width/100*14;
-		int cntY = height/100*77;	
+		int cntX = width*14/100;
+		int cntY = height*77/100;	
 		FrameLayout.LayoutParams mainEtingParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		mainEtingParams.leftMargin = cntX; //Your X coordinate
 		mainEtingParams.topMargin = cntY; //Your Y coordinate
@@ -297,8 +298,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 */
 		ImageView mainUfo = (ImageView) getView().findViewById(R.id.main_ufo);
 		//위치조정
-		int ufoX = width/100*76;
-		int ufoY = height/100*13;
+		int ufoX = width*76/100;
+		int ufoY = height*13/100;
 		FrameLayout.LayoutParams ufoParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		ufoParams.leftMargin = ufoX; //Your X coordinate
 		ufoParams.topMargin = ufoY; //Your Y coordinate
@@ -315,8 +316,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		mainInboxCnt.setText("New " + String.valueOf(inboxCnt));
 		
 		//위치조정
-		int inboxX = width/100*58 + mainUfo.getWidth();
-		int inboxY = height/100*8 - mainInboxCnt.getHeight()/4*1;	
+		int inboxX = width*58/100 + getActivity().getResources().getDrawable(R.drawable.main_ufo).getIntrinsicWidth();
+		int inboxY = height*8/100 - mainInboxCnt.getHeight()/4*1;	
 		FrameLayout.LayoutParams mainInboxParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		mainInboxParams.leftMargin = inboxX; //Your X coordinate
 		mainInboxParams.topMargin = inboxY; //Your Y coordinate

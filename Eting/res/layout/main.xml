@@ -17,10 +17,10 @@
 
     <ImageButton
         android:id="@+id/setting_btn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="bottom|right"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="60dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/setting_btn"
         android:contentDescription="@string/settingbutton"
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#4d4d4d"
-        android:textSize="46sp" />
+        android:textSize="42sp" />
 
     <TextView
         android:id="@+id/main_eting_cnt"
@@ -47,7 +47,7 @@
         android:textColor="#CC2323"
         android:textStyle="bold"
         android:textColorHighlight="#FFFFFF"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:rotation="-30"
         android:layout_marginBottom="5dp"
         android:layout_marginRight="5dp" />

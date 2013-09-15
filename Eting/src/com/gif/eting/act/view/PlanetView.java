@@ -12,7 +12,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 
 import com.gif.eting.util.AnimateDrawable;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 움직이는 구름

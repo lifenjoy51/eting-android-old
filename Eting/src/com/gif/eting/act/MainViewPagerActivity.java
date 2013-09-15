@@ -25,7 +25,7 @@ import com.gif.eting.act.view.Cloud1View;
 import com.gif.eting.act.view.Cloud2View;
 import com.gif.eting.act.view.Cloud3View;
 import com.gif.eting.act.view.Cloud4View;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 메인 뷰페이져
@@ -61,9 +61,13 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 		fr.addView(new Cloud2View(this)); // 구름애니메이션
 		fr.addView(new Cloud3View(this)); // 구름애니메이션
 		fr.addView(new Cloud4View(this)); // 구름애니메이션
+
+        fr.setAnimationCacheEnabled(true);
+        fr.setDrawingCacheEnabled(true);
         
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.bringToFront();
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setCurrentItem(1);		//초기페이지설정
@@ -93,19 +97,19 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 		Log.i("currunt hour", thisHourStr);
 		
 		if(thisHour<1 ){
-			mPager.setBackgroundResource(R.drawable.bg_1);
+			fr.setBackgroundResource(R.drawable.bg_1);
 		}else if(thisHour<5 ){
-			mPager.setBackgroundResource(R.drawable.bg_2);
+			fr.setBackgroundResource(R.drawable.bg_2);
 		}else if(thisHour<9 ){
-			mPager.setBackgroundResource(R.drawable.bg_3);
+			fr.setBackgroundResource(R.drawable.bg_3);
 		}else if(thisHour<13 ){
-			mPager.setBackgroundResource(R.drawable.bg_4);
+			fr.setBackgroundResource(R.drawable.bg_4);
 		}else if(thisHour<17 ){
-			mPager.setBackgroundResource(R.drawable.bg_5);
+			fr.setBackgroundResource(R.drawable.bg_5);
 		}else if(thisHour<21 ){
-			mPager.setBackgroundResource(R.drawable.bg_6);
+			fr.setBackgroundResource(R.drawable.bg_6);
 		}else{
-			mPager.setBackgroundResource(R.drawable.bg_1);
+			fr.setBackgroundResource(R.drawable.bg_1);
 		}
         
 		/**

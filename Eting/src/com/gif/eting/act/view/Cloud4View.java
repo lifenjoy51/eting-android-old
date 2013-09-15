@@ -12,7 +12,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 
 import com.gif.eting.util.AnimateDrawable;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 움직이는 구름
@@ -51,6 +51,7 @@ public class Cloud4View extends View {
 		System.out.println("onAnimationEnd");
 		Drawable dr = context.getResources().getDrawable(R.drawable.main_cloud_4);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
+		dr.setAlpha(150);
 
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;

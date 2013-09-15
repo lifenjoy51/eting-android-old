@@ -11,7 +11,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 import com.gif.eting.util.AnimateDrawable;
 
 /**
@@ -51,6 +51,7 @@ public class Cloud1View extends View {
 		System.out.println("onAnimationEnd");
 		Drawable dr = context.getResources().getDrawable(R.drawable.main_cloud_1);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
+		dr.setAlpha(250);
 
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;
@@ -110,6 +111,7 @@ public class Cloud1View extends View {
 		an.setRepeatCount(-1);
 		an.setInterpolator(new LinearInterpolator());
 		an.initialize(objWidth, objHeight, width, height);
+		
 
 		mDrawable = new AnimateDrawable(dr, an);
 		an.startNow();

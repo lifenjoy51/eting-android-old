@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gif.eting.svc.PasswordService;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 비밀번호 화면
@@ -27,6 +27,8 @@ public class LockScreenActivity extends Activity {
 
 		//암호입력필드
 		EditText et = (EditText) findViewById(R.id.lockScreenPassword);
+		
+		et.setTextScaleX(2.0f);
 		
 		//암호입력할때 4자리 다 채우면 자동으로 암호검사
 		et.addTextChangedListener(new TextWatcher() {

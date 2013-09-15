@@ -12,7 +12,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 
 import com.gif.eting.util.AnimateDrawable;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 움직이는 구름
@@ -51,6 +51,7 @@ public class Cloud3View extends View {
 		System.out.println("onAnimationEnd");
 		Drawable dr = context.getResources().getDrawable(R.drawable.main_cloud_3);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
+		dr.setAlpha(200);
 
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;
@@ -64,7 +65,7 @@ public class Cloud3View extends View {
 		int enPtY; // 수직 위치 끝
 		long duration = 28000; // 이동하는 시간
 		
-		int stX1 = -20;	//첫번째 애니메이션 시작위치
+		int stX1 = 20;	//첫번째 애니메이션 시작위치
 		int enX1 = 100;	//첫번째 애니메이션 끝 위치
 		int stX2 = -100;	//두번째 애니메이션 시작위치
 		int enX2 = stX1;	//두번째 애니메이션 끝 위치

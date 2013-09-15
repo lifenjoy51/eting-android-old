@@ -11,14 +11,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +27,7 @@ import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.svc.task.ReceiveStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 내 이야기 목록에서 선택한 이야기를 읽는 화면
@@ -47,10 +46,6 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-		layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-		layoutParams.dimAmount = 0.7f;
-		getWindow().setAttributes(layoutParams);
 		setContentView(R.layout.read_mystory_popup);
 		
 
@@ -133,88 +128,85 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		//클릭이벤트 설정
 		findViewById(R.id.del_btn).setOnClickListener(this);
 	}
-	
+
 	/**
 	 * ReceiveStampTask 수행 후 실행되는 콜백
 	 */
-	private class AfterReceiveStampTask implements AsyncTaskCompleteListener<List<StampDTO>>{
+	private class AfterReceiveStampTask implements
+			AsyncTaskCompleteListener<List<StampDTO>> {
 
 		@Override
 		public void onTaskComplete(List<StampDTO> list) {
-			
-			if(list!=null){
-				if(list.size()>0){
+
+			if (list != null) {
+				if (list.size() > 0) {
 					String sender = list.get(0).getSender();
 					TextView contentView = (TextView) findViewById(R.id.popup_stamp_sender);
-					contentView.setText("From. "+sender);
+					contentView.setText("From. " + sender);
 				}
 			}
-			
+
 			/**
 			 * 스탬프입력창
 			 */
-			RelativeLayout stampArea = (RelativeLayout) findViewById(R.id.mystory_stamp_area); // 스탬프영역
-				
-			//화면 해상도
-			DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-			int width = metrics.widthPixels;	//팝업창이므로 좀 줄인다
-			int height = metrics.heightPixels;
+			LinearLayout stampArea = (LinearLayout) findViewById(R.id.mystory_stamp_area); // 스탬프영역
 
-			
-			Log.i("display", width + " , " + height);
-			
-			int preX = 0;
-			int preY = 0;
-			
-			//스탬프크기
-			int objWidth = getResources().getDrawable(R.drawable.feedback).getIntrinsicWidth();
-			int objHeight = getResources().getDrawable(R.drawable.feedback).getIntrinsicHeight();
-			
-			//여백		
+			// 여백
 			int margin = 10;
-			
-			//한줄에 3개씩 넣었을대 필요한 너비
+
+			// 한줄에 3개씩 넣었을대 필요한 너비
 			int cntPerRow = 3;
-			
-			//처음 시작위치 설정
-			preX = margin;
-			int chk = 0;
-			
-			for(StampDTO stamp : list){
-				
+
+			// 처음 시작위치 설정
+			int chk = 1;
+
+			LinearLayout stampInnerLayout = initLayout();
+			for (StampDTO stamp : list) {
+
 				StampView stampView = new StampView(context);
 				stampView.setText(stamp.getStamp_name());
 				stampView.setStamp(stamp);
 				stampView.setGravity(Gravity.CENTER);
 				stampView.setBackgroundResource(R.drawable.feedback);
 				stampView.setTextSize(15);
-				
-				RelativeLayout.LayoutParams stampParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
-							
-				if(chk++ % cntPerRow == 0){
-					stampParams.leftMargin = 0 + margin; //Your X coordinate
-					stampParams.topMargin = preY+objHeight + margin + margin; //Your Y coordinate
 
-					preX = 0;
-					preX += objWidth + margin;
-					preY += objHeight + margin;
-				}else{
-					
-					stampParams.leftMargin = preX + margin; //Your X coordinate
-					stampParams.topMargin = preY + margin; //Your Y coordinate
-					preX += objWidth + margin;
-				}
+				LinearLayout.LayoutParams stampParams = new LinearLayout.LayoutParams(
+						LinearLayout.LayoutParams.WRAP_CONTENT,
+						LinearLayout.LayoutParams.WRAP_CONTENT);
 				
-				Log.i("stampParams", stampParams.leftMargin + " , " + stampParams.topMargin);
-				/*stampParams.setMargins(10, 10, 10, 10);*/
+				stampParams.leftMargin = margin;
+				stampParams.topMargin = margin;
+				stampParams.rightMargin = margin;
+				stampParams.bottomMargin = margin;
 				stampView.setLayoutParams(stampParams);
-				
-				stampArea.addView(stampView);
+
+				if (chk != 0 && chk % cntPerRow == 0) {
+					stampInnerLayout.addView(stampView);
+					stampArea.addView(stampInnerLayout);
+					stampInnerLayout = initLayout();
+					System.out.println("new stampInnerLayout");
+				} else {
+					stampInnerLayout.addView(stampView);
+				}
+				chk++;
+
 			}
 			
-			//stampInfoView.setText(result);	
+			//출력해줌
+			if (chk != 0 && chk % cntPerRow != 0) {
+				stampArea.addView(stampInnerLayout);				
+			}
 		}
-	}
+
+		private LinearLayout initLayout() {
+			LinearLayout stampInnerLayout = new LinearLayout(context);
+			stampInnerLayout.setGravity(Gravity.CENTER);
+			stampInnerLayout.setLayoutParams(new LinearLayout.LayoutParams(
+					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+			return stampInnerLayout;
+		}
+	}	
+		
 
 	@Override
 	public void onClick(View v) {

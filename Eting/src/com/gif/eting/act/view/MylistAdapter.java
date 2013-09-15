@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gif.eting.dto.StoryDTO;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 
