@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.gif.eting.R;
@@ -20,6 +21,7 @@ public class SettingActivity extends Activity implements OnClickListener {
 	private ImageView password_img_btn;
 	private ImageView email_btn;
 	private ImageView credit_img_btn;
+	private Button tutorialBtn;
 
 	// private Uri fileUri;
 
@@ -32,6 +34,7 @@ public class SettingActivity extends Activity implements OnClickListener {
 		password_img_btn = (ImageView) findViewById(R.id.password_img_btn);
 		email_btn = (ImageView) findViewById(R.id.email_btn);
 		credit_img_btn = (ImageView) findViewById(R.id.credit_img_btn);
+		tutorialBtn = (Button) findViewById(R.id.tutorialBtn);
 
 		alarm_img_btn.setImageResource(R.drawable.alram_off);
 
@@ -106,6 +109,7 @@ public class SettingActivity extends Activity implements OnClickListener {
 		password_img_btn.setOnClickListener(this);
 		email_btn.setOnClickListener(this);
 		credit_img_btn.setOnClickListener(this);
+		tutorialBtn.setOnClickListener(this);
 
 	}
 
@@ -136,7 +140,9 @@ public class SettingActivity extends Activity implements OnClickListener {
 				alarm_img_btn.setImageResource(R.drawable.alram_on);
 				// 로직 수행
 			}
-
+		}
+		if(view.getId() == R.id.tutorialBtn) {
+			startActivity(new Intent(this, TutorialActivity.class));	
 		}
 
 	}

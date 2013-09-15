@@ -25,7 +25,6 @@
         android:ems="10"
         android:imeOptions="flagNoExtractUi"
         android:inputType="number"
-        android:lineSpacingExtra="15dip"
         android:maxLength="4"
         android:paddingLeft="20dp"
         android:password="true"
