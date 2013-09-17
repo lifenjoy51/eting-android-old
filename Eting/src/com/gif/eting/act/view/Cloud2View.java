@@ -23,7 +23,7 @@ import com.gif.eting_dev.R;
 @SuppressLint("ViewConstructor")
 public class Cloud2View extends View {
 	private AnimateDrawable mDrawable;
-	private boolean chk = false;
+	private boolean chk = true;
 
 	public Cloud2View(Context context) {
 		super(context);
@@ -36,8 +36,7 @@ public class Cloud2View extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		mDrawable.draw(canvas);
-
-		//invalidate();
+		invalidate();
 	}
 
 	/**
@@ -49,9 +48,9 @@ public class Cloud2View extends View {
 	private void setAnimationEvent(Context context, Animation an) {
 
 		System.out.println("onAnimationEnd");
-		Drawable dr = context.getResources().getDrawable(R.drawable.main_cloud_2);
+		Drawable dr = context.getResources().getDrawable(R.drawable.main_cloud_3);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
-		dr.setAlpha(100);
+		//dr.setAlpha(100);
 
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;
@@ -65,14 +64,14 @@ public class Cloud2View extends View {
 		int enPtY; // 수직 위치 끝
 		long duration = 38000; // 이동하는 시간
 		
-		int stX1 = -60;	//첫번째 애니메이션 시작위치
+		int stX1 = 41;	//첫번째 애니메이션 시작위치
 		int enX1 = 100;	//첫번째 애니메이션 끝 위치
-		int stX2 = -100;	//두번째 애니메이션 시작위치
+		int stX2 = -70;	//두번째 애니메이션 시작위치
 		int enX2 = stX1;	//두번째 애니메이션 끝 위치
 		int lenX1 = enX1 - stX1;	//첫번째 애니메이션 이동길이
 		int lenX2 = enX2 - stX2;	//두번째 애니메이션 이동길이
 		int lenTot = lenX1 + lenX2;	//전체 이동길이
-		int posY = 30;
+		int posY = 28;
 		
 		// 위아래로 왔다갔다하게하기
 		if (chk) {

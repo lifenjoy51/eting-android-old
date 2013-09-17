@@ -5,7 +5,9 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -15,6 +17,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.gif.eting.act.view.StampView;
@@ -63,6 +67,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 	 */
 	private String sender;
 	
+	private Typeface nanum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,8 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 
 		setContentView(R.layout.read_inbox_popup);
 		
+		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
+		
 		//Service초기화
 		inboxService = new InboxService(this.getApplicationContext());
 		stampService = new StampService(this.getApplicationContext());
@@ -86,14 +93,21 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		String content = inboxStory.getContent();
 		String storyDate = inboxStory.getStory_date();
 		
+		//스크린크기
+		DisplayMetrics metrics = getResources().getDisplayMetrics();
+		int width = metrics.widthPixels;
+		int height = metrics.heightPixels;
+		
 		TextView contentView = (TextView) findViewById(R.id.popup_content);
+		contentView.setTypeface(nanum);
 		contentView.setText(content);
 		
 		TextView storyDateView = (TextView) findViewById(R.id.popup_date);
+		storyDateView.setTypeface(nanum);
 		storyDateView.setText(storyDate);
 
 		//버튼이벤트 삽입
-		findViewById(R.id.inbox_confirm_btn).setOnClickListener(this);
+		findViewById(R.id.inbox_confirm_btn).setOnClickListener(this);		
 		
 		/**
 		 * 스탬프입력창
@@ -143,7 +157,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		if (chk != 0 && chk % cntPerRow != 0) {
 			stampArea.addView(stampInnerLayout);				
 		}
-		
+				
 	}
 	
 	private LinearLayout initLayout(){
@@ -199,6 +213,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		 * 보낸이 설정
 		 */
 		EditText et = (EditText) findViewById(R.id.stamp_sender);
+		et.setTypeface(nanum);
 		sender = et.getText().toString();
 		
 		/**

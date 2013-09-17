@@ -32,7 +32,6 @@
         android:paddingTop="10dp"
         android:password="true"
         android:singleLine="true"
-        android:text="sdfs"
         android:textSize="36sp"
         android:textStyle="bold" />
 

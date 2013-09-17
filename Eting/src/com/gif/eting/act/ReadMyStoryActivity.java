@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -40,6 +41,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 	private StoryService storyService;
 	private String storyIdx;
 	private Context context;
+	private Typeface nanum;
 	
 
 	@Override
@@ -47,6 +49,8 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.read_mystory_popup);
+		
+		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
 		
 
 		/**
@@ -57,20 +61,16 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		int thisHour = Integer.parseInt(thisHourStr);
 		Log.i("currunt hour", thisHourStr);
 		
-		if(thisHour<1 ){
-			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_1);
-		}else if(thisHour<5 ){
-			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_2);
-		}else if(thisHour<9 ){
-			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_3);
-		}else if(thisHour<13 ){
-			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_4);
-		}else if(thisHour<17 ){
-			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_5);
-		}else if(thisHour<21 ){
-			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_6);
+		
+
+		if(thisHour<4 ){
+			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_4);	//파랑
+		}else if(thisHour<12 ){
+			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_5);	//보라
+		}else if(thisHour<20 ){
+			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_1);	//초록
 		}else{
-			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_1);
+			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_4);	//파랑
 		}
 		
 		this.context = getApplicationContext();
@@ -92,6 +92,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		}
 		
 		TextView contentView = (TextView) findViewById(R.id.popup_content);
+		contentView.setTypeface(nanum);
 		contentView.setText(storyDate+"\n"+content);
 		
 		/**
@@ -142,7 +143,8 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 				if (list.size() > 0) {
 					String sender = list.get(0).getSender();
 					TextView contentView = (TextView) findViewById(R.id.popup_stamp_sender);
-					contentView.setText("From. " + sender);
+					contentView.setTypeface(nanum);
+					contentView.setText("From. "+sender);
 				}
 			}
 

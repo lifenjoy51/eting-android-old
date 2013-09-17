@@ -69,7 +69,6 @@ public class MyStoryListFragment  extends SherlockFragment{
                 .inflate(R.layout.mystory_list, container, false);
         nanum = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
 
-
         return rootView;
 	}
     

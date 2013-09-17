@@ -3,6 +3,7 @@ package com.gif.eting.act.view;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 
 	private List<StoryDTO> items;
 	private Context context;
+	private Typeface nanum;
 
 	public MylistAdapter(Context context, int textViewResourceId,
 			List<StoryDTO> items) {
@@ -28,6 +30,8 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		nanum = Typeface.createFromAsset(getContext().getAssets(), "fonts/NanumGothic.ttf");
+		
 		/**
 		 * 내 이야기
 		 */
@@ -52,6 +56,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			 * 구분선 날짜
 			 */
 			TextView mystoryDate = (TextView) v.findViewById(R.id.mylist_item_date);
+			mystoryDate.setTypeface(nanum);
 			if (mystoryDate != null) {
 				mystoryDate.setText(storyDate);
 			}
@@ -90,6 +95,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			 * 이야기 작성일자
 			 */
 			TextView mystoryDate = (TextView) v.findViewById(R.id.mylist_item_date);
+			mystoryDate.setTypeface(nanum);
 			if (mystoryDate != null) {
 				mystoryDate.setText(storyDate);
 			}
@@ -98,6 +104,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			 * 이야기 내용
 			 */
 			TextView mystoryContent = (TextView) v.findViewById(R.id.mylist_item_content);
+			mystoryContent.setTypeface(nanum);
 			if (mystoryContent != null) {
 				String content = storyContent;
 				content = content.replaceAll("\n", " ");

@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,15 +30,20 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 	private StoryService storyService = null;
 	private String mailContent;
 	private String emailAddress;
+	private Typeface nanum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.email_setting);
+		
+		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
 
 		email_address = (EditText) findViewById(R.id.email_address);
 		send_email = (ImageView) findViewById(R.id.send_email);
 		cancel_btn = (ImageView) findViewById(R.id.cancel_btn);
+		
+		email_address.setTypeface(nanum);
 
 		// emailAddress = email_address.getText().toString();
 
@@ -146,6 +152,7 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 		it.setType("plain/text");
 
 		emailAddress = email_address.getText().toString();
+		
 		String[] tos = { emailAddress };
 		it.putExtra(Intent.EXTRA_EMAIL, tos);
 

@@ -129,8 +129,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		mainToday.setText(today);
 		
 		//위치조정
-		int dateX = width*14/100;
-		int dateY = height*85/100;
+		int dateX = width*11/100;
+		int dateY = height*81/100;
 		
 		FrameLayout.LayoutParams dataParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		dataParams.leftMargin = dateX; //Your X coordinate
@@ -145,25 +145,25 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 */
 		ImageButton settingBtn = (ImageButton) rootView.findViewById(R.id.setting_btn);
 		settingBtn.bringToFront();
-		/*
+		
 		//위치조정
-		int settingX = width/100*97;
-		int settingY = height/100*80;
+		int settingX = width*84/100 - settingBtn.getWidth();		
+		int settingY = height*82/100 - settingBtn.getHeight();
 		
 		FrameLayout.LayoutParams settingParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		settingParams.leftMargin = settingX; //Your X coordinate
 		settingParams.topMargin = settingY; //Your Y coordinate
 		settingParams.gravity = Gravity.LEFT | Gravity.TOP;
 		settingBtn.setLayoutParams(settingParams);
-		*/
+		
 		
 		/**
 		 * 별모양1
 		 */
 		ImageView mainAcc1 = (ImageView) rootView.findViewById(R.id.main_acc_1);
 		//위치조정
-		int mainAcc1X = width*10/100;
-		int mainAcc1Y = height*20/100;
+		int mainAcc1X = width*15/100;
+		int mainAcc1Y = height*19/100;
 		FrameLayout.LayoutParams mainAcc1Params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		mainAcc1Params.leftMargin = mainAcc1X; //Your X coordinate
 		mainAcc1Params.topMargin = mainAcc1Y; //Your Y coordinate
@@ -175,8 +175,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 */
 		ImageView mainAcc2 = (ImageView) rootView.findViewById(R.id.main_acc_2);
 		//위치조정
-		int mainAcc2X = width*90/100;
-		int mainAcc2Y = height*60/100;
+		int mainAcc2X = width*83/100;
+		int mainAcc2Y = height*58/100;
 		FrameLayout.LayoutParams mainAcc2Params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		mainAcc2Params.leftMargin = mainAcc2X; //Your X coordinate
 		mainAcc2Params.topMargin = mainAcc2Y; //Your Y coordinate
@@ -284,8 +284,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		mainEtingCnt.setTypeface(face);
 				
 		//위치조정
-		int cntX = width*14/100;
-		int cntY = height*77/100;	
+		int cntX = width*11/100;
+		int cntY = height*74/100;	
 		FrameLayout.LayoutParams mainEtingParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		mainEtingParams.leftMargin = cntX; //Your X coordinate
 		mainEtingParams.topMargin = cntY; //Your Y coordinate

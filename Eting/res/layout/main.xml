@@ -3,25 +3,11 @@
     android:id="@+id/main_frame"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@android:color/transparent">
-
-<!-- 
-    <ImageView
-        android:id="@+id/main_bg"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:contentDescription="@string/mainbackgroundimage"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg_1" /> -->
-
-    <ImageButton
+    android:background="@android:color/transparent"
+    android:orientation="vertical" >    <ImageButton
         android:id="@+id/setting_btn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="60dp"
-        android:layout_marginRight="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/setting_btn"
         android:contentDescription="@string/settingbutton"
         android:gravity="bottom" />
@@ -39,18 +25,18 @@
         android:layout_height="wrap_content"
         android:textColor="#777777"
         android:textSize="28sp" />
-    
+
     <TextView
         android:id="@+id/main_inbox_cnt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:rotation="-30"
         android:textColor="#CC2323"
-        android:textStyle="bold"
         android:textColorHighlight="#FFFFFF"
         android:textSize="16sp"
-        android:rotation="-30"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="5dp" />
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/main_ufo"
@@ -58,14 +44,14 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/mainufo"
         android:src="@drawable/main_ufo" />
-    
+
     <ImageView
         android:id="@+id/main_acc_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/mainacc1"
         android:src="@drawable/main_acc_1" />
-    
+
     <ImageView
         android:id="@+id/main_acc_2"
         android:layout_width="wrap_content"

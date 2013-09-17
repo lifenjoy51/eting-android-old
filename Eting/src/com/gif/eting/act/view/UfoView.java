@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -48,7 +49,7 @@ public class UfoView extends View {
 	 */
 	private void setAnimationEvent(Context context, Animation an){
 
-		System.out.println("onAnimationEnd");
+		System.out.println("ufoAnimation");
 		Drawable dr = context.getResources().getDrawable(
 				R.drawable.intro_ufo);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());

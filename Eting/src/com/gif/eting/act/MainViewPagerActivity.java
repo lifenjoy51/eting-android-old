@@ -96,20 +96,14 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 		int thisHour = Integer.parseInt(thisHourStr);
 		Log.i("currunt hour", thisHourStr);
 		
-		if(thisHour<1 ){
-			fr.setBackgroundResource(R.drawable.bg_1);
-		}else if(thisHour<5 ){
-			fr.setBackgroundResource(R.drawable.bg_2);
-		}else if(thisHour<9 ){
-			fr.setBackgroundResource(R.drawable.bg_3);
-		}else if(thisHour<13 ){
-			fr.setBackgroundResource(R.drawable.bg_4);
-		}else if(thisHour<17 ){
-			fr.setBackgroundResource(R.drawable.bg_5);
-		}else if(thisHour<21 ){
-			fr.setBackgroundResource(R.drawable.bg_6);
+		if(thisHour<4 ){
+			fr.setBackgroundResource(R.drawable.bg_4);	//파랑
+		}else if(thisHour<12 ){
+			fr.setBackgroundResource(R.drawable.bg_5);	//보라
+		}else if(thisHour<20 ){
+			fr.setBackgroundResource(R.drawable.bg_1);	//초록
 		}else{
-			fr.setBackgroundResource(R.drawable.bg_1);
+			fr.setBackgroundResource(R.drawable.bg_4);	//파랑
 		}
         
 		/**
@@ -130,9 +124,26 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 			
 			
 		}
+		
     }
     
-    /**
+    
+    
+    @Override
+	protected void onPause() {
+		super.onPause();
+		
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+	}
+
+
+
+	/**
      * 페이지 변경
      * 
      * @param position
@@ -148,7 +159,6 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     	SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
-    	
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
 		}
@@ -199,16 +209,15 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
             return fragment;
         }
         
+        public Fragment getFragment(int position) {
+            return registeredFragments.get(position);
+        }
+
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             registeredFragments.remove(position);
             super.destroyItem(container, position, object);
         }
-        
-        public Fragment getFragment(int position) {
-            return registeredFragments.get(position);
-        }
-
 	}
 
 	/**
