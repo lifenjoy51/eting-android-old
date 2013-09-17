@@ -47,12 +47,12 @@ public class TutorialActivity extends Activity implements OnTouchListener {
 			// 다음 view 보여줌
 			viewflipper.showNext();
 		}
-		// finishTutorial();
+//		v.invalidate();
 		return true;
 	}
-
 //	public void finishTutorial() {
 //		if (wm != null) {
+//			
 //			wm.removeView(viewflipper);
 //			viewflipper.setDisplayedChild(0);
 //			wm = null;
