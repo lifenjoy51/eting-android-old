@@ -11,6 +11,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
 
 import com.gif.eting.util.AnimateDrawable;
+import com.gif.eting.util.Util;
 import com.gif.eting_dev.R;
 
 
@@ -57,15 +58,22 @@ public class UfoView extends View {
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;
 		int height = metrics.heightPixels;
+		
+		//사이즈
+//		int size - width * Util.
 
 		int stPtX = width / 2 - dr.getIntrinsicWidth() / 2;
 		int enPtX = width / 2 - dr.getIntrinsicWidth() / 2;
-		int stPtY = height / 100 * 28;	//수직 위치 시작
-		int enPtY = height / 100 * 34;	//수직 위치 끝
+//		int stPtY = height / 100 * 28;	//수직 위치 시작
+//		int enPtY = height / 100 * 34;	//수직 위치 끝
+
+		int center = height * 43 / 100 - dr.getIntrinsicHeight() / 2;
+		int stPtY = height * 41 / 100 - dr.getIntrinsicHeight() / 2;
+		int enPtY = height * 45 / 100 - dr.getIntrinsicHeight() / 2;
 		
 		//처음 실행할때
 		if(cnt==0){
-			stPtY = (stPtY+enPtY)/2; //처음엔 중앙에서 시작한다
+			stPtY = center; //처음엔 중앙에서 시작한다
 		}
 		
 		//위아래로 왔다갔다하게하기

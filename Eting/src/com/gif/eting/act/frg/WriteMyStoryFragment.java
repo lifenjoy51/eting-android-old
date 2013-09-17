@@ -173,8 +173,8 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 
 		backgroundimage.setBackgroundColor(Color.BLACK);
 		background.setAlpha(150);
-		backgroundimage.bringToFront();
 		ufo.bringToFront();
+		backgroundimage.bringToFront();
 		rootView.addView(ufo); // 움직이는 UFO 등록
 
 		/**
