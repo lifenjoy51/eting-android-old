@@ -6,10 +6,8 @@ import java.util.Locale;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -19,12 +17,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.gif.eting.act.view.UfoView;
+import com.gif.eting.act.view.UfoWritePageView;
 import com.gif.eting.svc.task.SendStoryTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
 import com.gif.eting_dev.R;
@@ -38,7 +40,6 @@ import com.gif.eting_dev.R;
 public class WriteMyStoryFragment extends SherlockFragment implements
 		OnClickListener {
 	private ViewPager mPager;
-	private ProgressDialog progressDialog;
 	private TextView send_textview;
 	private TextView tv;
 	private Typeface nanum;
@@ -46,9 +47,8 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 	private ViewGroup rootView;
 	private Handler handle = new Handler();
 	private Runnable mMyTask;
-	private UfoView ufo;
-	private View backgroundimage;
-	private Drawable background;
+	private ViewGroup writeContentArea;
+	private UfoWritePageView ufo;
 
 	/**
 	 * Factory method for this fragment class. Constructs a new fragment for the
@@ -81,15 +81,15 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 				"fonts/NanumGothic.ttf");
 
 		context = getActivity();
+		
+		writeContentArea = (ViewGroup) rootView.findViewById(R.id.write_content_area);
 
 		tv = (TextView) rootView.findViewById(R.id.write_story_dt);
-		send_textview = (TextView) rootView.findViewById(R.id.send_textview);
 		tv.setTypeface(nanum);
+		
+		/*send_textview = (TextView) rootView.findViewById(R.id.send_textview);
 		send_textview.setTypeface(nanum);
-		send_textview.setPaintFlags(send_textview.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
-		backgroundimage = rootView.findViewById(R.id.background);
-
-		background = backgroundimage.getBackground();
+		send_textview.setPaintFlags(send_textview.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);*/
 
 		// 상단에 오늘날짜 설정
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd",
@@ -98,13 +98,6 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		String today = formatter.format(date);
 		tv.setPaintFlags(tv.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 		tv.setText(today);
-
-		/**
-		 * 상단날자 위치조정
-		 */
-		// 기준이 될 이야기 입력부분
-		EditText et = (EditText) rootView.findViewById(R.id.story_content);
-		//et.setTypeface(nanum);
 
 		// 클릭이벤트 설정
 		rootView.findViewById(R.id.send_story_btn).setOnClickListener(this);
@@ -163,19 +156,20 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		EditText et = (EditText) getView().findViewById(R.id.story_content);
 		//et.setTypeface(nanum);
 		final String content = et.getText().toString(); // 이야기 내용
-		ufo = new UfoView(context);
+		
+		//페이드아웃 애니메이션
+		Animation sa = new AlphaAnimation(1.0f, 0.0f);
 
-		// 전송상태 나타냄
-		// progressDialog = ProgressDialog.show(getActivity(), "",
-		// getResources().getString(R.string.app_name), true, true); //TODO
-		// 전송메세지가 임시값으로 설정되어있다.
-		// 애니메이션 시작
-
-		backgroundimage.setBackgroundColor(Color.BLACK);
-		background.setAlpha(150);
-		backgroundimage.bringToFront();
-		ufo.bringToFront();
-		rootView.addView(ufo); // 움직이는 UFO 등록
+		sa.setDuration(500);
+		sa.setRepeatCount(0);
+		sa.setFillAfter(true);
+		sa.setFillEnabled(true);
+		sa.setAnimationListener(new AnimationControl(context));
+		
+		/**
+		 * 이야기 전송을 시작하며 동시와 페이드아웃 애니메이션도 시작한다.
+		 */
+		writeContentArea.startAnimation(sa);
 
 		/**
 		 * 서버로 이야기 전송
@@ -184,17 +178,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		 * 파라미터가 실제 넘겨줄 자료들. parameter[0] = content. 이야기 내용 parameter[1] =
 		 * getSherlockActivity(). Context.
 		 */
-		Runnable mMyTask = new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				new SendStoryTask(new AfterSendStoryTask()).execute(content,
-						getSherlockActivity());
-			}
-		};
-		handle = new Handler();
-
-		handle.postDelayed(mMyTask, 3000);
+		new SendStoryTask(new AfterSendStoryTask()).execute(content, getSherlockActivity());
 		onDestroy();
 	}
 
@@ -214,25 +198,9 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		public void onTaskComplete(String result) {
 			Log.i("onTaskComplete", result);
 			
-			// 애니메이션 끝
-			rootView.removeViewInLayout(backgroundimage);
-			rootView.removeView(ufo);
-
-			if (progressDialog != null)
-				progressDialog.dismiss();
-
-			Toast toast = Toast.makeText(getActivity(), "이야기가 전송되었습니다",
-					Toast.LENGTH_SHORT);
-			toast.show();
-
-			// 쓰기화면 초기화
-			EditText et = (EditText) getView().findViewById(R.id.story_content);
-			et.setText("");
-
-			// 메인화면으로 이동 //시연때 성환이형 의견 수렴
-			if (mPager != null) {
-				mPager.setCurrentItem(1);
-			}
+			/**
+			 * 여기엔 뭐하지??
+			 */
 		}
 	}
 
@@ -249,6 +217,89 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 			mPager.setCurrentItem(1);
 		}
 		return true;
+	}
+	
+
+	/**
+	 * 페이드아웃 애니메이션 상태를 제어
+	 * 
+	 * @author lifenjoy51
+	 *
+	 */
+	private class AnimationControl implements AnimationListener {
+		Context context;
+		
+		public AnimationControl(Context context){
+			this.context = context;
+		}
+
+		@Override
+		public void onAnimationEnd(Animation an) {
+			/**
+			 * 페이드아웃이 끝나면 ufo를 나오게 한다.
+			 */
+			ufo = new UfoWritePageView(context, new AfterAnimationTask());
+			rootView.addView(ufo); // 움직이는 UFO 등록
+		}
+
+		/**
+		 * 애니메이션이 반복될때마다 실행
+		 */
+		@Override
+		public void onAnimationRepeat(Animation an) {
+		}
+
+		@Override
+		public void onAnimationStart(Animation arg0) {
+
+		}
+	}
+	
+	/**
+	 * UFO애니메이션이 끝나고 실행된다.
+	 */
+	private class AfterAnimationTask implements
+			AsyncTaskCompleteListener<String> {
+
+		@Override
+		public void onTaskComplete(String result) {
+
+			/**
+			 * 전송완료 메세지
+			 */
+			Toast toast = Toast.makeText(getActivity(), "이야기가 전송되었습니다",
+					Toast.LENGTH_SHORT);
+			toast.show();
+			
+			/**
+			 * 쓰기 화면 원상복구
+			 */
+			Animation sa = new AlphaAnimation(0.0f, 1.0f);
+			sa.setDuration(0);
+			sa.setRepeatCount(0);
+			sa.setFillAfter(true);
+			sa.setFillEnabled(true);
+			writeContentArea.startAnimation(sa);
+		
+			System.out.println("animation end!!!");
+			/**
+			 * UFO제거하고
+			 */
+			rootView.removeView(ufo);
+
+			/**
+			 * 쓰기화면 초기화
+			 */
+			EditText et = (EditText) getView().findViewById(R.id.story_content);
+			et.setText("");
+
+			/**
+			 * 메인화면으로 이동
+			 */
+			if (mPager != null) {
+				mPager.setCurrentItem(1);
+			}
+		}
 	}
 
 }

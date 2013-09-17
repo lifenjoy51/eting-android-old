@@ -109,11 +109,12 @@ public class IntroActivity extends Activity {
 		handler.postDelayed(new Runnable() {
 			public void run() {
 				cnt++;
+				moveToLockScreenActivity();
 				if(cnt==total){
 					moveToLockScreenActivity();
 				}
 			}
-		}, 3000);	//3초후 이동
+		}, 5000);	//5초후 무조건 이동
 	}
 	
 	/**

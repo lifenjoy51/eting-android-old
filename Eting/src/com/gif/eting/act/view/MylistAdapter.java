@@ -55,6 +55,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 		 */
 		if("#dateInfo".equals(storyContent)){
 			v = vi.inflate(R.layout.mylist_line, null);
+			v.setClickable(false);
 			
 			/**
 			 * 구분선 날짜
@@ -76,11 +77,11 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 					String thisHourStr = storyTime.substring(0,2);
 					int thisHour = Integer.parseInt(thisHourStr);
 										
-					if(thisHour<4 ){
+					if(thisHour<6 ){
 						v.setBackgroundResource(R.drawable.list_4);
 					}else if(thisHour<12 ){
 						v.setBackgroundResource(R.drawable.list_5);
-					}else if(thisHour<20 ){
+					}else if(thisHour<24 ){
 						v.setBackgroundResource(R.drawable.list_1);
 					}else {
 						v.setBackgroundResource(R.drawable.list_4);

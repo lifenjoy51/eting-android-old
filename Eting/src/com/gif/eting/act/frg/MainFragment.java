@@ -129,7 +129,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		mainToday.setText(today);
 		
 		//위치조정
-		int dateX = width*11/100;
+		int dateX = width*10/100;
 		int dateY = height*81/100;
 		
 		FrameLayout.LayoutParams dataParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
@@ -284,7 +284,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		mainEtingCnt.setTypeface(face);
 				
 		//위치조정
-		int cntX = width*11/100;
+		int cntX = width*10/100;
 		int cntY = height*74/100;	
 		FrameLayout.LayoutParams mainEtingParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		mainEtingParams.leftMargin = cntX; //Your X coordinate
@@ -365,7 +365,9 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 										int which) {
 
 									// Stop the activity
-									getActivity().finish();
+									//getActivity().finish();
+									System.exit(0);
+									System.out.println("is end??");
 								}
 
 							}).setNegativeButton(R.string.no, null).show();

@@ -63,11 +63,11 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		
 		
 
-		if(thisHour<4 ){
+		if(thisHour<6 ){
 			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_4);	//파랑
 		}else if(thisHour<12 ){
 			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_5);	//보라
-		}else if(thisHour<20 ){
+		}else if(thisHour<24 ){
 			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_1);	//초록
 		}else{
 			findViewById(R.id.popup_layout).setBackgroundResource(R.drawable.bg_4);	//파랑

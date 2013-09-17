@@ -96,11 +96,11 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 		int thisHour = Integer.parseInt(thisHourStr);
 		Log.i("currunt hour", thisHourStr);
 		
-		if(thisHour<4 ){
+		if(thisHour<6 ){
 			fr.setBackgroundResource(R.drawable.bg_4);	//파랑
 		}else if(thisHour<12 ){
 			fr.setBackgroundResource(R.drawable.bg_5);	//보라
-		}else if(thisHour<20 ){
+		}else if(thisHour<24 ){
 			fr.setBackgroundResource(R.drawable.bg_1);	//초록
 		}else{
 			fr.setBackgroundResource(R.drawable.bg_4);	//파랑
