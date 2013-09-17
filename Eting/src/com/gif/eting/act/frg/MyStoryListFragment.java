@@ -24,7 +24,7 @@ import com.gif.eting.act.ReadMyStoryActivity;
 import com.gif.eting.act.view.MylistAdapter;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 내 이야기 목록
@@ -102,8 +102,13 @@ public class MyStoryListFragment  extends SherlockFragment{
 		List<StoryDTO> list = new ArrayList<StoryDTO>();
 		String chkDate="";
 		for(StoryDTO story : myStoryList){
-			if(!chkDate.equals(story.getStory_date())){
-				chkDate = story.getStory_date();
+			String tempMonth = "";
+			if(story.getStory_date() != null){
+				tempMonth = story.getStory_date().substring(0,7);
+				Log.i("temp month = ", tempMonth);
+			}
+			if(!chkDate.equals(tempMonth)){
+				chkDate = tempMonth;
 				StoryDTO temp = new StoryDTO();
 				temp.setStory_date(chkDate);
 				temp.setContent("#dateInfo");	//이야기 내용이 아니라 날짜를 구분하는 특수문자를 입력한다.
@@ -130,12 +135,16 @@ public class MyStoryListFragment  extends SherlockFragment{
     	
     	public void onItemClick(AdapterView<?> parentView, View clickedView,
     			int position, long id) {
-    		
-    		MylistAdapter listAdapter = (MylistAdapter) parentView.getAdapter();	//ListView에서 Adapter 받아옴
-    		StoryDTO selectedItem = (StoryDTO) listAdapter.getItem(position);	//선택한 Row에 있는 Object를 받아옴
-    		String idx = String.valueOf(selectedItem.getIdx());	//Object에서 idx값을 받아옴
-    		
-    		readMyStoryPopup(getActivity(), idx);    		
+
+			try {
+				MylistAdapter listAdapter = (MylistAdapter) parentView.getAdapter(); // ListView에서 Adapter 받아옴
+				StoryDTO selectedItem = (StoryDTO) listAdapter.getItem(position); // 선택한 Row에 있는 Object를 받아옴
+				String idx = String.valueOf(selectedItem.getIdx()); // Object에서 idx값을 받아옴
+				readMyStoryPopup(getActivity(), idx);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
     	}
     	
     };

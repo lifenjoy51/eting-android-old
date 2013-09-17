@@ -1,7 +1,5 @@
 package com.gif.eting.act;
 
-import com.gif.eting.R;
-
 import android.app.Activity;
 import android.app.Service;
 import android.os.Bundle;
@@ -10,6 +8,8 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.ViewFlipper;
+
+import com.gif.eting_dev.R;
 
 public class TutorialActivity extends Activity implements OnTouchListener {
 

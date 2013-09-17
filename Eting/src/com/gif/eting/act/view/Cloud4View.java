@@ -12,7 +12,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 
 import com.gif.eting.util.AnimateDrawable;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 움직이는 구름
@@ -49,8 +49,9 @@ public class Cloud4View extends View {
 	private void setAnimationEvent(Context context, Animation an) {
 
 		System.out.println("onAnimationEnd");
-		Drawable dr = context.getResources().getDrawable(R.drawable.main_cloud_4);
+		Drawable dr = context.getResources().getDrawable(R.drawable.main_cloud_1);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
+		dr.setAlpha(229);
 
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;
@@ -64,14 +65,14 @@ public class Cloud4View extends View {
 		int enPtY; // 수직 위치 끝
 		long duration = 28000; // 이동하는 시간
 		
-		int stX1 = -20;	//첫번째 애니메이션 시작위치
+		int stX1 = 60;	//첫번째 애니메이션 시작위치
 		int enX1 = 100;	//첫번째 애니메이션 끝 위치
-		int stX2 = -100;	//두번째 애니메이션 시작위치
+		int stX2 = -30;	//두번째 애니메이션 시작위치
 		int enX2 = stX1;	//두번째 애니메이션 끝 위치
 		int lenX1 = enX1 - stX1;	//첫번째 애니메이션 이동길이
 		int lenX2 = enX2 - stX2;	//두번째 애니메이션 이동길이
 		int lenTot = lenX1 + lenX2;	//전체 이동길이
-		int posY = 67;
+		int posY = 70;
 		
 		// 위아래로 왔다갔다하게하기
 		if (chk) {

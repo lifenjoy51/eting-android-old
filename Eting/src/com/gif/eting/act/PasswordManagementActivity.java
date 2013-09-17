@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.gif.eting.svc.PasswordService;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 public class PasswordManagementActivity extends Activity implements
 		OnClickListener {

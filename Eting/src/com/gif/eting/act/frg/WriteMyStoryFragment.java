@@ -14,23 +14,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.FrameLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.gif.eting.act.view.UfoView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.gif.eting.act.view.UfoView;
 import com.gif.eting.svc.task.SendStoryTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 내 이야기 쓰기
@@ -89,6 +86,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		send_textview = (TextView) rootView.findViewById(R.id.send_textview);
 		tv.setTypeface(nanum);
 		send_textview.setTypeface(nanum);
+		send_textview.setPaintFlags(send_textview.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 		backgroundimage = rootView.findViewById(R.id.background);
 
 		background = backgroundimage.getBackground();
@@ -106,28 +104,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		 */
 		// 기준이 될 이야기 입력부분
 		EditText et = (EditText) rootView.findViewById(R.id.story_content);
-		et.setTypeface(nanum);
-		FrameLayout.LayoutParams etParams = (LayoutParams) et.getLayoutParams();
-
-		int etX = etParams.leftMargin;
-		int etY = etParams.topMargin;
-
-		// 여백설정
-		int marginDp = (int) (30 * getResources().getDisplayMetrics().density);
-
-		// 위치조정
-		FrameLayout.LayoutParams dataParams = new FrameLayout.LayoutParams(
-				FrameLayout.LayoutParams.WRAP_CONTENT,
-				FrameLayout.LayoutParams.WRAP_CONTENT); // The WRAP_CONTENT
-														// parameters can be
-														// replaced by an
-														// absolute width and
-														// height or the
-														// FILL_PARENT option)
-		dataParams.leftMargin = etX + marginDp; // Your X coordinate
-		dataParams.topMargin = etY + marginDp; // Your Y coordinate
-		dataParams.gravity = Gravity.LEFT | Gravity.TOP;
-		tv.setLayoutParams(dataParams);
+		//et.setTypeface(nanum);
 
 		// 클릭이벤트 설정
 		rootView.findViewById(R.id.send_story_btn).setOnClickListener(this);
@@ -145,7 +122,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		case R.id.send_story_btn:
 			// 입력한 문자 체크로직
 			EditText et = (EditText) getView().findViewById(R.id.story_content);
-			et.setTypeface(nanum);
+			//et.setTypeface(nanum);
 			String content = et.getText().toString(); // 이야기 내용
 
 			// 입력값이 없으면 처리중단
@@ -184,7 +161,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 	 */
 	private void sendAndSaveStory() {
 		EditText et = (EditText) getView().findViewById(R.id.story_content);
-		et.setTypeface(nanum);
+		//et.setTypeface(nanum);
 		final String content = et.getText().toString(); // 이야기 내용
 		ufo = new UfoView(context);
 

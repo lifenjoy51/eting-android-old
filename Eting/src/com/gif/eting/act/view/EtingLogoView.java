@@ -4,13 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 
-import com.gif.eting.R;
+import com.gif.eting.util.Util;
+import com.gif.eting_dev.R;
 
 /**
  * 움직이는 구름
@@ -47,14 +49,18 @@ public class EtingLogoView extends View {
 
 		System.out.println("onAnimationEnd");
 		Drawable dr = context.getResources().getDrawable(R.drawable.eting_logo);
-		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
-
+		
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;
 		int height = metrics.heightPixels;
+		
+		dr = new ScaleDrawable(dr, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight()).getDrawable();
+		int size = width * 42 / 100;	//mainRatio% 에 해당하는 크기
+		dr.setBounds(0, 0, size, size);
 
-		int objWidth = dr.getIntrinsicWidth();
-		int objHeight = dr.getIntrinsicHeight();
+
+		int objWidth = size;
+		int objHeight = size;
 		
 		int ptX = width/2 - objWidth/2; // 수평 위치
 		int ptY = height/100*42 - objHeight/2 ; // 수평 위치 끝
