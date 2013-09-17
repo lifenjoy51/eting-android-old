@@ -50,7 +50,7 @@ public class Cloud2View extends View {
 		System.out.println("onAnimationEnd");
 		Drawable dr = context.getResources().getDrawable(R.drawable.main_cloud_3);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
-		//dr.setAlpha(100);
+		dr.setAlpha(204);
 
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;

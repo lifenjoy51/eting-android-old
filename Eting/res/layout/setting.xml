@@ -6,15 +6,17 @@
     android:orientation="vertical" >
 
     <ImageView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:adjustViewBounds="false"
+        android:scaleType="fitXY"
         android:src="@drawable/setting" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:background="#ffffff"
+        android:gravity="center"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -29,8 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/alram_off"
-                />
+                android:src="@drawable/alram_off" />
 
             <ImageView
                 android:id="@+id/password_img_btn"
@@ -51,6 +52,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/aboutus_1" />
+            <Button 
+                android:id="@+id/tutorialBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="튜토리얼버튼"/>
         </LinearLayout>
     </LinearLayout>
 

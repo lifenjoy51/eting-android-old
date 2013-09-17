@@ -51,7 +51,7 @@ public class Cloud1View extends View {
 		System.out.println("onAnimationEnd");
 		Drawable dr = context.getResources().getDrawable(R.drawable.main_cloud_4);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
-		//dr.setAlpha(250);
+		dr.setAlpha(178);
 
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;

@@ -24,7 +24,6 @@ public class LockScreenActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lock_screen);
 
-
 		//암호입력필드
 		EditText et = (EditText) findViewById(R.id.lockScreenPassword);
 

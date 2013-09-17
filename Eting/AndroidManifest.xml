@@ -114,6 +114,7 @@
         </receiver>
 
         <service android:name="com.gif.eting.svc.gcm.GcmIntentService" />
+        <activity android:name=".act.TutorialActivity"></activity>
         
 </application>
 

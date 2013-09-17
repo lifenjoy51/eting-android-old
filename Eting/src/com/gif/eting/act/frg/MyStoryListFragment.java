@@ -135,12 +135,16 @@ public class MyStoryListFragment  extends SherlockFragment{
     	
     	public void onItemClick(AdapterView<?> parentView, View clickedView,
     			int position, long id) {
-    		
-    		MylistAdapter listAdapter = (MylistAdapter) parentView.getAdapter();	//ListView에서 Adapter 받아옴
-    		StoryDTO selectedItem = (StoryDTO) listAdapter.getItem(position);	//선택한 Row에 있는 Object를 받아옴
-    		String idx = String.valueOf(selectedItem.getIdx());	//Object에서 idx값을 받아옴
-    		
-    		readMyStoryPopup(getActivity(), idx);    		
+
+			try {
+				MylistAdapter listAdapter = (MylistAdapter) parentView.getAdapter(); // ListView에서 Adapter 받아옴
+				StoryDTO selectedItem = (StoryDTO) listAdapter.getItem(position); // 선택한 Row에 있는 Object를 받아옴
+				String idx = String.valueOf(selectedItem.getIdx()); // Object에서 idx값을 받아옴
+				readMyStoryPopup(getActivity(), idx);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
     	}
     	
     };

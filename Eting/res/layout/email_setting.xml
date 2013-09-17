@@ -4,55 +4,55 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical" >
-    
-<ImageView 
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:src="@drawable/sendemail"/>
 
-    <LinearLayout 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="false"
+        android:scaleType="fitXY"
+        android:src="@drawable/sendemail" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="40dp"
-        android:orientation="vertical">
-    <EditText
-        android:id="@+id/email_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/setting_blank"
-        android:paddingLeft="20dp"
-        android:maxLength="40"
-        android:hint="E-mail address" />
+        android:gravity="center"
+        android:orientation="vertical" >
 
+        <EditText
+            android:id="@+id/email_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/setting_blank"
+            android:hint="E-mail address"
+            android:maxLength="40"
+            android:paddingLeft="20dp" />
     </LinearLayout>
 
-    <LinearLayout 
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_gravity="center"
         android:gravity="bottom"
-        >
-    <ImageView
-        android:id="@+id/send_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:src="@drawable/send_1"        
-        />
-    
-    <ImageView
-        android:id="@+id/cancel_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        android:onClick="clear"
-        android:gravity="center"
-        android:src="@drawable/cancel_1"
-        />
-    
-</LinearLayout>
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/send_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/send_1" />
+
+        <ImageView
+            android:id="@+id/cancel_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:onClick="clear"
+            android:src="@drawable/cancel_1" />
+    </LinearLayout>
+
 </LinearLayout>

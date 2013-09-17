@@ -29,7 +29,10 @@
         android:background="@android:color/transparent"
         android:divider="@android:color/transparent"
         android:dividerHeight="8.0sp"
-        android:padding="10dp" >
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" >
     </ListView>
 
 </LinearLayout>

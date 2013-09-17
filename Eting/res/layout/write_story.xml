@@ -1,98 +1,107 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@android:color/transparent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <!-- android:background="@android:color/transparent" -->
+
+    <FrameLayout
         android:id="@+id/background"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@android:color/transparent"
         android:orientation="vertical" >
-    </LinearLayout>
-
-    <!-- <ImageView -->
-    <!-- android:layout_width="fill_parent" -->
-    <!-- android:layout_height="wrap_content" -->
-    <!-- android:background="@drawable/write_title_bar" -->
-    <!-- android:contentDescription="@string/writetitlebar" /> -->
+    </FrameLayout>
 
     <TextView
         android:id="@+id/send_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Send Eting"
+        android:text="Write eting"
         android:textColor="#4d4d4d"
         android:textSize="26sp" />
 
-    <FrameLayout
+    <RelativeLayout
+        android:id="@+id/write_content_area"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@android:color/transparent" >
-
-        <EditText
-            android:id="@+id/story_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:background="@drawable/write_bg_bottom"
-            android:ems="4"
-            android:gravity="center_vertical|top|left"
-            android:inputType="textMultiLine"
-            android:paddingBottom="90dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:paddingTop="80dp"
-            android:textSize="20sp" />
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/send_textview"
+        android:background="@android:color/transparent"
+        android:padding="20dp" >
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:id="@+id/write_bg_top"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|center"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/write_bg_top"
             android:contentDescription="@string/writebgtop" />
 
-        <TextView
-            android:id="@+id/write_story_dt"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/write_story_dt_area"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|center"
-            android:layout_marginRight="60dp"
-            android:layout_marginTop="50dp"
+            android:layout_below="@id/write_bg_top"
             android:background="@android:color/white"
-            android:textSize="20sp" >
-        </TextView>
+            android:paddingLeft="20dp"
+            android:paddingTop="15dp" >
 
-        <ImageButton
-            android:id="@+id/send_story_btn"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/write_story_dt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:textSize="20sp" >
+            </TextView>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/write_bg_bottom"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="50dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/write_btn_selector"
-            android:contentDescription="@string/sendstorybutton"
-            android:scaleType="fitCenter" />
-    </FrameLayout>
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/write_bg_bottom"
+            android:contentDescription="@string/writebgtop" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="50"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/blank" >
-    </ImageView>
+        <LinearLayout
+            android:id="@+id/send_story_btn_area"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/write_bg_bottom"
+            android:background="@android:color/white"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" >
 
-</FrameLayout>
+            <ImageButton
+                android:id="@+id/send_story_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/write_btn_selector"
+                android:contentDescription="@string/sendstorybutton" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/story_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/send_story_btn_area"
+            android:layout_below="@id/write_story_dt_area"
+            android:background="@android:color/white"
+            android:ems="4"
+            android:gravity="center_vertical|top|left"
+            android:inputType="textMultiLine"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="15dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

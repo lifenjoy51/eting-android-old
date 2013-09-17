@@ -101,20 +101,14 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		int storyHour = Integer.parseInt(storyTime);
 		Log.i("currunt hour", thisHourStr);
 		
-		if(storyHour<1 ){
-			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_1);
-		}else if(storyHour<5 ){
-			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_2);
-		}else if(storyHour<9 ){
-			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_3);
-		}else if(storyHour<13 ){
+		if(storyHour<4 ){
 			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_4);
-		}else if(storyHour<17 ){
+		}else if(storyHour<12 ){
 			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_5);
-		}else if(storyHour<21 ){
-			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_6);
-		}else{
+		}else if(storyHour<20 ){
 			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_1);
+		}else {
+			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_4);
 		}
 		
 		/**

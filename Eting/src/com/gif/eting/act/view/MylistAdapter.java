@@ -37,6 +37,10 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 		 */
 		StoryDTO story = items.get(position);
 		String storyDate = story.getStory_date();
+		if(storyDate!=null){
+			storyDate = storyDate.replaceAll("-", ".");
+		}
+		
 		String storyContent = story.getContent();
 		String storyTime = story.getStory_time();
 		String stampYn = story.getStamp_yn();
@@ -71,20 +75,15 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 				if(storyTime.length()>2){
 					String thisHourStr = storyTime.substring(0,2);
 					int thisHour = Integer.parseInt(thisHourStr);
-					if(thisHour<1 ){
-						v.setBackgroundResource(R.drawable.list_1);
-					}else if(thisHour<5 ){
-						v.setBackgroundResource(R.drawable.list_2);
-					}else if(thisHour<9 ){
-						v.setBackgroundResource(R.drawable.list_3);
-					}else if(thisHour<13 ){
+										
+					if(thisHour<4 ){
 						v.setBackgroundResource(R.drawable.list_4);
-					}else if(thisHour<17 ){
+					}else if(thisHour<12 ){
 						v.setBackgroundResource(R.drawable.list_5);
-					}else if(thisHour<21 ){
-						v.setBackgroundResource(R.drawable.list_6);
-					}else{
+					}else if(thisHour<20 ){
 						v.setBackgroundResource(R.drawable.list_1);
+					}else {
+						v.setBackgroundResource(R.drawable.list_4);
 					}
 					
 				}
@@ -104,15 +103,17 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			 * 이야기 내용
 			 */
 			TextView mystoryContent = (TextView) v.findViewById(R.id.mylist_item_content);
-			mystoryContent.setTypeface(nanum);
+			//mystoryContent.setTypeface(nanum);
 			if (mystoryContent != null) {
 				String content = storyContent;
 				content = content.replaceAll("\n", " ");
+				/*
 				int maxLength = 15;	//리스트에 보여줄 문자열 길이
 				if(content.length()>maxLength){	//길이보다 길면
 					content = content.substring(0, maxLength);		//자른다
 					content += "...";
 				}
+				*/
 				mystoryContent.setText(content);
 			}
 			
