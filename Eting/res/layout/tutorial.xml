@@ -13,7 +13,7 @@
 	    <ImageView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:src="@drawable/tuto01"
+	        android:src="@drawable/tu01"
 	        android:scaleType="fitXY"/>
 	</LinearLayout>
 	<LinearLayout
@@ -25,7 +25,7 @@
 	    <ImageView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:src="@drawable/tuto02"
+	        android:src="@drawable/tu04"
 	        android:scaleType="fitXY"/>
 	</LinearLayout>
 	<LinearLayout
@@ -36,7 +36,7 @@
 	    <ImageView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:src="@drawable/tuto03"
+	        android:src="@drawable/tu03"
 	        android:scaleType="fitXY"/>
 	</LinearLayout>
 	<LinearLayout
@@ -48,7 +48,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:gravity="center"
-	        android:src="@drawable/tuto04"
+	        android:src="@drawable/tu02"
 	        android:scaleType="fitXY"/>
 	</LinearLayout>
 
