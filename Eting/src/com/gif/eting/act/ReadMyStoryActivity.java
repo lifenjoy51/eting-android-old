@@ -18,8 +18,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -156,11 +156,16 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 					contentView.setText("PS. "+sender);
 				}else{
 					ScrollView stampAreaView = (ScrollView) findViewById(R.id.mystory_stamp_scroll_area); // 스탬프영역
-					stampAreaView.setVisibility(View.GONE);
+					stampAreaView.setVisibility(View.GONE);					
+					ImageView line = (ImageView) findViewById(R.id.stamp_div_line);
+					line.setVisibility(View.GONE);
+					
 				}
 			}else{
 				ScrollView stampAreaView = (ScrollView) findViewById(R.id.mystory_stamp_scroll_area); // 스탬프영역
 				stampAreaView.setVisibility(View.GONE);
+				ImageView line = (ImageView) findViewById(R.id.stamp_div_line);
+				line.setVisibility(View.GONE);
 				
 			}
 
