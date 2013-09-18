@@ -84,6 +84,12 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		
 		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
 		
+		/**
+		 * 짧은이야기 적는 부분
+		 */
+		EditText et = (EditText) findViewById(R.id.stamp_sender);
+		et.setTypeface(nanum);
+		
 		//Service초기화
 		inboxService = new InboxService(this.getApplicationContext());
 		stampService = new StampService(this.getApplicationContext());
@@ -137,6 +143,8 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 			stampView.setGravity(Gravity.CENTER);
 			stampView.setBackgroundResource(R.drawable.feedback);
 			stampView.setTextSize(15);
+			stampView.setTextColor(Color.parseColor("#999999"));
+			stampView.setTypeface(nanum, Typeface.BOLD);
 			stampView.setOnClickListener(this);
 			
 			LinearLayout.LayoutParams stampParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
@@ -197,7 +205,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
     			//이미 찍은거면 초기화
     			//((StampView) v).setTextColor(color.black);
     			v.setBackgroundResource(R.drawable.feedback);
-    			((StampView) v).setTextColor(Color.parseColor("#474747"));
+    			((StampView) v).setTextColor(Color.parseColor("#999999"));
     			stamps.remove(stampId);
     		}else{
     			//스탬프찍기
@@ -219,7 +227,6 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		 * 보낸이 설정
 		 */
 		EditText et = (EditText) findViewById(R.id.stamp_sender);
-		et.setTypeface(nanum);
 		sender = et.getText().toString();
 		
 		/**

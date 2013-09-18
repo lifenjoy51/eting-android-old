@@ -89,7 +89,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		et.setTypeface(nanum);
 
 		tv = (TextView) rootView.findViewById(R.id.write_story_dt);
-		tv.setTypeface(nanum);
+		tv.setTypeface(nanum, Typeface.BOLD);
 		
 		/*send_textview = (TextView) rootView.findViewById(R.id.send_textview);
 		send_textview.setTypeface(nanum);

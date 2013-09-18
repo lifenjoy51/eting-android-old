@@ -316,7 +316,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 */
 		Drawable dr = getActivity().getResources().getDrawable(R.drawable.spaceship);
 		mainInboxCnt =  (TextView) getView().findViewById(R.id.main_inbox_cnt);
-		mainInboxCnt.setTypeface(nanum);
+		mainInboxCnt.setTypeface(nanum, Typeface.BOLD);
 		InboxService is = new InboxService(getActivity());
 		int inboxCnt = is.getInboxCnt();
 		mainInboxCnt.setText(String.valueOf(inboxCnt));

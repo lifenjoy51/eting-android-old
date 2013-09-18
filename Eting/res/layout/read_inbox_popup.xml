@@ -22,14 +22,14 @@
             android:nextFocusLeft="@id/autotext"
             android:nextFocusUp="@id/autotext" />
     </LinearLayout>
-    
+
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="@drawable/inbox_bg_top"
         android:scaleType="fitCenter" />
-    
+
     <TextView
         android:id="@+id/popup_date"
         android:layout_width="fill_parent"
@@ -38,7 +38,8 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="40dp"
         android:gravity="left|center"
-        android:textColor="#4D4D4D" />
+        android:textColor="#4D4D4D"
+        android:textSize="14sp" />
 
     <ScrollView
         android:id="@+id/popup_content_scroll_area"
@@ -56,7 +57,7 @@
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
             android:textColor="#4D4D4D"
-            android:textSize="16sp" />
+            android:textSize="17sp" />
     </ScrollView>
 
     <ScrollView
@@ -94,7 +95,9 @@
             android:ems="8"
             android:hint="@string/enter_you_name"
             android:maxLength="10"
-            android:paddingLeft="10dp" >
+            android:paddingLeft="10dp"
+            android:textColor="#474747"
+            android:textColorHint="#BBBBBB" >
         </EditText>
 
         <Button

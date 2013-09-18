@@ -17,7 +17,9 @@
         android:background="@drawable/myeting_blank_b_top"
         android:contentDescription="@string/popuptitle"
         android:paddingLeft="30dp"
-        android:paddingTop="15dp" />
+        android:paddingTop="15dp"
+        android:textColor="#474747"
+        android:textSize="14sp" />
 
     <LinearLayout
         android:id="@+id/mystory_btn_area"
@@ -116,14 +118,14 @@
         <TextView
             android:id="@+id/popup_content"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/myeting_blank_b_middle"
             android:gravity="left|top"
             android:lineSpacingExtra="5dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:textColor="#4D4D4D"
-            android:textSize="16sp" />
+            android:textColor="#474747"
+            android:textSize="17sp" />
     </ScrollView>
 
 </RelativeLayout>

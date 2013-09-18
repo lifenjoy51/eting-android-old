@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.opengl.Visibility;
@@ -154,7 +155,10 @@ public class MyStoryListFragment  extends SherlockFragment{
 			/**
 			 * 텍스트
 			 */
-			TextView storListAramText = (TextView) rootView.findViewById(R.id.story_list_alarm_text);			
+			TextView storListAramText = (TextView) rootView.findViewById(R.id.story_list_alarm_text);
+			storListAramText.setTypeface(nanum);
+			storListAramText.setTextColor(Color.parseColor("#474747"));
+			
 			
 			int storListAramTextY = height*43/100;
 			FrameLayout.LayoutParams storListAramTextParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.WRAP_CONTENT); 

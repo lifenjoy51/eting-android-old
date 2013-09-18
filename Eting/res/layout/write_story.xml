@@ -14,19 +14,19 @@
         android:background="@android:color/transparent"
         android:orientation="vertical" >
     </FrameLayout>
-    
- 	<RelativeLayout
+
+    <RelativeLayout
         android:id="@+id/write_content_area"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:background="@android:color/transparent"
+        android:paddingBottom="20dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingBottom="20dp"
         android:paddingTop="25dp" >
-        
+
         <ImageView
             android:id="@+id/write_bg_top"
             android:layout_width="fill_parent"
@@ -43,14 +43,15 @@
             android:layout_below="@id/write_bg_top"
             android:background="@android:color/white"
             android:paddingLeft="20dp"
-            android:paddingTop="15dp" >
+            android:paddingTop="14dp" >
 
             <TextView
                 android:id="@+id/write_story_dt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:textSize="20sp" >
+                android:textColor="#474747"
+                android:textSize="15sp" >
             </TextView>
         </LinearLayout>
 
@@ -88,13 +89,15 @@
             android:layout_below="@id/write_story_dt_area"
             android:background="@android:color/white"
             android:ems="4"
-            android:lineSpacingExtra="6dp"
             android:gravity="center_vertical|top|left"
             android:inputType="textMultiLine"
+            android:lineSpacingExtra="6dp"
             android:paddingBottom="20dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:paddingTop="15dp" />
+            android:paddingTop="15dp"
+            android:textColor="#474747"
+            android:textSize="17sp" />
     </RelativeLayout>
 
 </RelativeLayout>

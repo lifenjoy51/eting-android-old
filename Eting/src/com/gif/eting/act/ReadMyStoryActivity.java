@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -164,7 +165,8 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 					System.out.println("onTaskComplete = "+list);
 					String sender = list.get(0).getSender();
 					TextView contentView = (TextView) findViewById(R.id.popup_stamp_sender);
-					contentView.setTypeface(nanum);
+					contentView.setTypeface(nanum, Typeface.BOLD);
+					
 					contentView.setText("PS. "+sender);
 				}else{
 					ScrollView stampAreaView = (ScrollView) findViewById(R.id.mystory_stamp_scroll_area); // 스탬프영역
@@ -204,6 +206,8 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 				stampView.setGravity(Gravity.CENTER);
 				stampView.setBackgroundResource(R.drawable.feedback);
 				stampView.setTextSize(15);
+				stampView.setTextColor(Color.parseColor("#474747"));
+				stampView.setTypeface(nanum, Typeface.BOLD);
 
 				LinearLayout.LayoutParams stampParams = new LinearLayout.LayoutParams(
 						LinearLayout.LayoutParams.WRAP_CONTENT,
