@@ -92,9 +92,9 @@ public class MyStoryListFragment  extends SherlockFragment{
 		// StoryService초기화
 		StoryService storyService = new StoryService(getActivity());
 		List<StoryDTO> myStoryList = storyService.getMyStoryList();
-        myeting_textview = (TextView) getView().findViewById(R.id.myeting_textview);
-        myeting_textview.setTypeface(nanum);
-        myeting_textview.setPaintFlags(myeting_textview.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+//        myeting_textview = (TextView) getView().findViewById(R.id.myeting_textview);
+//        myeting_textview.setTypeface(nanum);
+//        myeting_textview.setPaintFlags(myeting_textview.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 		
 		/**
 		 * 날짜구분선을 위한 작업

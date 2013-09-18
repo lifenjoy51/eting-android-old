@@ -24,7 +24,7 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 	private Context context;
 	private EditText email_address;
 	private ImageView send_email;
-	private ImageView cancel_btn;
+//	private ImageView cancel_btn;
 
 	private List<StoryDTO> contentArray = null;
 	private StoryService storyService = null;
@@ -41,7 +41,7 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 
 		email_address = (EditText) findViewById(R.id.email_address);
 		send_email = (ImageView) findViewById(R.id.send_email);
-		cancel_btn = (ImageView) findViewById(R.id.cancel_btn);
+//		cancel_btn = (ImageView) findViewById(R.id.cancel_btn);
 		
 		email_address.setTypeface(nanum);
 
@@ -69,31 +69,31 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 				return false;
 			}
 		});
-		cancel_btn.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					cancel_btn = (ImageView) findViewById(v.getId());
-					cancel_btn.setImageResource(R.drawable.cancel_2);
-				}
-				if (event.getAction() == MotionEvent.ACTION_MOVE) {
-					if (!v.isPressed()) {
-						cancel_btn.setImageResource(R.drawable.cancel_1);
-						return true;
-					}
-
-				}
-
-				if (event.getAction() == MotionEvent.ACTION_UP) {
-					cancel_btn.setImageResource(R.drawable.cancel_1);
-				}
-
-				return false;
-			}
-		});
+//		cancel_btn.setOnTouchListener(new OnTouchListener() {
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//					cancel_btn = (ImageView) findViewById(v.getId());
+//					cancel_btn.setImageResource(R.drawable.cancel_2);
+//				}
+//				if (event.getAction() == MotionEvent.ACTION_MOVE) {
+//					if (!v.isPressed()) {
+//						cancel_btn.setImageResource(R.drawable.cancel_1);
+//						return true;
+//					}
+//
+//				}
+//
+//				if (event.getAction() == MotionEvent.ACTION_UP) {
+//					cancel_btn.setImageResource(R.drawable.cancel_1);
+//				}
+//
+//				return false;
+//			}
+//		});
 
 		send_email.setOnClickListener(this);
-		cancel_btn.setOnClickListener(this);
+//		cancel_btn.setOnClickListener(this);
 	}
 
 	@Override
@@ -112,9 +112,9 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 			}
 
 		}
-		if (v.getId() == R.id.cancel_btn) {
-			clear(v);
-		}
+//		if (v.getId() == R.id.cancel_btn) {
+//			clear(v);
+//		}
 
 	}
 

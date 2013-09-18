@@ -10,15 +10,15 @@
 <!--         android:layout_height="wrap_content" -->
 <!--         android:background="@drawable/list_myeting" -->
 <!--         android:contentDescription="@string/listmyeting" /> -->
-<TextView 
-    android:id="@+id/myeting_textview"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="My eting"
-    android:textColor="#4d4d4d"
-    android:layout_marginTop="20dp"
-    android:textSize="26sp"
-    android:layout_gravity="center"/>
+<!-- <TextView  -->
+<!--     android:id="@+id/myeting_textview" -->
+<!--     android:layout_width="wrap_content" -->
+<!--     android:layout_height="wrap_content" -->
+<!--     android:text="My eting" -->
+<!--     android:textColor="#4d4d4d" -->
+<!--     android:layout_marginTop="20dp" -->
+<!--     android:textSize="26sp" -->
+<!--     android:layout_gravity="center"/> -->
 <!--     divider, dividerHeight = 리스트뷰에서 아이템과 아이템 사이에 공백을 넣어주는 옵션
  -->
 

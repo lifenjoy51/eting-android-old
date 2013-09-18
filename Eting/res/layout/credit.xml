@@ -8,6 +8,6 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/credit" />
+        android:src="@drawable/about_01" />
 
 </LinearLayout>
