@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 public class ExportEmailActivity extends Activity implements OnClickListener {
 

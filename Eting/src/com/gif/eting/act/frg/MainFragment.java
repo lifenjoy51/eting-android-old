@@ -36,7 +36,7 @@ import com.gif.eting.act.view.EtingLogoView;
 import com.gif.eting.act.view.PlanetView;
 import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StoryService;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 

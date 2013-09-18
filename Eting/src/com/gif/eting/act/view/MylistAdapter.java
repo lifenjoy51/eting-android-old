@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gif.eting.dto.StoryDTO;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 
@@ -80,13 +80,13 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 					int thisHour = Integer.parseInt(thisHourStr);
 										
 					if(thisHour<6 ){
-						v.setBackgroundResource(R.drawable.list_4);
+						v.setBackgroundResource(R.drawable.list_blank_b);
 					}else if(thisHour<12 ){
-						v.setBackgroundResource(R.drawable.list_5);
+						v.setBackgroundResource(R.drawable.list_blank_p);
 					}else if(thisHour<24 ){
-						v.setBackgroundResource(R.drawable.list_1);
+						v.setBackgroundResource(R.drawable.list_blank_g);
 					}else {
-						v.setBackgroundResource(R.drawable.list_4);
+						v.setBackgroundResource(R.drawable.list_blank_b);
 					}
 					
 				}

@@ -24,7 +24,7 @@ import com.gif.eting.svc.task.CheckStampTask;
 import com.gif.eting.svc.task.CheckStampedStoryTask;
 import com.gif.eting.svc.task.RegistrationTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
