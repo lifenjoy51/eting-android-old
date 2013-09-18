@@ -22,6 +22,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,10 +32,6 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.gif.eting.act.ReadInboxActivity;
 import com.gif.eting.act.SettingActivity;
-import com.gif.eting.act.view.Cloud1View;
-import com.gif.eting.act.view.Cloud2View;
-import com.gif.eting.act.view.Cloud3View;
-import com.gif.eting.act.view.Cloud4View;
 import com.gif.eting.act.view.EtingLogoView;
 import com.gif.eting.act.view.PlanetView;
 import com.gif.eting.svc.InboxService;
@@ -324,6 +322,14 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		mainInboxCnt.setText(String.valueOf(inboxCnt));
 		mainInboxCnt.setBackgroundResource(R.drawable.spaceship);
 		mainInboxCnt.setGravity(Gravity.CENTER);
+		
+		RotateAnimation animation = new RotateAnimation(0.0f, 30.0f,
+		Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+		animation.setDuration(0);
+		animation.setFillAfter(true);
+		mainInboxCnt.startAnimation(animation );
+
+				
 		
 		//위치조정
 		int inboxX = width*76/100 - dr.getIntrinsicWidth()/2;
