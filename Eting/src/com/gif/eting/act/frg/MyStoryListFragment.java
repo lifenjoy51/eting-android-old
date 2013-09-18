@@ -92,7 +92,6 @@ public class MyStoryListFragment  extends SherlockFragment{
 		// StoryService초기화
 		StoryService storyService = new StoryService(getActivity());
 		List<StoryDTO> myStoryList = storyService.getMyStoryList();
-
 		
 		/**
 		 * 날짜구분선을 위한 작업

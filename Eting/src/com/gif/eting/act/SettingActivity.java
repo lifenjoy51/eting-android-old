@@ -21,7 +21,7 @@ public class SettingActivity extends Activity implements OnClickListener {
 	private ImageView password_img_btn;
 	private ImageView email_btn;
 	private ImageView credit_img_btn;
-	private Button tutorialBtn;
+	private ImageView tutorialBtn;
 
 	// private Uri fileUri;
 
@@ -34,7 +34,7 @@ public class SettingActivity extends Activity implements OnClickListener {
 		password_img_btn = (ImageView) findViewById(R.id.password_img_btn);
 		email_btn = (ImageView) findViewById(R.id.email_btn);
 		credit_img_btn = (ImageView) findViewById(R.id.credit_img_btn);
-		tutorialBtn = (Button) findViewById(R.id.tutorialBtn);
+		tutorialBtn = (ImageView) findViewById(R.id.tutorialBtn);
 
 		alarm_img_btn.setImageResource(R.drawable.alram_off);
 
@@ -99,6 +99,28 @@ public class SettingActivity extends Activity implements OnClickListener {
 
 				if (event.getAction() == MotionEvent.ACTION_UP) {
 					credit_img_btn.setImageResource(R.drawable.aboutus_1);
+				}
+
+				return false;
+			}
+		});
+		tutorialBtn.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					tutorialBtn = (ImageView) findViewById(v.getId());
+					tutorialBtn.setImageResource(R.drawable.tutorial2);
+				}
+				if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					if (!v.isPressed()) {
+						tutorialBtn.setImageResource(R.drawable.tutorial1);
+						return true;
+					}
+
+				}
+
+				if (event.getAction() == MotionEvent.ACTION_UP) {
+					tutorialBtn.setImageResource(R.drawable.tutorial1);
 				}
 
 				return false;

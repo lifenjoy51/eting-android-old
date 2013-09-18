@@ -177,7 +177,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		ImageView mainAcc2 = (ImageView) rootView.findViewById(R.id.main_acc_2);
 		//위치조정
 		int mainAcc2X = width*83/100;
-		int mainAcc2Y = height*58/100;
+		int mainAcc2Y = height*62/100;
 		FrameLayout.LayoutParams mainAcc2Params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		mainAcc2Params.leftMargin = mainAcc2X; //Your X coordinate
 		mainAcc2Params.topMargin = mainAcc2Y; //Your Y coordinate

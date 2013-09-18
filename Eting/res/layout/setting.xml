@@ -48,15 +48,17 @@
                 android:src="@drawable/sendemail_1" />
 
             <ImageView
+                android:id="@+id/tutorialBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/tutorial1" />
+
+            <ImageView
                 android:id="@+id/credit_img_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/aboutus_1" />
-            <Button 
-                android:id="@+id/tutorialBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="튜토리얼버튼"/>
         </LinearLayout>
     </LinearLayout>
 

@@ -72,7 +72,7 @@ public class PlanetView extends View {
 		int objHeight = size;
 		
 		int ptX = width/2 - objWidth/2; // 수평 위치
-		int ptY = height/100*42 - objHeight/2 ; // 수평 위치 끝
+		int ptY = height/100*45 - objHeight/2 ; // 수평 위치 끝
 		
 		FrameLayout.LayoutParams settingParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		settingParams.leftMargin = ptX; //Your X coordinate
