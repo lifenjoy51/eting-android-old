@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -28,7 +29,7 @@ import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StampService;
 import com.gif.eting.svc.task.SendStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 /**
  * 받은편지함 읽기화면
@@ -196,11 +197,13 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
     			//이미 찍은거면 초기화
     			//((StampView) v).setTextColor(color.black);
     			v.setBackgroundResource(R.drawable.feedback);
+    			((StampView) v).setTextColor(Color.parseColor("#474747"));
     			stamps.remove(stampId);
     		}else{
     			//스탬프찍기
     			//((StampView) v).setTextColor(color.white);
     			v.setBackgroundResource(R.drawable.feedback_chk);
+    			((StampView) v).setTextColor(Color.WHITE);
     			stamps.add(stampId);
     		}
     		

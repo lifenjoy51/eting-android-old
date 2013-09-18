@@ -12,7 +12,7 @@ import android.view.animation.TranslateAnimation;
 import com.gif.eting.util.AnimateDrawable;
 import com.gif.eting.util.AsyncTaskCompleteListener;
 import com.gif.eting.util.Util;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 /**
  * 위아래로 움직이는 UFO 이미지

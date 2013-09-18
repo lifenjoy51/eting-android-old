@@ -30,7 +30,7 @@ import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.svc.task.ReceiveStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 /**
  * 내 이야기 목록에서 선택한 이야기를 읽는 화면
@@ -113,17 +113,29 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		 */
 		int storyHour = Integer.parseInt(storyTime);
 		Log.i("currunt hour", thisHourStr);
-		/*
-		if(storyHour<4 ){
-			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_4);
+							
+		if(storyHour<6 ){
+			findViewById(R.id.mystory_content_top).setBackgroundResource(R.drawable.myeting_blank_b_top);
+			findViewById(R.id.popup_content_scroll_area).setBackgroundResource(R.drawable.myeting_blank_b_middle);
+			findViewById(R.id.mystory_content_bottom).setBackgroundResource(R.drawable.myeting_blank_b_bottom);
+						
 		}else if(storyHour<12 ){
-			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_5);
-		}else if(storyHour<20 ){
-			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_1);
+			findViewById(R.id.mystory_content_top).setBackgroundResource(R.drawable.myeting_blank_p_top);
+			findViewById(R.id.popup_content_scroll_area).setBackgroundResource(R.drawable.myeting_blank_p_middle);
+			findViewById(R.id.mystory_content_bottom).setBackgroundResource(R.drawable.myeting_blank_p_bottom);
+			
+		}else if(storyHour<24 ){
+			findViewById(R.id.mystory_content_top).setBackgroundResource(R.drawable.myeting_blank_g_top);
+			findViewById(R.id.popup_content_scroll_area).setBackgroundResource(R.drawable.myeting_blank_g_middle);
+			findViewById(R.id.mystory_content_bottom).setBackgroundResource(R.drawable.myeting_blank_g_bottom);
+			
 		}else {
-			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_4);
+			findViewById(R.id.mystory_content_top).setBackgroundResource(R.drawable.myeting_blank_b_top);
+			findViewById(R.id.popup_content_scroll_area).setBackgroundResource(R.drawable.myeting_blank_b_middle);
+			findViewById(R.id.mystory_content_bottom).setBackgroundResource(R.drawable.myeting_blank_b_bottom);
+			
 		}
-		*/
+		
 		/**
 		 * 조회하는 이야기에 찍힌 스탬프 받아오기
 		 * 

@@ -24,7 +24,7 @@ import com.gif.eting.act.ReadMyStoryActivity;
 import com.gif.eting.act.view.MylistAdapter;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 /**
  * 내 이야기 목록
@@ -114,6 +114,16 @@ public class MyStoryListFragment  extends SherlockFragment{
 			
 			list.add(story);
 		}
+		
+		/**
+		 * 아무것도 없을때 처리
+		 */
+		if(myStoryList.size() == 0){
+			StoryDTO temp = new StoryDTO();
+			temp.setContent("작성한 eting이 없어요. eting해보아요!");
+			list.add(temp);
+		}
+		
 		MylistAdapter m_adapter = new MylistAdapter(getActivity(), R.layout.mylist_item, list); // 어댑터 생성
 		
 		// 리스트뷰에 어댑터 연결

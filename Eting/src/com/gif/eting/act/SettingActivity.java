@@ -15,7 +15,7 @@ import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 public class SettingActivity extends Activity implements OnClickListener {
 
