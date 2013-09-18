@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -13,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gif.eting.dto.StoryDTO;
@@ -24,6 +26,7 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 	private Context context;
 	private EditText email_address;
 	private ImageView send_email;
+	private TextView email_textView;
 //	private ImageView cancel_btn;
 
 	private List<StoryDTO> contentArray = null;
@@ -41,10 +44,12 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 
 		email_address = (EditText) findViewById(R.id.email_address);
 		send_email = (ImageView) findViewById(R.id.send_email);
+		email_textView = (TextView) findViewById(R.id.email_textView);
 //		cancel_btn = (ImageView) findViewById(R.id.cancel_btn);
 		
 		email_address.setTypeface(nanum);
-
+		email_textView.setTypeface(nanum);
+		email_textView.setPaintFlags(email_textView.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 		// emailAddress = email_address.getText().toString();
 
 		send_email.setOnTouchListener(new OnTouchListener() {

@@ -3,6 +3,7 @@ package com.gif.eting.act;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -11,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gif.eting.svc.PasswordService;
@@ -21,6 +23,7 @@ public class PasswordManagementActivity extends Activity implements
 	private EditText origin_pwd;
 	private EditText setting_pw;
 	private EditText setting_pw2;
+	private TextView password_textView;
 	private ImageView setting_save_pw_btn;
 	private boolean isValid = false;
 	private String o_pw;
@@ -40,10 +43,13 @@ public class PasswordManagementActivity extends Activity implements
 		origin_pwd = (EditText) findViewById(R.id.origin_pwd);
 		setting_pw = (EditText) findViewById(R.id.setting_pw);
 		setting_pw2 = (EditText) findViewById(R.id.setting_pw2);
+		password_textView = (TextView) findViewById(R.id.password_textView);
 		
 		origin_pwd.setTypeface(nanum);
 		setting_pw.setTypeface(nanum);
 		setting_pw2.setTypeface(nanum);
+		password_textView.setTypeface(nanum);
+		password_textView.setPaintFlags(password_textView.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 		
 		o_pw = origin_pwd.getText().toString(); // 예전 비밀번호
 
@@ -58,9 +64,7 @@ public class PasswordManagementActivity extends Activity implements
 			origin_pwd.setFocusableInTouchMode(false);
 			origin_pwd.setHintTextColor(Color.BLACK);
 			origin_pwd.setHint("Don't have password!!");
-			
 		}
-
 		
 		setting_save_pw_btn.setOnTouchListener(new OnTouchListener() {
 			@Override

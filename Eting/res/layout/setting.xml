@@ -20,14 +20,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="100dp"
+            android:layout_marginRight="50dp"
             android:src="@drawable/setting_icon" />
 
         <TextView
             android:id="@+id/setting_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:layout_marginLeft="10dp"
+            android:textSize="24sp"
+            style="bold"
             android:layout_gravity="center"
             android:text="Setting" />
     </FrameLayout>

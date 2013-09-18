@@ -5,12 +5,26 @@
     android:background="#ffffff"
     android:orientation="vertical" >
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="false"
-        android:scaleType="fitXY"
-        android:src="@drawable/sendemail" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="false"
+            android:scaleType="fitXY"
+            android:src="@drawable/top_2" />
+        
+        <TextView 
+            android:id="@+id/email_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="24sp"
+            style="bold"
+            android:text="Send email"/>
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,15 +59,15 @@
             android:layout_marginBottom="40dp"
             android:src="@drawable/send_1" />
 
-<!--         <ImageView -->
-<!--             android:id="@+id/cancel_btn" -->
-<!--             android:layout_width="match_parent" -->
-<!--             android:layout_height="wrap_content" -->
-<!--             android:layout_marginBottom="20dp" -->
-<!--             android:layout_marginTop="10dp" -->
-<!--             android:gravity="center" -->
-<!--             android:onClick="clear" -->
-<!--             android:src="@drawable/cancel_1" /> -->
+        <!-- <ImageView -->
+        <!-- android:id="@+id/cancel_btn" -->
+        <!-- android:layout_width="match_parent" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:layout_marginBottom="20dp" -->
+        <!-- android:layout_marginTop="10dp" -->
+        <!-- android:gravity="center" -->
+        <!-- android:onClick="clear" -->
+        <!-- android:src="@drawable/cancel_1" /> -->
     </LinearLayout>
 
 </LinearLayout>

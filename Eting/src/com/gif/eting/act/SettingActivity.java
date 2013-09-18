@@ -3,6 +3,8 @@ package com.gif.eting.act;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -10,8 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.gif.eting_dev.R;
 
@@ -22,6 +24,8 @@ public class SettingActivity extends Activity implements OnClickListener {
 	private ImageView email_btn;
 	private ImageView credit_img_btn;
 	private ImageView tutorialBtn;
+	private TextView setting_textView;
+	private Typeface nanum;
 
 	// private Uri fileUri;
 
@@ -35,26 +39,35 @@ public class SettingActivity extends Activity implements OnClickListener {
 		email_btn = (ImageView) findViewById(R.id.email_btn);
 		credit_img_btn = (ImageView) findViewById(R.id.credit_img_btn);
 		tutorialBtn = (ImageView) findViewById(R.id.tutorialBtn);
+		setting_textView = (TextView) findViewById(R.id.setting_textView);
 
+		// 글꼴
+		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
+		setting_textView.setTypeface(nanum);
+		setting_textView.setPaintFlags(setting_textView.getPaintFlags()
+				| Paint.FAKE_BOLD_TEXT_FLAG);
+		
 		alarm_img_btn.setImageResource(R.drawable.alram_off);
-
 		password_img_btn.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
 					password_img_btn = (ImageView) findViewById(v.getId());
-					password_img_btn.setImageResource(R.drawable.changepassword_2);
+					password_img_btn
+							.setImageResource(R.drawable.changepassword_2);
 				}
 				if (event.getAction() == MotionEvent.ACTION_MOVE) {
 					if (!v.isPressed()) {
-						password_img_btn.setImageResource(R.drawable.changepassword_1);
+						password_img_btn
+								.setImageResource(R.drawable.changepassword_1);
 						return true;
 					}
 
 				}
 
 				if (event.getAction() == MotionEvent.ACTION_UP) {
-					password_img_btn.setImageResource(R.drawable.changepassword_1);
+					password_img_btn
+							.setImageResource(R.drawable.changepassword_1);
 				}
 
 				return false;
@@ -163,8 +176,8 @@ public class SettingActivity extends Activity implements OnClickListener {
 				// 로직 수행
 			}
 		}
-		if(view.getId() == R.id.tutorialBtn) {
-			startActivity(new Intent(this, TutorialActivity.class));	
+		if (view.getId() == R.id.tutorialBtn) {
+			startActivity(new Intent(this, TutorialActivity.class));
 		}
 
 	}
