@@ -108,7 +108,7 @@ public class Cloud4View extends View {
 
 		an.setAnimationListener(new AnimationControl(context));
 		an.setDuration(duration);
-		an.setRepeatCount(-1);
+		an.setRepeatCount(0);
 		an.setInterpolator(new LinearInterpolator());
 		an.initialize(objWidth, objHeight, width, height);
 
@@ -132,6 +132,7 @@ public class Cloud4View extends View {
 
 		@Override
 		public void onAnimationEnd(Animation an) {
+			setAnimationEvent(context, an);
 		}
 
 		/**
@@ -139,7 +140,6 @@ public class Cloud4View extends View {
 		 */
 		@Override
 		public void onAnimationRepeat(Animation an) {
-			setAnimationEvent(context, an);
 		}
 
 		@Override

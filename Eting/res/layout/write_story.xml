@@ -88,6 +88,7 @@
             android:layout_below="@id/write_story_dt_area"
             android:background="@android:color/white"
             android:ems="4"
+            android:lineSpacingExtra="5dp"
             android:gravity="center_vertical|top|left"
             android:inputType="textMultiLine"
             android:paddingBottom="20dp"

@@ -83,6 +83,10 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		context = getActivity();
 		
 		writeContentArea = (ViewGroup) rootView.findViewById(R.id.write_content_area);
+		
+		//폰트설정
+		EditText et = (EditText) rootView.findViewById(R.id.story_content);
+		et.setTypeface(nanum);
 
 		tv = (TextView) rootView.findViewById(R.id.write_story_dt);
 		tv.setTypeface(nanum);
@@ -115,7 +119,6 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		case R.id.send_story_btn:
 			// 입력한 문자 체크로직
 			EditText et = (EditText) getView().findViewById(R.id.story_content);
-			//et.setTypeface(nanum);
 			String content = et.getText().toString(); // 이야기 내용
 
 			// 입력값이 없으면 처리중단
@@ -154,7 +157,6 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 	 */
 	private void sendAndSaveStory() {
 		EditText et = (EditText) getView().findViewById(R.id.story_content);
-		//et.setTypeface(nanum);
 		final String content = et.getText().toString(); // 이야기 내용
 		
 		//페이드아웃 애니메이션

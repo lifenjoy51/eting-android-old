@@ -2,13 +2,28 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/intro_layout"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:background="#ffffff" >
 
     <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:contentDescription="@string/introbackgroundimage"
-        android:scaleType="centerCrop"
-        android:src="@drawable/intro_bg" />
+        android:id="@+id/intro_bg1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:src="@drawable/intro_backgroung" />
+    
+    <ImageView
+        android:id="@+id/intro_bg2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:src="@drawable/intro_eting_little" />
+
+    <!-- <ImageView -->
+    <!-- android:layout_width="fill_parent" -->
+    <!-- android:layout_height="fill_parent" -->
+    <!-- android:contentDescription="@string/introbackgroundimage" -->
+    <!-- android:scaleType="centerCrop" -->
+    <!-- android:src="@drawable/intro_bg" /> -->
 
 </FrameLayout>

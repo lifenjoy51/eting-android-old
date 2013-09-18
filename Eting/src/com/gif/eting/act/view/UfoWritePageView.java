@@ -82,9 +82,9 @@ public class UfoWritePageView extends View {
 		an.setAnimationListener(new AnimationControl(context));
 
 		// 처음 실행할때
-		long duration = 1300; // 이동하는 시간
+		long duration = 1000; // 이동하는 시간
 		an.setDuration(duration);
-		an.setRepeatCount(-1);
+		an.setRepeatCount(0);
 		an.initialize(10, 10, 10, 10);
 
 		mDrawable = new AnimateDrawable(dr, an);
@@ -107,6 +107,11 @@ public class UfoWritePageView extends View {
 
 		@Override
 		public void onAnimationEnd(Animation an) {
+			cnt++;
+			if (cnt == 2) {
+				callback.onTaskComplete("");
+			}
+			setAnimationEvent(context, an);
 		}
 
 		/**
@@ -114,11 +119,6 @@ public class UfoWritePageView extends View {
 		 */
 		@Override
 		public void onAnimationRepeat(Animation an) {
-			cnt++;
-			if (cnt == 4) {
-				callback.onTaskComplete("");
-			}
-			setAnimationEvent(context, an);
 		}
 
 		@Override
