@@ -18,13 +18,13 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.gif.eting.R;
 import com.gif.eting.act.view.UfoView;
 import com.gif.eting.svc.PasswordService;
 import com.gif.eting.svc.task.CheckStampTask;
 import com.gif.eting.svc.task.CheckStampedStoryTask;
 import com.gif.eting.svc.task.RegistrationTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
-import com.gif.eting.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -41,6 +41,7 @@ public class IntroActivity extends Activity {
 	public static final String PROPERTY_REG_ID = "registration_id";
 	private static final String PROPERTY_APP_VERSION = "appVersion";
 	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+	private boolean isFirst = false;
 
 	protected int cnt = 0;
 	private int total = 3;
@@ -62,7 +63,7 @@ public class IntroActivity extends Activity {
 
 	GoogleCloudMessaging gcm;
 	AtomicInteger msgId = new AtomicInteger();
-	Context context;
+	static Context context;
 	String regid;
 
 	@Override
@@ -120,11 +121,10 @@ public class IntroActivity extends Activity {
 
 			if ("".equals(regid)) {
 				registerInBackground();
-				Intent intent = new Intent(IntroActivity.this, TutorialActivity.class);
-				startActivity(intent);
-				} else {
-					sendRegistrationIdToBackend(); // TODO 임시로 만들어놓은거.
-				}
+				isFirst = true;
+			} else {
+				sendRegistrationIdToBackend(); // TODO 임시로 만들어놓은거.
+			}
 		} else {
 			Log.i(TAG, "No valid Google Play Services APK found.");
 		}
@@ -138,6 +138,16 @@ public class IntroActivity extends Activity {
 				}
 			}
 		}, 3000); // 3초후 이동
+		
+		if (isFirst) {
+
+			Intent intent = new Intent(IntroActivity.this,
+					TutorialActivity.class);
+			intent.putExtra("isFirst", true);
+			startActivity(intent);
+			finish();
+
+		}
 	}
 
 	/**
@@ -178,6 +188,10 @@ public class IntroActivity extends Activity {
 	 * 화면이동
 	 */
 	private void moveToLockScreenActivity() {
+		if(isFirst){
+			return;
+		}
+		
 		PasswordService psvc = new PasswordService(this);
 		if (psvc.isPassword()) {
 			Intent intent = new Intent(IntroActivity.this,
@@ -195,16 +209,16 @@ public class IntroActivity extends Activity {
 	 * doesn't, display a dialog that allows users to download the APK from the
 	 * Google Play Store or enable it in the device's system settings.
 	 */
-	private boolean checkPlayServices() {
+	public static boolean checkPlayServices() {
 		int resultCode = GooglePlayServicesUtil
-				.isGooglePlayServicesAvailable(this);
+				.isGooglePlayServicesAvailable(context);
 		if (resultCode != ConnectionResult.SUCCESS) {
 			if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-				GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+				GooglePlayServicesUtil.getErrorDialog(resultCode, (Activity) context,
 						PLAY_SERVICES_RESOLUTION_REQUEST).show();
 			} else {
 				Log.i(TAG, "This device is not supported.");
-				finish();
+				((Activity) context).finish();
 			}
 			return false;
 		}

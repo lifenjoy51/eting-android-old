@@ -2,6 +2,7 @@ package com.gif.eting.act;
 
 import android.app.Activity;
 import android.app.Service;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -19,7 +20,8 @@ public class TutorialActivity extends Activity implements OnTouchListener {
 	private ViewFlipper viewflipper;
 	private WindowManager wm = null;
 	private GestureDetector gestureDetector;
-
+	private Boolean isFirst=false;
+	
 	Animation animFlipInForeward;
 	Animation animFlipOutForeward;
 	Animation animFlipInBackward;
@@ -34,6 +36,15 @@ public class TutorialActivity extends Activity implements OnTouchListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tutorial);
+		
+		Bundle bd = getIntent().getExtras();
+		if(bd!=null){
+			if(bd.containsKey("isFirst")){
+				isFirst = (Boolean) bd.get("isFirst");
+			}
+		}
+		
+		
 		gestureDetector = new GestureDetector(getApplicationContext(),
 				simpleOnGestureListener);
 
@@ -41,12 +52,9 @@ public class TutorialActivity extends Activity implements OnTouchListener {
 
 		viewflipper = (ViewFlipper) findViewById(R.id.viewflipper);
 		animFlipInForeward = AnimationUtils.loadAnimation(this, R.anim.flipin);
-		animFlipOutForeward = AnimationUtils
-				.loadAnimation(this, R.anim.flipout);
-		animFlipInBackward = AnimationUtils.loadAnimation(this,
-				R.anim.flipin_reverse);
-		animFlipOutBackward = AnimationUtils.loadAnimation(this,
-				R.anim.flipout_reverse);
+		animFlipOutForeward = AnimationUtils .loadAnimation(this, R.anim.flipout);
+		animFlipInBackward = AnimationUtils.loadAnimation(this, R.anim.flipin_reverse);
+		animFlipOutBackward = AnimationUtils.loadAnimation(this, R.anim.flipout_reverse);
 		viewflipper.setOnTouchListener(this);
 
 	}
@@ -62,7 +70,6 @@ public class TutorialActivity extends Activity implements OnTouchListener {
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		System.out.println("onTouch");
 		return gestureDetector.onTouchEvent(event);
 
 		/*
@@ -93,20 +100,42 @@ public class TutorialActivity extends Activity implements OnTouchListener {
 
 		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 				float velocityY) {
+			
+			System.out.println("e1 "+e1.getX());
+			System.out.println("e2 "+e2.getX());
+			
 			String swipe = "abc ";
 			float sensitvity = 50;
 
+			System.out.println("viewflipper.getDisplayedChild() "+viewflipper.getDisplayedChild());
+			System.out.println("viewflipper.getChildCount() "+viewflipper.getChildCount());
+			
 			// TODO Auto-generated method stub
 			if ((e1.getX() - e2.getX()) > sensitvity) {
 				swipe += "Swipe Left\n";
-				viewflipper.setInAnimation(animFlipInForeward);
-				viewflipper.setOutAnimation(animFlipOutForeward);
-				viewflipper.showPrevious();
+				
+				if (viewflipper.getDisplayedChild() == viewflipper.getChildCount() - 1) {
+					if (isFirst != null) {
+						if (isFirst) {
+							startActivity(new Intent(getApplicationContext(),
+									MainViewPagerActivity.class));
+						}
+					}
+					finish();
+				}else{
+					viewflipper.setInAnimation(animFlipInForeward);
+					viewflipper.setOutAnimation(animFlipOutForeward);
+					
+					viewflipper.showNext();
+				}
 			} else if ((e2.getX() - e1.getX()) > sensitvity) {
 				swipe += "Swipe Right\n";
-				viewflipper.setInAnimation(animFlipInBackward);
-				viewflipper.setOutAnimation(animFlipOutBackward);
-				viewflipper.showNext();
+
+				if (viewflipper.getDisplayedChild()>0){
+					viewflipper.setInAnimation(animFlipInBackward);
+					viewflipper.setOutAnimation(animFlipOutBackward);
+					viewflipper.showPrevious();
+				}
 			} else {
 				swipe += "\n";
 			}
