@@ -33,6 +33,15 @@ public class TutorialActivity extends Activity implements OnTouchListener {
 
 	}
 
+	public void finishTutorial() {
+		if (wm != null) {
+
+			wm.removeView(viewflipper);
+			viewflipper.setDisplayedChild(0);
+			wm = null;
+		}
+	}
+
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		// TODO Auto-generated method stub
@@ -41,21 +50,21 @@ public class TutorialActivity extends Activity implements OnTouchListener {
 
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			xAtDown = event.getX(); // 터치 시작지점 x좌표 저장
-
+			
 		} else if (event.getAction() == MotionEvent.ACTION_UP) {
 			xAtUp = event.getX(); // 터치 끝난지점 x좌표 저장
 			// 다음 view 보여줌
 			viewflipper.showNext();
+			if (viewflipper.getCurrentView() == viewflipper.getChildAt(3)) {
+				return false;
+			}
+			// if (viewflipper.getCurrentView() == viewflipper.getChildAt(4)) {
+			// wm.removeView(viewflipper);
+			// viewflipper.setDisplayedChild(0);
+			// wm = null;
+			// }
+			// v.invalidate();
 		}
-//		v.invalidate();
 		return true;
 	}
-//	public void finishTutorial() {
-//		if (wm != null) {
-//			
-//			wm.removeView(viewflipper);
-//			viewflipper.setDisplayedChild(0);
-//			wm = null;
-//		}
-//	}
 }
