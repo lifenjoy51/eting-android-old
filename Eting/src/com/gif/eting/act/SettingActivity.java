@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gif.eting.R;
+import com.gif.eting.dao.SettingDAO;
+import com.gif.eting.dto.SettingDTO;
 
 public class SettingActivity extends Activity implements OnClickListener {
 
@@ -26,12 +28,17 @@ public class SettingActivity extends Activity implements OnClickListener {
 	private ImageView tutorialBtn;
 	private TextView setting_textView;
 	private Typeface nanum;
+	private SettingDAO settingDao;
 
 	// private Uri fileUri;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.setting);
+		
+		//Dao초기화
+		settingDao = new SettingDAO(getApplicationContext());
+		
 
 		// 버튼 온클릭이벤트 등록
 		alarm_img_btn = (ImageView) findViewById(R.id.alarm_img_btn);
@@ -40,6 +47,19 @@ public class SettingActivity extends Activity implements OnClickListener {
 		credit_img_btn = (ImageView) findViewById(R.id.credit_img_btn);
 		tutorialBtn = (ImageView) findViewById(R.id.tutorialBtn);
 		setting_textView = (TextView) findViewById(R.id.setting_textView);
+		
+
+		//알람설정
+		settingDao.open();
+    	Object alarm = settingDao.getsettingInfo("push_alarm");
+    	settingDao.close();
+    	
+    	//알람설정 off면 이미지 교체
+    	if(alarm==null){
+    		alarm_img_btn.setImageResource(R.drawable.alram_off);
+    	}else{
+    		alarm_img_btn.setImageResource(R.drawable.alram_on);
+    	}
 
 		// 글꼴
 		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
@@ -47,7 +67,6 @@ public class SettingActivity extends Activity implements OnClickListener {
 		setting_textView.setPaintFlags(setting_textView.getPaintFlags()
 				| Paint.FAKE_BOLD_TEXT_FLAG);
 		
-		alarm_img_btn.setImageResource(R.drawable.alram_off);
 		password_img_btn.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -170,10 +189,23 @@ public class SettingActivity extends Activity implements OnClickListener {
 
 			if (tmpBitmap.equals(tmpBitmapRes)) {
 				alarm_img_btn.setImageResource(R.drawable.alram_off);
+				
 				// 로직 수행
+				settingDao.open();
+				settingDao.delsetting("push_alarm");
+				settingDao.close();
 			} else {
 				alarm_img_btn.setImageResource(R.drawable.alram_on);
+				
 				// 로직 수행
+				SettingDTO setting = new SettingDTO();
+				setting.setKey("push_alarm");
+				setting.setValue("Y");
+				
+				settingDao.open();
+				settingDao.inssetting(setting);
+				settingDao.close();
+				
 			}
 		}
 		if (view.getId() == R.id.tutorialBtn) {

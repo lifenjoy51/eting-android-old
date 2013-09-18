@@ -64,7 +64,7 @@ public class PasswordManagementActivity extends Activity implements
 			origin_pwd.setEnabled(false);
 			origin_pwd.setFocusable(false);
 			origin_pwd.setFocusableInTouchMode(false);
-			origin_pwd.setHintTextColor(Color.parseColor("999999"));
+			origin_pwd.setHintTextColor(Color.parseColor("#999999"));
 
 			origin_pwd.setHint("Don't have password!!");
 		}

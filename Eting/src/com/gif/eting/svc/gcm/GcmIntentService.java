@@ -11,9 +11,10 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.gif.eting.act.MainViewPagerActivity;
-import com.gif.eting.svc.task.CheckStampedStoryTask;
 import com.gif.eting.R;
+import com.gif.eting.act.MainViewPagerActivity;
+import com.gif.eting.dao.SettingDAO;
+import com.gif.eting.svc.task.CheckStampedStoryTask;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 /**
@@ -73,6 +74,17 @@ public class GcmIntentService extends IntentService {
     // a GCM message.
     private void sendNotification(String storyId) {
     	Log.i("sendNotification", storyId);
+    	
+    	SettingDAO settingDao = new SettingDAO(getApplicationContext());
+    	
+    	settingDao.open();
+    	Object alarm = settingDao.getsettingInfo("push_alarm");
+    	settingDao.close();
+    	
+    	//알람설정 off면 끝내기
+    	if(alarm==null){
+    		return;
+    	}
     	
     	/**
 		 * 스탬프찍힌 이야기 리스트 받아오기
