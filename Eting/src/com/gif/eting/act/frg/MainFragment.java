@@ -347,8 +347,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 			mainInboxCnt.setVisibility(View.VISIBLE);
 			mainInboxCnt.bringToFront();
 			Animation ani;
-			ani = AnimationUtils.loadAnimation(getActivity(), R.anim.twinkle);
-			//mainUfo.startAnimation(ani);
+			ani = AnimationUtils.loadAnimation(getActivity(), R.anim.main_ufo);
+			mainInboxCnt.startAnimation(ani);
 			//mainInboxCnt.startAnimation(ani);
 		}else{
 			//mainUfo.clearAnimation();

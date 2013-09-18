@@ -162,7 +162,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		//페이드아웃 애니메이션
 		Animation sa = new AlphaAnimation(1.0f, 0.0f);
 
-		sa.setDuration(500);
+		sa.setDuration(700);
 		sa.setRepeatCount(0);
 		sa.setFillAfter(true);
 		sa.setFillEnabled(true);

@@ -5,26 +5,31 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.gif.eting.R;
 import com.gif.eting.act.ReadMyStoryActivity;
 import com.gif.eting.act.view.MylistAdapter;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
-import com.gif.eting.R;
 
 /**
  * 내 이야기 목록
@@ -36,6 +41,8 @@ public class MyStoryListFragment  extends SherlockFragment{
 	private ViewPager mPager;
 	
 	private Typeface nanum;
+	
+	private ViewGroup rootView;
 	
 
     /**
@@ -65,7 +72,7 @@ public class MyStoryListFragment  extends SherlockFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         // Inflate the layout containing a title and body text.
-        ViewGroup rootView = (ViewGroup) inflater
+        rootView = (ViewGroup) inflater
                 .inflate(R.layout.mystory_list, container, false);
         nanum = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
 
@@ -118,10 +125,47 @@ public class MyStoryListFragment  extends SherlockFragment{
 		/**
 		 * 아무것도 없을때 처리
 		 */
+		System.out.println("myStoryList.size() " +myStoryList.size());
 		if(myStoryList.size() == 0){
-			StoryDTO temp = new StoryDTO();
-			temp.setContent("작성한 eting이 없어요. eting해보아요!");
-			list.add(temp);
+			
+			FrameLayout area = (FrameLayout) rootView.findViewById(R.id.story_list_alarm_area);
+			area.setVisibility(View.VISIBLE);
+			area.bringToFront();
+			
+			//스크린크기
+			DisplayMetrics metrics = getResources().getDisplayMetrics();
+			int width = metrics.widthPixels;
+			int height = metrics.heightPixels;
+			
+			/**
+			 * 별모양2
+			 */
+			Drawable dr = getActivity().getResources().getDrawable(R.drawable.main_acc_2);
+			ImageView storyListAlarmIcon = (ImageView) rootView.findViewById(R.id.story_list_alarm_icon);
+			//위치조정
+			int storyListAlarmIconX = width*50/100 - dr.getIntrinsicWidth()/2;
+			int storyListAlarmIconY = height*35/100;
+			FrameLayout.LayoutParams storyListAlarmIconParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
+			storyListAlarmIconParams.leftMargin = storyListAlarmIconX; //Your X coordinate
+			storyListAlarmIconParams.topMargin = storyListAlarmIconY; //Your Y coordinate
+			storyListAlarmIconParams.gravity = Gravity.LEFT | Gravity.TOP;
+			storyListAlarmIcon.setLayoutParams(storyListAlarmIconParams);
+			
+			/**
+			 * 텍스트
+			 */
+			TextView storListAramText = (TextView) rootView.findViewById(R.id.story_list_alarm_text);			
+			
+			int storListAramTextY = height*43/100;
+			FrameLayout.LayoutParams storListAramTextParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.WRAP_CONTENT); 
+			
+			storListAramTextParams.topMargin = storListAramTextY; //Your Y coordinate
+			storListAramTextParams.gravity = Gravity.LEFT | Gravity.TOP;
+			storListAramText.setLayoutParams(storListAramTextParams);
+		}else{
+			FrameLayout area = (FrameLayout) rootView.findViewById(R.id.story_list_alarm_area);
+			area.setVisibility(View.GONE);
+			area.bringToFront();
 		}
 		
 		MylistAdapter m_adapter = new MylistAdapter(getActivity(), R.layout.mylist_item, list); // 어댑터 생성

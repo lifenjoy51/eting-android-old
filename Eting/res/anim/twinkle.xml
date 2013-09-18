@@ -8,5 +8,4 @@
         android:repeatCount="infinite"
         android:repeatMode="reverse"
         android:toAlpha="0.0" />
-
-</set>
+</set>
