@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -50,6 +51,7 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 		email_address.setTypeface(nanum);
 		email_textView.setTypeface(nanum);
 		email_textView.setPaintFlags(email_textView.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+		email_address.setHintTextColor(Color.parseColor("#bbbbbb"));
 		// emailAddress = email_address.getText().toString();
 
 		send_email.setOnTouchListener(new OnTouchListener() {
