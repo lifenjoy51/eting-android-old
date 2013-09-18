@@ -120,9 +120,11 @@ public class IntroActivity extends Activity {
 
 			if ("".equals(regid)) {
 				registerInBackground();
-			} else {
-				sendRegistrationIdToBackend(); // TODO 임시로 만들어놓은거.
-			}
+				Intent intent = new Intent(IntroActivity.this, TutorialActivity.class);
+				startActivity(intent);
+				} else {
+					sendRegistrationIdToBackend(); // TODO 임시로 만들어놓은거.
+				}
 		} else {
 			Log.i(TAG, "No valid Google Play Services APK found.");
 		}

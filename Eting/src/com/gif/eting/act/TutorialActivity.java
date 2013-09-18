@@ -8,6 +8,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ViewFlipper;
 
 import com.gif.eting_dev.R;
@@ -17,6 +19,11 @@ public class TutorialActivity extends Activity implements OnTouchListener {
 	private ViewFlipper viewflipper;
 	private WindowManager wm = null;
 	private GestureDetector gestureDetector;
+
+	Animation animFlipInForeward;
+	Animation animFlipOutForeward;
+	Animation animFlipInBackward;
+	Animation animFlipOutBackward;
 
 	// 터치 이벤트 발생 지점의 x좌표 저장
 	private float xAtDown;
@@ -33,6 +40,13 @@ public class TutorialActivity extends Activity implements OnTouchListener {
 		wm = (WindowManager) getSystemService(Service.WINDOW_SERVICE);
 
 		viewflipper = (ViewFlipper) findViewById(R.id.viewflipper);
+		animFlipInForeward = AnimationUtils.loadAnimation(this, R.anim.flipin);
+		animFlipOutForeward = AnimationUtils
+				.loadAnimation(this, R.anim.flipout);
+		animFlipInBackward = AnimationUtils.loadAnimation(this,
+				R.anim.flipin_reverse);
+		animFlipOutBackward = AnimationUtils.loadAnimation(this,
+				R.anim.flipout_reverse);
 		viewflipper.setOnTouchListener(this);
 
 	}
@@ -85,9 +99,13 @@ public class TutorialActivity extends Activity implements OnTouchListener {
 			// TODO Auto-generated method stub
 			if ((e1.getX() - e2.getX()) > sensitvity) {
 				swipe += "Swipe Left\n";
+				viewflipper.setInAnimation(animFlipInForeward);
+				viewflipper.setOutAnimation(animFlipOutForeward);
 				viewflipper.showPrevious();
 			} else if ((e2.getX() - e1.getX()) > sensitvity) {
 				swipe += "Swipe Right\n";
+				viewflipper.setInAnimation(animFlipInBackward);
+				viewflipper.setOutAnimation(animFlipOutBackward);
 				viewflipper.showNext();
 			} else {
 				swipe += "\n";
