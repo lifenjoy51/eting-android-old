@@ -11,6 +11,7 @@ import android.view.animation.TranslateAnimation;
 
 import com.gif.eting.util.AnimateDrawable;
 import com.gif.eting.util.AsyncTaskCompleteListener;
+import com.gif.eting.util.Util;
 import com.gif.eting_dev.R;
 
 /**
@@ -43,8 +44,15 @@ public class UfoWritePageView extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		mDrawable.draw(canvas);
-		invalidate();
+		synchronized (this) {
+			mDrawable.draw(canvas);
+			invalidate();
+			try {
+				this.wait(Util.fps);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**

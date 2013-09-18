@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ScaleDrawable;
-import android.os.AsyncTask;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 
-import com.gif.eting.act.task.UfoAnimationTask;
 import com.gif.eting.util.AnimateDrawable;
 import com.gif.eting.util.Util;
 import com.gif.eting_dev.R;
@@ -28,28 +26,25 @@ import com.gif.eting_dev.R;
 @SuppressLint("ViewConstructor")
 public class PlanetView extends View {
 	private AnimateDrawable mDrawable;
-	private UfoAnimationTask ufoAnimationTask;
 
 	public PlanetView(Context context) {
 		super(context);
 		setFocusable(true);
 		setFocusableInTouchMode(true);
-		
-		ufoAnimationTask = new UfoAnimationTask(null);
 
 		setAnimationEvent(context, null);
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		
-		Object[] obj = new Object[3];
-		obj[0] = this;
-		obj[1] = canvas;
-		obj[2] = mDrawable;
-		
-		if(ufoAnimationTask.getStatus()== AsyncTask.Status.FINISHED){
-			ufoAnimationTask.execute(this, canvas, mDrawable);
+		synchronized (this) {
+			mDrawable.draw(canvas);
+			invalidate();
+			try {
+				this.wait(Util.fps);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -61,7 +56,7 @@ public class PlanetView extends View {
 	 */
 	private void setAnimationEvent(Context context, Animation an) {
 
-		System.out.println("onAnimationEnd");
+		
 		Drawable dr = context.getResources().getDrawable(R.drawable.main_planet);
 		
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();

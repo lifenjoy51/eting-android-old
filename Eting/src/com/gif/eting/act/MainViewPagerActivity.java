@@ -57,10 +57,10 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
         
 
 		FrameLayout fr = (FrameLayout) findViewById(R.id.mainviewpager_frame);
-		//fr.addView(new Cloud1View(this)); // 구름애니메이션
-		//fr.addView(new Cloud2View(this)); // 구름애니메이션
-		//fr.addView(new Cloud3View(this)); // 구름애니메이션
-		//fr.addView(new Cloud4View(this)); // 구름애니메이션
+		fr.addView(new Cloud1View(this)); // 구름애니메이션
+		fr.addView(new Cloud2View(this)); // 구름애니메이션
+		fr.addView(new Cloud3View(this)); // 구름애니메이션
+		fr.addView(new Cloud4View(this)); // 구름애니메이션
 
         fr.setAnimationCacheEnabled(true);
         fr.setDrawingCacheEnabled(true);

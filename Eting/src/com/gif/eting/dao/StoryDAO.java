@@ -184,4 +184,17 @@ public class StoryDAO {
 		story.setStamp_yn(cursor.getString(4));
 		return story;
 	}
+	
+	/**
+	 * 이팅 개수 가져오기
+	 * @return
+	 */
+	public Integer getStoryCnt(){
+		Cursor cur = database.rawQuery("SELECT COUNT(*) FROM "+StoryDBHelper.TABLE_STORY_MASTER, null);	
+		cur.moveToFirst(); // 커서 처음으로
+		Integer count = cur.getInt(0);
+		cur.close();
+		
+		return count;
+	}
 }

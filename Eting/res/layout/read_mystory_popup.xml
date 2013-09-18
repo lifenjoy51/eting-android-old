@@ -1,82 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/popup_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingBottom="30dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="30dp" >
 
-    <ImageView
-        android:id="@+id/popup_title"
+    <TextView
+        android:id="@+id/mystory_content_top"
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/list_myeting"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:paddingTop="15dp"
+        android:background="@drawable/myeting_blank_b_top"
         android:contentDescription="@string/popuptitle" />
 
-    <ScrollView
-        android:id="@+id/popup_content_scroll_area"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="50"
-        android:paddingTop="10dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/feedback_bg" >
-	
-        <TextView
-            android:id="@+id/popup_content"
-            android:layout_width="fill_parent"
+    <LinearLayout
+        android:id="@+id/mystory_btn_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/del_btn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/textbox_1"
-            android:gravity="left|top"
-            android:lineSpacingExtra="5dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:textColor="#4D4D4D"
-            android:textSize="16sp" />
-    </ScrollView>
+            android:layout_gravity="left"
+            android:layout_weight="5"
+            android:background="@drawable/del_btn_selector"
+            android:contentDescription="@string/delbtn" />
+
+        <ImageButton
+            android:id="@+id/check_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="5"
+            android:background="@drawable/check_btn_selector"
+            android:contentDescription="@string/delbtn" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/popup_stamp_sender"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="10dp"
-        android:drawableBottom="@drawable/mylist_line"
-        android:textColor="@android:color/white"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/mystory_btn_area"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/feed_blank_bottom"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:textColor="#999999"
         android:textSize="16sp" />
 
     <ScrollView
         android:id="@+id/mystory_stamp_scroll_area"
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/border" >
+        android:layout_height="60sp"
+        android:layout_above="@id/popup_stamp_sender"
+        android:overScrollMode="never"
+        android:background="@drawable/feed_blank_middle" >
 
-         <LinearLayout
+        <LinearLayout
             android:id="@+id/mystory_stamp_area"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-             >
+            android:layout_gravity="center|top"
+            android:background="#00000000"
+            android:orientation="vertical" >
         </LinearLayout>
     </ScrollView>
 
-    <ImageButton
-        android:id="@+id/del_btn"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/mystory_stamp_top"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_gravity="right|center_vertical"
-        android:background="@drawable/del_btn_selector"
-        android:contentDescription="@string/delbtn" />
+        android:layout_above="@id/mystory_stamp_scroll_area"
+        android:layout_gravity="center"
+        android:background="@drawable/feed_blank_top" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/mystory_content_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/mystory_stamp_top"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/myeting_blank_b_bottom"
+        android:contentDescription="@string/popuptitle" />
+
+    <ScrollView
+        android:id="@+id/popup_content_scroll_area"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/mystory_content_bottom"
+        android:layout_below="@id/mystory_content_top"
+        android:background="@drawable/myeting_blank_b_middle"
+        android:overScrollMode="never"
+        android:paddingTop="10dp" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/popup_content"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:gravity="left|top"
+                android:lineSpacingExtra="5dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:textColor="#4D4D4D"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

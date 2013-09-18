@@ -194,13 +194,9 @@ public class StoryService {
 	 */
 	public Integer getStoryCnt(){
 		storyDao.open();
-		List<StoryDTO> myStoryList = storyDao.getStoryList();
+		Integer count = storyDao.getStoryCnt();
 		storyDao.close();
-		if(myStoryList != null){
-			return myStoryList.size();			
-		}else{
-			return 0;
-		}
+		return count;
 	}
 
 }

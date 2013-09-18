@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -188,7 +189,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
         /**
          * 클릭이벤트 설정
          */
-        rootView.findViewById(R.id.main_ufo).setOnClickListener(this);
+        rootView.findViewById(R.id.main_inbox_cnt).setOnClickListener(this);
   		rootView.findViewById(R.id.setting_btn).setOnClickListener(this);  		
   		
   		/**
@@ -226,7 +227,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 
 		switch (v.getId()) {
 
-		case R.id.main_ufo:
+		case R.id.main_inbox_cnt:
 			/**
 			 * 받은이야기 보는 로직
 			 */
@@ -296,28 +297,37 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		/**
 		 * 받은편지가 있으면 우주선표시
 		 */
+		/*
+		Drawable dr = getActivity().getResources().getDrawable(R.drawable.spaceship);
 		ImageView mainUfo = (ImageView) getView().findViewById(R.id.main_ufo);
+		
+		
 		//위치조정
-		int ufoX = width*76/100;
-		int ufoY = height*13/100;
-		FrameLayout.LayoutParams ufoParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
+		int ufoX = width*76/100 - dr.getIntrinsicWidth()/2;
+		int ufoY = height*13/100 - dr.getIntrinsicHeight()/2;
+		
+		FrameLayout.LayoutParams ufoParams 
+		= new FrameLayout.LayoutParams(dr.getIntrinsicWidth(),dr.getIntrinsicHeight());
 		ufoParams.leftMargin = ufoX; //Your X coordinate
 		ufoParams.topMargin = ufoY; //Your Y coordinate
 		ufoParams.gravity = Gravity.LEFT | Gravity.TOP;
 		mainUfo.setLayoutParams(ufoParams);
-		
+		*/
 		/**
 		 * 받은편지함 개수 설정
 		 */
+		Drawable dr = getActivity().getResources().getDrawable(R.drawable.spaceship);
 		mainInboxCnt =  (TextView) getView().findViewById(R.id.main_inbox_cnt);
 		mainInboxCnt.setTypeface(nanum);
 		InboxService is = new InboxService(getActivity());
 		int inboxCnt = is.getInboxCnt();
-		mainInboxCnt.setText("New " + String.valueOf(inboxCnt));
+		mainInboxCnt.setText(String.valueOf(inboxCnt));
+		mainInboxCnt.setBackgroundResource(R.drawable.spaceship);
+		mainInboxCnt.setGravity(Gravity.CENTER);
 		
 		//위치조정
-		int inboxX = width*58/100 + getActivity().getResources().getDrawable(R.drawable.main_ufo).getIntrinsicWidth();
-		int inboxY = height*8/100 - mainInboxCnt.getHeight()/4*1;	
+		int inboxX = width*76/100 - dr.getIntrinsicWidth()/2;
+		int inboxY = height*13/100 - dr.getIntrinsicHeight()/2;	
 		FrameLayout.LayoutParams mainInboxParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
 		mainInboxParams.leftMargin = inboxX; //Your X coordinate
 		mainInboxParams.topMargin = inboxY; //Your Y coordinate
@@ -326,8 +336,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		
 		
 		if(inboxCnt>0){
-			mainUfo.setVisibility(View.VISIBLE);
-			mainUfo.bringToFront();
+			//mainUfo.setVisibility(View.VISIBLE);
+			//mainUfo.bringToFront();
 			mainInboxCnt.setVisibility(View.VISIBLE);
 			mainInboxCnt.bringToFront();
 			Animation ani;
@@ -335,8 +345,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 			//mainUfo.startAnimation(ani);
 			//mainInboxCnt.startAnimation(ani);
 		}else{
-			mainUfo.clearAnimation();
-			mainUfo.setVisibility(View.GONE);
+			//mainUfo.clearAnimation();
+			//mainUfo.setVisibility(View.GONE);
 			mainInboxCnt.clearAnimation();
 			mainInboxCnt.setVisibility(View.GONE);
 		}

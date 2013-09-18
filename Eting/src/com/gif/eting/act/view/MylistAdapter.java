@@ -20,12 +20,14 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 	private List<StoryDTO> items;
 	private Context context;
 	private Typeface nanum;
+	private LayoutInflater vi;
 
 	public MylistAdapter(Context context, int textViewResourceId,
 			List<StoryDTO> items) {
 		super(context, textViewResourceId, items);
 		this.context = context;
 		this.items = items;
+		this.vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 		View v = convertView;
 		Log.i("MylistAdapter", "list = "+position+storyDate+storyContent);
 		
-		LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
 			
 
 		/**

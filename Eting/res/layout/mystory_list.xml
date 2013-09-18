@@ -10,6 +10,8 @@
 <!--         android:layout_height="wrap_content" -->
 <!--         android:background="@drawable/list_myeting" -->
 <!--         android:contentDescription="@string/listmyeting" /> -->
+
+<!-- 
 <TextView 
     android:id="@+id/myeting_textview"
     android:layout_width="wrap_content"
@@ -19,6 +21,8 @@
     android:layout_marginTop="20dp"
     android:textSize="26sp"
     android:layout_gravity="center"/>
+ -->
+
 <!--     divider, dividerHeight = 리스트뷰에서 아이템과 아이템 사이에 공백을 넣어주는 옵션
  -->
 
@@ -31,8 +35,8 @@
         android:dividerHeight="8.0sp"
         android:paddingTop="15dp"
         android:paddingBottom="10dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp" >
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp" >
     </ListView>
 
 </LinearLayout>
