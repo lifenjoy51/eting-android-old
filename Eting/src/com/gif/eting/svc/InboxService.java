@@ -49,14 +49,9 @@ public class InboxService {
 	 */
 	public Integer getInboxCnt() {
 		inboxDao.open();
-		List<StoryDTO> inboxStoryList = inboxDao.getStoryList();
+		Integer count = inboxDao.getStoryCnt();
 		inboxDao.close();
-
-		if (inboxStoryList != null) {
-			return inboxStoryList.size();
-		} else {
-			return 0;
-		}
+		return count;
 	}
 
 }

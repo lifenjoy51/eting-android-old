@@ -19,6 +19,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,7 +85,12 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		
 		StoryDTO myStory = storyService.getMyStory(storyIdx);	//해당하는 이야기 받아오기
 		String content = myStory.getContent();
+		
 		String storyDate = myStory.getStory_date();
+		if(storyDate != null && storyDate != ""){
+			storyDate = storyDate.replaceAll("-", ".");
+		}
+		
 		String storyTime = myStory.getStory_time();
 		if(storyTime == null || storyTime == ""){
 			storyTime = "0";
@@ -91,16 +98,22 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			storyTime = storyTime.substring(0,2);
 		}
 		
+		
+		
+		TextView storyDateView = (TextView) findViewById(R.id.mystory_content_top);
+		storyDateView.setText(storyDate);
+		storyDateView.setTypeface(nanum, Typeface.BOLD);
+		
 		TextView contentView = (TextView) findViewById(R.id.popup_content);
 		contentView.setTypeface(nanum);
-		contentView.setText(storyDate+"\n"+content);
+		contentView.setText(content);
 		
 		/**
 		 * 작성시간에 맞게 배경화면 변화
 		 */
 		int storyHour = Integer.parseInt(storyTime);
 		Log.i("currunt hour", thisHourStr);
-		
+		/*
 		if(storyHour<4 ){
 			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_4);
 		}else if(storyHour<12 ){
@@ -110,7 +123,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		}else {
 			findViewById(R.id.popup_content).setBackgroundResource(R.drawable.textbox_4);
 		}
-		
+		*/
 		/**
 		 * 조회하는 이야기에 찍힌 스탬프 받아오기
 		 * 
@@ -122,6 +135,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		
 		//클릭이벤트 설정
 		findViewById(R.id.del_btn).setOnClickListener(this);
+		findViewById(R.id.check_btn).setOnClickListener(this);
 	}
 
 	/**
@@ -132,14 +146,22 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 
 		@Override
 		public void onTaskComplete(List<StampDTO> list) {
-
+			System.out.println("@_@!#!#");
 			if (list != null) {
 				if (list.size() > 0) {
+					System.out.println("onTaskComplete = "+list);
 					String sender = list.get(0).getSender();
 					TextView contentView = (TextView) findViewById(R.id.popup_stamp_sender);
 					contentView.setTypeface(nanum);
-					contentView.setText("From. "+sender);
+					contentView.setText("PS. "+sender);
+				}else{
+					ScrollView stampAreaView = (ScrollView) findViewById(R.id.mystory_stamp_scroll_area); // 스탬프영역
+					stampAreaView.setVisibility(View.GONE);
 				}
+			}else{
+				ScrollView stampAreaView = (ScrollView) findViewById(R.id.mystory_stamp_scroll_area); // 스탬프영역
+				stampAreaView.setVisibility(View.GONE);
+				
 			}
 
 			/**
@@ -158,7 +180,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 
 			LinearLayout stampInnerLayout = initLayout();
 			for (StampDTO stamp : list) {
-
+				System.out.println("@@@@@"+stamp);
 				StampView stampView = new StampView(context);
 				stampView.setText(stamp.getStamp_name());
 				stampView.setStamp(stamp);
@@ -176,6 +198,8 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 				stampParams.bottomMargin = margin;
 				stampView.setLayoutParams(stampParams);
 
+				System.out.println("chk = ? "+chk);
+				System.out.println("cntPerRow = ? "+cntPerRow);
 				if (chk != 0 && chk % cntPerRow == 0) {
 					stampInnerLayout.addView(stampView);
 					stampArea.addView(stampInnerLayout);
@@ -189,7 +213,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			}
 			
 			//출력해줌
-			if (chk != 0 && chk % cntPerRow != 0) {
+			if (chk != 0 && --chk % cntPerRow != 0) {
 				stampArea.addView(stampInnerLayout);				
 			}
 		}
@@ -229,6 +253,8 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 									finish();								}
 
 							}).setNegativeButton(R.string.no, null).show();
+		}else if(v.getId()==R.id.check_btn){
+			finish();
 		}
 	}
 

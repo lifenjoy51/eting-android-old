@@ -47,7 +47,7 @@ public class EtingLogoView extends View {
 	 */
 	private void setAnimationEvent(Context context, Animation an) {
 
-		System.out.println("onAnimationEnd");
+		
 		Drawable dr = context.getResources().getDrawable(R.drawable.eting_logo);
 		
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();

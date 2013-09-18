@@ -12,6 +12,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 
 import com.gif.eting.util.AnimateDrawable;
+import com.gif.eting.util.Util;
 import com.gif.eting_dev.R;
 
 /**
@@ -35,9 +36,15 @@ public class Cloud4View extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		mDrawable.draw(canvas);
-
-		invalidate();
+		synchronized (this) {
+			mDrawable.draw(canvas);
+			invalidate();
+			try {
+				this.wait(Util.fps);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -48,7 +55,7 @@ public class Cloud4View extends View {
 	 */
 	private void setAnimationEvent(Context context, Animation an) {
 
-		System.out.println("onAnimationEnd");
+		
 		Drawable dr = context.getResources().getDrawable(R.drawable.main_cloud_1);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
 		dr.setAlpha(229);
@@ -76,14 +83,12 @@ public class Cloud4View extends View {
 		
 		// 위아래로 왔다갔다하게하기
 		if (chk) {
-			System.out.println("chk" + chk);
-
 			stPtX = width * stX1 / 100;
 			enPtX = width * enX1 / 100;
 			stPtY = height * posY / 100;
 			enPtY = height * posY / 100;
 
-			System.out.println(stPtX + "," + enPtX + "," + stPtY + "," + enPtY);
+			
 			
 			an = new TranslateAnimation(stPtX, enPtX, stPtY, enPtY);
 			chk = false;
@@ -91,14 +96,14 @@ public class Cloud4View extends View {
 			duration = duration*lenX1/lenTot;
 			
 		} else {
-			System.out.println("chk" + chk);
+			
 
 			stPtX = width * stX2/ 100;
 			enPtX = width * enX2 / 100;
 			stPtY = height * posY / 100;
 			enPtY = height * posY / 100;
 
-			System.out.println(stPtX + "," + enPtX + "," + stPtY + "," + enPtY);
+			
 			
 			an = new TranslateAnimation(stPtX, enPtX, stPtY, enPtY);
 			chk = true;

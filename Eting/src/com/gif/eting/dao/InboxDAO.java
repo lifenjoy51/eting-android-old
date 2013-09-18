@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.gif.eting.db.InboxDBHelper;
+import com.gif.eting.db.StoryDBHelper;
 import com.gif.eting.dto.StoryDTO;
 
 /**
@@ -157,5 +158,18 @@ public class InboxDAO {
 		story.setContent(cursor.getString(1));
 		story.setStory_date(cursor.getString(2));
 		return story;
+	}
+	
+	/**
+	 * 받은이야기 개수 가져오기
+	 * @return
+	 */
+	public Integer getStoryCnt(){
+		Cursor cur = database.rawQuery("SELECT COUNT(*) FROM "+InboxDBHelper.TABLE_INBOX, null);	
+		cur.moveToFirst(); // 커서 처음으로
+		Integer count = cur.getInt(0);
+		cur.close();
+		
+		return count;
 	}
 }
