@@ -92,6 +92,9 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		inboxStoryIdx = idx;
 		String content = inboxStory.getContent();
 		String storyDate = inboxStory.getStory_date();
+		if(storyDate != null && storyDate != ""){
+			storyDate = storyDate.replaceAll("-", ".");
+		}
 		
 		//스크린크기
 		DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -103,7 +106,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		contentView.setText(content);
 		
 		TextView storyDateView = (TextView) findViewById(R.id.popup_date);
-		storyDateView.setTypeface(nanum);
+		storyDateView.setTypeface(nanum, Typeface.BOLD);
 		storyDateView.setText(storyDate);
 
 		//버튼이벤트 삽입
