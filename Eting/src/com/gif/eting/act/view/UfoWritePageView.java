@@ -45,8 +45,10 @@ public class UfoWritePageView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		synchronized (this) {
-			mDrawable.draw(canvas);
-			invalidate();
+			if(mDrawable!=null && canvas!=null){
+				mDrawable.draw(canvas);
+				invalidate();
+			}
 			try {
 				this.wait(Util.fps);
 			} catch (InterruptedException e) {

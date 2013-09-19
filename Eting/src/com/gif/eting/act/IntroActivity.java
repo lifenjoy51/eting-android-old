@@ -132,22 +132,24 @@ public class IntroActivity extends Activity {
 		handler = new Handler();
 		handler.postDelayed(new Runnable() {
 			public void run() {
-				cnt++;
-				if (cnt == total) {
-					moveToLockScreenActivity();
+
+				if (isFirst) {
+
+					Intent intent = new Intent(IntroActivity.this,
+							TutorialActivity.class);
+					intent.putExtra("isFirst", true);
+					startActivity(intent);
+					finish();
+
+				} else {
+					cnt++;
+					if (cnt == total) {
+						moveToLockScreenActivity();
+					}
+
 				}
 			}
 		}, 3000); // 3초후 이동
-		
-		if (isFirst) {
-
-			Intent intent = new Intent(IntroActivity.this,
-					TutorialActivity.class);
-			intent.putExtra("isFirst", true);
-			startActivity(intent);
-			finish();
-
-		}
 	}
 
 	/**

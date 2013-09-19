@@ -64,7 +64,9 @@ public class AnimateDrawable extends ProxyDrawable {
 						mTransformation);
 				canvas.concat(mTransformation.getMatrix());
 			}
-			dr.draw(canvas);
+			if(dr!=null && canvas!=null){
+				dr.draw(canvas);
+			}
 			canvas.restoreToCount(sc);
 		}
 	}

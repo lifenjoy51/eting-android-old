@@ -55,7 +55,7 @@ public class SettingActivity extends Activity implements OnClickListener {
     	settingDao.close();
     	
     	//알람설정 off면 이미지 교체
-    	if(alarm==null){
+    	if(alarm!=null){
     		alarm_img_btn.setImageResource(R.drawable.alram_off);
     	}else{
     		alarm_img_btn.setImageResource(R.drawable.alram_on);
@@ -189,23 +189,22 @@ public class SettingActivity extends Activity implements OnClickListener {
 
 			if (tmpBitmap.equals(tmpBitmapRes)) {
 				alarm_img_btn.setImageResource(R.drawable.alram_off);
+
+				// 로직 수행
+				SettingDTO setting = new SettingDTO();
+				setting.setKey("push_alarm");
+				setting.setValue("N");
 				
+				settingDao.open();
+				settingDao.inssetting(setting);
+				settingDao.close();				
+			} else {
+				alarm_img_btn.setImageResource(R.drawable.alram_on);
+
 				// 로직 수행
 				settingDao.open();
 				settingDao.delsetting("push_alarm");
 				settingDao.close();
-			} else {
-				alarm_img_btn.setImageResource(R.drawable.alram_on);
-				
-				// 로직 수행
-				SettingDTO setting = new SettingDTO();
-				setting.setKey("push_alarm");
-				setting.setValue("Y");
-				
-				settingDao.open();
-				settingDao.inssetting(setting);
-				settingDao.close();
-				
 			}
 		}
 		if (view.getId() == R.id.tutorialBtn) {

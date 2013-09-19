@@ -82,7 +82,7 @@ public class GcmIntentService extends IntentService {
     	settingDao.close();
     	
     	//알람설정 off면 끝내기
-    	if(alarm==null){
+    	if(alarm!=null){
     		return;
     	}
     	

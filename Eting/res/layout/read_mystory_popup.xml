@@ -119,7 +119,7 @@
             android:id="@+id/popup_content"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/myeting_blank_b_middle"
+            android:background="@android:color/transparent"
             android:gravity="left|top"
             android:lineSpacingExtra="5dp"
             android:paddingLeft="30dp"
