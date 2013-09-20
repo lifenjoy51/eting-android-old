@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
+import com.gif.eting.util.Util;
 import com.gif.eting.R;
 
 public class ExportEmailActivity extends Activity implements OnClickListener {
@@ -34,15 +35,12 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 	private StoryService storyService = null;
 	private String mailContent;
 	private String emailAddress;
-	private Typeface nanum;
+	private Typeface nanum = Util.nanum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.email_setting);
-		
-		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
-
 		email_address = (EditText) findViewById(R.id.email_address);
 		send_email = (ImageView) findViewById(R.id.send_email);
 		email_textView = (TextView) findViewById(R.id.email_textView);

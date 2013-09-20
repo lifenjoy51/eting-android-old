@@ -31,6 +31,7 @@ import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.svc.task.ReceiveStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
+import com.gif.eting.util.Util;
 import com.gif.eting.R;
 
 /**
@@ -44,7 +45,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 	private StoryService storyService;
 	private String storyIdx;
 	private Context context;
-	private Typeface nanum;
+	private Typeface nanum = Util.nanum;
 	
 
 	@Override
@@ -52,8 +53,6 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.read_mystory_popup);
-		
-		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
 		
 
 		/**

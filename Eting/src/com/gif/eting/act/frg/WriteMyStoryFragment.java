@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -21,7 +20,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +27,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.gif.eting.act.view.UfoWritePageView;
 import com.gif.eting.svc.task.SendStoryTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
+import com.gif.eting.util.Util;
 import com.gif.eting.R;
 
 /**
@@ -42,7 +41,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 	private ViewPager mPager;
 	private TextView send_textview;
 	private TextView tv;
-	private Typeface nanum;
+	private Typeface nanum = Util.nanum;
 	private Context context;
 	private ViewGroup rootView;
 	private Handler handle = new Handler();
@@ -77,8 +76,6 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		// Inflate the layout containing a title and body text.
 		rootView = (ViewGroup) inflater.inflate(R.layout.write_story,
 				container, false);
-		nanum = Typeface.createFromAsset(getActivity().getAssets(),
-				"fonts/NanumGothic.ttf");
 
 		context = getActivity();
 		

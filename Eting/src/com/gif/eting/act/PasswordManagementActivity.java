@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gif.eting.svc.PasswordService;
+import com.gif.eting.util.Util;
 import com.gif.eting.R;
 
 public class PasswordManagementActivity extends Activity implements
@@ -28,14 +29,12 @@ public class PasswordManagementActivity extends Activity implements
 	private boolean isValid = false;
 	private String o_pw;
 	private PasswordService svc;
-	private Typeface nanum;
+	private Typeface nanum = Util.nanum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.password_manage);
-
-		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
 
 		// 버튼 온클릭이벤트 등록
 		setting_save_pw_btn = (ImageView) findViewById(R.id.setting_save_pw_btn);

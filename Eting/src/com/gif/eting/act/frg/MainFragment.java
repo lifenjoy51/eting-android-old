@@ -22,8 +22,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -36,6 +34,7 @@ import com.gif.eting.act.view.EtingLogoView;
 import com.gif.eting.act.view.PlanetView;
 import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StoryService;
+import com.gif.eting.util.Util;
 import com.gif.eting.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -53,7 +52,17 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	private TextView mainToday;
 	private TextView mainEtingCnt;
 	private TextView mainInboxCnt;
-	private Typeface nanum;
+	private Typeface nanum = Util.nanum;
+	
+
+	//스크린크기
+	private DisplayMetrics metrics;
+	private 	int width;
+	private int height;
+	
+	//기타 전역변수
+	private StoryService svc;
+	private InboxService is;
 
 	/**
 	 * Factory method for this fragment class. Constructs a new fragment for the
@@ -100,19 +109,22 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 * 애니메이션
 		 */
 		FrameLayout fr = (FrameLayout) rootView.findViewById(R.id.main_frame);
+		
 		fr.addView(new PlanetView(getActivity())); // 메인동그라미
+		
 		fr.bringToFront();
 		
 		
 		
 		//스크린크기
-		DisplayMetrics metrics = getResources().getDisplayMetrics();
-		int width = metrics.widthPixels;
-		int height = metrics.heightPixels;
+		metrics = getResources().getDisplayMetrics();
+		width = metrics.widthPixels;
+		height = metrics.heightPixels;
 		
 		/**
 		 * 로고이미지
 		 */
+		
 		fr.addView(new EtingLogoView(getActivity())); // 메인동그라미
 		
 		/**
@@ -194,6 +206,51 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
   		 * 다시그리기
   		 */
   		rootView.refreshDrawableState();
+		
+		/**
+		 * gcm test
+		 */
+		int gcmChk = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity().getApplicationContext());
+		ConnectionResult cr = new ConnectionResult(gcmChk, null);
+		System.out.println(cr.toString());
+		
+
+		/**
+		 * 내 이야기개수 설정
+		 */
+		mainEtingCnt =  (TextView) rootView.findViewById(R.id.main_eting_cnt);
+		mainEtingCnt.setTypeface(nanum);
+		mainEtingCnt.setPaintFlags(mainEtingCnt.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+		svc = new StoryService(getActivity());
+		
+		//위치조정
+		int cntX = width*10/100;
+		int cntY = height*74/100;	
+		FrameLayout.LayoutParams mainEtingParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
+		mainEtingParams.leftMargin = cntX; //Your X coordinate
+		mainEtingParams.topMargin = cntY; //Your Y coordinate
+		mainEtingParams.gravity = Gravity.LEFT | Gravity.TOP;
+		mainEtingCnt.setLayoutParams(mainEtingParams);
+		
+
+		/**
+		 * 받은편지함 개수 설정
+		 */
+		Drawable dr = getActivity().getResources().getDrawable(R.drawable.spaceship);
+		mainInboxCnt =  (TextView) rootView.findViewById(R.id.main_inbox_cnt);
+		mainInboxCnt.setTypeface(nanum, Typeface.BOLD);
+		is = new InboxService(getActivity());
+		mainInboxCnt.setBackgroundResource(R.drawable.spaceship);
+		mainInboxCnt.setGravity(Gravity.CENTER);
+		
+		//위치조정
+		int inboxX = width*76/100 - dr.getIntrinsicWidth()/2;
+		int inboxY = height*13/100 - dr.getIntrinsicHeight()/2;	
+		FrameLayout.LayoutParams mainInboxParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
+		mainInboxParams.leftMargin = inboxX; //Your X coordinate
+		mainInboxParams.topMargin = inboxY; //Your Y coordinate
+		mainInboxParams.gravity = Gravity.LEFT | Gravity.TOP;
+		mainInboxCnt.setLayoutParams(mainInboxParams);
   		
         return rootView;
     }
@@ -208,13 +265,6 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 * 받은편지함 관련 정보 설정(개수, 우주선)
 		 */
 		setInboxCnt();
-		
-		/**
-		 * gcm test
-		 */
-		int gcmChk = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity().getApplicationContext());
-		ConnectionResult cr = new ConnectionResult(gcmChk, null);
-		System.out.println(cr.toString());
 	}
 
 	/**
@@ -259,100 +309,28 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	 * 받은편지함 관련 정보 설정(개수, 우주선)
 	 */
 	public void setInboxCnt(){
-		//스크린크기
-		DisplayMetrics metrics = getResources().getDisplayMetrics();
-		int width = metrics.widthPixels;
-		int height = metrics.heightPixels;
-		
-//		Typeface boldtYoon = Typeface.createFromAsset(this.getAssets(), "fonts/yoon530_TT.ttf");
-		
-		
 		/**
 		 * 내 이야기개수 설정
 		 */
-//		etingTextView = (TextView) getView().findViewById(R.id.eting_textview);
-		mainEtingCnt =  (TextView) getView().findViewById(R.id.main_eting_cnt);
-		mainEtingCnt.setTypeface(nanum);
-//		etingTextView.setTypeface(nanum);
-		mainEtingCnt.setPaintFlags(mainEtingCnt.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
-		StoryService svc = new StoryService(getActivity());
 		int storyCnt = svc.getStoryCnt();
 		mainEtingCnt.setText(String.valueOf(storyCnt) + "  eting");
-		
-		Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
-		mainEtingCnt.setTypeface(face);
-				
-		//위치조정
-		int cntX = width*10/100;
-		int cntY = height*74/100;	
-		FrameLayout.LayoutParams mainEtingParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
-		mainEtingParams.leftMargin = cntX; //Your X coordinate
-		mainEtingParams.topMargin = cntY; //Your Y coordinate
-		mainEtingParams.gravity = Gravity.LEFT | Gravity.TOP;
-		mainEtingCnt.setLayoutParams(mainEtingParams);
 		mainEtingCnt.bringToFront();
-
-		/**
-		 * 받은편지가 있으면 우주선표시
-		 */
-		/*
-		Drawable dr = getActivity().getResources().getDrawable(R.drawable.spaceship);
-		ImageView mainUfo = (ImageView) getView().findViewById(R.id.main_ufo);
 		
-		
-		//위치조정
-		int ufoX = width*76/100 - dr.getIntrinsicWidth()/2;
-		int ufoY = height*13/100 - dr.getIntrinsicHeight()/2;
-		
-		FrameLayout.LayoutParams ufoParams 
-		= new FrameLayout.LayoutParams(dr.getIntrinsicWidth(),dr.getIntrinsicHeight());
-		ufoParams.leftMargin = ufoX; //Your X coordinate
-		ufoParams.topMargin = ufoY; //Your Y coordinate
-		ufoParams.gravity = Gravity.LEFT | Gravity.TOP;
-		mainUfo.setLayoutParams(ufoParams);
-		*/
 		/**
 		 * 받은편지함 개수 설정
 		 */
-		Drawable dr = getActivity().getResources().getDrawable(R.drawable.spaceship);
-		mainInboxCnt =  (TextView) getView().findViewById(R.id.main_inbox_cnt);
-		mainInboxCnt.setTypeface(nanum, Typeface.BOLD);
-		InboxService is = new InboxService(getActivity());
 		int inboxCnt = is.getInboxCnt();
-		mainInboxCnt.setText(String.valueOf(inboxCnt));
-		mainInboxCnt.setBackgroundResource(R.drawable.spaceship);
-		mainInboxCnt.setGravity(Gravity.CENTER);
+		mainInboxCnt.setText(String.valueOf(inboxCnt));		
 		
-		RotateAnimation animation = new RotateAnimation(0.0f, 30.0f,
-		Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-		animation.setDuration(0);
-		animation.setFillAfter(true);
-		mainInboxCnt.startAnimation(animation );
-
-				
-		
-		//위치조정
-		int inboxX = width*76/100 - dr.getIntrinsicWidth()/2;
-		int inboxY = height*13/100 - dr.getIntrinsicHeight()/2;	
-		FrameLayout.LayoutParams mainInboxParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)
-		mainInboxParams.leftMargin = inboxX; //Your X coordinate
-		mainInboxParams.topMargin = inboxY; //Your Y coordinate
-		mainInboxParams.gravity = Gravity.LEFT | Gravity.TOP;
-		mainInboxCnt.setLayoutParams(mainInboxParams);
-		
-		
-		if(inboxCnt>0){
-			//mainUfo.setVisibility(View.VISIBLE);
-			//mainUfo.bringToFront();
+		/**
+		 * 받은편지함 처리
+		 */
+		if(inboxCnt>0){			
+			Animation ani = AnimationUtils.loadAnimation(getActivity(), R.anim.main_ufo);
+			mainInboxCnt.startAnimation(ani);
 			mainInboxCnt.setVisibility(View.VISIBLE);
 			mainInboxCnt.bringToFront();
-			Animation ani;
-			ani = AnimationUtils.loadAnimation(getActivity(), R.anim.main_ufo);
-			mainInboxCnt.startAnimation(ani);
-			//mainInboxCnt.startAnimation(ani);
 		}else{
-			//mainUfo.clearAnimation();
-			//mainUfo.setVisibility(View.GONE);
 			mainInboxCnt.clearAnimation();
 			mainInboxCnt.setVisibility(View.GONE);
 		}

@@ -18,8 +18,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.gif.eting.act.view.StampView;
@@ -29,6 +27,7 @@ import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StampService;
 import com.gif.eting.svc.task.SendStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
+import com.gif.eting.util.Util;
 import com.gif.eting.R;
 
 /**
@@ -68,7 +67,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 	 */
 	private String sender;
 	
-	private Typeface nanum;
+	private Typeface nanum = Util.nanum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +80,6 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		getWindow().setAttributes(layoutParams);
 
 		setContentView(R.layout.read_inbox_popup);
-		
-		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
 		
 		/**
 		 * 짧은이야기 적는 부분

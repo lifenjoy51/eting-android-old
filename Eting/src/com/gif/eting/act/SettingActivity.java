@@ -15,9 +15,10 @@ import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gif.eting.R;
 import com.gif.eting.dao.SettingDAO;
 import com.gif.eting.dto.SettingDTO;
+import com.gif.eting.util.Util;
+import com.gif.eting.R;
 
 public class SettingActivity extends Activity implements OnClickListener {
 
@@ -27,7 +28,7 @@ public class SettingActivity extends Activity implements OnClickListener {
 	private ImageView credit_img_btn;
 	private ImageView tutorialBtn;
 	private TextView setting_textView;
-	private Typeface nanum;
+	private Typeface nanum = Util.nanum;
 	private SettingDAO settingDao;
 
 	// private Uri fileUri;
@@ -62,7 +63,6 @@ public class SettingActivity extends Activity implements OnClickListener {
     	}
 
 		// 글꼴
-		nanum = Typeface.createFromAsset(getAssets(), "fonts/NanumGothic.ttf");
 		setting_textView.setTypeface(nanum);
 		setting_textView.setPaintFlags(setting_textView.getPaintFlags()
 				| Paint.FAKE_BOLD_TEXT_FLAG);

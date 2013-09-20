@@ -31,6 +31,7 @@ import com.gif.eting.act.ReadMyStoryActivity;
 import com.gif.eting.act.view.MylistAdapter;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
+import com.gif.eting.util.Util;
 
 /**
  * 내 이야기 목록
@@ -41,7 +42,7 @@ import com.gif.eting.svc.StoryService;
 public class MyStoryListFragment  extends SherlockFragment{
 	private ViewPager mPager;
 	
-	private Typeface nanum;
+	private Typeface nanum = Util.nanum;
 	
 	private ViewGroup rootView;
 	
@@ -75,7 +76,7 @@ public class MyStoryListFragment  extends SherlockFragment{
         // Inflate the layout containing a title and body text.
         rootView = (ViewGroup) inflater
                 .inflate(R.layout.mystory_list, container, false);
-        nanum = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
+        nanum = Util.nanum;
 
         return rootView;
 	}

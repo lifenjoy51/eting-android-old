@@ -57,7 +57,7 @@ public class PlanetView extends View {
 	private void setAnimationEvent(Context context, Animation an) {
 
 		
-		Drawable dr = context.getResources().getDrawable(R.drawable.main_planet);
+		Drawable dr = Util.planetDrawable;
 		
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;

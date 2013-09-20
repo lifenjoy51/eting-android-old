@@ -13,13 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gif.eting.dto.StoryDTO;
+import com.gif.eting.util.Util;
 import com.gif.eting.R;
 
 public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 
 	private List<StoryDTO> items;
 	private Context context;
-	private Typeface nanum;
+	private Typeface nanum = Util.nanum;
 	private LayoutInflater vi;
 
 	public MylistAdapter(Context context, int textViewResourceId,
@@ -32,7 +33,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		nanum = Typeface.createFromAsset(getContext().getAssets(), "fonts/NanumGothic.ttf");
+		nanum = Util.nanum;
 		
 		/**
 		 * 내 이야기

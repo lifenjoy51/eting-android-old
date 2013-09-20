@@ -18,13 +18,14 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.gif.eting.R;
 import com.gif.eting.act.view.UfoView;
 import com.gif.eting.svc.PasswordService;
 import com.gif.eting.svc.task.CheckStampTask;
 import com.gif.eting.svc.task.CheckStampedStoryTask;
 import com.gif.eting.svc.task.RegistrationTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
+import com.gif.eting.util.Util;
+import com.gif.eting.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -71,6 +72,11 @@ public class IntroActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.intro);
 		context = getApplicationContext();
+		
+		/**
+		 * Util클래스에 설정값 초기화
+		 */
+		Util.init(context);
 
 		FrameLayout fr = (FrameLayout) findViewById(R.id.intro_layout);
 		introBg1 = (ImageView) findViewById(R.id.intro_bg1);
