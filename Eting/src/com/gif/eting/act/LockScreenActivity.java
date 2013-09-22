@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.gif.eting.act.IntroActivity;
 
 import com.gif.eting.svc.PasswordService;
+import com.gif.eting.util.Util;
 import com.gif.eting.R;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -46,6 +47,7 @@ public class LockScreenActivity extends Activity implements OnClickListener  {
 		
 		// 암호입력필드
 		EditText et = (EditText) findViewById(R.id.lockScreenPassword);
+		et.setTypeface(Util.nanum);
 		lockScreenButton = (ImageView) findViewById(R.id.lockScreenButton);
 		pwd_letter = (ImageView) findViewById(R.id.pwd_letter);
 		pwd_bg2 = (ImageView) findViewById(R.id.pwd_bg2);

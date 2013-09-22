@@ -46,6 +46,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/inbox_stamp_scroll_area"
+            android:background="@android:color/white"
         android:layout_below="@+id/popup_date" >
 
         <TextView

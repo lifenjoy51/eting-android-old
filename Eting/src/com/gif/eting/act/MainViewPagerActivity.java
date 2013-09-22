@@ -25,6 +25,7 @@ import com.gif.eting.act.view.Cloud1View;
 import com.gif.eting.act.view.Cloud2View;
 import com.gif.eting.act.view.Cloud3View;
 import com.gif.eting.act.view.Cloud4View;
+import com.gif.eting.util.Util;
 import com.gif.eting.R;
 
 /**
@@ -55,6 +56,7 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager);
         
+        Util.init(getApplicationContext());
 
 		FrameLayout fr = (FrameLayout) findViewById(R.id.mainviewpager_frame);
 		fr.addView(new Cloud1View(this)); // 구름애니메이션
@@ -62,9 +64,9 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 		fr.addView(new Cloud3View(this)); // 구름애니메이션
 		fr.addView(new Cloud4View(this)); // 구름애니메이션
 
-        fr.setAnimationCacheEnabled(true);
+        fr.setAnimationCacheEnabled(true);/*
         fr.setDrawingCacheEnabled(true);
-        
+        */
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.bringToFront();

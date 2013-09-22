@@ -69,6 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/write_bg_bottom"
             android:background="@android:color/white"
+            android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp" >
@@ -77,8 +78,10 @@
                 android:id="@+id/send_story_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@drawable/write_btn_selector"
                 android:contentDescription="@string/sendstorybutton" />
+
         </LinearLayout>
 
         <EditText

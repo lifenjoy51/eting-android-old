@@ -39,13 +39,10 @@ import com.gif.eting.R;
 public class WriteMyStoryFragment extends SherlockFragment implements
 		OnClickListener {
 	private ViewPager mPager;
-	private TextView send_textview;
 	private TextView tv;
 	private Typeface nanum = Util.nanum;
 	private Context context;
 	private ViewGroup rootView;
-	private Handler handle = new Handler();
-	private Runnable mMyTask;
 	private ViewGroup writeContentArea;
 	private UfoWritePageView ufo;
 
@@ -76,6 +73,8 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		// Inflate the layout containing a title and body text.
 		rootView = (ViewGroup) inflater.inflate(R.layout.write_story,
 				container, false);
+		
+		rootView.bringToFront();
 
 		context = getActivity();
 		
@@ -178,12 +177,10 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		 * getSherlockActivity(). Context.
 		 */
 		new SendStoryTask(new AfterSendStoryTask()).execute(content, getSherlockActivity());
-		onDestroy();
 	}
 
 	public void onDestroy() {
 		Log.i("test", "onDstory()");
-		handle.removeCallbacks(mMyTask);
 		super.onDestroy();
 	}
 
