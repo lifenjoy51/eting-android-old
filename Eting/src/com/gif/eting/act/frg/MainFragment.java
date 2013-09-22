@@ -145,15 +145,6 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		height = metrics.heightPixels;
 
 		/**
-<<<<<<< HEAD
-=======
-		 * 로고이미지
-		 */
-
-		fr.addView(new EtingLogoView(getActivity())); // 메인동그라미
-
-		/**
->>>>>>> be5e867e011e734dc9f2172be32eefaa362dbf0e
 		 * 현재날짜
 		 */
 		mainToday = (TextView) rootView.findViewById(R.id.main_today);
