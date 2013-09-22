@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/alram_off" />
+                android:src="@drawable/alarm_on" />
 
             <ImageView
                 android:id="@+id/password_img_btn"

@@ -35,7 +35,7 @@ import com.gif.eting.util.Util;
  * 메인 뷰페이져
  * 
  * @author lifenjoy51
- *
+ * 
  */
 public class MainViewPagerActivity extends SherlockFragmentActivity {
     /**
@@ -59,6 +59,7 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
      */
     private FrameLayout fr;
     private Context context;
+	private PasswordResetActivity aActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,80 +87,81 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 						fr.addView(new Cloud3View(context),0); // 구름애니메이션
 						fr.addView(new Cloud4View(context),0); // 구름애니메이션
 
+
 					}
 				});
 			}
 		})).start();
 		
-        fr.setAnimationCacheEnabled(true);/*
-        fr.setDrawingCacheEnabled(true);
-        */
-        // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.bringToFront();
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-        mPager.setCurrentItem(1);		//초기페이지설정
-        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-            	//페이지 변경됐을때 이벤트처리
-    			Fragment fragment = ((ScreenSlidePagerAdapter) mPagerAdapter)
-    					.getFragment(position);
+		fr.setAnimationCacheEnabled(true);/*
+										 * fr.setDrawingCacheEnabled(true);
+										 */
+		// Instantiate a ViewPager and a PagerAdapter.
+		mPager = (ViewPager) findViewById(R.id.pager);
+		mPager.bringToFront();
+		mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+		mPager.setAdapter(mPagerAdapter);
+		mPager.setCurrentItem(1); // 초기페이지설정
+		mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+			@Override
+			public void onPageSelected(int position) {
+				// 페이지 변경됐을때 이벤트처리
+				Fragment fragment = ((ScreenSlidePagerAdapter) mPagerAdapter)
+						.getFragment(position);
 
-    			/**
-    			 * 프래그먼트에 따른 조건분기
-    			 */
-    			if (fragment instanceof MainFragment) {
-    				((MainFragment) fragment).setInboxCnt();
-    			}
-            	
-            }
-        });
+				/**
+				 * 프래그먼트에 따른 조건분기
+				 */
+				if (fragment instanceof MainFragment) {
+					((MainFragment) fragment).setInboxCnt();
+				}
+
+			}
+		});
 		
 		/**
-		 * 시간에따라 배경을 바꾼다 
+		 * 시간에따라 배경을 바꾼다
 		 */
 		SimpleDateFormat sdf = new SimpleDateFormat("HH", Locale.KOREA);
 		String thisHourStr = sdf.format(new Date());
 		int thisHour = Integer.parseInt(thisHourStr);
 		Log.i("currunt hour", thisHourStr);
-		
-		if(thisHour<6 ){
-			fr.setBackgroundResource(R.drawable.bg_4);	//파랑
-		}else if(thisHour<12 ){
-			fr.setBackgroundResource(R.drawable.bg_5);	//보라
-		}else if(thisHour<24 ){
-			fr.setBackgroundResource(R.drawable.bg_1);	//초록
-		}else{
-			fr.setBackgroundResource(R.drawable.bg_4);	//파랑
+
+		if (thisHour < 6) {
+			fr.setBackgroundResource(R.drawable.bg_4); // 파랑
+		} else if (thisHour < 12) {
+			fr.setBackgroundResource(R.drawable.bg_5); // 보라
+		} else if (thisHour < 24) {
+			fr.setBackgroundResource(R.drawable.bg_1); // 초록
+		} else {
+			fr.setBackgroundResource(R.drawable.bg_4); // 파랑
 		}
-        
+
 		/**
 		 * GCM으로 받은경우 페이지이동
 		 */
-        Intent intent = getIntent();
-		boolean isGcm = intent.getBooleanExtra("GCM", false);	//GCM여부
-		if(isGcm){
+		Intent intent = getIntent();
+		boolean isGcm = intent.getBooleanExtra("GCM", false); // GCM여부
+		if (isGcm) {
 			String storyId = intent.getStringExtra("storyId");
-			//내목록화면으로 이동
+			// 내목록화면으로 이동
 			setPage(0);
-			Fragment fragment = ((ScreenSlidePagerAdapter) mPagerAdapter).getItem(0);
-			if(fragment != null){
+			Fragment fragment = ((ScreenSlidePagerAdapter) mPagerAdapter)
+					.getItem(0);
+			if (fragment != null) {
 				if (fragment instanceof MyStoryListFragment) {
-					 ((MyStoryListFragment)fragment).readMyStoryPopup(this, storyId);
-				 }
+					((MyStoryListFragment) fragment).readMyStoryPopup(this,
+							storyId);
+				}
 			}
 		}
-		
-    }
-    
-    
-    
-    @Override
+
+	}
+
+	@Override
 	protected void onPause() {
 		super.onPause();
-		
+
 	}
 
 	@Override
@@ -168,40 +170,35 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 		super.onResume();
 	}
 
-
+	/**
+	 * 페이지 변경
+	 * 
+	 * @param position
+	 */
+	public void setPage(int position) {
+		mPager.setCurrentItem(position);
+	}
 
 	/**
-     * 페이지 변경
-     * 
-     * @param position
-     */
-    public void setPage(int position){
-    	mPager.setCurrentItem(position);
-    }
+	 * A simple pager adapter
+	 */
+	private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+		SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
-
-    /**
-     * A simple pager adapter
-     */
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-    	SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
-
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
+		public ScreenSlidePagerAdapter(FragmentManager fm) {
+			super(fm);
 		}
 
-        /**
-         * 페이지마다 Fragment를 반환함
-         * 0 = 내 이야기 목록
-         * 1 = 메인페이지
-         * 2 = 내 이야기 쓰기
-         */
+		/**
+		 * 페이지마다 Fragment를 반환함 0 = 내 이야기 목록 1 = 메인페이지 2 = 내 이야기 쓰기
+		 */
 		@Override
 		public Fragment getItem(int position) {
 			switch (position) {
-			
+
 			case 0:
-				MyStoryListFragment myStoryList = MyStoryListFragment.create(position);
+				MyStoryListFragment myStoryList = MyStoryListFragment
+						.create(position);
 				myStoryList.setViewPager(mPager);
 				return myStoryList;
 
@@ -211,40 +208,44 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 				return main;
 
 			case 2:
-				WriteMyStoryFragment writeMyStory = WriteMyStoryFragment.create(position);
+				WriteMyStoryFragment writeMyStory = WriteMyStoryFragment
+						.create(position);
 				writeMyStory.setViewPager(mPager);
 				return writeMyStory;
-				
+
 			default:
 				return MainFragment.create();
-				
+
 			}
 		}
 
 		/**
 		 * 전체 페이지개수 반환
 		 */
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
-        
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            Fragment fragment = (Fragment) super.instantiateItem(container, position);
-            registeredFragments.put(position, fragment);
-            return fragment;
-        }
-        
-        public Fragment getFragment(int position) {
-            return registeredFragments.get(position);
-        }
+		@Override
+		public int getCount() {
+			return NUM_PAGES;
+		}
 
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            registeredFragments.remove(position);
-            super.destroyItem(container, position, object);
-        }
+		@Override
+		public Object instantiateItem(ViewGroup container, int position) {
+			Fragment fragment = (Fragment) super.instantiateItem(container,
+					position);
+			registeredFragments.put(position, fragment);
+			return fragment;
+		}
+
+		public Fragment getFragment(int position) {
+			return registeredFragments.get(position);
+		}
+
+		@Override
+		public void destroyItem(ViewGroup container, int position, Object object) {
+			registeredFragments.remove(position);
+			aActivity.finish();
+			super.destroyItem(container, position, object);
+			aActivity.finish();
+		}
 	}
 
 	/**
@@ -258,53 +259,24 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 			int curItem = mPager.getCurrentItem();
 			Fragment fragment = ((ScreenSlidePagerAdapter) mPagerAdapter)
 					.getFragment(curItem);
-
 			/**
 			 * 프래그먼트에 따른 조건분기
 			 */
 			if (fragment instanceof WriteMyStoryFragment) {
-				return ((WriteMyStoryFragment) fragment).onKeyDown(keyCode, event);
+				return ((WriteMyStoryFragment) fragment).onKeyDown(keyCode,
+						event);
 			} else if (fragment instanceof MyStoryListFragment) {
-				return ((MyStoryListFragment) fragment).onKeyDown(keyCode, event);
+				return ((MyStoryListFragment) fragment).onKeyDown(keyCode,
+						event);
 			} else if (fragment instanceof MainFragment) {
 				return ((MainFragment) fragment).onKeyDown(keyCode, event);
 			} else {
 				return super.onKeyDown(keyCode, event);
 			}
+			
 		} else {
 			return super.onKeyDown(keyCode, event);
 		}
-	}
-	
-	public void test(){
-
-	    
-	    final Handler myHandler = new Handler(){
-	    	@Override
-	    public void handleMessage(Message msg) {
-	    		updateUI((String)msg.obj);
-	    }
-	    	
-	    };
-
-	    (new Thread(new Runnable() {
-	    	
-	    	@Override
-	    	public void run() {
-	    		Message msg = myHandler.obtainMessage();
-	    		
-	    		msg.obj = doLongOperation();
-	    		
-	    		myHandler.sendMessage(msg);
-	    	}
-	    })).start();
-	}
-	
-	public void updateUI(Object obj){
 		
-	}
-	
-	public Object doLongOperation(){
-		return null;
 	}
 }

@@ -57,9 +57,9 @@ public class SettingActivity extends Activity implements OnClickListener {
     	
     	//알람설정 off면 이미지 교체
     	if(alarm!=null){
-    		alarm_img_btn.setImageResource(R.drawable.alram_off);
+    		alarm_img_btn.setImageResource(R.drawable.alarm_off);
     	}else{
-    		alarm_img_btn.setImageResource(R.drawable.alram_on);
+    		alarm_img_btn.setImageResource(R.drawable.alarm_on);
     	}
 
 		// 글꼴
@@ -183,12 +183,12 @@ public class SettingActivity extends Activity implements OnClickListener {
 		if (view.getId() == R.id.alarm_img_btn) {
 			Drawable tempImg = alarm_img_btn.getDrawable();
 			Drawable tempRes = SettingActivity.this.getResources().getDrawable(
-					R.drawable.alram_on);
+					R.drawable.alarm_on);
 			Bitmap tmpBitmap = ((BitmapDrawable) tempImg).getBitmap();
 			Bitmap tmpBitmapRes = ((BitmapDrawable) tempRes).getBitmap();
 
 			if (tmpBitmap.equals(tmpBitmapRes)) {
-				alarm_img_btn.setImageResource(R.drawable.alram_off);
+				alarm_img_btn.setImageResource(R.drawable.alarm_off);
 
 				// 로직 수행
 				SettingDTO setting = new SettingDTO();
@@ -199,7 +199,7 @@ public class SettingActivity extends Activity implements OnClickListener {
 				settingDao.inssetting(setting);
 				settingDao.close();				
 			} else {
-				alarm_img_btn.setImageResource(R.drawable.alram_on);
+				alarm_img_btn.setImageResource(R.drawable.alarm_on);
 
 				// 로직 수행
 				settingDao.open();

@@ -81,7 +81,7 @@
         
         <!-- 비밀번호관리 -->
         <activity
-            android:name="com.gif.eting.act.PasswordManagementActivity"
+            android:name="com.gif.eting.act.PasswordResetActivity"
             android:screenOrientation="portrait" >
         </activity>
         
@@ -117,6 +117,9 @@
 
         <service android:name="com.gif.eting.svc.gcm.GcmIntentService" />
         <activity android:name="com.gif.eting.act.TutorialActivity"></activity>
+        <activity android:name="com.gif.eting.act.PasswordInitActivity"></activity>
+        <activity android:name="com.gif.eting.act.PasswordManagementActivity"
+            ></activity>
         
 </application>
 
