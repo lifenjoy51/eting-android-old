@@ -56,7 +56,6 @@ public class UfoView extends View {
 	 */
 	private void setAnimationEvent(Context context, Animation an){
 
-		System.out.println("ufoAnimation");
 		Drawable dr = context.getResources().getDrawable(
 				R.drawable.intro_ufo);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
@@ -84,11 +83,9 @@ public class UfoView extends View {
 		
 		//위아래로 왔다갔다하게하기
 		if(chk){
-			System.out.println("chk"+chk);
 			an = new TranslateAnimation(enPtX, stPtX, enPtY, stPtY);
 			chk= false;
 		}else{
-			System.out.println("chk"+chk);
 			an = new TranslateAnimation(stPtX, enPtX, stPtY, enPtY);					
 			chk= true;
 		}

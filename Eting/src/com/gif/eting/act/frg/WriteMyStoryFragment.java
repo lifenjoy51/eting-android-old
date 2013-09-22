@@ -7,6 +7,7 @@ import java.util.Locale;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -45,6 +46,18 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 	private ViewGroup rootView;
 	private ViewGroup writeContentArea;
 	private UfoWritePageView ufo;
+	/*
+	 * sendingFlag
+	 * 전송중이면 true
+	 * 전송중이 아니면 false
+	 */
+	private boolean sendingFlag = false;
+	/*
+	 * sendingCount
+	 * 애니메이션이 끝나면 +1
+	 * 이야기전송이 성공적으로 끝나면 +1
+	 */
+	private int sendingCount = 0;
 
 	/**
 	 * Factory method for this fragment class. Constructs a new fragment for the
@@ -137,7 +150,9 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 
 			// 문제가 없으면 저장시작
 			if (chk) {
-				sendAndSaveStory();
+				if(!sendingFlag){
+					sendAndSaveStory();
+				}
 			} else {
 				// 문제있다고 알람
 				Toast.makeText(getActivity(), R.string.write_story_validate,
@@ -152,6 +167,9 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 	 * 작성한 이야기를 서버에 전송하고 자신의 폰에 저장한다.
 	 */
 	private void sendAndSaveStory() {
+		//전송이 시작되면 플래그값을 바꾼다.
+		sendingFlag = true;
+		
 		EditText et = (EditText) getView().findViewById(R.id.story_content);
 		final String content = et.getText().toString(); // 이야기 내용
 		
@@ -195,8 +213,32 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 			Log.i("onTaskComplete", result);
 			
 			/**
-			 * 여기엔 뭐하지??
+			 * 에러처리
 			 */
+			if("HttpUtil_Error".equals(result)){
+				Toast toast = Toast.makeText(getActivity(), "전송중에 문제가 발생했습니다.",
+						Toast.LENGTH_LONG);
+				toast.show();
+				
+				//에러났을 때  초기화
+				resetSendingStory();
+				
+			} else if("UnknownHostException".equals(result)){
+				Toast toast = Toast.makeText(getActivity(), "인터넷에 연결할 수 없습니다.",
+						Toast.LENGTH_LONG);
+				toast.show();
+				
+				//에러났을 때 초기화
+				resetSendingStory();
+				
+			} else if ("Success".equals(result)){
+				//정상으로 전송되었을 때.	
+				sendingCount++;
+				completeSendingStory();
+				
+			}else{
+				//???
+			}
 		}
 	}
 
@@ -231,6 +273,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 
 		@Override
 		public void onAnimationEnd(Animation an) {
+			
 			/**
 			 * 페이드아웃이 끝나면 ufo를 나오게 한다.
 			 */
@@ -247,6 +290,8 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 
 		@Override
 		public void onAnimationStart(Animation arg0) {
+			//숨기기
+			writeContentArea.setVisibility(View.GONE);
 
 		}
 	}
@@ -258,44 +303,77 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 			AsyncTaskCompleteListener<String> {
 
 		@Override
-		public void onTaskComplete(String result) {
-
-			/**
-			 * 전송완료 메세지
-			 */
-			Toast toast = Toast.makeText(getActivity(), "이야기가 전송되었습니다",
-					Toast.LENGTH_SHORT);
-			toast.show();
-			
-			/**
-			 * 쓰기 화면 원상복구
-			 */
-			Animation sa = new AlphaAnimation(0.0f, 1.0f);
-			sa.setDuration(0);
-			sa.setRepeatCount(0);
-			sa.setFillAfter(true);
-			sa.setFillEnabled(true);
-			writeContentArea.startAnimation(sa);
-		
-			System.out.println("animation end!!!");
-			/**
-			 * UFO제거하고
-			 */
-			rootView.removeView(ufo);
-
-			/**
-			 * 쓰기화면 초기화
-			 */
-			EditText et = (EditText) getView().findViewById(R.id.story_content);
-			et.setText("");
-
-			/**
-			 * 메인화면으로 이동
-			 */
-			if (mPager != null) {
-				mPager.setCurrentItem(1);
-			}
+		public void onTaskComplete(String result) {			
+			sendingCount++;
+			completeSendingStory();
 		}
+	}
+	
+	/**
+	 * 전송완료 로직
+	 */
+	private void completeSendingStory(){
+		
+		System.out.println("completeSendingStory");
+		
+		/**
+		 * 애니메이션이 모두 끝나고 && 전송이 제대로 이루어지면 진행, 아니면 리턴
+		 */
+		if(	sendingCount != 2){			
+			return;
+		}
+		
+		//resetSendingStory
+		resetSendingStory();
+
+		/**
+		 * 전송완료 메세지
+		 */
+		Toast toast = Toast.makeText(getActivity(), "이야기가 전송되었습니다",
+				Toast.LENGTH_SHORT);
+		toast.show();
+
+		/**
+		 * 쓰기화면 초기화
+		 */
+		EditText et = (EditText) getView().findViewById(R.id.story_content);
+		et.setText("");
+
+		/**
+		 * 메인화면으로 이동
+		 */
+		if (mPager != null) {
+			mPager.setCurrentItem(1);
+		}
+		
+	}
+	
+	/**
+	 * 전송중 에러났을때 초기화로직
+	 */
+	private void resetSendingStory(){
+		//전송중 플래그 초기화
+		sendingFlag = false;
+		
+		//전송상태 확인 카운트 초기화
+		sendingCount = 0;
+		
+		/**
+		 * 쓰기 화면 원상복구
+		 */
+		Animation sa = new AlphaAnimation(0.0f, 1.0f);
+		sa.setDuration(0);
+		sa.setRepeatCount(0);
+		sa.setFillAfter(true);
+		sa.setFillEnabled(true);
+		writeContentArea.startAnimation(sa);
+		writeContentArea.setVisibility(View.VISIBLE);
+		
+		/**
+		 * UFO제거하고
+		 */
+		rootView.removeView(ufo);
+		
 	}
 
 }

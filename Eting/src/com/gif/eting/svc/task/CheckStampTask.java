@@ -65,43 +65,59 @@ public class CheckStampTask extends AsyncTask<Object, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
 
-		Log.i("json response", result);	//응답확인
-		
-		StringBuffer stamps = new StringBuffer();
-		
-		try {
-			JSONObject json = new JSONObject(result);
+		Log.i("CheckStampTask json response", result);	//응답확인
 
-			if (!json.isNull("stampList")) {
-				JSONArray stampList = json.getJSONArray("stampList");
-				List<StampDTO> list = new ArrayList<StampDTO>();
-				for(int i=0; i<stampList.length(); i++){
-					JSONObject stamp = stampList.getJSONObject(i);
-					StampDTO stampDto = new StampDTO();
+		if("UnknownHostException".equals(result)){
+			
+			// 호출한 클래스 콜백
+			if (callback != null)
+				callback.onTaskComplete("UnknownHostException");
+			
+		}else if("HttpUtil_Error".equals(result)){
+			
+			// 호출한 클래스 콜백
+			if (callback != null)
+				callback.onTaskComplete("HttpUtil_Error");
+			
+		}else{		
+			StringBuffer stamps = new StringBuffer();
+			
+			try {
+				JSONObject json = new JSONObject(result);
+	
+				if (!json.isNull("stampList")) {
+					JSONArray stampList = json.getJSONArray("stampList");
+					List<StampDTO> list = new ArrayList<StampDTO>();
+					for(int i=0; i<stampList.length(); i++){
+						JSONObject stamp = stampList.getJSONObject(i);
+						StampDTO stampDto = new StampDTO();
+						
+						//저장
+						stampDto.setStamp_id(stamp.getString("stamp_id"));
+						stampDto.setStamp_name(stamp.getString("stamp_name"));
+						stampDto.setStamp_type(stamp.getString("stamp_type"));
+						stampDto.setStamp_order(stamp.getString("stamp_order"));
+						stampDto.setStamp_url(stamp.getString("stamp_url"));
+						
+						
+						list.add(stampDto);
+						
+						Log.i("recieved new stamp", stamp.getString("stamp_id") + stamp.getString("stamp_name"));
+					}
 					
-					//저장
-					stampDto.setStamp_id(stamp.getString("stamp_id"));
-					stampDto.setStamp_name(stamp.getString("stamp_name"));
-					stampDto.setStamp_type(stamp.getString("stamp_type"));
-					stampDto.setStamp_order(stamp.getString("stamp_order"));
-					stampDto.setStamp_url(stamp.getString("stamp_url"));
-					
-					
-					list.add(stampDto);
-					
-					Log.i("recieved new stamp", stamp.getString("stamp_id") + stamp.getString("stamp_name"));
+					StampService svc = new StampService(context);
+					svc.saveStamps(list);
 				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} finally{
 				
-				StampService svc = new StampService(context);
-				svc.saveStamps(list);
+				// 호출한 클래스 콜백
+				if (callback != null)
+					callback.onTaskComplete(stamps.toString());
+				
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
 		}
-		
-		// 호출한 클래스 콜백
-		if (callback != null)
-			callback.onTaskComplete(stamps.toString());	
 	}
 
 }

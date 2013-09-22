@@ -61,29 +61,47 @@ public class CheckStampedStoryTask extends AsyncTask<Object, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
 
-		Log.i("json response", result);	//응답확인
+		Log.i("CheckStampedStoryTask json response", result);	//응답확인
 		
-		StringBuffer stamps = new StringBuffer();
-		
-		try {
-			JSONObject json = new JSONObject(result);
+		if("UnknownHostException".equals(result)){
+			
+			// 호출한 클래스 콜백
+			if (callback != null)
+				callback.onTaskComplete("UnknownHostException");	
+			
+		}else if("HttpUtil_Error".equals(result)){
+			
+			// 호출한 클래스 콜백
+			if (callback != null)
+				callback.onTaskComplete("HttpUtil_Error");	
+			
+		}else{
+			StringBuffer stamps = new StringBuffer();
+			
+			try {
+				JSONObject json = new JSONObject(result);
 
-			if (!json.isNull("stampedStoryList")) {				
-				StoryService svc = new StoryService(context);
-				JSONArray stampedStoryList = json.getJSONArray("stampedStoryList");
-				List<String> list = new ArrayList<String>();
-				for(int i=0; i<stampedStoryList.length(); i++){
-					list.add(stampedStoryList.getString(i));
+				if (!json.isNull("stampedStoryList")) {				
+					StoryService svc = new StoryService(context);
+					JSONArray stampedStoryList = json.getJSONArray("stampedStoryList");
+					List<String> list = new ArrayList<String>();
+					for(int i=0; i<stampedStoryList.length(); i++){
+						list.add(stampedStoryList.getString(i));
+					}
+					svc.updStoryStampYn(list);
 				}
-				svc.updStoryStampYn(list);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}finally{
+				
+				// 호출한 클래스 콜백
+				if (callback != null)
+					callback.onTaskComplete(stamps.toString());	
+				
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
+			
 		}
 		
-		// 호출한 클래스 콜백
-		if (callback != null)
-			callback.onTaskComplete(stamps.toString());	
 	}
 
 }

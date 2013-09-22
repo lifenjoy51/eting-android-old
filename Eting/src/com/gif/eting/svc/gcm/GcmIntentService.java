@@ -12,8 +12,11 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.gif.eting.R;
+import com.gif.eting.act.IntroActivity;
+import com.gif.eting.act.LockScreenActivity;
 import com.gif.eting.act.MainViewPagerActivity;
 import com.gif.eting.dao.SettingDAO;
+import com.gif.eting.svc.PasswordService;
 import com.gif.eting.svc.task.CheckStampedStoryTask;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -97,11 +100,22 @@ public class GcmIntentService extends IntentService {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Intent intent =new Intent(this, MainViewPagerActivity.class);
+        Intent intent;
+        
+        PasswordService psvc = new PasswordService(this);
+		if (psvc.isPassword()) {
+			intent = new Intent(this, LockScreenActivity.class);
+		} else {
+			intent = new Intent(this, MainViewPagerActivity.class);
+		}
+		
         intent.putExtra("GCM", true);
         intent.putExtra("storyId", storyId);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK 
+                | Intent.FLAG_ACTIVITY_CLEAR_TOP 
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0 );
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)

@@ -17,6 +17,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.gif.eting.act.view.UfoView;
 import com.gif.eting.svc.PasswordService;
@@ -121,6 +122,7 @@ public class IntroActivity extends Activity {
 
 		// Check device for Play Services APK. If check succeeds, proceed with
 		// GCM registration.
+		System.out.println("checkPlayServices() "+checkPlayServices());
 		if (checkPlayServices()) {
 			gcm = GoogleCloudMessaging.getInstance(this);
 			regid = getRegistrationId(context);
@@ -148,11 +150,7 @@ public class IntroActivity extends Activity {
 					finish();
 
 				} else {
-					cnt++;
-					if (cnt == total) {
-						moveToLockScreenActivity();
-					}
-
+					moveToLockScreenActivity();
 				}
 			}
 		}, 3000); // 3초후 이동
@@ -168,9 +166,8 @@ public class IntroActivity extends Activity {
 		@Override
 		public void onTaskComplete(String result) {
 			Log.i("AfterCheckStampTask", result);
-			cnt++;
-			if (cnt == total) {
-				moveToLockScreenActivity();
+			if("UnknownHostException".equals(result)){
+				processError();
 			}
 		}
 	}
@@ -185,9 +182,8 @@ public class IntroActivity extends Activity {
 		@Override
 		public void onTaskComplete(String result) {
 			Log.i("AfterCheckStampTask", result);
-			cnt++;
-			if (cnt == total) {
-				moveToLockScreenActivity();
+			if("UnknownHostException".equals(result)){
+				processError();
 			}
 		}
 	}
@@ -366,6 +362,17 @@ public class IntroActivity extends Activity {
 		 * 폰고유ID와 메세지를 받기위한 고유ID를 서버에 전송
 		 */
 		new RegistrationTask().execute(regid, context);
+	}
+	
+	/**
+	 * 에러처리 로직
+	 */
+	private void processError(){
+		System.out.println("processError");
+		
+		Toast toast = Toast.makeText(this, "인터넷에 연결할 수 없습니다.",
+				Toast.LENGTH_LONG);
+		toast.show();
 	}
 
 }

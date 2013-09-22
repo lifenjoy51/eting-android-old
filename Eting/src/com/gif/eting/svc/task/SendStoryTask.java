@@ -57,16 +57,24 @@ public class SendStoryTask extends AsyncTask<Object, String, String> {
 	 */
 	@Override
 	protected void onPostExecute(String result) {
+		String returnString = "Success";
+		if("HttpUtil_Error".equals(result)){
+			returnString = "HttpUtil_Error";
+		}else if("UnknownHostException".equals(result)){
+			returnString = "UnknownHostException";
+		}else{
 
-		Log.i("json response", result);	//응답 확인
+			Log.i("json response", result);	//응답 확인
 
-		// 폰DB에 저장
-		StoryService storyService = new StoryService(context);
-		storyService.saveToPhoneDB(result);
+			// 폰DB에 저장
+			StoryService storyService = new StoryService(context);
+			storyService.saveToPhoneDB(result);
+			
+		}
 		
 		// 콜백 메소드 실행
 		if (callback != null)
-			callback.onTaskComplete("");	//TODO 호출한 객체에 어떤 값을 넘겨줄것인가?? 
+			callback.onTaskComplete(returnString);	//TODO 호출한 객체에 어떤 값을 넘겨줄것인가?? 
 	}
 
 }

@@ -3,26 +3,19 @@ package com.gif.eting.act;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
-import com.gif.eting.act.IntroActivity;
 
 import com.gif.eting.svc.PasswordService;
 import com.gif.eting.util.Util;
 import com.gif.eting.R;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 /**
  * 비밀번호 화면
@@ -37,6 +30,10 @@ public class LockScreenActivity extends Activity implements OnClickListener  {
 	private ImageView pwd_bg2;
 	private Context context;
 	private double stpwd3Y;
+	
+	//GCM 관련 변수
+	private boolean isGcm;
+	private String storyId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +93,16 @@ public class LockScreenActivity extends Activity implements OnClickListener  {
 		});
 
 		lockScreenButton.setOnClickListener(this);
+		
+
+		/**
+		 * GCM으로 받은경우 페이지이동
+		 */
+        Intent intent = getIntent();
+		isGcm = intent.getBooleanExtra("GCM", false);	//GCM여부
+		if(isGcm){
+			storyId = intent.getStringExtra("storyId");			
+		}
 	}
 
 	public void onClick(View view) {
@@ -139,8 +146,10 @@ public class LockScreenActivity extends Activity implements OnClickListener  {
 
 		// 암호 성공/실패 분기처리
 		if (isValid) {
-
-			startActivity(new Intent(this, MainViewPagerActivity.class));
+			Intent intent =new Intent(this, MainViewPagerActivity.class);
+	        intent.putExtra("GCM", isGcm);
+	        intent.putExtra("storyId", storyId);
+			startActivity(intent);
 			finish(); // 뒤로가기 안먹게
 		} else {
 			// 비밀번호 틀렸을때

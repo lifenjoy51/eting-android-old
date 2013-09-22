@@ -1,11 +1,13 @@
 package com.gif.eting.util;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 /**
  * HTTP통신 유틸
@@ -49,9 +51,15 @@ public class HttpUtil  {
 			bf.close();
 
 			return sb.toString();
-		} catch (Exception e) {
+		} catch (UnknownHostException e) {
 			e.printStackTrace();
-			return e.toString();
+			return "UnknownHostException";
+		} catch (FileNotFoundException e) {
+			System.out.println("FileNotFoundException");
+			return "HttpUtil_Error";
+		}catch (Exception e) {
+			e.printStackTrace();
+			return "HttpUtil_Error";
 		}
 	}
 	

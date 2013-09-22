@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gif.eting.act.view.StampView;
 import com.gif.eting.dto.StampDTO;
@@ -68,11 +70,13 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 	private String sender;
 	
 	private Typeface nanum = Util.nanum;
+	private Context context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);		
+		context = getApplicationContext();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
 		layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
@@ -238,19 +242,38 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		 */
 		new SendStampTask(new AfterSendStampTask()).execute(String.valueOf(inboxStoryIdx), stamps, getApplicationContext(), sender);
 	}
-	
+
 	/**
 	 * SendStampTask 수행 후 실행되는 콜백
 	 */
-	private class AfterSendStampTask implements AsyncTaskCompleteListener<String>{
+	private class AfterSendStampTask implements
+			AsyncTaskCompleteListener<String> {
 		@Override
 		public void onTaskComplete(String result) {
 
 			if (progressDialog != null)
 				progressDialog.dismiss();
-			
-			finish();
-			
+
+			/**
+			 * 에러처리
+			 */
+			if ("HttpUtil_Error".equals(result)) {
+				Toast toast = Toast.makeText(context, "전송중에 문제가 발생했습니다.",
+						Toast.LENGTH_LONG);
+				toast.show();
+
+			} else if ("UnknownHostException".equals(result)) {
+				Toast toast = Toast.makeText(context, "인터넷에 연결할 수 없습니다.",
+						Toast.LENGTH_LONG);
+				toast.show();
+
+			} else if ("Success".equals(result)) {
+				// 정상으로 전송되었을 때.
+				finish();
+
+			} else {
+				// ???
+			}
 		}
 	}
 

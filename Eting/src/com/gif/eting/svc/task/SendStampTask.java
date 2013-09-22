@@ -77,20 +77,35 @@ public class SendStampTask extends AsyncTask<Object, String, String> {
 	protected void onPostExecute(String result) {
 
 		Log.i("json response", result);	//응답확인
-
-		StoryDTO inboxStory = new StoryDTO();
-		inboxStory.setIdx(Long.parseLong(storyId));
-
-		InboxDAO inboxDao = new InboxDAO(context);
 		
-		// 스탬프찍은 이야기 삭제
-		inboxDao.open();
-		inboxDao.delStory(inboxStory);
-		inboxDao.close();
-		
-		// 호출한 클래스 콜백
-		if (callback != null)
-			callback.onTaskComplete("");	//TODO 화면에 무엇을 넘길것인가?
+		if("UnknownHostException".equals(result)){
+			
+			// 호출한 클래스 콜백
+			if (callback != null)
+				callback.onTaskComplete("UnknownHostException");	
+			
+		}else if("HttpUtil_Error".equals(result)){
+			
+			// 호출한 클래스 콜백
+			if (callback != null)
+				callback.onTaskComplete("HttpUtil_Error");	
+			
+		}else{
+
+			StoryDTO inboxStory = new StoryDTO();
+			inboxStory.setIdx(Long.parseLong(storyId));
+	
+			InboxDAO inboxDao = new InboxDAO(context);
+			
+			// 스탬프찍은 이야기 삭제
+			inboxDao.open();
+			inboxDao.delStory(inboxStory);
+			inboxDao.close();
+			
+			// 호출한 클래스 콜백
+			if (callback != null)
+				callback.onTaskComplete("Success");
+		}
 	}
 
 }

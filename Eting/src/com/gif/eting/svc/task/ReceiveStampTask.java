@@ -55,33 +55,48 @@ public class ReceiveStampTask extends AsyncTask<String, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
 
-		Log.i("json response", result);	//응답확인
+		Log.i("ReceiveStampTask json response", result);	//응답확인
 		
-		List<StampDTO> list = new ArrayList<StampDTO>();
-		
-		try {
-			JSONObject json = new JSONObject(result);
-
-			if (!json.isNull("stampList")) {
-				JSONArray stampList = json.getJSONArray("stampList");
-				for(int i=0; i<stampList.length(); i++){
-					JSONObject stamp = stampList.getJSONObject(i);
-					StampDTO stampDto = new StampDTO();
-					stampDto.setStamp_id(stamp.getString("stamp_id"));
-					stampDto.setStamp_name(stamp.getString("stamp_name"));
-					stampDto.setSender(stamp.getString("sender"));
-					list.add(stampDto);
-					
-					Log.i("returned stamp", stamp.getString("stamp_id") + stamp.getString("stamp_name"));
+		if("UnknownHostException".equals(result)){
+			
+			// 호출한 클래스 콜백
+			if (callback != null)
+				callback.onTaskComplete(null);	
+			
+		}else if("HttpUtil_Error".equals(result)){
+			
+			// 호출한 클래스 콜백
+			if (callback != null)
+				callback.onTaskComplete(null);	
+			
+		}else{
+			
+			List<StampDTO> list = new ArrayList<StampDTO>();
+			
+			try {
+				JSONObject json = new JSONObject(result);
+	
+				if (!json.isNull("stampList")) {
+					JSONArray stampList = json.getJSONArray("stampList");
+					for(int i=0; i<stampList.length(); i++){
+						JSONObject stamp = stampList.getJSONObject(i);
+						StampDTO stampDto = new StampDTO();
+						stampDto.setStamp_id(stamp.getString("stamp_id"));
+						stampDto.setStamp_name(stamp.getString("stamp_name"));
+						stampDto.setSender(stamp.getString("sender"));
+						list.add(stampDto);
+						
+						Log.i("returned stamp", stamp.getString("stamp_id") + stamp.getString("stamp_name"));
+					}
 				}
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
+			
+			// 호출한 클래스 콜백
+			if (callback != null)
+				callback.onTaskComplete(list);	
 		}
-		
-		// 호출한 클래스 콜백
-		if (callback != null)
-			callback.onTaskComplete(list);	
 	}
 
 }

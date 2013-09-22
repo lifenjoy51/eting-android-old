@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -63,6 +64,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	//기타 전역변수
 	private StoryService svc;
 	private InboxService is;
+	private FrameLayout fr;
 
 	/**
 	 * Factory method for this fragment class. Constructs a new fragment for the
@@ -102,30 +104,46 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 				container, false);
 		rootView.setAnimationCacheEnabled(true);
 		rootView.setDrawingCacheEnabled(true);
-		nanum = Typeface.createFromAsset(getActivity().getAssets(), "fonts/NanumGothic.ttf");
 
 
 		/**
 		 * 애니메이션
 		 */
-		FrameLayout fr = (FrameLayout) rootView.findViewById(R.id.main_frame);
-		
-		fr.addView(new PlanetView(getActivity())); // 메인동그라미
-		
-		fr.bringToFront();
-		
-		
-		
+		fr = (FrameLayout) rootView.findViewById(R.id.main_frame);
+		final Handler myHandler = new Handler();
+
+		(new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				myHandler.post(new Runnable() {
+
+					@Override
+					public void run() {
+
+						/**
+						 * 돌아가는 동그라미 애니메이션
+						 */
+						fr.addView(new PlanetView(getActivity()));
+
+						/**
+						 * 로고이미지
+						 */
+						fr.addView(new EtingLogoView(getActivity()));
+
+						/**
+						 * 프레임 레이아웃 앞으로 보내기
+						 */
+						fr.bringToFront();
+					}
+				});
+			}
+		})).start();
+
 		//스크린크기
 		metrics = getResources().getDisplayMetrics();
 		width = metrics.widthPixels;
 		height = metrics.heightPixels;
-		
-		/**
-		 * 로고이미지
-		 */
-		
-		fr.addView(new EtingLogoView(getActivity())); // 메인동그라미
 		
 		/**
 		 * 현재날짜

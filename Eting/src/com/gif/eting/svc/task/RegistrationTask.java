@@ -48,7 +48,15 @@ public class RegistrationTask extends AsyncTask<Object, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
 
-		Log.i("json response", result);	//응답 확인
+		Log.i("RegistrationTask response", result);	//응답 확인
+
+		if("UnknownHostException".equals(result)){
+			//등록실패
+		}else if("HttpUtil_Error".equals(result)){
+			//등록실패
+		}else{
+			//등록성공
+		}
 	}
 
 }
