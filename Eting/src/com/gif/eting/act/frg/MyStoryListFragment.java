@@ -7,8 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -18,6 +18,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.FrameLayout;
@@ -26,12 +28,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.gif.eting.R;
+import com.gif.eting.act.MainViewPagerActivity;
 import com.gif.eting.act.ReadMyStoryActivity;
 import com.gif.eting.act.view.MylistAdapter;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.util.Util;
+import com.gif.eting.R;
 
 /**
  * 내 이야기 목록
@@ -40,11 +43,13 @@ import com.gif.eting.util.Util;
  *
  */
 public class MyStoryListFragment  extends SherlockFragment{
-	private ViewPager mPager;
+	private ViewPager mPager = MainViewPagerActivity.mPager;
 	
 	private Typeface nanum = Util.nanum;
 	
 	private ViewGroup rootView;
+	
+	private int lastPos = 0;
 	
 
     /**
@@ -178,9 +183,22 @@ public class MyStoryListFragment  extends SherlockFragment{
 		// 리스트뷰에 어댑터 연결
 		ListView listView = (ListView) view.findViewById(R.id.myStoryListView);
 		listView.setAdapter(m_adapter);
+		listView.setSelection(lastPos);
 		
 		// 클릭이벤트 연결
 		listView.setOnItemClickListener(this.mOnItemClickListener);
+		listView.setOnScrollListener(new OnScrollListener(){
+
+		    public void onScroll(AbsListView view, int firstVisibleItem,
+		            int visibleItemCount, int totalItemCount) { 
+		    }
+
+		    public void onScrollStateChanged(AbsListView view, int scrollState) {   
+		    	lastPos = view.getLastVisiblePosition();
+		    }
+
+		});
+
 	}
 	
     
@@ -189,7 +207,8 @@ public class MyStoryListFragment  extends SherlockFragment{
      */
     private OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
     	
-    	public void onItemClick(AdapterView<?> parentView, View clickedView,
+    	@SuppressWarnings("deprecation")
+		public void onItemClick(AdapterView<?> parentView, View clickedView,
     			int position, long id) {
 
 			try {

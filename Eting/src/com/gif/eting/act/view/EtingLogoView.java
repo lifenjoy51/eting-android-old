@@ -35,8 +35,7 @@ public class EtingLogoView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		mDrawable.draw(canvas);
-
-		invalidate();
+		invalidateDrawable(mDrawable);
 	}
 
 	/**

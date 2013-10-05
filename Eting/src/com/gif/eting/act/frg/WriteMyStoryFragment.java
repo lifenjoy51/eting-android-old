@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.gif.eting.act.MainViewPagerActivity;
 import com.gif.eting.act.view.UfoWritePageView;
 import com.gif.eting.svc.task.SendStoryTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
@@ -39,7 +40,7 @@ import com.gif.eting.R;
  */
 public class WriteMyStoryFragment extends SherlockFragment implements
 		OnClickListener {
-	private ViewPager mPager;
+	private ViewPager mPager = MainViewPagerActivity.mPager;
 	private TextView tv;
 	private Typeface nanum = Util.nanum;
 	private Context context;
@@ -292,6 +293,8 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		public void onAnimationStart(Animation arg0) {
 			//숨기기
 			writeContentArea.setVisibility(View.GONE);
+			//터치불가처리
+			writeContentArea.setFocusable(false);
 
 		}
 	}
@@ -368,6 +371,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		sa.setFillEnabled(true);
 		writeContentArea.startAnimation(sa);
 		writeContentArea.setVisibility(View.VISIBLE);
+		writeContentArea.setFocusableInTouchMode(true);
 		
 		/**
 		 * UFO제거하고

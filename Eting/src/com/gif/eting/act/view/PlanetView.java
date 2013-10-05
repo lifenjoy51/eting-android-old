@@ -26,6 +26,7 @@ import com.gif.eting.R;
 @SuppressLint("ViewConstructor")
 public class PlanetView extends View {
 	private AnimateDrawable mDrawable;
+	private long drawClock = 0;
 
 	public PlanetView(Context context) {
 		super(context);
@@ -37,15 +38,7 @@ public class PlanetView extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		synchronized (this) {
-			mDrawable.draw(canvas);
-			invalidate();
-			try {
-				this.wait(Util.fps);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		mDrawable.draw(canvas);
 	}
 
 	/**

@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -17,20 +20,22 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gif.eting.R;
 import com.gif.eting.act.view.StampView;
 import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StampService;
+import com.gif.eting.svc.task.ReportStroyTask;
 import com.gif.eting.svc.task.SendStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
 import com.gif.eting.util.Util;
-import com.gif.eting.R;
 
 /**
  * 받은편지함 읽기화면
@@ -69,8 +74,14 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 	 */
 	private String sender;
 	
+	/**
+	 * 코멘트
+	 */
+	private EditText et;
+	
 	private Typeface nanum = Util.nanum;
 	private Context context;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +99,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		/**
 		 * 짧은이야기 적는 부분
 		 */
-		EditText et = (EditText) findViewById(R.id.stamp_sender);
+		et = (EditText) findViewById(R.id.stamp_sender);
 		et.setTypeface(nanum);
 		
 		//Service초기화
@@ -119,6 +130,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 
 		//버튼이벤트 삽입
 		findViewById(R.id.inbox_confirm_btn).setOnClickListener(this);		
+		findViewById(R.id.report_btn).setOnClickListener(this);		
 		
 		/**
 		 * 스탬프입력창
@@ -184,6 +196,12 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		if(v.getId()==R.id.inbox_confirm_btn){
 			
+			if(stamps.size()==0){
+				Toast toast = Toast.makeText(context, "스티커를 선택해주세요!",
+						Toast.LENGTH_SHORT);
+				toast.show();
+				return;
+			}
 			
 			//전송상태 나타냄
 			progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.app_name), true, true);
@@ -216,6 +234,35 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
     			stamps.add(stampId);
     		}
     		
+		} else if (v.getId() == R.id.report_btn) {
+
+			// Ask the user if they want to quit
+			new AlertDialog.Builder(this)
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setTitle(R.string.report_title)
+					.setMessage(R.string.report_message)
+					.setPositiveButton(R.string.yes,
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+
+									// 전송상태 나타냄
+									progressDialog = ProgressDialog.show(
+											ReadInboxActivity.this,
+											"",
+											getResources().getString(
+													R.string.app_name), true,
+											true);
+									// 신고기능
+									reportStory();
+									// 돌아가기
+									finish();
+								}
+
+							}).setNegativeButton(R.string.no, null).show();
+
 		}
 		
 	}
@@ -227,7 +274,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		/**
 		 * 보낸이 설정
 		 */
-		EditText et = (EditText) findViewById(R.id.stamp_sender);
+		et = (EditText) findViewById(R.id.stamp_sender);
 		sender = et.getText().toString();
 		
 		/**
@@ -268,6 +315,60 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 				toast.show();
 
 			} else if ("Success".equals(result)) {
+				// 정상으로 전송되었을 때.
+				InputMethodManager imm = (InputMethodManager) context
+						.getSystemService(Service.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
+				 
+				finish();
+
+			} else {
+				// ???
+			}
+		}
+	}
+	
+	
+	/**
+	 * 이야기 신고기능
+	 * 
+	 * ReportStroyTask를 생성할때 파라미터는 ReportStroyTask가 수행되고 나서 실행될 콜백이다.
+	 * execute의 파라미터가 실제 넘겨줄 자료들.
+	 * parameter[0] = inboxStoryIdx. 받은이야기 고유번호
+	 */
+	private void reportStory(){
+		new ReportStroyTask(new AfterReportStoryTask()).execute(String.valueOf(inboxStoryIdx), getApplicationContext());
+	}
+	
+	/**
+	 * ReportStroyTask 수행 후 실행되는 콜백
+	 */
+	private class AfterReportStoryTask implements
+			AsyncTaskCompleteListener<String> {
+		@Override
+		public void onTaskComplete(String result) {
+
+			if (progressDialog != null)
+				progressDialog.dismiss();
+
+			/**
+			 * 에러처리
+			 */
+			if ("HttpUtil_Error".equals(result)) {
+				Toast toast = Toast.makeText(context, "전송중에 문제가 발생했습니다.",
+						Toast.LENGTH_LONG);
+				toast.show();
+
+			} else if ("UnknownHostException".equals(result)) {
+				Toast toast = Toast.makeText(context, "인터넷에 연결할 수 없습니다.",
+						Toast.LENGTH_LONG);
+				toast.show();
+
+			} else if ("Success".equals(result)) {
+				Toast toast = Toast.makeText(context, "신고완료.",
+						Toast.LENGTH_SHORT);
+				toast.show();
+				
 				// 정상으로 전송되었을 때.
 				finish();
 

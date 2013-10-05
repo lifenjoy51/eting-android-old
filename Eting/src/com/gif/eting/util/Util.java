@@ -17,7 +17,7 @@ public class Util {
 	// public static String serverContext = "http://192.168.123.123:8080/eting";
 	// //로컬
 	public static int mainRatio = 82;
-	public static int fps = 5;
+	public static long fps = 20;
 	public static Typeface nanum;
 	public static Drawable planetDrawable;
 

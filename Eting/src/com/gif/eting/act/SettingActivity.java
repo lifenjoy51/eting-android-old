@@ -73,12 +73,12 @@ public class SettingActivity extends Activity implements OnClickListener {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
 					password_img_btn = (ImageView) findViewById(v.getId());
 					password_img_btn
-							.setImageResource(R.drawable.changepassword_2);
+							.setImageResource(R.drawable.passward_2);
 				}
 				if (event.getAction() == MotionEvent.ACTION_MOVE) {
 					if (!v.isPressed()) {
 						password_img_btn
-								.setImageResource(R.drawable.changepassword_1);
+								.setImageResource(R.drawable.passward_1);
 						return true;
 					}
 
@@ -86,7 +86,7 @@ public class SettingActivity extends Activity implements OnClickListener {
 
 				if (event.getAction() == MotionEvent.ACTION_UP) {
 					password_img_btn
-							.setImageResource(R.drawable.changepassword_1);
+							.setImageResource(R.drawable.passward_1);
 				}
 
 				return false;
@@ -171,7 +171,7 @@ public class SettingActivity extends Activity implements OnClickListener {
 	public void onClick(View view) {
 		// 비밀번호관리 버튼 클릭시
 		if (view.getId() == R.id.password_img_btn) {
-			startActivity(new Intent(this, PasswordManagementActivity.class));
+			startActivity(new Intent(this, PasswordActivity.class));
 		}
 		// 이메일첨부 버튼 클릭시
 		if (view.getId() == R.id.email_btn) {

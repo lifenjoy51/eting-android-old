@@ -13,12 +13,14 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.gif.eting.act.MainViewPagerActivity.MyHandler;
 import com.gif.eting.act.view.UfoView;
 import com.gif.eting.svc.PasswordService;
 import com.gif.eting.svc.task.CheckStampTask;
@@ -51,6 +53,8 @@ public class IntroActivity extends Activity {
 
 	private ImageView introBg1;
 	private ImageView introBg2;
+	private static UfoView ufo;
+	
 
 	/**
 	 * Substitute you own sender ID here. This is the project number you got
@@ -96,8 +100,10 @@ public class IntroActivity extends Activity {
 		introBg1.setPadding(0, stBg1Y, 0, 0);
 		introBg2.setPadding(0, stBg2Y, 0, 0);
 
-		fr.addView(new UfoView(this)); // 움직이는 UFO 등록
-
+		ufo = new UfoView(this);
+		fr.addView(ufo); // 움직이는 UFO 등록
+		this.setRepeat();
+		
 		/**
 		 * 서버와 스탬프목록 동기화
 		 * 
@@ -213,16 +219,14 @@ public class IntroActivity extends Activity {
 	 * doesn't, display a dialog that allows users to download the APK from the
 	 * Google Play Store or enable it in the device's system settings.
 	 */
-	public static boolean checkPlayServices() {
+	public boolean checkPlayServices() {
 		int resultCode = GooglePlayServicesUtil
 				.isGooglePlayServicesAvailable(context);
 		if (resultCode != ConnectionResult.SUCCESS) {
 			if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-				GooglePlayServicesUtil.getErrorDialog(resultCode, (Activity) context,
-						PLAY_SERVICES_RESOLUTION_REQUEST).show();
+				System.out.println(GooglePlayServicesUtil.getErrorString(resultCode));
 			} else {
-				Log.i(TAG, "This device is not supported.");
-				((Activity) context).finish();
+				Log.i(TAG, "This device is not supported.");				
 			}
 			return false;
 		}
@@ -374,5 +378,30 @@ public class IntroActivity extends Activity {
 				Toast.LENGTH_LONG);
 		toast.show();
 	}
+	
+
+	/**
+	 * 애니메이션 관련 변수
+	 */
+	static Handler hdler;
+	static int delayTime = (int) Util.fps;
+
+	static class  MyHandler extends Handler {
+		public void handleMessage(Message msg) {
+			doRepeatedly();
+			hdler.sendMessageDelayed(new Message(), delayTime);
+		}
+	}
+
+	public static void doRepeatedly() {		
+		ufo.invalidate();
+	}
+
+	public void setRepeat() {
+		hdler = new MyHandler();
+		hdler.sendMessageDelayed(new Message(), delayTime);
+	}
+
+
 
 }

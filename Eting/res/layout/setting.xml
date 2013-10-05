@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/changepassword_1" />
+                android:src="@drawable/passward_1" />
 
             <ImageView
                 android:id="@+id/email_btn"

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -20,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.gif.eting.R;
 import com.gif.eting.act.frg.MainFragment;
 import com.gif.eting.act.frg.MyStoryListFragment;
 import com.gif.eting.act.frg.WriteMyStoryFragment;
@@ -29,6 +29,7 @@ import com.gif.eting.act.view.Cloud2View;
 import com.gif.eting.act.view.Cloud3View;
 import com.gif.eting.act.view.Cloud4View;
 import com.gif.eting.util.Util;
+import com.gif.eting.R;
 
 /**
  * 메인 뷰페이져
@@ -46,7 +47,7 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
      */
-    private ViewPager mPager;
+    static public ViewPager mPager;
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.
@@ -56,9 +57,8 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
     /**
      * 전역변수
      */
-    private FrameLayout fr;
+    private static FrameLayout fr;
     private Context context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,29 +68,15 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
         Util.init(getApplicationContext());
 
 		fr = (FrameLayout) findViewById(R.id.mainviewpager_frame);
-		
-		final Handler myHandler = new Handler();
-		
-		(new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				myHandler.post(new Runnable() {
-					
-					@Override
-					public void run() {
-					    
-						fr.addView(new Cloud1View(context),0); // 구름애니메이션
-						fr.addView(new Cloud2View(context),0); // 구름애니메이션
-						fr.addView(new Cloud3View(context),0); // 구름애니메이션
-						fr.addView(new Cloud4View(context),0); // 구름애니메이션
+	    
+		fr.addView(new Cloud1View(context),0); // 구름애니메이션
+		fr.addView(new Cloud2View(context),0); // 구름애니메이션
+		fr.addView(new Cloud3View(context),0); // 구름애니메이션
+		fr.addView(new Cloud4View(context),0); // 구름애니메이션
 
+		setRepeat();	//주기적으로 화면그리기
 
-					}
-				});
-			}
-		})).start();
-		
+	    
 		fr.setAnimationCacheEnabled(true);/*
 										 * fr.setDrawingCacheEnabled(true);
 										 */
@@ -197,18 +183,15 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 			case 0:
 				MyStoryListFragment myStoryList = MyStoryListFragment
 						.create(position);
-				myStoryList.setViewPager(mPager);
 				return myStoryList;
 
 			case 1:
 				MainFragment main = MainFragment.create();
-				main.setViewPager(mPager);
 				return main;
 
 			case 2:
 				WriteMyStoryFragment writeMyStory = WriteMyStoryFragment
 						.create(position);
-				writeMyStory.setViewPager(mPager);
 				return writeMyStory;
 
 			default:
@@ -275,4 +258,27 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 		}
 		
 	}
+
+	/**
+	 * 애니메이션 관련 변수
+	 */
+	static Handler hdler;
+	static int delayTime = (int) Util.fps;
+
+	static class MyHandler extends Handler {
+		public void handleMessage(Message msg) {
+			doRepeatedly();
+			hdler.sendMessageDelayed(new Message(), delayTime);
+		}
+	}
+
+	public static void doRepeatedly() {
+		fr.invalidate();
+	}
+
+	public void setRepeat() {
+		hdler = new MyHandler();
+		hdler.sendMessageDelayed(new Message(), delayTime);
+	}
+
 }

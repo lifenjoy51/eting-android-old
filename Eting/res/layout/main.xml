@@ -8,7 +8,7 @@
         android:id="@+id/setting_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/setting_btn"
+        android:background="@drawable/setting_btn_selector"
         android:contentDescription="@string/settingbutton"
         android:gravity="bottom" />
 

@@ -32,12 +32,15 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        android:divider="@android:color/transparent"
+        android:divider="@android:color/transparent"        
         android:dividerHeight="8.0sp"
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingTop="14dp" >
+        android:paddingTop="14dp"
+        android:drawSelectorOnTop="true"
+        android:listSelector="@drawable/list_blank_selected" >
+        
     </ListView>
 
     <FrameLayout

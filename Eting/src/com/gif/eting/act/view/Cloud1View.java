@@ -11,9 +11,9 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 
-import com.gif.eting.R;
 import com.gif.eting.util.AnimateDrawable;
 import com.gif.eting.util.Util;
+import com.gif.eting.R;
 
 /**
  * 움직이는 구름
@@ -24,6 +24,7 @@ import com.gif.eting.util.Util;
 @SuppressLint("ViewConstructor")
 public class Cloud1View extends View {
 	private AnimateDrawable mDrawable;
+	private long drawClock = 0;
 	private boolean chk = true;
 
 	public Cloud1View(Context context) {
@@ -36,15 +37,7 @@ public class Cloud1View extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		synchronized (this) {
-			mDrawable.draw(canvas);
-			invalidate();
-			try {
-				this.wait(Util.fps);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		mDrawable.draw(canvas);
 	}
 
 	/**

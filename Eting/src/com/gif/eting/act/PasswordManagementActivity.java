@@ -61,7 +61,7 @@ public class PasswordManagementActivity extends Activity implements
 			alert.show();
 			
 		} else if (v.getId() == R.id.reset_pwd) {
-			Intent intent = new Intent(PasswordManagementActivity.this, PasswordResetActivity.class);
+			Intent intent = new Intent(PasswordManagementActivity.this, PasswordActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 			finish(); // 뒤로가기 안먹게

@@ -23,6 +23,7 @@ import com.gif.eting.R;
 public class UfoWritePageView extends View {
 	public AsyncTaskCompleteListener<String> callback;
 	private AnimateDrawable mDrawable;
+	private long drawClock = 0;
 	private boolean chk = false;
 	private int cnt = 0;
 	private int chkStart = 0;
@@ -44,17 +45,8 @@ public class UfoWritePageView extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		synchronized (this) {
-			if(mDrawable!=null && canvas!=null){
-				mDrawable.draw(canvas);
-				invalidate();
-			}
-			try {
-				this.wait(Util.fps);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		mDrawable.draw(canvas);
+		invalidate();
 	}
 
 	/**

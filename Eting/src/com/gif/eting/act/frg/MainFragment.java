@@ -12,6 +12,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -29,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.gif.eting.act.MainViewPagerActivity;
 import com.gif.eting.act.ReadInboxActivity;
 import com.gif.eting.act.SettingActivity;
 import com.gif.eting.act.view.EtingLogoView;
@@ -47,8 +49,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
  * 
  */
 public class MainFragment extends SherlockFragment implements OnClickListener {
-	@SuppressWarnings("unused")
-	private ViewPager mPager;
+	private ViewPager mPager = MainViewPagerActivity.mPager;
 
 	private TextView mainToday;
 	private TextView mainEtingCnt;
@@ -63,7 +64,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	// 기타 전역변수
 	private StoryService svc;
 	private InboxService is;
-	private FrameLayout fr;
+	private static FrameLayout fr;
+	
 
 	/**
 	 * Factory method for this fragment class. Constructs a new fragment for the
@@ -109,35 +111,24 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 * 애니메이션
 		 */
 		fr = (FrameLayout) rootView.findViewById(R.id.main_frame);
-		final Handler myHandler = new Handler();
 
-		(new Thread(new Runnable() {
+		/**
+		 * 돌아가는 동그라미 애니메이션
+		 */
+		fr.addView(new PlanetView(getActivity()));
 
-			@Override
-			public void run() {
-				myHandler.post(new Runnable() {
+		/**
+		 * 로고이미지
+		 */
+		fr.addView(new EtingLogoView(getActivity()));
 
-					@Override
-					public void run() {
-
-						/**
-						 * 돌아가는 동그라미 애니메이션
-						 */
-						fr.addView(new PlanetView(getActivity()));
-
-						/**
-						 * 로고이미지
-						 */
-						fr.addView(new EtingLogoView(getActivity()));
-
-						/**
-						 * 프레임 레이아웃 앞으로 보내기
-						 */
-						fr.bringToFront();
-					}
-				});
-			}
-		})).start();
+		/**
+		 * 프레임 레이아웃 앞으로 보내기
+		 */
+		fr.bringToFront();
+		
+		//애니메이션 시작
+		this.setRepeat();
 
 		//스크린크기
 		metrics = getResources().getDisplayMetrics();
@@ -382,11 +373,19 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 * 받은편지함 처리
 		 */
 		if (inboxCnt > 0) {
-			Animation ani = AnimationUtils.loadAnimation(getActivity(),
-					R.anim.main_ufo);
-			mainInboxCnt.startAnimation(ani);
-			mainInboxCnt.setVisibility(View.VISIBLE);
-			mainInboxCnt.bringToFront();
+			mainInboxCnt.setVisibility(View.GONE);
+			new Handler() {
+			}.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					Animation ani = AnimationUtils.loadAnimation(getActivity(),
+							R.anim.main_ufo);
+					mainInboxCnt.startAnimation(ani);
+					mainInboxCnt.setVisibility(View.VISIBLE);
+					mainInboxCnt.bringToFront();
+				}
+			}, 5000);
+			
 		} else {
 			mainInboxCnt.clearAnimation();
 			mainInboxCnt.setVisibility(View.GONE);
@@ -429,6 +428,30 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 			return true;
 		}
 		return true;
+	}
+
+
+
+	/**
+	 * 애니메이션 관련 변수
+	 */
+	static Handler hdler;
+	static int delayTime = (int) Util.fps;
+
+	static class MyHandler extends Handler {
+		public void handleMessage(Message msg) {
+			doRepeatedly();
+			hdler.sendMessageDelayed(new Message(), delayTime);
+		}
+	}
+
+	public static void doRepeatedly() {
+		fr.invalidate();
+	}
+
+	public void setRepeat() {
+		hdler = new MyHandler();
+		hdler.sendMessageDelayed(new Message(), delayTime);
 	}
 
 }

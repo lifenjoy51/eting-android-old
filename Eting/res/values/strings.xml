@@ -19,7 +19,7 @@
     
     <string name="write_story_validate">한 문자만 입력할 수 없습니다.</string>
     <string name="write_story_input">내용을 입력해주세요.</string>
-    <string name="enter_you_name">P.S.</string>
+    <string name="enter_you_name">p.s. 15자 이내</string>
     <string name="delete_story">이야기 삭제</string>
     <string name="really_delete_story">이야기를 삭제하시겠습니까?</string>
     <string name="settingbutton">settingButton</string>
@@ -38,5 +38,8 @@
     <string name="sendstorybutton">sendStoryButton</string>
     <string name="send">send</string>
     <string name="clear">clear</string>
+    
+    <string name="report_title">신고</string>
+    <string name="report_message">이 메세지를 신고하시겠습니까?</string>
 
 </resources>

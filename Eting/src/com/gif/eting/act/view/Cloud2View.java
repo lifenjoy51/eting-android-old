@@ -24,6 +24,7 @@ import com.gif.eting.R;
 @SuppressLint("ViewConstructor")
 public class Cloud2View extends View {
 	private AnimateDrawable mDrawable;
+	private long drawClock = 0;
 	private boolean chk = true;
 
 	public Cloud2View(Context context) {
@@ -33,18 +34,10 @@ public class Cloud2View extends View {
 
 		setAnimationEvent(context, null);
 	}
-
+	
 	@Override
 	protected void onDraw(Canvas canvas) {
-		synchronized (this) {
-			mDrawable.draw(canvas);
-			invalidate();
-			try {
-				this.wait(Util.fps);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		mDrawable.draw(canvas);
 	}
 
 	/**

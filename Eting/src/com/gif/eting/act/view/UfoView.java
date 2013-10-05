@@ -23,6 +23,7 @@ import com.gif.eting.R;
  */
 public class UfoView extends View {
 	private AnimateDrawable mDrawable;
+	private long drawClock = 0;
 	private boolean chk= false;
 	private int cnt = 0;
 
@@ -37,15 +38,7 @@ public class UfoView extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		synchronized (this) {
-			mDrawable.draw(canvas);
-			invalidate();
-			try {
-				this.wait(Util.fps);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		mDrawable.draw(canvas);
 	}
 	
 	/**
