@@ -14,7 +14,7 @@ import com.gif.eting.util.SecureUtil;
  */
 public class PasswordService {
 
-	private SettingDAO settingDao;
+	public SettingDAO settingDao;
 
 	public PasswordService(Context context) {
 		this.settingDao = new SettingDAO(context);
@@ -28,10 +28,19 @@ public class PasswordService {
 		SettingDTO setting = new SettingDTO();
 		pw = SecureUtil.toSHA256(pw);
 
-		setting.setKey("password");
+		String key = "password";
+		setting.setKey(key);
 		setting.setValue(pw);
-
+		
 		settingDao.open(); // 열고
+		
+		SettingDTO result = settingDao.getsettingInfo(key);
+		if(result==null){
+			settingDao.inssetting(setting);
+		}else{
+			settingDao.delsetting(key);
+			settingDao.inssetting(setting);
+		}
 		settingDao.inssetting(setting);
 		settingDao.close(); // 닫고
 	}
@@ -59,7 +68,7 @@ public class PasswordService {
 
 		return isValid;
 	}
-	
+
 	/**
 	 * 패스워드 유무 확인
 	 * @return

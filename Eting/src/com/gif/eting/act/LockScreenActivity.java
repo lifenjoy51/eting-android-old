@@ -64,8 +64,8 @@ public class LockScreenActivity extends Activity implements OnClickListener  {
 		stpwd3Y = height * 43.8 / 100;
 		double stpwd4Y = height * 33.5 / 100;
 		
-		pwd_letter.setPadding(0, (int) stpwd1Y, 0, 0);
-		pwd_bg2.setPadding(0, (int) stpwd2Y, 0, 0);
+		pwd_letter.setPadding(0, (int) stpwd1Y - 8, 0, 0);
+		pwd_bg2.setPadding(0, (int) stpwd2Y - 8, 0, 0);
 		lockScreenButton.setPadding(0, (int) stpwd3Y, 0, 0);
 		et.setPadding(0, (int) (height * 34.5 / 100), 0, 0);
 		

@@ -155,7 +155,7 @@ public class IntroActivity extends Activity {
 					startActivity(intent);
 					finish();
 
-				} else {
+				}else {
 					moveToLockScreenActivity();
 				}
 			}

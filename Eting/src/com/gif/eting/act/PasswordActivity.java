@@ -2,21 +2,28 @@ package com.gif.eting.act;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gif.eting.dao.SettingDAO;
+import com.gif.eting.dto.SettingDTO;
 import com.gif.eting.svc.PasswordService;
+import com.gif.eting.util.SecureUtil;
 import com.gif.eting.util.Util;
 import com.gif.eting.R;
 
@@ -27,23 +34,30 @@ public class PasswordActivity extends Activity implements OnClickListener {
 	private TextView password_textView;
 	private ImageView password_check;
 	private ImageView setting_save_pw_btn;
+	private Button setting_save_btn;
 	private boolean isValid = false;
 	private String o_pw;
 	private PasswordService svc;
 	private Typeface nanum = Util.nanum;
+	private SettingDTO setting = new SettingDTO();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.password);
-		// 버튼 온클릭이벤트 등록
+
+		
 		password_check = (ImageView) findViewById(R.id.password_check);
 		setting_save_pw_btn = (ImageView) findViewById(R.id.setting_save_pw_btn);
 		origin_pwd = (EditText) findViewById(R.id.origin_pwd);
 		setting_pw = (EditText) findViewById(R.id.setting_pw);
 		setting_pw2 = (EditText) findViewById(R.id.setting_pw2);
 		password_textView = (TextView) findViewById(R.id.password_textView);
-
+		setting_save_btn = (Button) findViewById(R.id.setting_save_btn);
+		
+//		setting_save_btn.setVisibility(View.INVISIBLE);
+//		setting_save_pw_btn.setVisibility(View.VISIBLE);
+		
 		origin_pwd.setTypeface(nanum);
 		setting_pw.setTypeface(nanum);
 		setting_pw2.setTypeface(nanum);
@@ -55,17 +69,16 @@ public class PasswordActivity extends Activity implements OnClickListener {
 		setting_pw2.setHintTextColor(Color.parseColor("#bbbbbb"));
 		o_pw = origin_pwd.getText().toString(); // 예전 비밀번호
 
-		// if(alarm!=null){
-		// alarm_img_btn.setImageResource(R.drawable.alarm_off);
-		// }else{
-		// alarm_img_btn.setImageResource(R.drawable.alarm_on);
-		// }
-
 		// 암호체크
 		svc = new PasswordService(this);
-		isValid = svc.checkPassword(o_pw);
+		// isValid = svc.checkPassword(o_pw);
+		isValid = svc.isPassword();
 
 		if (isValid == true) {
+			origin_pwd.setHintTextColor(Color.parseColor("#999999"));
+			origin_pwd.setHint("origin passwrod");
+			origin_pwd.setVisibility(View.VISIBLE);
+		} else {
 			// origin_pwd.setClickable(false);
 			// origin_pwd.setEnabled(false);
 			// origin_pwd.setFocusable(false);
@@ -73,26 +86,7 @@ public class PasswordActivity extends Activity implements OnClickListener {
 			// origin_pwd.setHintTextColor(Color.parseColor("#999999"));
 			origin_pwd.setVisibility(View.GONE);
 			// origin_pwd.setHint("Don't have password!!");
-		} else {
-			origin_pwd.setHintTextColor(Color.parseColor("#999999"));
-			origin_pwd.setHint("origin passwrod");
-			origin_pwd.setVisibility(View.VISIBLE);
 		}
-		password_check.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				// TODO Auto-generated method stub
-				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					password_check
-							.setBackgroundResource(R.drawable.passward_off);
-				} else if (event.getAction() == MotionEvent.ACTION_UP) {
-					password_check
-							.setBackgroundResource(R.drawable.passward_on);
-				}
-				return false;
-			}
-		});
-
 		setting_save_pw_btn.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -118,6 +112,8 @@ public class PasswordActivity extends Activity implements OnClickListener {
 		});
 
 		setting_save_pw_btn.setOnClickListener(this);
+		password_check.setOnClickListener(this);
+		setting_save_btn.setOnClickListener(this);
 
 	}
 
@@ -127,24 +123,86 @@ public class PasswordActivity extends Activity implements OnClickListener {
 		String s2 = setting_pw.getText().toString();
 		String s3 = setting_pw2.getText().toString();
 
-		if (isValid == true) {
-			if ((s2 == null || "".equals(s2)) || (s3 == null || "".equals(s3))) {
-				Toast.makeText(this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
-				return;
+		if (view.getId() == R.id.setting_save_pw_btn) {
+			if (isValid == true) {
+				if ((s1 == null || "".equals(s1))
+						|| (s2 == null || "".equals(s2))
+						|| (s3 == null || "".equals(s3))) {
+					Toast.makeText(this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT)
+							.show();
+					return;
+				} else
+					savePassword();
 			} else {
-				savePassword();
+				if ((s2 == null || "".equals(s2))
+						|| (s3 == null || "".equals(s3))) {
+					Toast.makeText(this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT)
+							.show();
+					return;
+				}
+				else
+					savePassword();
 			}
-		} else {
-			if ((s1 == null || "".equals(s1)) || (s2 == null || "".equals(s2))
-					|| (s3 == null || "".equals(s3))) {
-				Toast.makeText(this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
-				return;
-			} else {
-				savePassword();
-			}
+		} else if (view.getId() == R.id.password_check) {
+			Drawable tempImg = password_check.getDrawable();
+			Drawable tempRes = PasswordActivity.this.getResources()
+					.getDrawable(R.drawable.passward_off);
+			Bitmap tmpBitmap = ((BitmapDrawable) tempImg).getBitmap();
+			Bitmap tmpBitmapRes = ((BitmapDrawable) tempRes).getBitmap();
 
+			if (isValid == true) {
+				if (tmpBitmap.equals(tmpBitmapRes)) {
+//					setting_save_pw_btn.setVisibility(View.VISIBLE);
+//					setting_save_btn.setVisibility(View.INVISIBLE);
+					
+					password_check.setImageResource(R.drawable.passward_on);
+					origin_pwd.setHintTextColor(Color.parseColor("#bbbbbb"));
+					setting_pw.setHintTextColor(Color.parseColor("#bbbbbb"));
+					setting_pw2.setHintTextColor(Color.parseColor("#bbbbbb"));
+					origin_pwd.setEnabled(true);
+					setting_pw.setEnabled(true);
+					setting_pw2.setEnabled(true);
+					setting_save_btn.setEnabled(true);
+
+				} else {
+					savePasswordOff();
+//					setting_save_pw_btn.setVisibility(View.INVISIBLE);
+//					setting_save_btn.setVisibility(View.VISIBLE);
+					
+					password_check.setImageResource(R.drawable.passward_off);
+					origin_pwd.setHintTextColor(Color.parseColor("#e2e2e2"));
+					setting_pw.setHintTextColor(Color.parseColor("#e2e2e2"));
+					setting_pw2.setHintTextColor(Color.parseColor("#e2e2e2"));
+					origin_pwd.setEnabled(false);
+					setting_pw.setEnabled(false);
+					setting_pw2.setEnabled(false);
+					setting_save_btn.setEnabled(false);
+
+				}
+			}
+			else if(view.getId() == R.id.setting_save_btn) {
+				savePasswordOff();
+				
+			}
 		}
+	}
 
+	public void savePasswordOff() { // password off 하고 저장했을때
+		setting.setKey(null);
+		setting.setValue(null);
+		svc.settingDao.open();
+		svc.settingDao.delsetting("password");
+		svc.settingDao.close(); // 닫고
+
+		Toast toast = Toast.makeText(this, "Password Off 설정 되었습니다",
+				Toast.LENGTH_SHORT);
+		toast.show();
+
+		Intent intent = new Intent(PasswordActivity.this,
+				MainViewPagerActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+		finish(); // 뒤로가기 안먹게
 	}
 
 	// 세팅화면에서 비밀번호 저장
@@ -156,9 +214,9 @@ public class PasswordActivity extends Activity implements OnClickListener {
 		String pw2 = setting_pw2.getText().toString(); // 새로입력한 비밀번호 확인
 
 		// 암호체크
-		PasswordService svc = new PasswordService(this);
+		svc = new PasswordService(this);
 		isValid = svc.checkPassword(o_pw);
-		//
+
 		// String s1 = origin_pwd.getText().toString();
 		// if (isValid == false) {
 		// origin_pwd.setClickable(false);
@@ -185,8 +243,7 @@ public class PasswordActivity extends Activity implements OnClickListener {
 				toast.show();
 			}
 
-		} else {
-			// 비밀번호 틀렸을때
+		} else { // 비밀번호 틀렸을때
 			Toast toast = Toast.makeText(this, "기존의 비밀번호가 맞지 않습니다.",
 					Toast.LENGTH_SHORT);
 			toast.show();
