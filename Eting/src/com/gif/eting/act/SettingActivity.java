@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.gif.eting.dao.SettingDAO;
 import com.gif.eting.dto.SettingDTO;
 import com.gif.eting.util.Util;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 public class SettingActivity extends Activity implements OnClickListener {
 

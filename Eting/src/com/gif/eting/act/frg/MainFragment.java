@@ -38,7 +38,7 @@ import com.gif.eting.act.view.PlanetView;
 import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.util.Util;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -384,7 +384,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 					mainInboxCnt.setVisibility(View.VISIBLE);
 					mainInboxCnt.bringToFront();
 				}
-			}, 5000);
+			}, 2000);
 			
 		} else {
 			mainInboxCnt.clearAnimation();

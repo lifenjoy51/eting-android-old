@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.gif.eting.svc.PasswordService;
 import com.gif.eting.util.Util;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 비밀번호 화면

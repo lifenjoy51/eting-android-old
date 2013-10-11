@@ -25,7 +25,7 @@ import com.gif.eting.dto.SettingDTO;
 import com.gif.eting.svc.PasswordService;
 import com.gif.eting.util.SecureUtil;
 import com.gif.eting.util.Util;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 public class PasswordActivity extends Activity implements OnClickListener {
 	private EditText origin_pwd;

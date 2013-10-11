@@ -34,7 +34,7 @@ import com.gif.eting.act.view.MylistAdapter;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.util.Util;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 내 이야기 목록

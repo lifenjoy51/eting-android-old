@@ -11,7 +11,7 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 import com.gif.eting.act.IntroActivity;
 import com.gif.eting.act.LockScreenActivity;
 import com.gif.eting.act.MainViewPagerActivity;

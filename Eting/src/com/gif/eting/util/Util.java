@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 /**
  * 상수값 모음

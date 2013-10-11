@@ -11,7 +11,7 @@ import android.view.animation.TranslateAnimation;
 
 import com.gif.eting.util.AnimateDrawable;
 import com.gif.eting.util.Util;
-import com.gif.eting.R;
+import com.gif.eting_dev.R;
 
 
 
