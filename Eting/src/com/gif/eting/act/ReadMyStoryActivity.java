@@ -156,6 +156,16 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			Toast.makeText(context, "문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
 		}
 	}
+	
+	
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		finish();
+	}
+
+
 
 	/**
 	 * ReceiveStampTask 수행 후 실행되는 콜백

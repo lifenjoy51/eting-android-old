@@ -194,7 +194,7 @@ public class MyStoryListFragment  extends SherlockFragment{
 		    }
 
 		    public void onScrollStateChanged(AbsListView view, int scrollState) {   
-		    	lastPos = view.getLastVisiblePosition();
+		    	lastPos = view.getFirstVisiblePosition ();
 		    }
 
 		});
@@ -234,6 +234,7 @@ public class MyStoryListFragment  extends SherlockFragment{
      */
     public void readMyStoryPopup(Context context, String storyId){		
 		Intent intent =new Intent(context, ReadMyStoryActivity.class);
+		
 		intent.putExtra("idx", storyId);
 		context.startActivity(intent);
     }
