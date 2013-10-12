@@ -13,7 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ViewFlipper;
 
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 public class TutorialActivity extends Activity implements OnTouchListener {
 

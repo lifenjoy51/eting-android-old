@@ -11,7 +11,7 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 import com.gif.eting.act.IntroActivity;
 import com.gif.eting.act.LockScreenActivity;
 import com.gif.eting.act.MainViewPagerActivity;
@@ -108,13 +108,13 @@ public class GcmIntentService extends IntentService {
 		} else {
 			intent = new Intent(this, MainViewPagerActivity.class);
 		}
-		
-        intent.putExtra("GCM", true);
-        intent.putExtra("storyId", storyId);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK 
-                | Intent.FLAG_ACTIVITY_CLEAR_TOP 
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        
+
+		intent.putExtra("GCM", true);
+		intent.putExtra("storyId", storyId);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0 );
 
         NotificationCompat.Builder mBuilder =

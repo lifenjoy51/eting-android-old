@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.util.Util;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 

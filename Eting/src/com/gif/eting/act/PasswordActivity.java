@@ -27,7 +27,7 @@ import com.gif.eting.dto.SettingDTO;
 import com.gif.eting.svc.PasswordService;
 import com.gif.eting.util.SecureUtil;
 import com.gif.eting.util.Util;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 public class PasswordActivity extends Activity implements OnClickListener {
 	private EditText origin_pwd;
@@ -147,7 +147,7 @@ public class PasswordActivity extends Activity implements OnClickListener {
 		} else if (view.getId() == R.id.password_check) {
 			Drawable tempImg = password_check.getDrawable();
 			Drawable tempRes = PasswordActivity.this.getResources()
-					.getDrawable(R.drawable.passward_off);
+					.getDrawable(R.drawable.password_off);
 			Bitmap tmpBitmap = ((BitmapDrawable) tempImg).getBitmap();
 			Bitmap tmpBitmapRes = ((BitmapDrawable) tempRes).getBitmap();
 
@@ -156,7 +156,7 @@ public class PasswordActivity extends Activity implements OnClickListener {
 					// setting_save_pw_btn.setVisibility(View.VISIBLE);
 					// setting_save_btn.setVisibility(View.INVISIBLE);
 
-					password_check.setImageResource(R.drawable.passward_on);
+					password_check.setImageResource(R.drawable.password_on);
 					origin_pwd.setHintTextColor(Color.parseColor("#bbbbbb"));
 					setting_pw.setHintTextColor(Color.parseColor("#bbbbbb"));
 					setting_pw2.setHintTextColor(Color.parseColor("#bbbbbb"));
@@ -170,7 +170,7 @@ public class PasswordActivity extends Activity implements OnClickListener {
 					// setting_save_pw_btn.setVisibility(View.INVISIBLE);
 					// setting_save_btn.setVisibility(View.VISIBLE);
 
-					password_check.setImageResource(R.drawable.passward_off);
+					password_check.setImageResource(R.drawable.password_off);
 					origin_pwd.setHintTextColor(Color.parseColor("#e2e2e2"));
 					setting_pw.setHintTextColor(Color.parseColor("#e2e2e2"));
 					setting_pw2.setHintTextColor(Color.parseColor("#e2e2e2"));
@@ -212,7 +212,7 @@ public class PasswordActivity extends Activity implements OnClickListener {
 		});
 		alertDlg.setNegativeButton("취소", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				password_check.setImageResource(R.drawable.passward_on);
+				password_check.setImageResource(R.drawable.password_on);
 				origin_pwd.setHintTextColor(Color.parseColor("#bbbbbb"));
 				setting_pw.setHintTextColor(Color.parseColor("#bbbbbb"));
 				setting_pw2.setHintTextColor(Color.parseColor("#bbbbbb"));

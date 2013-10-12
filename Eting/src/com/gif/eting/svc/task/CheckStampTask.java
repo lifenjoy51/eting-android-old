@@ -55,8 +55,9 @@ public class CheckStampTask extends AsyncTask<Object, String, String> {
 			String stampId = svc.getMaxStampId();
 			String param = "stamp_id=" + stampId;	
 			
-			
-			return HttpUtil.doPost(urlStr, param);	//Http전송
+			String response = HttpUtil.doPost(urlStr, param);	//Http전송 
+			System.out.println(this.getClass().getName() + " = " + response);
+			return response;
 	}
 	
 	/**

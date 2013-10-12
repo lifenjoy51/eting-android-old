@@ -29,7 +29,7 @@ import com.gif.eting.act.view.Cloud2View;
 import com.gif.eting.act.view.Cloud3View;
 import com.gif.eting.act.view.Cloud4View;
 import com.gif.eting.util.Util;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 /**
  * 메인 뷰페이져

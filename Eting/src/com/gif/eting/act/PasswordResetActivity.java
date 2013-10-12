@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.gif.eting.svc.PasswordService;
 import com.gif.eting.util.Util;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 public class PasswordResetActivity extends Activity implements
 		OnClickListener {

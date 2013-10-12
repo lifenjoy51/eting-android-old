@@ -11,7 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 public class PasswordManagementActivity extends Activity implements
 		OnClickListener {

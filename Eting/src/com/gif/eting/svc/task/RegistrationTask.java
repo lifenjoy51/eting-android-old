@@ -39,7 +39,9 @@ public class RegistrationTask extends AsyncTask<Object, String, String> {
 			String param = "phone_id=" + phoneId +"&reg_id=" +regId;	//서버에 전송할 파라미터 조립
 			String urlStr = Util.serverContext+"/registration";
 			
-			return HttpUtil.doPost(urlStr, param);	//Http전송
+			String response = HttpUtil.doPost(urlStr, param);	//Http전송 
+			System.out.println(this.getClass().getName() + " = " + response);
+			return response;
 	}	
 	
 	/**

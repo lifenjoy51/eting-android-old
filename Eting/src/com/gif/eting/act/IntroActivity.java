@@ -28,7 +28,7 @@ import com.gif.eting.svc.task.CheckStampedStoryTask;
 import com.gif.eting.svc.task.RegistrationTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
 import com.gif.eting.util.Util;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -152,6 +152,11 @@ public class IntroActivity extends Activity {
 					Intent intent = new Intent(IntroActivity.this,
 							TutorialActivity.class);
 					intent.putExtra("isFirst", true);
+					
+					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+					
 					startActivity(intent);
 					finish();
 
@@ -206,9 +211,22 @@ public class IntroActivity extends Activity {
 		if (psvc.isPassword()) {
 			Intent intent = new Intent(IntroActivity.this,
 					LockScreenActivity.class);
+
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			
+			
 			startActivity(intent);
 		} else {
-			startActivity(new Intent(this, MainViewPagerActivity.class));
+
+			Intent intent = new Intent(IntroActivity.this, MainViewPagerActivity.class);
+
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			
+			startActivity(intent);
 		}
 		finish(); // 뒤로가기 했을경우 안나오도록 없애주기
 

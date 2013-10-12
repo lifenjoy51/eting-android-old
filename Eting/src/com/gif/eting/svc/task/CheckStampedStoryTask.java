@@ -52,7 +52,9 @@ public class CheckStampedStoryTask extends AsyncTask<Object, String, String> {
 			String phoneId = Installation.id(context);	//기기 고유값
 			String param = "phone_id=" + phoneId;	
 			
-			return HttpUtil.doPost(urlStr, param);	//Http전송
+			String response = HttpUtil.doPost(urlStr, param);	//Http전송 
+			System.out.println(this.getClass().getName() + " = " + response);
+			return response;
 	}
 	
 	/**

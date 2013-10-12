@@ -47,7 +47,9 @@ public class ReportStroyTask extends AsyncTask<Object, String, String> {
 			String param = "story_id=" + storyId;	//파라미터 첫번째값 storyId
 			this.context = (Context) params[1];	//파라미터 두번째값 context
 			
-			return HttpUtil.doPost(urlStr, param);	//Http전송
+			String response = HttpUtil.doPost(urlStr, param);	//Http전송 
+			System.out.println(this.getClass().getName() + " = " + response);
+			return response;
 	}
 
 	/**

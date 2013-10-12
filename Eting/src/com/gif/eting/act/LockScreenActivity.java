@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.gif.eting.svc.PasswordService;
 import com.gif.eting.util.Util;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 /**
  * 비밀번호 화면
@@ -156,6 +156,9 @@ public class LockScreenActivity extends Activity implements OnClickListener  {
 			Intent intent =new Intent(this, MainViewPagerActivity.class);
 	        intent.putExtra("GCM", isGcm);
 	        intent.putExtra("storyId", storyId);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 			startActivity(intent);
 			finish(); // 뒤로가기 안먹게
 		} else {

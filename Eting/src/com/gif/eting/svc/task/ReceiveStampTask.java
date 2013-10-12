@@ -46,7 +46,9 @@ public class ReceiveStampTask extends AsyncTask<String, String, String> {
 			String urlStr = Util.serverContext+"/getStamp";
 			String param = "story_id=" + params[0];	//파라미터 첫번째값 storyId
 			
-			return HttpUtil.doPost(urlStr, param);	//Http전송
+			String response = HttpUtil.doPost(urlStr, param);	//Http전송 
+			System.out.println(this.getClass().getName() + " = " + response);
+			return response;
 	}
 	
 	/**
@@ -54,7 +56,7 @@ public class ReceiveStampTask extends AsyncTask<String, String, String> {
 	 */
 	@Override
 	protected void onPostExecute(String result) {
-
+		System.out.println("ReceiveStampTask onPostExecute = "+result);
 		Log.i("ReceiveStampTask json response", result);	//응답확인
 		
 		if("UnknownHostException".equals(result)){

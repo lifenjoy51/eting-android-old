@@ -32,7 +32,7 @@ import com.gif.eting.svc.StoryService;
 import com.gif.eting.svc.task.ReceiveStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
 import com.gif.eting.util.Util;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 /**
  * 내 이야기 목록에서 선택한 이야기를 읽는 화면
@@ -79,75 +79,82 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		
 		Intent intent = getIntent();
 		storyIdx = intent.getStringExtra("idx");	//파라미터값으로 넘긴 이야기 고유번호
-
+		Log.i("ReadMyStoryActivity recieve story idx = ",storyIdx);
+		
 		//Service초기화
 		storyService = new StoryService(this.getApplicationContext());
 		
-		StoryDTO myStory = storyService.getMyStory(storyIdx);	//해당하는 이야기 받아오기
-		String content = myStory.getContent();
-		
-		String storyDate = myStory.getStory_date();
-		if(storyDate != null && storyDate != ""){
-			storyDate = storyDate.replaceAll("-", ".");
-		}
-		
-		String storyTime = myStory.getStory_time();
-		if(storyTime == null || storyTime == ""){
-			storyTime = "0";
-		}else{
-			storyTime = storyTime.substring(0,2);
-		}
-		
-		
-		
-		TextView storyDateView = (TextView) findViewById(R.id.mystory_content_top);
-		storyDateView.setText(storyDate);
-		storyDateView.setTypeface(nanum, Typeface.BOLD);
-		
-		TextView contentView = (TextView) findViewById(R.id.popup_content);
-		contentView.setTypeface(nanum);
-		contentView.setText(content);
-		
-		/**
-		 * 작성시간에 맞게 배경화면 변화
-		 */
-		int storyHour = Integer.parseInt(storyTime);
-		Log.i("currunt hour", thisHourStr);
+		try{
+
+			StoryDTO myStory = storyService.getMyStory(storyIdx);	//해당하는 이야기 받아오기
+			String content = myStory.getContent();
+			
+			String storyDate = myStory.getStory_date();
+			if(storyDate != null && storyDate != ""){
+				storyDate = storyDate.replaceAll("-", ".");
+			}
+			
+			String storyTime = myStory.getStory_time();
+			if(storyTime == null || storyTime == ""){
+				storyTime = "0";
+			}else{
+				storyTime = storyTime.substring(0,2);
+			}
+			
+			
+			
+			TextView storyDateView = (TextView) findViewById(R.id.mystory_content_top);
+			storyDateView.setText(storyDate);
+			storyDateView.setTypeface(nanum, Typeface.BOLD);
+			
+			TextView contentView = (TextView) findViewById(R.id.popup_content);
+			contentView.setTypeface(nanum);
+			contentView.setText(content);
+			
+			/**
+			 * 작성시간에 맞게 배경화면 변화
+			 */
+			int storyHour = Integer.parseInt(storyTime);
+			Log.i("currunt hour", thisHourStr);
+								
+			if(storyHour<6 ){
+				findViewById(R.id.mystory_content_top).setBackgroundResource(R.drawable.myeting_blank_b_top);
+				findViewById(R.id.popup_content_scroll_area).setBackgroundResource(R.drawable.myeting_blank_b_middle);
+				findViewById(R.id.mystory_content_bottom).setBackgroundResource(R.drawable.myeting_blank_b_bottom);
 							
-		if(storyHour<6 ){
-			findViewById(R.id.mystory_content_top).setBackgroundResource(R.drawable.myeting_blank_b_top);
-			findViewById(R.id.popup_content_scroll_area).setBackgroundResource(R.drawable.myeting_blank_b_middle);
-			findViewById(R.id.mystory_content_bottom).setBackgroundResource(R.drawable.myeting_blank_b_bottom);
-						
-		}else if(storyHour<12 ){
-			findViewById(R.id.mystory_content_top).setBackgroundResource(R.drawable.myeting_blank_p_top);
-			findViewById(R.id.popup_content_scroll_area).setBackgroundResource(R.drawable.myeting_blank_p_middle);
-			findViewById(R.id.mystory_content_bottom).setBackgroundResource(R.drawable.myeting_blank_p_bottom);
+			}else if(storyHour<12 ){
+				findViewById(R.id.mystory_content_top).setBackgroundResource(R.drawable.myeting_blank_p_top);
+				findViewById(R.id.popup_content_scroll_area).setBackgroundResource(R.drawable.myeting_blank_p_middle);
+				findViewById(R.id.mystory_content_bottom).setBackgroundResource(R.drawable.myeting_blank_p_bottom);
+				
+			}else if(storyHour<24 ){
+				findViewById(R.id.mystory_content_top).setBackgroundResource(R.drawable.myeting_blank_g_top);
+				findViewById(R.id.popup_content_scroll_area).setBackgroundResource(R.drawable.myeting_blank_g_middle);
+				findViewById(R.id.mystory_content_bottom).setBackgroundResource(R.drawable.myeting_blank_g_bottom);
+				
+			}else {
+				findViewById(R.id.mystory_content_top).setBackgroundResource(R.drawable.myeting_blank_b_top);
+				findViewById(R.id.popup_content_scroll_area).setBackgroundResource(R.drawable.myeting_blank_b_middle);
+				findViewById(R.id.mystory_content_bottom).setBackgroundResource(R.drawable.myeting_blank_b_bottom);
+				
+			}
 			
-		}else if(storyHour<24 ){
-			findViewById(R.id.mystory_content_top).setBackgroundResource(R.drawable.myeting_blank_g_top);
-			findViewById(R.id.popup_content_scroll_area).setBackgroundResource(R.drawable.myeting_blank_g_middle);
-			findViewById(R.id.mystory_content_bottom).setBackgroundResource(R.drawable.myeting_blank_g_bottom);
+			/**
+			 * 조회하는 이야기에 찍힌 스탬프 받아오기
+			 * 
+			 * ReceiveStampTask를 생성할때 파라미터는 ReceiveStampTask가 수행되고 나서 실행될 콜백이다.
+			 * execute의 파라미터가 실제 넘겨줄 자료들.
+			 * parameter[0] = idx. 이야기 고유번호.
+			 */
+			new ReceiveStampTask(new AfterReceiveStampTask()).execute(storyIdx);
 			
-		}else {
-			findViewById(R.id.mystory_content_top).setBackgroundResource(R.drawable.myeting_blank_b_top);
-			findViewById(R.id.popup_content_scroll_area).setBackgroundResource(R.drawable.myeting_blank_b_middle);
-			findViewById(R.id.mystory_content_bottom).setBackgroundResource(R.drawable.myeting_blank_b_bottom);
-			
+			//클릭이벤트 설정
+			findViewById(R.id.del_btn).setOnClickListener(this);
+			findViewById(R.id.check_btn).setOnClickListener(this);
+		}catch(Exception e){
+			Log.i("read my story activity error", e.toString());
+			Toast.makeText(context, "문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
 		}
-		
-		/**
-		 * 조회하는 이야기에 찍힌 스탬프 받아오기
-		 * 
-		 * ReceiveStampTask를 생성할때 파라미터는 ReceiveStampTask가 수행되고 나서 실행될 콜백이다.
-		 * execute의 파라미터가 실제 넘겨줄 자료들.
-		 * parameter[0] = idx. 이야기 고유번호.
-		 */
-		new ReceiveStampTask(new AfterReceiveStampTask()).execute(storyIdx);
-		
-		//클릭이벤트 설정
-		findViewById(R.id.del_btn).setOnClickListener(this);
-		findViewById(R.id.check_btn).setOnClickListener(this);
 	}
 
 	/**

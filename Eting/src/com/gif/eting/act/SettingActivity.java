@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.gif.eting.dao.SettingDAO;
 import com.gif.eting.dto.SettingDTO;
 import com.gif.eting.util.Util;
-import com.gif.eting_dev.R;
+import com.gif.eting.R;
 
 public class SettingActivity extends Activity implements OnClickListener {
 
@@ -73,12 +73,12 @@ public class SettingActivity extends Activity implements OnClickListener {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
 					password_img_btn = (ImageView) findViewById(v.getId());
 					password_img_btn
-							.setImageResource(R.drawable.passward_2);
+							.setImageResource(R.drawable.password_2);
 				}
 				if (event.getAction() == MotionEvent.ACTION_MOVE) {
 					if (!v.isPressed()) {
 						password_img_btn
-								.setImageResource(R.drawable.passward_1);
+								.setImageResource(R.drawable.password_1);
 						return true;
 					}
 
@@ -86,7 +86,7 @@ public class SettingActivity extends Activity implements OnClickListener {
 
 				if (event.getAction() == MotionEvent.ACTION_UP) {
 					password_img_btn
-							.setImageResource(R.drawable.passward_1);
+							.setImageResource(R.drawable.password_1);
 				}
 
 				return false;
