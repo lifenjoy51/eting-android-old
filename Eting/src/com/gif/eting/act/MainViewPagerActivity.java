@@ -61,6 +61,12 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+		try {
+			Class.forName("android.os.AsyncTask");
+		} catch (ClassNotFoundException e) {
+		}
+		
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager);
         context = getApplicationContext();

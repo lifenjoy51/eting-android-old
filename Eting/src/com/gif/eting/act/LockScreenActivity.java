@@ -38,6 +38,11 @@ public class LockScreenActivity extends Activity implements OnClickListener  {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
+		try {
+			Class.forName("android.os.AsyncTask");
+		} catch (ClassNotFoundException e) {
+		}
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lock_screen);
 		context = getApplicationContext();
