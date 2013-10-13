@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.app.Service;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -173,6 +175,9 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		
 		EditText et = (EditText) getView().findViewById(R.id.story_content);
 		final String content = et.getText().toString(); // 이야기 내용
+		InputMethodManager imm = (InputMethodManager) context
+				.getSystemService(Service.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
 		
 		//페이드아웃 애니메이션
 		Animation sa = new AlphaAnimation(1.0f, 0.0f);
