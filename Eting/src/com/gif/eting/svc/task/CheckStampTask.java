@@ -56,7 +56,7 @@ public class CheckStampTask extends AsyncTask<Object, String, String> {
 			String param = "stamp_id=" + stampId;	
 			
 			String response = HttpUtil.doPost(urlStr, param);	//Http전송 
-			System.out.println(this.getClass().getName() + " = " + response);
+			//System.out.println(this.getClass().getName() + " = " + response);
 			return response;
 	}
 	
@@ -66,7 +66,7 @@ public class CheckStampTask extends AsyncTask<Object, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
 
-		Log.i("CheckStampTask json response", result);	//응답확인
+		//Log.i("CheckStampTask json response", result);	//응답확인
 
 		if("UnknownHostException".equals(result)){
 			
@@ -103,7 +103,7 @@ public class CheckStampTask extends AsyncTask<Object, String, String> {
 						
 						list.add(stampDto);
 						
-						Log.i("recieved new stamp", stamp.getString("stamp_id") + stamp.getString("stamp_name"));
+						//Log.i("recieved new stamp", stamp.getString("stamp_id") + stamp.getString("stamp_name"));
 					}
 					
 					StampService svc = new StampService(context);

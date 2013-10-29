@@ -35,7 +35,6 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 	private StoryService storyService = null;
 	private String mailContent;
 	private String emailAddress;
-	private Typeface nanum = Util.nanum;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +45,8 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 		email_textView = (TextView) findViewById(R.id.email_textView);
 //		cancel_btn = (ImageView) findViewById(R.id.cancel_btn);
 		
-		email_address.setTypeface(nanum);
-		email_textView.setTypeface(nanum);
+		email_address.setTypeface(Util.getNanum(getApplicationContext()));
+		email_textView.setTypeface(Util.getNanum(getApplicationContext()));
 		email_textView.setPaintFlags(email_textView.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 		email_address.setHintTextColor(Color.parseColor("#bbbbbb"));
 		// emailAddress = email_address.getText().toString();
@@ -170,6 +169,7 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 			// startActivity(it);
 			startActivity(Intent.createChooser(it, "메일보냄"));
 		} catch (android.content.ActivityNotFoundException ex) {
+			ex.printStackTrace();
 			Toast.makeText(this, "안됨", Toast.LENGTH_SHORT).show();
 			//TODO 메시지 확인필요
 		}

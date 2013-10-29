@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:textColor="#474747"
+                android:textColor="#555555"
                 android:textSize="15sp" >
             </TextView>
         </LinearLayout>
@@ -99,7 +99,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="15dp"
-            android:textColor="#474747"
+            android:textColor="#555555"
             android:textSize="17sp" />
     </RelativeLayout>
 

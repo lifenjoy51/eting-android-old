@@ -47,7 +47,7 @@ public class ReceiveStampTask extends AsyncTask<String, String, String> {
 			String param = "story_id=" + params[0];	//파라미터 첫번째값 storyId
 			
 			String response = HttpUtil.doPost(urlStr, param);	//Http전송 
-			System.out.println(this.getClass().getName() + " = " + response);
+			//System.out.println(this.getClass().getName() + " = " + response);
 			return response;
 	}
 	
@@ -56,8 +56,8 @@ public class ReceiveStampTask extends AsyncTask<String, String, String> {
 	 */
 	@Override
 	protected void onPostExecute(String result) {
-		System.out.println("ReceiveStampTask onPostExecute = "+result);
-		Log.i("ReceiveStampTask json response", result);	//응답확인
+		//System.out.println("ReceiveStampTask onPostExecute = "+result);
+		//Log.i("ReceiveStampTask json response", result);	//응답확인
 		
 		if("UnknownHostException".equals(result)){
 			
@@ -88,7 +88,7 @@ public class ReceiveStampTask extends AsyncTask<String, String, String> {
 						stampDto.setSender(stamp.getString("sender"));
 						list.add(stampDto);
 						
-						Log.i("returned stamp", stamp.getString("stamp_id") + stamp.getString("stamp_name"));
+						//Log.i("returned stamp", stamp.getString("stamp_id") + stamp.getString("stamp_name"));
 					}
 				}
 			} catch (JSONException e) {

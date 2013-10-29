@@ -101,14 +101,14 @@ public class TutorialActivity extends Activity implements OnTouchListener {
 		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 				float velocityY) {
 			
-			System.out.println("e1 "+e1.getX());
-			System.out.println("e2 "+e2.getX());
+			//System.out.println("e1 "+e1.getX());
+			//System.out.println("e2 "+e2.getX());
 			
 			String swipe = "abc ";
 			float sensitvity = 50;
 
-			System.out.println("viewflipper.getDisplayedChild() "+viewflipper.getDisplayedChild());
-			System.out.println("viewflipper.getChildCount() "+viewflipper.getChildCount());
+			//System.out.println("viewflipper.getDisplayedChild() "+viewflipper.getDisplayedChild());
+			//System.out.println("viewflipper.getChildCount() "+viewflipper.getChildCount());
 			
 			// TODO Auto-generated method stub
 			if ((e1.getX() - e2.getX()) > sensitvity) {
@@ -147,7 +147,7 @@ public class TutorialActivity extends Activity implements OnTouchListener {
 			} else {
 				swipe += "\n";
 			}
-			System.out.println(swipe);
+			//System.out.println(swipe);
 			return true;
 		}
 

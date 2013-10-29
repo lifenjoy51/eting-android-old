@@ -59,19 +59,21 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
      */
     private static FrameLayout fr;
     private Context context;
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
 
 		try {
 			Class.forName("android.os.AsyncTask");
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 		
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager);
         context = getApplicationContext();
         
-        Util.init(getApplicationContext());
+        //Util.init(getApplicationContext());
 
 		fr = (FrameLayout) findViewById(R.id.mainviewpager_frame);
 	    
@@ -111,11 +113,14 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 		
 		/**
 		 * 시간에따라 배경을 바꾼다
+		 * #Util에서 시간에 맞게 이미지를 캐슁해놓는다.
 		 */
+		fr.setBackgroundDrawable(Util.getMainBg(getApplicationContext()));
+		/*
 		SimpleDateFormat sdf = new SimpleDateFormat("HH", Locale.KOREA);
 		String thisHourStr = sdf.format(new Date());
 		int thisHour = Integer.parseInt(thisHourStr);
-		Log.i("currunt hour", thisHourStr);
+		//Log.i("currunt hour", thisHourStr);
 
 		if (thisHour < 6) {
 			fr.setBackgroundResource(R.drawable.bg_4); // 파랑
@@ -125,7 +130,7 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 			fr.setBackgroundResource(R.drawable.bg_1); // 초록
 		} else {
 			fr.setBackgroundResource(R.drawable.bg_4); // 파랑
-		}
+		}*/
 
 		/**
 		 * GCM으로 받은경우 페이지이동
@@ -238,7 +243,7 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		Log.i("onKeyDown Main", String.valueOf(keyCode));
+		//Log.i("onKeyDown Main", String.valueOf(keyCode));
 
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			int curItem = mPager.getCurrentItem();

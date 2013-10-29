@@ -3,6 +3,7 @@ package com.gif.eting.act;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -20,15 +21,15 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.gif.eting.act.MainViewPagerActivity.MyHandler;
+import com.gif.eting.R;
 import com.gif.eting.act.view.UfoView;
 import com.gif.eting.svc.PasswordService;
 import com.gif.eting.svc.task.CheckStampTask;
-import com.gif.eting.svc.task.CheckStampedStoryTask;
 import com.gif.eting.svc.task.RegistrationTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
+import com.gif.eting.util.Counter;
+import com.gif.eting.util.CounterListener;
 import com.gif.eting.util.Util;
-import com.gif.eting.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -39,22 +40,24 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
  * @author lifenjoy51
  * 
  */
-public class IntroActivity extends Activity {
+public class IntroActivity extends Activity implements CounterListener{
 
 	public static final String EXTRA_MESSAGE = "message";
 	public static final String PROPERTY_REG_ID = "registration_id";
 	private static final String PROPERTY_APP_VERSION = "appVersion";
-	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 	private boolean isFirst = false;
 
-	protected int cnt = 0;
-	private int total = 3;
+	private boolean isDelayed = false;
+	private boolean isLoaded= false;
 	private Handler handler;
 
 	private ImageView introBg1;
 	private ImageView introBg2;
 	private static UfoView ufo;
 	
+	//GCM 관련 변수
+	private boolean isGcm;
+	private String storyId;
 
 	/**
 	 * Substitute you own sender ID here. This is the project number you got
@@ -78,10 +81,7 @@ public class IntroActivity extends Activity {
 		setContentView(R.layout.intro);
 		context = getApplicationContext();
 		
-		/**
-		 * Util클래스에 설정값 초기화
-		 */
-		Util.init(context);
+		//android.os.SystemClock.sleep(3000);
 
 		FrameLayout fr = (FrameLayout) findViewById(R.id.intro_layout);
 		introBg1 = (ImageView) findViewById(R.id.intro_bg1);
@@ -105,6 +105,11 @@ public class IntroActivity extends Activity {
 		this.setRepeat();
 		
 		/**
+		 * Util클래스에 설정값 초기화
+		 */
+		Util.init(context);	//비동기 실행을 어느시점에 해야 먼저 애니메이션이 떠오르지?
+		
+		/**
 		 * 서버와 스탬프목록 동기화
 		 * 
 		 * CheckStampTask 파라미터는 CheckStampTask 수행되고 나서 실행될 콜백이다. execute의 파라미터가
@@ -118,8 +123,7 @@ public class IntroActivity extends Activity {
 		 * CheckStampedStoryTask 파라미터는 CheckStampedStoryTask 수행되고 나서 실행될 콜백이다.
 		 * execute의 파라미터가 실제 넘겨줄 자료들. parameter[0] = this. Context.
 		 */
-		new CheckStampedStoryTask(new AfterCheckStampedStoryTask())
-				.execute(this);
+		//new CheckStampedStoryTask(new AfterCheckStampedStoryTask()).execute(this);
 
 		/**
 		 * GCM 등록체크
@@ -128,7 +132,7 @@ public class IntroActivity extends Activity {
 
 		// Check device for Play Services APK. If check succeeds, proceed with
 		// GCM registration.
-		System.out.println("checkPlayServices() "+checkPlayServices());
+		//System.out.println("checkPlayServices() "+checkPlayServices());
 		if (checkPlayServices()) {
 			gcm = GoogleCloudMessaging.getInstance(this);
 			regid = getRegistrationId(context);
@@ -142,29 +146,27 @@ public class IntroActivity extends Activity {
 		} else {
 			Log.i(TAG, "No valid Google Play Services APK found.");
 		}
-
+		
+		//리스너 등록
+		Counter.setListner(this);
+		
 		handler = new Handler();
 		handler.postDelayed(new Runnable() {
 			public void run() {
-
-				if (isFirst) {
-
-					Intent intent = new Intent(IntroActivity.this,
-							TutorialActivity.class);
-					intent.putExtra("isFirst", true);
-					
-					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-					
-					startActivity(intent);
-					finish();
-
-				}else {
-					moveToLockScreenActivity();
-				}
+				isDelayed = true;
+				startNextActivity();
+				
 			}
 		}, 3000); // 3초후 이동
+		
+		/**
+		 * GCM으로 받은경우 페이지이동
+		 */
+        Intent intent = getIntent();
+		isGcm = intent.getBooleanExtra("GCM", false);	//GCM여부
+		if(isGcm){
+			storyId = intent.getStringExtra("storyId");			
+		}
 	}
 
 	/**
@@ -176,7 +178,7 @@ public class IntroActivity extends Activity {
 
 		@Override
 		public void onTaskComplete(String result) {
-			Log.i("AfterCheckStampTask", result);
+			//Log.i("AfterCheckStampTask", result);
 			if("UnknownHostException".equals(result)){
 				processError();
 			}
@@ -187,12 +189,13 @@ public class IntroActivity extends Activity {
 	 * SendStoryTask수행 후 실행되는 콜백 애니메이션이 3초이상 지속되고 스탬프 동기화를 마치고 스탬프찍힌 이야기를 검사하면
 	 * 이동한다!
 	 */
+	@SuppressWarnings("unused")
 	private class AfterCheckStampedStoryTask implements
 			AsyncTaskCompleteListener<String> {
 
 		@Override
 		public void onTaskComplete(String result) {
-			Log.i("AfterCheckStampTask", result);
+			//Log.i("AfterCheckStampTask", result);
 			if("UnknownHostException".equals(result)){
 				processError();
 			}
@@ -202,6 +205,7 @@ public class IntroActivity extends Activity {
 	/**
 	 * 화면이동
 	 */
+	@SuppressLint("InlinedApi")
 	private void moveToLockScreenActivity() {
 		if(isFirst){
 			return;
@@ -211,22 +215,26 @@ public class IntroActivity extends Activity {
 		if (psvc.isPassword()) {
 			Intent intent = new Intent(IntroActivity.this,
 					LockScreenActivity.class);
-
+			intent.putExtra("GCM", isGcm);
+	        intent.putExtra("storyId", storyId);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 			
 			
 			startActivity(intent);
+			overridePendingTransition(R.anim.fade, R.anim.hold);
 		} else {
 
 			Intent intent = new Intent(IntroActivity.this, MainViewPagerActivity.class);
-
+			intent.putExtra("GCM", isGcm);
+	        intent.putExtra("storyId", storyId);
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 			
 			startActivity(intent);
+			overridePendingTransition(R.anim.fade, R.anim.hold);
 		}
 		finish(); // 뒤로가기 했을경우 안나오도록 없애주기
 
@@ -242,7 +250,7 @@ public class IntroActivity extends Activity {
 				.isGooglePlayServicesAvailable(context);
 		if (resultCode != ConnectionResult.SUCCESS) {
 			if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-				System.out.println(GooglePlayServicesUtil.getErrorString(resultCode));
+				//System.out.println(GooglePlayServicesUtil.getErrorString(resultCode));
 			} else {
 				Log.i(TAG, "This device is not supported.");				
 			}
@@ -323,6 +331,7 @@ public class IntroActivity extends Activity {
 					// Persist the regID - no need to register again.
 					storeRegistrationId(context, regid);
 				} catch (IOException ex) {
+					ex.printStackTrace();
 					msg = "Error :" + ex.getMessage();
 					// If there is an error, don't just keep trying to register.
 					// Require the user to click a button again, or perform
@@ -333,7 +342,7 @@ public class IntroActivity extends Activity {
 
 			@Override
 			protected void onPostExecute(String msg) {
-				Log.i("main onPostExecute ", msg + "\n");
+				//Log.i("main onPostExecute ", msg + "\n");
 			}
 		}.execute(null, null, null);
 	}
@@ -347,6 +356,7 @@ public class IntroActivity extends Activity {
 					.getPackageInfo(context.getPackageName(), 0);
 			return packageInfo.versionCode;
 		} catch (NameNotFoundException e) {
+			e.printStackTrace();
 			// should never happen
 			throw new RuntimeException("Could not get package name: " + e);
 		}
@@ -378,7 +388,7 @@ public class IntroActivity extends Activity {
 	 * message using the 'from' address in the message.
 	 */
 	private void sendRegistrationIdToBackend() {
-		Log.i("sendRegistrationIdToBackend", regid);
+		//Log.i("sendRegistrationIdToBackend", regid);
 
 		/**
 		 * 폰고유ID와 메세지를 받기위한 고유ID를 서버에 전송
@@ -390,7 +400,7 @@ public class IntroActivity extends Activity {
 	 * 에러처리 로직
 	 */
 	private void processError(){
-		System.out.println("processError");
+		//System.out.println("processError");
 		
 		Toast toast = Toast.makeText(this, "인터넷에 연결할 수 없습니다.",
 				Toast.LENGTH_LONG);
@@ -418,6 +428,43 @@ public class IntroActivity extends Activity {
 	public void setRepeat() {
 		hdler = new MyHandler();
 		hdler.sendMessageDelayed(new Message(), delayTime);
+	}
+
+	@Override
+	public void onEvent(Integer cnt) {
+		isLoaded=true;
+		startNextActivity();
+		
+	}
+	
+	/**
+	 * 처음접속이면 튜토리얼
+	 * 아니면 비밀번호화면으로
+	 */
+	@SuppressLint("InlinedApi")
+	public void startNextActivity(){
+		if(!isLoaded || !isDelayed){
+			return;
+		}
+		
+		if (isFirst) {
+
+			Intent intent = new Intent(IntroActivity.this,
+					TutorialActivity.class);
+			intent.putExtra("isFirst", true);
+			
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			
+			startActivity(intent);
+			overridePendingTransition(R.anim.fade, R.anim.hold);
+			finish();
+
+		}else {
+			moveToLockScreenActivity();
+		}
+		
 	}
 
 

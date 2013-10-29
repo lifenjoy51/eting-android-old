@@ -1,10 +1,12 @@
 package com.gif.eting.act.view;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,28 +14,68 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gif.eting.R;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.util.Util;
-import com.gif.eting.R;
 
 public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 
-	private List<StoryDTO> items;
-	private Context context;
-	private Typeface nanum = Util.nanum;
+	private List<StoryDTO> items = new ArrayList<StoryDTO>();
+	//private Context context;
 	private LayoutInflater vi;
-
-	public MylistAdapter(Context context, int textViewResourceId,
-			List<StoryDTO> items) {
-		super(context, textViewResourceId, items);
-		this.context = context;
-		this.items = items;
+	
+	//static constants
+	private static final int TYPE_ITEM = 0;
+    private static final int TYPE_SEPARATOR = 1;
+    private static final int TYPE_MAX_COUNT = TYPE_SEPARATOR + 1;
+    private TreeSet<Integer> mSeparatorsSet = new TreeSet<Integer>();
+    
+	public MylistAdapter(Context context, int textViewResourceId) {
+		super(context, textViewResourceId);
+		//this.context = context;
 		this.vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	}
+	
+	public void addItem(final StoryDTO item) {
+        items.add(item);
+        notifyDataSetChanged();
+    }
+
+    public void addSeparatorItem(final StoryDTO item) {
+        items.add(item);
+        mSeparatorsSet.add(items.size() - 1);
+        notifyDataSetChanged();
+    }
+
+	@Override
+	public int getViewTypeCount() {
+		return TYPE_MAX_COUNT;
 	}
 
 	@Override
+	public int getItemViewType(int position) {
+		return mSeparatorsSet.contains(position) ? TYPE_SEPARATOR : TYPE_ITEM;
+	}
+	
+	@Override
+    public int getCount() {
+        return items.size();
+    }
+
+    @Override
+    public StoryDTO getItem(int position) {
+        return items.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+
+	@SuppressLint("CutPasteId")
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		nanum = Util.nanum;
 		
 		/**
 		 * 내 이야기
@@ -47,30 +89,47 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 		String storyContent = story.getContent();
 		String storyTime = story.getStory_time();
 		String stampYn = story.getStamp_yn();
-		View v = convertView;
-		Log.i("MylistAdapter", "list = "+position+storyDate+storyContent);
+		//Log.i("MylistAdapter", "list = "+position+storyDate+storyContent);			
 		
-		
-			
+        int type = getItemViewType(position);
+        //System.out.println("getView " + position + " " + convertView + " type = " + type);
+        
 
-		/**
-		 * 날짜구분선 여부를 확인하고 view를 생성한다.
-		 */
-		if("#dateInfo".equals(storyContent)){
-			v = vi.inflate(R.layout.mylist_line, null);
-			v.setClickable(false);
-			
+		View v = null;
+		
+		// View 생성
+		if (convertView == null) {
+			switch (type) {
+			case TYPE_SEPARATOR:
+				v = vi.inflate(R.layout.mylist_line, null);
+				break;
+
+			case TYPE_ITEM:
+				v = vi.inflate(R.layout.mylist_item, null);
+				v.setClickable(false);
+				break;
+
+			}
+		} else {
+			v = convertView;
+		}        
+        
+		//View 내용 채우기
+    	switch (type) {
+    	case TYPE_SEPARATOR:
+    		
 			/**
 			 * 구분선 날짜
 			 */
-			TextView mystoryDate = (TextView) v.findViewById(R.id.mylist_item_date);
-			mystoryDate.setTypeface(nanum,Typeface.BOLD);
-			if (mystoryDate != null) {
-				mystoryDate.setText(storyDate);
-			}
+			TextView seperatorDate = (TextView) v.findViewById(R.id.mylist_item_date);
+			seperatorDate.setTypeface(Util.getNanum(getContext()),Typeface.BOLD);
+			if (seperatorDate != null) {
+				seperatorDate.setText(storyDate);
+			} 
 			
-		}else{
-			v = vi.inflate(R.layout.mylist_item, null);
+    		break;
+    		
+    	case TYPE_ITEM:
 			
 			/**
 			 * 작성시간에 맞게 배경변화 
@@ -98,7 +157,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			 * 이야기 작성일자
 			 */
 			TextView mystoryDate = (TextView) v.findViewById(R.id.mylist_item_date);
-			mystoryDate.setTypeface(nanum, Typeface.BOLD);
+			mystoryDate.setTypeface(Util.getNanum(getContext()), Typeface.BOLD);
 			if (mystoryDate != null) {
 				mystoryDate.setText(storyDate);
 			}
@@ -107,7 +166,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			 * 이야기 내용
 			 */
 			TextView mystoryContent = (TextView) v.findViewById(R.id.mylist_item_content);
-			mystoryContent.setTypeface(nanum);
+			mystoryContent.setTypeface(Util.getNanum(getContext()));
 			if (mystoryContent != null) {
 				String content = storyContent;
 				content = content.replaceAll("\n", " ");
@@ -125,11 +184,23 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			 * 스탬프여부
 			 */
 			ImageView star = (ImageView) v.findViewById(R.id.star);
-			if (stampYn != null) {
+			if (star != null) {
 				if("Y".equals(stampYn)){
 					star.setImageResource(R.drawable.star_2);
+				}else{
+					star.setImageResource(R.drawable.star_1);
 				}
 			}
+			
+    		break;
+    	}  	
+
+		/**
+		 * 날짜구분선 여부를 확인하고 view를 생성한다.
+		 */
+		if("#dateInfo".equals(storyContent)){
+			
+		}else{
 			
 		}
 		

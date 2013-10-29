@@ -40,7 +40,7 @@ public class PasswordManagementActivity extends Activity implements
 			ab.setMessage("비밀번호를 초기화 하시겠습니까?").setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					//Action for 'yes'
-					System.out.println("YES");
+					//System.out.println("YES");
 					Intent intent = new Intent(PasswordManagementActivity.this, SettingActivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(intent);
@@ -50,7 +50,7 @@ public class PasswordManagementActivity extends Activity implements
 			}).setNegativeButton("No", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					//Action for 'no'
-					System.out.println("No");
+					//System.out.println("No");
 					Intent intent = new Intent(PasswordManagementActivity.this, SettingActivity.class);
 					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(intent);

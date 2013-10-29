@@ -47,13 +47,13 @@ public class EtingLogoView extends View {
 	private void setAnimationEvent(Context context, Animation an) {
 
 		
-		Drawable dr = context.getResources().getDrawable(R.drawable.eting_logo);
+		Drawable dr = Util.getEtingLogo(context);
 		
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;
 		int height = metrics.heightPixels;
 		
-		dr = new ScaleDrawable(dr, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight()).getDrawable();
+		//dr = new ScaleDrawable(dr, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight()).getDrawable();
 		int size = width * 42 / 100;	//mainRatio% 에 해당하는 크기
 		dr.setBounds(0, 0, size, size);
 

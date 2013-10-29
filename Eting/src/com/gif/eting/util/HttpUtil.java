@@ -55,6 +55,7 @@ public class HttpUtil  {
 			e.printStackTrace();
 			return "UnknownHostException";
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 			System.out.println("FileNotFoundException");
 			return "HttpUtil_Error";
 		}catch (Exception e) {

@@ -28,10 +28,35 @@ public class StoryDTO {
 	private String story_time;
 
 	/**
-	 * 스탬프여부
-	 * 기본은 없고 있으면 Y를 넣는다.
+	 * 스탬프여부 기본은 없고 있으면 Y를 넣는다.
 	 */
 	private String stamp_yn;
+
+	/**
+	 * 받아온 스탬프
+	 */
+	private String stamps;
+
+	/**
+	 * 피드백
+	 */
+	private String comment;
+
+	public String getStamps() {
+		return stamps;
+	}
+
+	public void setStamps(String stamps) {
+		this.stamps = stamps;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 
 	public String getStamp_yn() {
 		return stamp_yn;

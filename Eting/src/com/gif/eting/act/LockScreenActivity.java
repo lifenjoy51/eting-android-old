@@ -1,6 +1,7 @@
 package com.gif.eting.act;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -41,6 +43,7 @@ public class LockScreenActivity extends Activity implements OnClickListener  {
 		try {
 			Class.forName("android.os.AsyncTask");
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 
 		super.onCreate(savedInstanceState);
@@ -49,7 +52,7 @@ public class LockScreenActivity extends Activity implements OnClickListener  {
 		
 		// 암호입력필드
 		EditText et = (EditText) findViewById(R.id.lockScreenPassword);
-		et.setTypeface(Util.nanum);
+		et.setTypeface(Util.getNanum(getApplicationContext()));
 		et.clearComposingText();
 		
 		lockScreenButton = (ImageView) findViewById(R.id.lockScreenButton);
@@ -153,6 +156,12 @@ public class LockScreenActivity extends Activity implements OnClickListener  {
 
 		// 암호 성공/실패 분기처리
 		if (isValid) {
+			//키보드 숨기기
+			InputMethodManager imm = (InputMethodManager) context
+					.getSystemService(Service.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
+			
+			//메인화면으로 이동
 			Intent intent =new Intent(this, MainViewPagerActivity.class);
 	        intent.putExtra("GCM", isGcm);
 	        intent.putExtra("storyId", storyId);
@@ -160,6 +169,7 @@ public class LockScreenActivity extends Activity implements OnClickListener  {
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 			startActivity(intent);
+			overridePendingTransition(R.anim.fade, R.anim.hold);
 			finish(); // 뒤로가기 안먹게
 		} else {
 			// 비밀번호 틀렸을때

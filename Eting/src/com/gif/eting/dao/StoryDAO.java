@@ -28,7 +28,7 @@ public class StoryDAO {
 	private StoryDBHelper dbHelper;
 	private String[] allColumns = { StoryDBHelper.COL_IDX,
 			StoryDBHelper.COL_CONTENT, StoryDBHelper.COL_STORY_DATE,
-			StoryDBHelper.COL_STORY_TIME, StoryDBHelper.COL_STAMP_YN };
+			StoryDBHelper.COL_STORY_TIME, StoryDBHelper.COL_STAMP_YN, StoryDBHelper.COL_STAMPS, StoryDBHelper.COL_COMMENT };
 
 	/**
 	 * 생성할때 dbHelper 초기화
@@ -75,8 +75,7 @@ public class StoryDAO {
 
 		//확인용 로그
 		for (StoryDTO story : storyList) {
-			Log.i("my story list",
-					story.getIdx() + story.getContent() + story.getStory_date());
+			//Log.i("my story list",story.getIdx() + story.getContent() + story.getStory_date());
 		}
 		
 		return storyList;
@@ -96,7 +95,7 @@ public class StoryDAO {
 		StoryDTO returnedStory = getStoryDTO(cur); // 반환할 객체
 		cur.close();
 		
-		Log.i("story info",returnedStory.toString());
+		//Log.i("story info",returnedStory.toString());
 
 		return returnedStory;
 	}
@@ -115,7 +114,7 @@ public class StoryDAO {
 		values.put(StoryDBHelper.COL_STORY_TIME, story.getStory_time());
 		long insertedId = database.insert(StoryDBHelper.TABLE_STORY_MASTER,
 				null, values);
-		Log.i("story is inserted",String.valueOf(insertedId));
+		//Log.i("story is inserted",String.valueOf(insertedId));
 		return insertedId;
 	}
 
@@ -133,13 +132,13 @@ public class StoryDAO {
 		values.put(StoryDBHelper.COL_STORY_TIME, story.getStory_time());
 		int rtn = database.update(StoryDBHelper.TABLE_STORY_MASTER, values,
 				StoryDBHelper.COL_IDX + " = " + idx, null);
-		Log.i("story is updated",String.valueOf(rtn));
+		//Log.i("story is updated",String.valueOf(rtn));
 
 		return rtn;
 	}
 	
 	/**
-	 *  스탬프여부 수정
+	 *  스탬프여부 수정 (목록)
 	 *  
 	 * @param story
 	 * @return
@@ -150,7 +149,28 @@ public class StoryDAO {
 		values.put(StoryDBHelper.COL_STAMP_YN, "Y");
 		int rtn = database.update(StoryDBHelper.TABLE_STORY_MASTER, values,
 				StoryDBHelper.COL_IDX + " = " + idx, null);
-		Log.i("updStoryStampYn is updated",String.valueOf(rtn));
+		//Log.i("updStoryStampYn is updated",String.valueOf(rtn));
+
+		return rtn;
+	}
+	
+	/**
+	 * 스탬프 저장하기
+	 * 
+	 * @param storyId
+	 * @param stamps
+	 * @param comment
+	 * @return
+	 */
+	public Integer updStoryStamp(String storyId, String stamps, String comment) {
+		long idx = Long.parseLong(storyId);
+		ContentValues values = new ContentValues();
+		values.put(StoryDBHelper.COL_STAMP_YN, "Y");
+		values.put(StoryDBHelper.COL_STAMPS, stamps);
+		values.put(StoryDBHelper.COL_COMMENT, comment);
+		int rtn = database.update(StoryDBHelper.TABLE_STORY_MASTER, values,
+				StoryDBHelper.COL_IDX + " = " + idx, null);
+		//Log.i("updStoryStampYn is updated",String.valueOf(rtn));
 
 		return rtn;
 	}
@@ -165,7 +185,7 @@ public class StoryDAO {
 		long idx = story.getIdx();
 		int rtn = database.delete(StoryDBHelper.TABLE_STORY_MASTER,
 				StoryDBHelper.COL_IDX + " = " + idx, null);
-		Log.i("story is deleted",String.valueOf(rtn));
+		//Log.i("story is deleted",String.valueOf(rtn));
 		return rtn;
 	}
 
@@ -182,6 +202,8 @@ public class StoryDAO {
 		story.setStory_date(cursor.getString(2));
 		story.setStory_time(cursor.getString(3));
 		story.setStamp_yn(cursor.getString(4));
+		story.setStamps(cursor.getString(5));
+		story.setComment(cursor.getString(6));
 		return story;
 	}
 	
@@ -197,4 +219,5 @@ public class StoryDAO {
 		
 		return count;
 	}
+	
 }

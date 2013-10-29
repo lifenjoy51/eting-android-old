@@ -68,7 +68,7 @@ public class SendStampTask extends AsyncTask<Object, String, String> {
 			}
 			
 			String response = HttpUtil.doPost(urlStr, param);	//Http전송 
-			System.out.println(this.getClass().getName() + " = " + response);
+			//System.out.println(this.getClass().getName() + " = " + response);
 			return response;
 	}
 	
@@ -78,7 +78,7 @@ public class SendStampTask extends AsyncTask<Object, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
 
-		Log.i("json response", result);	//응답확인
+		//Log.i("json response", result);	//응답확인
 		
 		if("UnknownHostException".equals(result)){
 			

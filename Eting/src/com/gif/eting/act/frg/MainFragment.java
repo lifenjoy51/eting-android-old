@@ -54,7 +54,6 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	private TextView mainToday;
 	private TextView mainEtingCnt;
 	private TextView mainInboxCnt;
-	private Typeface nanum = Util.nanum;
 
 	// 스크린크기
 	private DisplayMetrics metrics;
@@ -140,7 +139,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 */
 		mainToday = (TextView) rootView.findViewById(R.id.main_today);
 
-		mainToday.setTypeface(nanum);
+		mainToday.setTypeface(Util.getNanum(getActivity()));
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd",
 				Locale.KOREA);
@@ -247,13 +246,13 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 				.isGooglePlayServicesAvailable(getActivity()
 						.getApplicationContext());
 		ConnectionResult cr = new ConnectionResult(gcmChk, null);
-		System.out.println(cr.toString());
+		//System.out.println(cr.toString());
 
 		/**
 		 * 내 이야기개수 설정
 		 */
 		mainEtingCnt = (TextView) rootView.findViewById(R.id.main_eting_cnt);
-		mainEtingCnt.setTypeface(nanum);
+		mainEtingCnt.setTypeface(Util.getNanum(getActivity()));
 		mainEtingCnt.setPaintFlags(mainEtingCnt.getPaintFlags()
 				| Paint.FAKE_BOLD_TEXT_FLAG);
 		svc = new StoryService(getActivity());
@@ -277,10 +276,9 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		/**
 		 * 받은편지함 개수 설정
 		 */
-		Drawable dr = getActivity().getResources().getDrawable(
-				R.drawable.spaceship);
+		Drawable dr = Util.getSpaceship(getActivity());
 		mainInboxCnt = (TextView) rootView.findViewById(R.id.main_inbox_cnt);
-		mainInboxCnt.setTypeface(nanum, Typeface.BOLD);
+		mainInboxCnt.setTypeface(Util.getNanum(getActivity()), Typeface.BOLD);
 		is = new InboxService(getActivity());
 		mainInboxCnt.setBackgroundResource(R.drawable.spaceship);
 		mainInboxCnt.setGravity(Gravity.CENTER);
@@ -401,7 +399,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	 * @return
 	 */
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		Log.i("onKeyDown SUB", String.valueOf(keyCode));
+		//Log.i("onKeyDown SUB", String.valueOf(keyCode));
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			// Ask the user if they want to quit
 			new AlertDialog.Builder(getActivity())
@@ -418,7 +416,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 									// Stop the activity
 									// getActivity().finish();
 									System.exit(0);
-									System.out.println("is end??");
+									//System.out.println("is end??");
 								}
 
 							}).setNegativeButton(R.string.no, null).show();

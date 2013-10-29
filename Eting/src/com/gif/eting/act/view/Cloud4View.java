@@ -50,7 +50,7 @@ public class Cloud4View extends View {
 	private void setAnimationEvent(Context context, Animation an) {
 
 		
-		Drawable dr = context.getResources().getDrawable(R.drawable.main_cloud_1);
+		Drawable dr = Util.getCloud1(context);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
 		dr.setAlpha(229);
 

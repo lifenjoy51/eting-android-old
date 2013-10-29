@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,7 +28,6 @@ import com.gif.eting.act.view.StampView;
 import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
-import com.gif.eting.svc.task.ReceiveStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
 import com.gif.eting.util.Util;
 import com.gif.eting.R;
@@ -45,11 +43,17 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 	private StoryService storyService;
 	private String storyIdx;
 	private Context context;
-	private Typeface nanum = Util.nanum;
 	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
+		try {
+			Class.forName("android.os.AsyncTask");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.read_mystory_popup);
@@ -61,7 +65,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		SimpleDateFormat sdf = new SimpleDateFormat("HH", Locale.KOREA);
 		String thisHourStr = sdf.format(new Date());
 		int thisHour = Integer.parseInt(thisHourStr);
-		Log.i("currunt hour", thisHourStr);
+		// Log.i("currunt hour", thisHourStr);
 		
 		
 
@@ -79,7 +83,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		
 		Intent intent = getIntent();
 		storyIdx = intent.getStringExtra("idx");	//파라미터값으로 넘긴 이야기 고유번호
-		Log.i("ReadMyStoryActivity recieve story idx = ",storyIdx);
+		//Log.i("ReadMyStoryActivity recieve story idx = ",storyIdx);
 		
 		//Service초기화
 		storyService = new StoryService(this.getApplicationContext());
@@ -105,17 +109,17 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			
 			TextView storyDateView = (TextView) findViewById(R.id.mystory_content_top);
 			storyDateView.setText(storyDate);
-			storyDateView.setTypeface(nanum, Typeface.BOLD);
+			storyDateView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
 			
 			TextView contentView = (TextView) findViewById(R.id.popup_content);
-			contentView.setTypeface(nanum);
+			contentView.setTypeface(Util.getNanum(getApplicationContext()));
 			contentView.setText(content);
 			
 			/**
 			 * 작성시간에 맞게 배경화면 변화
 			 */
 			int storyHour = Integer.parseInt(storyTime);
-			Log.i("currunt hour", thisHourStr);
+			//Log.i("currunt hour", thisHourStr);
 								
 			if(storyHour<6 ){
 				findViewById(R.id.mystory_content_top).setBackgroundResource(R.drawable.myeting_blank_b_top);
@@ -146,13 +150,15 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			 * execute의 파라미터가 실제 넘겨줄 자료들.
 			 * parameter[0] = idx. 이야기 고유번호.
 			 */
-			new ReceiveStampTask(new AfterReceiveStampTask()).execute(storyIdx);
+			//new ReceiveStampTask(new AfterReceiveStampTask()).execute(storyIdx);
+			drawStampArea();
 			
 			//클릭이벤트 설정
 			findViewById(R.id.del_btn).setOnClickListener(this);
 			findViewById(R.id.check_btn).setOnClickListener(this);
 		}catch(Exception e){
-			Log.i("read my story activity error", e.toString());
+			//Log.i("read my story activity error", e.toString());
+			e.printStackTrace();
 			Toast.makeText(context, "문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -175,92 +181,9 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 
 		@Override
 		public void onTaskComplete(List<StampDTO> list) {
-			System.out.println("@_@!#!#");
-			if (list != null) {
-				if (list.size() > 0) {
-					System.out.println("onTaskComplete = "+list);
-					String sender = list.get(0).getSender();
-					TextView contentView = (TextView) findViewById(R.id.popup_stamp_sender);
-					contentView.setTypeface(nanum, Typeface.BOLD);
-					
-					contentView.setText("PS. "+sender);
-				}else{
-					ScrollView stampAreaView = (ScrollView) findViewById(R.id.mystory_stamp_scroll_area); // 스탬프영역
-					stampAreaView.setVisibility(View.GONE);					
-					ImageView line = (ImageView) findViewById(R.id.stamp_div_line);
-					line.setVisibility(View.GONE);
-					
-				}
-			}else{
-				ScrollView stampAreaView = (ScrollView) findViewById(R.id.mystory_stamp_scroll_area); // 스탬프영역
-				stampAreaView.setVisibility(View.GONE);
-				ImageView line = (ImageView) findViewById(R.id.stamp_div_line);
-				line.setVisibility(View.GONE);
-				
-			}
-
-			/**
-			 * 스탬프입력창
-			 */
-			LinearLayout stampArea = (LinearLayout) findViewById(R.id.mystory_stamp_area); // 스탬프영역
-
-			// 여백
-			int margin = 10;
-
-			// 한줄에 3개씩 넣었을대 필요한 너비
-			int cntPerRow = 3;
-
-			// 처음 시작위치 설정
-			int chk = 1;
-
-			LinearLayout stampInnerLayout = initLayout();
-			for (StampDTO stamp : list) {
-				System.out.println("@@@@@"+stamp);
-				StampView stampView = new StampView(context);
-				stampView.setText(stamp.getStamp_name());
-				stampView.setStamp(stamp);
-				stampView.setGravity(Gravity.CENTER);
-				stampView.setBackgroundResource(R.drawable.feedback);
-				stampView.setTextSize(15);
-				stampView.setTextColor(Color.parseColor("#474747"));
-				stampView.setTypeface(nanum, Typeface.BOLD);
-
-				LinearLayout.LayoutParams stampParams = new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.WRAP_CONTENT,
-						LinearLayout.LayoutParams.WRAP_CONTENT);
-				
-				stampParams.leftMargin = margin;
-				stampParams.topMargin = margin;
-				stampParams.rightMargin = margin;
-				stampParams.bottomMargin = margin;
-				stampView.setLayoutParams(stampParams);
-
-				System.out.println("chk = ? "+chk);
-				System.out.println("cntPerRow = ? "+cntPerRow);
-				if (chk != 0 && chk % cntPerRow == 0) {
-					stampInnerLayout.addView(stampView);
-					stampArea.addView(stampInnerLayout);
-					stampInnerLayout = initLayout();
-					System.out.println("new stampInnerLayout");
-				} else {
-					stampInnerLayout.addView(stampView);
-				}
-				chk++;
-
-			}
+			//System.out.println("@_@!#!#");
 			
-			//출력해줌
-			if (chk != 0 && --chk % cntPerRow != 0) {
-				stampArea.addView(stampInnerLayout);				
-			}
-		}
-
-		private LinearLayout initLayout() {
-			LinearLayout stampInnerLayout = new LinearLayout(context);
-			stampInnerLayout.setGravity(Gravity.CENTER);
-			stampInnerLayout.setLayoutParams(new LinearLayout.LayoutParams(
-					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-			return stampInnerLayout;
+			drawStampArea();
 		}
 	}	
 		
@@ -294,5 +217,93 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			finish();
 		}
 	}
+	
+	/**
+	 * 스탬프정보 출력
+	 * 
+	 */
+	public void drawStampArea(){
+		List<StampDTO> list=  storyService.getStamps(storyIdx);
+		
+		if (list != null) {
+			if (list.size() > 0) {
+				//System.out.println("onTaskComplete = "+list);
+				String sender = list.get(0).getSender();
+				TextView contentView = (TextView) findViewById(R.id.popup_stamp_sender);
+				contentView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
+				
+				contentView.setText("PS. "+sender);
+			}else{
+				ScrollView stampAreaView = (ScrollView) findViewById(R.id.mystory_stamp_scroll_area); // 스탬프영역
+				stampAreaView.setVisibility(View.GONE);					
+				ImageView line = (ImageView) findViewById(R.id.stamp_div_line);
+				line.setVisibility(View.GONE);
+				
+			}
+		}
 
+		/**
+		 * 스탬프입력창
+		 */
+		LinearLayout stampArea = (LinearLayout) findViewById(R.id.mystory_stamp_area); // 스탬프영역
+
+		// 여백
+		int margin = 10;
+
+		// 한줄에 3개씩 넣었을대 필요한 너비
+		int cntPerRow = 3;
+
+		// 처음 시작위치 설정
+		int chk = 1;
+
+		LinearLayout stampInnerLayout = initLayout();
+		for (StampDTO stamp : list) {
+			//System.out.println("@@@@@"+stamp);
+			StampView stampView = new StampView(context);
+			stampView.setText(stamp.getStamp_name());
+			stampView.setStamp(stamp);
+			stampView.setGravity(Gravity.CENTER);
+			stampView.setBackgroundResource(R.drawable.feedback);
+			stampView.setTextSize(15);
+			stampView.setTextColor(Color.parseColor("#555555"));
+			stampView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
+
+			LinearLayout.LayoutParams stampParams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT);
+			
+			stampParams.leftMargin = margin;
+			stampParams.topMargin = margin;
+			stampParams.rightMargin = margin;
+			stampParams.bottomMargin = margin;
+			stampView.setLayoutParams(stampParams);
+
+			//System.out.println("chk = ? "+chk);
+			//System.out.println("cntPerRow = ? "+cntPerRow);
+			if (chk != 0 && chk % cntPerRow == 0) {
+				stampInnerLayout.addView(stampView);
+				stampArea.addView(stampInnerLayout);
+				stampInnerLayout = initLayout();
+				//System.out.println("new stampInnerLayout");
+			} else {
+				stampInnerLayout.addView(stampView);
+			}
+			chk++;
+
+		}
+		
+		//출력해줌
+		if (chk != 0 && --chk % cntPerRow != 0) {
+			stampArea.addView(stampInnerLayout);				
+		}
+	}
+
+
+	private LinearLayout initLayout() {
+		LinearLayout stampInnerLayout = new LinearLayout(context);
+		stampInnerLayout.setGravity(Gravity.CENTER);
+		stampInnerLayout.setLayoutParams(new LinearLayout.LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		return stampInnerLayout;
+	}
 }

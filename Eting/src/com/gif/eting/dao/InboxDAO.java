@@ -73,8 +73,7 @@ public class InboxDAO {
 		cursor.close();
 
 		for (StoryDTO story : storyList) {
-			Log.i("inbox story list",
-					story.getIdx() + story.getContent() + story.getStory_date());
+			//Log.i("inbox story list",story.getIdx() + story.getContent() + story.getStory_date());
 		}
 		
 		return storyList;
@@ -94,7 +93,7 @@ public class InboxDAO {
 		StoryDTO returnedStory = getStoryDTO(cur); // 반환할 객체
 		cur.close();
 		
-		Log.i("inbox info",returnedStory.toString());
+		//Log.i("inbox info",returnedStory.toString());
 
 		return returnedStory;
 	}
@@ -111,7 +110,7 @@ public class InboxDAO {
 		values.put(InboxDBHelper.COL_STORY_DATE, story.getStory_date());
 		long insertedId = database.insert(InboxDBHelper.TABLE_INBOX,
 				null, values);
-		Log.i("inbox is inserted",String.valueOf(insertedId));
+		//Log.i("inbox is inserted",String.valueOf(insertedId));
 
 		return insertedId;
 	}
@@ -128,7 +127,7 @@ public class InboxDAO {
 		values.put(InboxDBHelper.COL_STORY_DATE, story.getStory_date());
 		int rtn = database.update(InboxDBHelper.TABLE_INBOX, values,
 				InboxDBHelper.COL_IDX + " = " + idx, null);
-		Log.i("inbox is updated",String.valueOf(rtn));
+		//Log.i("inbox is updated",String.valueOf(rtn));
 
 
 		return rtn;
@@ -143,7 +142,7 @@ public class InboxDAO {
 		long idx = story.getIdx();
 		int rtn = database.delete(InboxDBHelper.TABLE_INBOX,
 				InboxDBHelper.COL_IDX + " = " + idx, null);
-		Log.i("inbox is deleted",String.valueOf(rtn));
+		//Log.i("inbox is deleted",String.valueOf(rtn));
 		return rtn;
 	}
 

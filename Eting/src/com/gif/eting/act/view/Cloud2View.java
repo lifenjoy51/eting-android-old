@@ -49,7 +49,7 @@ public class Cloud2View extends View {
 	private void setAnimationEvent(Context context, Animation an) {
 
 		
-		Drawable dr = context.getResources().getDrawable(R.drawable.main_cloud_3);
+		Drawable dr = Util.getCloud3(context);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
 		dr.setAlpha(204);
 

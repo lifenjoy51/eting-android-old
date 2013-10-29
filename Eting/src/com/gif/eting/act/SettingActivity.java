@@ -28,7 +28,6 @@ public class SettingActivity extends Activity implements OnClickListener {
 	private ImageView credit_img_btn;
 	private ImageView tutorialBtn;
 	private TextView setting_textView;
-	private Typeface nanum = Util.nanum;
 	private SettingDAO settingDao;
 
 	// private Uri fileUri;
@@ -63,7 +62,7 @@ public class SettingActivity extends Activity implements OnClickListener {
     	}
 
 		// 글꼴
-		setting_textView.setTypeface(nanum);
+		setting_textView.setTypeface(Util.getNanum(getApplicationContext()));
 		setting_textView.setPaintFlags(setting_textView.getPaintFlags()
 				| Paint.FAKE_BOLD_TEXT_FLAG);
 		

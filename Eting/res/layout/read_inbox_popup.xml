@@ -38,7 +38,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="40dp"
         android:gravity="left|center"
-        android:textColor="#4D4D4D"
+        android:textColor="#555555"
         android:textSize="14sp" />
     
      <Button
@@ -68,7 +68,7 @@
             android:lineSpacingExtra="5dp"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
-            android:textColor="#4D4D4D"
+            android:textColor="#555555"
             android:textSize="17sp" />
     </ScrollView>
 
@@ -88,27 +88,30 @@
         </LinearLayout>
     </ScrollView>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/inbox_control_area"
         android:layout_width="fill_parent"
-        android:layout_height="100sp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:paddingTop="20dp"
         android:background="@drawable/feedback_bg" >
 
         <EditText
             android:id="@+id/stamp_sender"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginRight="5dp"
             android:background="@drawable/feedback_name"
             android:ems="8"
             android:hint="@string/enter_you_name"
             android:maxLength="15"
+            android:singleLine="true"
             android:paddingLeft="10dp"
-            android:textColor="#474747"
+            android:paddingRight="10dp"
+            android:textColor="#555555"
             android:textColorHint="#BBBBBB" >
         </EditText>
 
@@ -116,11 +119,9 @@
             android:id="@+id/inbox_confirm_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/inbox_btn_selector" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

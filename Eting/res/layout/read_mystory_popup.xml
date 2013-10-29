@@ -18,7 +18,7 @@
         android:contentDescription="@string/popuptitle"
         android:paddingLeft="30dp"
         android:paddingTop="15dp"
-        android:textColor="#474747"
+        android:textColor="#555555"
         android:textSize="14sp" />
 
     <LinearLayout
@@ -47,20 +47,28 @@
             android:background="@drawable/check_btn_selector"
             android:contentDescription="@string/delbtn" />
     </LinearLayout>
+    
+   	<ImageView
+        android:id="@+id/popup_stamp_sender_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/mystory_btn_area"
+        android:layout_marginBottom="10dp"
+       	android:background="@drawable/feed_blank_bottom"
+        android:paddingLeft="10dp"
+       />    
 
     <TextView
         android:id="@+id/popup_stamp_sender"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/mystory_btn_area"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/feed_blank_bottom"
-        android:paddingBottom="5dp"
+        android:layout_above="@id/popup_stamp_sender_bottom"
+        android:background="@android:color/white"
         android:paddingLeft="10dp"
         android:paddingTop="5dp"
         android:textColor="#999999"
         android:textSize="16sp" />
-
+    
     <ScrollView
         android:id="@+id/mystory_stamp_scroll_area"
         android:layout_width="fill_parent"
@@ -124,7 +132,7 @@
             android:lineSpacingExtra="5dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:textColor="#474747"
+            android:textColor="#555555"
             android:textSize="17sp" />
     </ScrollView>
 

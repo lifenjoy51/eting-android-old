@@ -26,6 +26,7 @@ public class Installation {
 					writeInstallationFile(installation);
 				sID = readInstallationFile(installation);
 			} catch (Exception e) {
+				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
 		}

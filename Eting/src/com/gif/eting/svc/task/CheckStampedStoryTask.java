@@ -53,7 +53,7 @@ public class CheckStampedStoryTask extends AsyncTask<Object, String, String> {
 			String param = "phone_id=" + phoneId;	
 			
 			String response = HttpUtil.doPost(urlStr, param);	//Http전송 
-			System.out.println(this.getClass().getName() + " = " + response);
+			//System.out.println(this.getClass().getName() + " = " + response);
 			return response;
 	}
 	
@@ -63,7 +63,7 @@ public class CheckStampedStoryTask extends AsyncTask<Object, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
 
-		Log.i("CheckStampedStoryTask json response", result);	//응답확인
+		//Log.i("CheckStampedStoryTask json response", result);	//응답확인
 		
 		if("UnknownHostException".equals(result)){
 			

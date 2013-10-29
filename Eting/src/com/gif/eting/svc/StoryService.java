@@ -1,5 +1,6 @@
 package com.gif.eting.svc;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,10 +9,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.gif.eting.dao.InboxDAO;
 import com.gif.eting.dao.StoryDAO;
+import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
 
 /**
@@ -77,8 +78,7 @@ public class StoryService {
 				myStoryDto.setStory_date(myStoryDate);
 				myStoryDto.setStory_time(myStoryTime);
 
-				Log.i("returned my story",
-						myStoryDto.getIdx() + myStoryDto.getContent() + myStoryDto.getStory_date());
+				//Log.i("returned my story", myStoryDto.getIdx() + myStoryDto.getContent() + myStoryDto.getStory_date());
 				
 				this.saveMyStoryToPhone(myStoryDto); // 폰DB에 내 이야기 저장
 			}
@@ -100,8 +100,7 @@ public class StoryService {
 				recievedStoryDto.setStory_date(recievedStoryDate);
 				recievedStoryDto.setStory_time(recievedStoryTime);
 				
-				Log.i("returned recieved story",
-						recievedStoryDto.getIdx() + recievedStoryDto.getContent() + recievedStoryDto.getStory_date());
+				//Log.i("returned recieved story", recievedStoryDto.getIdx() + recievedStoryDto.getContent() + recievedStoryDto.getStory_date());
 				
 				this.saveRecievedStoryToPhone(recievedStoryDto); // 폰DB에 받아온 이야기 저장
 			}
@@ -174,7 +173,7 @@ public class StoryService {
 	}
 	
 	/**
-	 * 스탬프찍힌 이야기 업데이트
+	 * 스탬프찍힌 이야기 업데이트 (목록)
 	 * @param stampedStoryList
 	 */
 	public void updStoryStampYn(List<String> stampedStoryList){
@@ -183,6 +182,17 @@ public class StoryService {
 		for(String storyId : set){
 			storyDao.updStoryStampYn(storyId);
 		}
+		storyDao.close();
+		
+	}
+	
+	/**
+	 * 스탬프찍힌 이야기 업데이트 (단건)
+	 * @param stampedStoryList
+	 */
+	public void updStoryStamp(String stampedStory, String stamps, String comment){
+		storyDao.open();
+		storyDao.updStoryStamp(stampedStory, stamps, comment);
 		storyDao.close();
 		
 	}
@@ -197,6 +207,33 @@ public class StoryService {
 		Integer count = storyDao.getStoryCnt();
 		storyDao.close();
 		return count;
+	}
+	
+	/**
+	 *  이야기에 찍힌 스탬프를 불러온다.
+	 *  
+	 * @param idx
+	 * @return
+	 */
+	public List<StampDTO> getStamps(String idx) {
+		storyDao.open();
+		StoryDTO myStory = storyDao.getStoryInfo(idx);
+		String stamps = myStory.getStamps();
+		String comment = myStory.getComment();
+		
+		List<StampDTO> list = new ArrayList<StampDTO>();
+		if(stamps!=null){
+			StampService stSvc = new StampService(context);
+			String[] st = stamps.split(",");
+			for(String stampId : st){
+				StampDTO stamp = stSvc.getStamp(stampId);
+				stamp.setStory_id(idx);
+				stamp.setSender(comment);
+				list.add(stamp);
+			}
+		}
+		storyDao.close();
+		return list;
 	}
 
 }

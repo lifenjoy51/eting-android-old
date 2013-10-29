@@ -8,11 +8,8 @@ import android.app.Service;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.opengl.Visibility;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +24,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.gif.eting.R;
 import com.gif.eting.act.MainViewPagerActivity;
 import com.gif.eting.act.view.UfoWritePageView;
 import com.gif.eting.svc.task.SendStoryTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
 import com.gif.eting.util.Util;
-import com.gif.eting.R;
 
 /**
  * 내 이야기 쓰기
@@ -44,7 +41,6 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		OnClickListener {
 	private ViewPager mPager = MainViewPagerActivity.mPager;
 	private TextView tv;
-	private Typeface nanum = Util.nanum;
 	private Context context;
 	private ViewGroup rootView;
 	private ViewGroup writeContentArea;
@@ -98,13 +94,13 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		
 		//폰트설정
 		EditText et = (EditText) rootView.findViewById(R.id.story_content);
-		et.setTypeface(nanum);
+		et.setTypeface(Util.getNanum(getActivity()));
 
 		tv = (TextView) rootView.findViewById(R.id.write_story_dt);
-		tv.setTypeface(nanum, Typeface.BOLD);
+		tv.setTypeface(Util.getNanum(getActivity()), Typeface.BOLD);
 		
 		/*send_textview = (TextView) rootView.findViewById(R.id.send_textview);
-		send_textview.setTypeface(nanum);
+		send_textview.setTypeface(Util.getNanum(getActivity()));
 		send_textview.setPaintFlags(send_textview.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);*/
 
 		// 상단에 오늘날짜 설정
@@ -204,7 +200,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 	}
 
 	public void onDestroy() {
-		Log.i("test", "onDstory()");
+		//Log.i("test", "onDstory()");
 		super.onDestroy();
 	}
 
@@ -216,7 +212,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 
 		@Override
 		public void onTaskComplete(String result) {
-			Log.i("onTaskComplete", result);
+			//Log.i("onTaskComplete", result);
 			
 			/**
 			 * 에러처리
@@ -255,7 +251,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 	 * @return
 	 */
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		Log.i("onKeyDown WriteMyStory", String.valueOf(keyCode));
+		//Log.i("onKeyDown WriteMyStory", String.valueOf(keyCode));
 		// 메인 화면으로 이동
 		if (mPager != null) {
 			mPager.setCurrentItem(1);
@@ -322,7 +318,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 	 */
 	private void completeSendingStory(){
 		
-		System.out.println("completeSendingStory");
+		//System.out.println("completeSendingStory");
 		
 		/**
 		 * 애니메이션이 모두 끝나고 && 전송이 제대로 이루어지면 진행, 아니면 리턴

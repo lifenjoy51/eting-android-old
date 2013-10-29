@@ -74,8 +74,7 @@ public class StampDAO {
 
 		//확인용 로그
 		for (StampDTO stamp : stampList) {
-			Log.i("my stamp list",
-					stamp.getStamp_id() + stamp.getStamp_name() + stamp.getStamp_url());
+			//Log.i("my stamp list", stamp.getStamp_id() + stamp.getStamp_name() + stamp.getStamp_url());
 		}
 		
 		return stampList;
@@ -95,7 +94,7 @@ public class StampDAO {
 		StampDTO returnedStamp = getStampDTO(cur); // 반환할 객체
 		cur.close();
 		
-		Log.i("stamp info",returnedStamp.toString());
+		//Log.i("stamp info",returnedStamp.toString());
 
 		return returnedStamp;
 	}
@@ -115,7 +114,7 @@ public class StampDAO {
 		values.put(StampDBHelper.COL_URL, stamp.getStamp_url());
 		long insertedId = database.insert(StampDBHelper.TABLE_STAMP_MASTER,
 				null, values);
-		Log.i("stamp is inserted",String.valueOf(insertedId));
+		//Log.i("stamp is inserted",String.valueOf(insertedId));
 		return insertedId;
 	}
 
@@ -134,7 +133,7 @@ public class StampDAO {
 		values.put(StampDBHelper.COL_URL, stamp.getStamp_url());
 		int rtn = database.update(StampDBHelper.TABLE_STAMP_MASTER, values,
 				StampDBHelper.COL_IDX + " = " + idx, null);
-		Log.i("stamp is updated",String.valueOf(rtn));
+		//Log.i("stamp is updated",String.valueOf(rtn));
 
 		return rtn;
 	}
@@ -149,7 +148,7 @@ public class StampDAO {
 		String idx = stamp.getStamp_id();
 		int rtn = database.delete(StampDBHelper.TABLE_STAMP_MASTER,
 				StampDBHelper.COL_IDX + " = " + idx, null);
-		Log.i("stamp is deleted",String.valueOf(rtn));
+		//Log.i("stamp is deleted",String.valueOf(rtn));
 		return rtn;
 	}
 	

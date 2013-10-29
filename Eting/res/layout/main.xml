@@ -16,7 +16,7 @@
         android:id="@+id/main_today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#4d4d4d"
+        android:textColor="#555555"
         android:textSize="42sp" />
 
     <TextView

@@ -48,7 +48,7 @@ public class ReportStroyTask extends AsyncTask<Object, String, String> {
 			this.context = (Context) params[1];	//파라미터 두번째값 context
 			
 			String response = HttpUtil.doPost(urlStr, param);	//Http전송 
-			System.out.println(this.getClass().getName() + " = " + response);
+			//System.out.println(this.getClass().getName() + " = " + response);
 			return response;
 	}
 
@@ -58,7 +58,7 @@ public class ReportStroyTask extends AsyncTask<Object, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
 
-		Log.i("reportStroyTask json response", result); // 응답확인
+		//Log.i("reportStroyTask json response", result); // 응답확인
 		String returnMessage = "";
 
 		if ("UnknownHostException".equals(result)) {

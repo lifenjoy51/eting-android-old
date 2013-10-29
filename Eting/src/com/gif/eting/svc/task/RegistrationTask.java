@@ -40,7 +40,7 @@ public class RegistrationTask extends AsyncTask<Object, String, String> {
 			String urlStr = Util.serverContext+"/registration";
 			
 			String response = HttpUtil.doPost(urlStr, param);	//Http전송 
-			System.out.println(this.getClass().getName() + " = " + response);
+			//System.out.println(this.getClass().getName() + " = " + response);
 			return response;
 	}	
 	

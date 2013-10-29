@@ -50,7 +50,7 @@ public class SendStoryTask extends AsyncTask<Object, String, String> {
 			String urlStr = Util.serverContext+"/saveStory";
 			
 			String response = HttpUtil.doPost(urlStr, param);	//Http전송 
-			System.out.println(this.getClass().getName() + " = " + response);
+			//System.out.println(this.getClass().getName() + " = " + response);
 			return response;
 	}	
 	
@@ -66,7 +66,7 @@ public class SendStoryTask extends AsyncTask<Object, String, String> {
 			returnString = "UnknownHostException";
 		}else{
 
-			Log.i("json response", result);	//응답 확인
+			//Log.i("json response", result);	//응답 확인
 
 			// 폰DB에 저장
 			StoryService storyService = new StoryService(context);

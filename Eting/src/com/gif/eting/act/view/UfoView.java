@@ -49,8 +49,7 @@ public class UfoView extends View {
 	 */
 	private void setAnimationEvent(Context context, Animation an){
 
-		Drawable dr = context.getResources().getDrawable(
-				R.drawable.intro_ufo);
+		Drawable dr = Util.getIntro_ufo(context);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
 
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();

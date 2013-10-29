@@ -13,11 +13,8 @@ import android.util.Log;
 
 import com.gif.eting.R;
 import com.gif.eting.act.IntroActivity;
-import com.gif.eting.act.LockScreenActivity;
-import com.gif.eting.act.MainViewPagerActivity;
 import com.gif.eting.dao.SettingDAO;
-import com.gif.eting.svc.PasswordService;
-import com.gif.eting.svc.task.CheckStampedStoryTask;
+import com.gif.eting.svc.StoryService;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 /**
@@ -64,6 +61,12 @@ public class GcmIntentService extends IntentService {
                 // Post notification of received message.
                 //TODO 환경설정값에 따라서 메세지를 보여줌
                 String storyId = extras.getString("story_id");
+                String stamps = extras.getString("stamps");	//,로 이어져있음
+                String comment = extras.getString("comment");
+                
+                StoryService svc = new StoryService(this);
+                svc.updStoryStamp(storyId, stamps, comment);
+                                
                 sendNotification(storyId);
                 Log.i(TAG, "Received: " + extras.toString());
             }
@@ -76,7 +79,7 @@ public class GcmIntentService extends IntentService {
     // This is just one simple example of what you might choose to do with
     // a GCM message.
     private void sendNotification(String storyId) {
-    	Log.i("sendNotification", storyId);
+    	//Log.i("sendNotification", storyId);
     	
     	SettingDAO settingDao = new SettingDAO(getApplicationContext());
     	
@@ -95,19 +98,14 @@ public class GcmIntentService extends IntentService {
 		 * execute의 파라미터가 실제 넘겨줄 자료들.
 		 * parameter[0] = this. Context.
 		 */
-		new CheckStampedStoryTask(null).execute(this);
+		//new CheckStampedStoryTask(null).execute(this);
 		
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Intent intent;
         
-        PasswordService psvc = new PasswordService(this);
-		if (psvc.isPassword()) {
-			intent = new Intent(this, LockScreenActivity.class);
-		} else {
-			intent = new Intent(this, MainViewPagerActivity.class);
-		}
+		intent = new Intent(this, IntroActivity.class);
 
 		intent.putExtra("GCM", true);
 		intent.putExtra("storyId", storyId);

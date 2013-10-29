@@ -45,8 +45,6 @@ import com.gif.eting.R;
 public class MyStoryListFragment  extends SherlockFragment{
 	private ViewPager mPager = MainViewPagerActivity.mPager;
 	
-	private Typeface nanum = Util.nanum;
-	
 	private ViewGroup rootView;
 	
 	private int lastPos = 0;
@@ -81,7 +79,6 @@ public class MyStoryListFragment  extends SherlockFragment{
         // Inflate the layout containing a title and body text.
         rootView = (ViewGroup) inflater
                 .inflate(R.layout.mystory_list, container, false);
-        nanum = Util.nanum;
 
         return rootView;
 	}
@@ -109,30 +106,31 @@ public class MyStoryListFragment  extends SherlockFragment{
 		
 		/**
 		 * 날짜구분선을 위한 작업
-		 */
-		List<StoryDTO> list = new ArrayList<StoryDTO>();
+		 */	
+		//List<StoryDTO> list = new ArrayList<StoryDTO>();
+		MylistAdapter m_adapter = new MylistAdapter(getActivity(), R.layout.mylist_item); // 어댑터 생성
 		String chkDate="";
 		for(StoryDTO story : myStoryList){
 			String tempMonth = "";
 			if(story.getStory_date() != null){
 				tempMonth = story.getStory_date().substring(0,7);
-				Log.i("temp month = ", tempMonth);
+				//Log.i("temp month = ", tempMonth);
 			}
 			if(!chkDate.equals(tempMonth)){
 				chkDate = tempMonth;
 				StoryDTO temp = new StoryDTO();
 				temp.setStory_date(chkDate);
 				temp.setContent("#dateInfo");	//이야기 내용이 아니라 날짜를 구분하는 특수문자를 입력한다.
-				list.add(temp);
+				m_adapter.addSeparatorItem(temp);
 			}
 			
-			list.add(story);
+			m_adapter.addItem(story);
 		}
 		
 		/**
 		 * 아무것도 없을때 처리
 		 */
-		System.out.println("myStoryList.size() " +myStoryList.size());
+		//System.out.println("myStoryList.size() " +myStoryList.size());
 		if(myStoryList.size() == 0){
 			
 			FrameLayout area = (FrameLayout) rootView.findViewById(R.id.story_list_alarm_area);
@@ -147,7 +145,7 @@ public class MyStoryListFragment  extends SherlockFragment{
 			/**
 			 * 별모양2
 			 */
-			Drawable dr = getActivity().getResources().getDrawable(R.drawable.main_acc_2);
+			Drawable dr = Util.getMain_acc_2(getActivity());
 			ImageView storyListAlarmIcon = (ImageView) rootView.findViewById(R.id.story_list_alarm_icon);
 			//위치조정
 			int storyListAlarmIconX = width*50/100 - dr.getIntrinsicWidth()/2;
@@ -162,8 +160,8 @@ public class MyStoryListFragment  extends SherlockFragment{
 			 * 텍스트
 			 */
 			TextView storListAramText = (TextView) rootView.findViewById(R.id.story_list_alarm_text);
-			storListAramText.setTypeface(nanum);
-			storListAramText.setTextColor(Color.parseColor("#474747"));
+			storListAramText.setTypeface(Util.getNanum(getActivity()));
+			storListAramText.setTextColor(Color.parseColor("#555555"));
 			
 			
 			int storListAramTextY = height*43/100;
@@ -178,7 +176,7 @@ public class MyStoryListFragment  extends SherlockFragment{
 			area.bringToFront();
 		}
 		
-		MylistAdapter m_adapter = new MylistAdapter(getActivity(), R.layout.mylist_item, list); // 어댑터 생성
+		
 		
 		// 리스트뷰에 어댑터 연결
 		ListView listView = (ListView) view.findViewById(R.id.myStoryListView);
@@ -215,7 +213,7 @@ public class MyStoryListFragment  extends SherlockFragment{
 				MylistAdapter listAdapter = (MylistAdapter) parentView.getAdapter(); // ListView에서 Adapter 받아옴
 				StoryDTO selectedItem = (StoryDTO) listAdapter.getItem(position); // 선택한 Row에 있는 Object를 받아옴
 				String idx = String.valueOf(selectedItem.getIdx()); // Object에서 idx값을 받아옴
-				Log.i("idx = ", idx);
+				//Log.i("idx = ", idx);
 				
 				if(!"".equals(idx) && !"0".equals(idx)){
 					readMyStoryPopup(getActivity(), idx);
@@ -246,7 +244,7 @@ public class MyStoryListFragment  extends SherlockFragment{
 	 * @return
 	 */
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-    	Log.i("onKeyDown SUB", String.valueOf(keyCode));
+    	//Log.i("onKeyDown SUB", String.valueOf(keyCode));
     	// 메인 화면으로 이동
     	if(mPager!=null){
     		mPager.setCurrentItem(1);

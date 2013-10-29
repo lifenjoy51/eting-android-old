@@ -26,9 +26,11 @@ public class StoryDBHelper extends SQLiteOpenHelper {
 	public static final String COL_STORY_DATE = "story_date";
 	public static final String COL_STORY_TIME = "story_time";
 	public static final String COL_STAMP_YN= "stamp_yn";
+	public static final String COL_STAMPS= "stamps";
+	public static final String COL_COMMENT= "comment";
 
 	private static final String DATABASE_NAME = "eting_mystory.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	/**
 	 *  TABLE 생성문
@@ -39,7 +41,9 @@ public class StoryDBHelper extends SQLiteOpenHelper {
 			+ COL_CONTENT + " text not null, " 
 			+ COL_STORY_DATE + " text, "
 			+ COL_STORY_TIME + " text, "
-			+ COL_STAMP_YN + " text "
+			+ COL_STAMP_YN + " text, "
+			+ COL_STAMPS + " text, "
+			+ COL_COMMENT + " text "
 			+ ");";
 
 	/**
@@ -62,8 +66,37 @@ public class StoryDBHelper extends SQLiteOpenHelper {
 				+ ", which will destroy all old data");
 
 		// TODO StoryDBHelper 버젼이 다를때 임시로 처리. 추후 변경 필요.
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORY_MASTER);
-		onCreate(db);
+		/**
+		 *  TABLE 생성문
+		 */
+		final String TABLE_STORY_MASTER_TEMP = "mystory_temp"; // TABLE이름
+		final String CREATE_TEMP_TABLE = "CREATE TABLE "
+				+ TABLE_STORY_MASTER_TEMP + "(" 
+				+ COL_IDX + " integer primary key, "
+				+ COL_CONTENT + " text not null, " 
+				+ COL_STORY_DATE + " text, "
+				+ COL_STORY_TIME + " text, "
+				+ COL_STAMP_YN + " text, "
+				+ COL_STAMPS + " text, "
+				+ COL_COMMENT + " text "
+				+ ");";
+		
+		final String OLD_TO_TEMP = "INSERT INTO "+TABLE_STORY_MASTER_TEMP
+				+" ( "+COL_IDX+", "+COL_CONTENT+", "+COL_STORY_DATE+", "+COL_STORY_TIME+", "+COL_STAMP_YN+") "
+				+" SELECT "+COL_IDX+", "+COL_CONTENT+", "+COL_STORY_DATE+", "+COL_STORY_TIME+", "+COL_STAMP_YN+" FROM " + TABLE_STORY_MASTER;
+		
+		final String TEMP_TO_NEW = "INSERT INTO "+TABLE_STORY_MASTER
+				+" ( "+COL_IDX+", "+COL_CONTENT+", "+COL_STORY_DATE+", "+COL_STORY_TIME+", "+COL_STAMP_YN+") "
+				+" SELECT "+COL_IDX+", "+COL_CONTENT+", "+COL_STORY_DATE+", "+COL_STORY_TIME+", "+COL_STAMP_YN+" FROM " + TABLE_STORY_MASTER_TEMP;
+		
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORY_MASTER_TEMP);		
+		db.execSQL(CREATE_TEMP_TABLE);		
+		db.execSQL(OLD_TO_TEMP);		
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORY_MASTER);		
+		db.execSQL(DATABASE_CREATE);			
+		db.execSQL(TEMP_TO_NEW);		
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORY_MASTER_TEMP);
+		
 	}
 
 }

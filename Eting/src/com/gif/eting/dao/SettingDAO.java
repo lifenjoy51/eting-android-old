@@ -72,7 +72,7 @@ public class SettingDAO {
 		cursor.close();
 
 		for (SettingDTO setting : settingList) {
-			Log.i("setting setting list", setting.getKey() + setting.getValue());
+			//Log.i("setting setting list", setting.getKey() + setting.getValue());
 		}
 
 		return settingList;
@@ -92,7 +92,7 @@ public class SettingDAO {
 		cur.close();
 		
 		if(returnedsetting!=null){
-			Log.i("setting info", returnedsetting.toString());
+			//Log.i("setting info", returnedsetting.toString());
 		}else{
 			return null;
 		}
@@ -109,7 +109,7 @@ public class SettingDAO {
 		values.put(SettingDBHelper.COL_VALUE, setting.getValue());
 		long insertedId = database.insert(SettingDBHelper.TABLE_SETTING, null,
 				values);
-		Log.i("setting is inserted", String.valueOf(insertedId));
+		//Log.i("setting is inserted", String.valueOf(insertedId));
 
 		return insertedId;
 	}
@@ -125,7 +125,7 @@ public class SettingDAO {
 		values.put(SettingDBHelper.COL_VALUE, setting.getValue());
 		int rtn = database.update(SettingDBHelper.TABLE_SETTING, values,
 				SettingDBHelper.COL_KEY + " = " + "'"+key+"'", null);
-		Log.i("setting is updated", String.valueOf(rtn));
+		//Log.i("setting is updated", String.valueOf(rtn));
 
 		return rtn;
 	}
@@ -138,7 +138,7 @@ public class SettingDAO {
 	public Integer delsetting(String key) {
 		int rtn = database.delete(SettingDBHelper.TABLE_SETTING,
 				SettingDBHelper.COL_KEY + " = " + "'"+key+"'", null);
-		Log.i("setting is deleted", String.valueOf(rtn));
+		//Log.i("setting is deleted", String.valueOf(rtn));
 		return rtn;
 	}
 

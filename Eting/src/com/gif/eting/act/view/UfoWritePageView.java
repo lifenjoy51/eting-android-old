@@ -57,8 +57,8 @@ public class UfoWritePageView extends View {
 	 */
 	private void setAnimationEvent(Context context, Animation an) {
 
-		System.out.println("ufoAnimation");
-		Drawable dr = context.getResources().getDrawable(R.drawable.intro_ufo);
+		//System.out.println("ufoAnimation");
+		Drawable dr =Util.getIntro_ufo(context);
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
 
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();

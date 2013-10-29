@@ -38,6 +38,20 @@ public class StampService {
 
 		return stampList;
 	}
+	
+	/**
+	 * 스탬프 정보 가져오기
+	 * 
+	 * @return
+	 */
+	public StampDTO getStamp(String idx) {
+		StampDTO stamp = new StampDTO();
+		stampDao.open();
+		stamp= stampDao.getStampInfo(idx);
+		stampDao.close();
+
+		return stamp;
+	}
 
 	/**
 	 * 스탬프ID 최대값 가져오기

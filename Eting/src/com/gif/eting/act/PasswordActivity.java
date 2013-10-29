@@ -40,7 +40,6 @@ public class PasswordActivity extends Activity implements OnClickListener {
 	private boolean isValid = false;
 	private String o_pw;
 	private PasswordService svc;
-	private Typeface nanum = Util.nanum;
 	private SettingDTO setting = new SettingDTO();
 
 	@Override
@@ -59,10 +58,10 @@ public class PasswordActivity extends Activity implements OnClickListener {
 		// setting_save_btn.setVisibility(View.INVISIBLE);
 		// setting_save_pw_btn.setVisibility(View.VISIBLE);
 
-		origin_pwd.setTypeface(nanum);
-		setting_pw.setTypeface(nanum);
-		setting_pw2.setTypeface(nanum);
-		password_textView.setTypeface(nanum);
+		origin_pwd.setTypeface(Util.getNanum(getApplicationContext()));
+		setting_pw.setTypeface(Util.getNanum(getApplicationContext()));
+		setting_pw2.setTypeface(Util.getNanum(getApplicationContext()));
+		password_textView.setTypeface(Util.getNanum(getApplicationContext()));
 		password_textView.setPaintFlags(password_textView.getPaintFlags()
 				| Paint.FAKE_BOLD_TEXT_FLAG);
 
