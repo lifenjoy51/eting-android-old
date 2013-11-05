@@ -79,7 +79,7 @@ public class GcmIntentService extends IntentService {
     // This is just one simple example of what you might choose to do with
     // a GCM message.
     private void sendNotification(String storyId) {
-    	//Log.i("sendNotification", storyId);
+    	Log.i("sendNotification", storyId);
     	
     	SettingDAO settingDao = new SettingDAO(getApplicationContext());
     	
@@ -90,6 +90,17 @@ public class GcmIntentService extends IntentService {
     	//알람설정 off면 끝내기
     	if(alarm!=null){
     		return;
+    	}
+    	
+    	
+    	
+    	//지워진 이야기면 끝내기
+    	StoryService svc = new StoryService(this);
+    	try{
+        	svc.getMyStory(storyId);    		
+    	}catch(Exception e){
+        	Log.i("check story", e.toString());
+        	return;
     	}
     	
     	/**
@@ -113,7 +124,7 @@ public class GcmIntentService extends IntentService {
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0 );
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)

@@ -139,6 +139,7 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 		boolean isGcm = intent.getBooleanExtra("GCM", false); // GCM여부
 		if (isGcm) {
 			String storyId = intent.getStringExtra("storyId");
+			Log.i("gcm storyId", "Main Activity = "+storyId);
 			// 내목록화면으로 이동
 			setPage(0);
 			Fragment fragment = ((ScreenSlidePagerAdapter) mPagerAdapter)

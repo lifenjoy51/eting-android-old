@@ -160,11 +160,10 @@ public class IntroActivity extends Activity implements CounterListener{
         Intent intent = getIntent();
 		isGcm = intent.getBooleanExtra("GCM", false);	//GCM여부
 		if(isGcm){
-			storyId = intent.getStringExtra("storyId");			
+			storyId = intent.getStringExtra("storyId");
+			Log.i("gcm storyId", "Intro Activity = "+storyId);
 		}
 	}
-	
-	
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {

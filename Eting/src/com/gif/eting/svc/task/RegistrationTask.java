@@ -20,6 +20,7 @@ public class RegistrationTask extends AsyncTask<Object, String, String> {
 	 * Context
 	 */
 	private Context context;
+	private String regId;
 	
 	/**
 	 * @param callback
@@ -33,7 +34,7 @@ public class RegistrationTask extends AsyncTask<Object, String, String> {
 	@Override
 	protected String doInBackground(Object... params) {
 
-			String regId = (String) params[0]; 	//파라미터 첫번째값 regId.
+			this.regId = (String) params[0]; 	//파라미터 첫번째값 regId.
 			this.context = (Context) params[1];	//파라미터 두번째값 context
 			String phoneId = Installation.id(context);	//기기 고유값
 			String param = "phone_id=" + phoneId +"&reg_id=" +regId;	//서버에 전송할 파라미터 조립
@@ -54,8 +55,12 @@ public class RegistrationTask extends AsyncTask<Object, String, String> {
 
 		if("UnknownHostException".equals(result)){
 			//등록실패
+			Log.i("RegistrationTask Fail", result);
+			new RegistrationTask().execute(regId, context);
 		}else if("HttpUtil_Error".equals(result)){
 			//등록실패
+			Log.i("RegistrationTask Fail", result);
+			new RegistrationTask().execute(regId, context);
 		}else{
 			//등록성공
 		}

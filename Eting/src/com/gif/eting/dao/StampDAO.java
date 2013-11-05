@@ -163,8 +163,10 @@ public class StampDAO {
 		
 		if(!cur.isNull(0)){
 			String maxStampId = cur.getString(0);
+			cur.close();
 			return maxStampId;
 		}else{
+			cur.close();
 			return null;
 		}
 	}

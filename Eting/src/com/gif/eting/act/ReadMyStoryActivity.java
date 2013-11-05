@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -83,6 +84,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		
 		Intent intent = getIntent();
 		storyIdx = intent.getStringExtra("idx");	//파라미터값으로 넘긴 이야기 고유번호
+		Log.i("gcm storyId", "ReadMyStory Activity = "+storyIdx);
 		//Log.i("ReadMyStoryActivity recieve story idx = ",storyIdx);
 		
 		//Service초기화
