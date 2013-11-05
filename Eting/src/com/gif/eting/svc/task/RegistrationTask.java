@@ -56,11 +56,11 @@ public class RegistrationTask extends AsyncTask<Object, String, String> {
 		if("UnknownHostException".equals(result)){
 			//등록실패
 			Log.i("RegistrationTask Fail", result);
-			new RegistrationTask().execute(regId, context);
+			//new RegistrationTask().execute(regId, context);
 		}else if("HttpUtil_Error".equals(result)){
 			//등록실패
 			Log.i("RegistrationTask Fail", result);
-			new RegistrationTask().execute(regId, context);
+			//new RegistrationTask().execute(regId, context);
 		}else{
 			//등록성공
 		}
