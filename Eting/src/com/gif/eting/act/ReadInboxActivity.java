@@ -196,7 +196,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		if(v.getId()==R.id.inbox_confirm_btn){
 			
 			if(stamps.size()==0){
-				Toast toast = Toast.makeText(context, "스티커를 선택해주세요!",
+				Toast toast = Toast.makeText(context, R.string.select_stamp_plz,
 						Toast.LENGTH_SHORT);
 				toast.show();
 				return;
@@ -304,12 +304,12 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 			 * 에러처리
 			 */
 			if ("HttpUtil_Error".equals(result)) {
-				Toast toast = Toast.makeText(context, "전송중에 문제가 발생했습니다.",
+				Toast toast = Toast.makeText(context, R.string.error_on_transfer ,
 						Toast.LENGTH_LONG);
 				toast.show();
 
 			} else if ("UnknownHostException".equals(result)) {
-				Toast toast = Toast.makeText(context, "인터넷에 연결할 수 없습니다.",
+				Toast toast = Toast.makeText(context, R.string.cannot_connect_to_internet,
 						Toast.LENGTH_LONG);
 				toast.show();
 
@@ -354,17 +354,17 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 			 * 에러처리
 			 */
 			if ("HttpUtil_Error".equals(result)) {
-				Toast toast = Toast.makeText(context, "전송중에 문제가 발생했습니다.",
+				Toast toast = Toast.makeText(context, R.string.error_on_transfer,
 						Toast.LENGTH_LONG);
 				toast.show();
 
 			} else if ("UnknownHostException".equals(result)) {
-				Toast toast = Toast.makeText(context, "인터넷에 연결할 수 없습니다.",
+				Toast toast = Toast.makeText(context, R.string.cannot_connect_to_internet,
 						Toast.LENGTH_LONG);
 				toast.show();
 
 			} else if ("Success".equals(result)) {
-				Toast toast = Toast.makeText(context, "신고완료.",
+				Toast toast = Toast.makeText(context, R.string.report_completed,
 						Toast.LENGTH_SHORT);
 				toast.show();
 				

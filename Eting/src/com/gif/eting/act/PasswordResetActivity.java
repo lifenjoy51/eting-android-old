@@ -108,7 +108,7 @@ public class PasswordResetActivity extends Activity implements
 
 		if (isValid == true) {
 			if ((s2 == null || "".equals(s2)) || (s3 == null || "".equals(s3))) {
-				Toast.makeText(this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.enter_password_plz , Toast.LENGTH_SHORT).show();
 				return;
 			} else {
 				savePassword();
@@ -116,7 +116,7 @@ public class PasswordResetActivity extends Activity implements
 		} else {
 			if ((s1 == null || "".equals(s1)) || (s2 == null || "".equals(s2))
 					|| (s3 == null || "".equals(s3))) {
-				Toast.makeText(this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.enter_password_plz, Toast.LENGTH_SHORT).show();
 				return;
 			} else {
 				savePassword();
@@ -150,7 +150,7 @@ public class PasswordResetActivity extends Activity implements
 			if (pw.equals(pw2)) {
 				svc.savePassword(pw);
 
-				Toast toast = Toast.makeText(this, "저장되었습니다.",
+				Toast toast = Toast.makeText(this, R.string.save_completed,
 						Toast.LENGTH_SHORT);
 				toast.show();
 				Intent intent = new Intent(PasswordResetActivity.this, MainViewPagerActivity.class);
@@ -158,14 +158,14 @@ public class PasswordResetActivity extends Activity implements
 				startActivity(intent); 
 				finish(); // 뒤로가기 안먹게
 			} else {
-				Toast toast = Toast.makeText(this, "입력한 비밀번호가 다릅니다.",
+				Toast toast = Toast.makeText(this, R.string.wrong_input_password,
 						Toast.LENGTH_SHORT);
 				toast.show();
 			}
 
 		} else {
 			// 비밀번호 틀렸을때
-			Toast toast = Toast.makeText(this, "기존의 비밀번호가 맞지 않습니다.",
+			Toast toast = Toast.makeText(this, R.string.wrong_origin_password,
 					Toast.LENGTH_SHORT);
 			toast.show();
 

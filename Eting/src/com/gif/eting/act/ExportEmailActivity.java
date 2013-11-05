@@ -109,7 +109,7 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 		if (v.getId() == R.id.send_email) {
 			String s = email_address.getText().toString();
 			if (s == null || "".equals(s)) {
-				Toast.makeText(this, "이메일주소를 입력해주세요", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.enter_email_plz, Toast.LENGTH_SHORT).show();
 				return;
 			} else {
 				sendEmail();
@@ -170,7 +170,7 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 			startActivity(Intent.createChooser(it, "메일보냄"));
 		} catch (android.content.ActivityNotFoundException ex) {
 			ex.printStackTrace();
-			Toast.makeText(this, "안됨", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.have_problem, Toast.LENGTH_SHORT).show();
 			//TODO 메시지 확인필요
 		}
 

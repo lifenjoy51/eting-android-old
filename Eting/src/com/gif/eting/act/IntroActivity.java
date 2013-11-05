@@ -105,11 +105,6 @@ public class IntroActivity extends Activity implements CounterListener{
 		this.setRepeat();
 		
 		/**
-		 * Util클래스에 설정값 초기화
-		 */
-		Util.init(context);	//비동기 실행을 어느시점에 해야 먼저 애니메이션이 떠오르지?
-		
-		/**
 		 * 서버와 스탬프목록 동기화
 		 * 
 		 * CheckStampTask 파라미터는 CheckStampTask 수행되고 나서 실행될 콜백이다. execute의 파라미터가
@@ -168,6 +163,21 @@ public class IntroActivity extends Activity implements CounterListener{
 			storyId = intent.getStringExtra("storyId");			
 		}
 	}
+	
+	
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+
+		/**
+		 * Util클래스에 설정값 초기화
+		 */
+		Util.init(context);	//비동기 실행을 어느시점에 해야 먼저 애니메이션이 떠오르지?
+		
+		super.onPostCreate(savedInstanceState);
+	}
+
+
 
 	/**
 	 * SendStoryTask수행 후 실행되는 콜백 애니메이션이 3초이상 지속되고 스탬프찍힌 이야기를 검사하고 스탬프 동기화가 완료되면
@@ -402,7 +412,7 @@ public class IntroActivity extends Activity implements CounterListener{
 	private void processError(){
 		//System.out.println("processError");
 		
-		Toast toast = Toast.makeText(this, "인터넷에 연결할 수 없습니다.",
+		Toast toast = Toast.makeText(this,R.string.cannot_connect_to_internet,
 				Toast.LENGTH_LONG);
 		toast.show();
 	}
@@ -447,6 +457,8 @@ public class IntroActivity extends Activity implements CounterListener{
 			return;
 		}
 		
+		hdler.removeMessages(0, null);
+		
 		if (isFirst) {
 
 			Intent intent = new Intent(IntroActivity.this,
@@ -459,6 +471,7 @@ public class IntroActivity extends Activity implements CounterListener{
 			
 			startActivity(intent);
 			overridePendingTransition(R.anim.fade, R.anim.hold);
+		
 			finish();
 
 		}else {

@@ -173,7 +173,7 @@ public class LockScreenActivity extends Activity implements OnClickListener  {
 			finish(); // 뒤로가기 안먹게
 		} else {
 			// 비밀번호 틀렸을때
-			Toast toast = Toast.makeText(this, "비밀번호가 맞지 않습니다.",
+			Toast toast = Toast.makeText(this, R.string.wrong_password,
 					Toast.LENGTH_SHORT);
 			toast.show();
 

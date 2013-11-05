@@ -72,6 +72,8 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 
 	public void setViewPager(ViewPager mPager) {
 		this.mPager = mPager;
+		//this.mPager = (ViewPager) getActivity().findViewById(R.layout.viewpager);
+		
 	}
 
 	@Override
@@ -218,7 +220,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 			 * 에러처리
 			 */
 			if("HttpUtil_Error".equals(result)){
-				Toast toast = Toast.makeText(getActivity(), "전송중에 문제가 발생했습니다.",
+				Toast toast = Toast.makeText(getActivity(), R.string.error_on_transfer,
 						Toast.LENGTH_LONG);
 				toast.show();
 				
@@ -226,7 +228,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 				resetSendingStory();
 				
 			} else if("UnknownHostException".equals(result)){
-				Toast toast = Toast.makeText(getActivity(), "인터넷에 연결할 수 없습니다.",
+				Toast toast = Toast.makeText(getActivity(),R.string.cannot_connect_to_internet,
 						Toast.LENGTH_LONG);
 				toast.show();
 				
@@ -333,7 +335,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		/**
 		 * 전송완료 메세지
 		 */
-		Toast toast = Toast.makeText(getActivity(), "이야기가 전송되었습니다",
+		Toast toast = Toast.makeText(getActivity(), R.string.send_completed,
 				Toast.LENGTH_SHORT);
 		toast.show();
 

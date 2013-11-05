@@ -159,7 +159,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		}catch(Exception e){
 			//Log.i("read my story activity error", e.toString());
 			e.printStackTrace();
-			Toast.makeText(context, "문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, R.string.have_problem, Toast.LENGTH_SHORT).show();
 		}
 	}
 	
@@ -207,7 +207,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 									storyService.delStory(storyIdx);
 									
 									//삭제 후 로직
-									Toast.makeText(context, "삭제되었습니다", Toast.LENGTH_SHORT).show();
+									Toast.makeText(context, R.string.delete_completed, Toast.LENGTH_SHORT).show();
 									
 									//돌아가기
 									finish();								}
