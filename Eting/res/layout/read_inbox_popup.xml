@@ -107,7 +107,7 @@
             android:background="@drawable/feedback_name"
             android:ems="8"
             android:hint="@string/enter_you_name"
-            android:maxLength="15"
+            android:maxLength="150"
             android:singleLine="true"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
