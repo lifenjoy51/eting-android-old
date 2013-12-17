@@ -101,16 +101,21 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			}
 			
 			String storyTime = myStory.getStory_time();
+			String storyHH = "";
+			String storyHHMM = "";
 			if(storyTime == null || storyTime == ""){
-				storyTime = "0";
+				storyHH = "0";
 			}else{
-				storyTime = storyTime.substring(0,2);
+				storyHHMM = storyTime.substring(0,5);
+				storyHH = storyTime.substring(0,2);				
 			}
 			
 			
 			
+			String storyDateTime = storyDate + "\t" + storyHHMM;
+			
 			TextView storyDateView = (TextView) findViewById(R.id.mystory_content_top);
-			storyDateView.setText(storyDate);
+			storyDateView.setText(storyDateTime);
 			storyDateView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
 			
 			TextView contentView = (TextView) findViewById(R.id.popup_content);
@@ -120,7 +125,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			/**
 			 * 작성시간에 맞게 배경화면 변화
 			 */
-			int storyHour = Integer.parseInt(storyTime);
+			int storyHour = Integer.parseInt(storyHH);
 			//Log.i("currunt hour", thisHourStr);
 								
 			if(storyHour<6 ){

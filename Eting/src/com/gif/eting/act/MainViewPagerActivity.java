@@ -1,9 +1,5 @@
 package com.gif.eting.act;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.gif.eting.R;
 import com.gif.eting.act.frg.MainFragment;
 import com.gif.eting.act.frg.MyStoryListFragment;
 import com.gif.eting.act.frg.WriteMyStoryFragment;
@@ -28,8 +25,8 @@ import com.gif.eting.act.view.Cloud1View;
 import com.gif.eting.act.view.Cloud2View;
 import com.gif.eting.act.view.Cloud3View;
 import com.gif.eting.act.view.Cloud4View;
+import com.gif.eting.util.SnowFactory;
 import com.gif.eting.util.Util;
-import com.gif.eting.R;
 
 /**
  * 메인 뷰페이져
@@ -81,6 +78,9 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 		fr.addView(new Cloud2View(context),0); // 구름애니메이션
 		fr.addView(new Cloud3View(context),0); // 구름애니메이션
 		fr.addView(new Cloud4View(context),0); // 구름애니메이션
+		
+		SnowFactory sf = new SnowFactory(context, fr);
+		sf.setRepeat();
 
 		setRepeat();	//주기적으로 화면그리기
 

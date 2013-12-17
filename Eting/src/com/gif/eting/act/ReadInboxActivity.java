@@ -113,6 +113,12 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		if(storyDate != null && storyDate != ""){
 			storyDate = storyDate.replaceAll("-", ".");
 		}
+		String storyTime = inboxStory.getStory_time();
+		if(storyTime != null && storyTime != ""){
+			storyTime = storyTime.substring(0, 5);
+		}
+		
+		String storyDateTime = storyDate + "\t" + storyTime;
 		
 		//스크린크기
 		DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -125,7 +131,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		
 		TextView storyDateView = (TextView) findViewById(R.id.popup_date);
 		storyDateView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
-		storyDateView.setText(storyDate);
+		storyDateView.setText(storyDateTime);
 
 		//버튼이벤트 삽입
 		findViewById(R.id.inbox_confirm_btn).setOnClickListener(this);		
@@ -194,9 +200,14 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		if(v.getId()==R.id.inbox_confirm_btn){
-			
+			Log.d("et length", String.valueOf(et.getText().toString().length()));
 			if(stamps.size()==0){
 				Toast toast = Toast.makeText(context, R.string.select_stamp_plz,
+						Toast.LENGTH_SHORT);
+				toast.show();
+				return;
+			}else if(et.getText().toString().length() < 2){
+				Toast toast = Toast.makeText(context, R.string.enter_comment_plz,
 						Toast.LENGTH_SHORT);
 				toast.show();
 				return;

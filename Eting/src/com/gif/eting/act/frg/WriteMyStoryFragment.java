@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -45,6 +46,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 	private ViewGroup rootView;
 	private ViewGroup writeContentArea;
 	private UfoWritePageView ufo;
+	private EditText et;
 	/*
 	 * sendingFlag
 	 * 전송중이면 true
@@ -95,7 +97,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		writeContentArea = (ViewGroup) rootView.findViewById(R.id.write_content_area);
 		
 		//폰트설정
-		EditText et = (EditText) rootView.findViewById(R.id.story_content);
+		et = (EditText) rootView.findViewById(R.id.story_content);
 		et.setTypeface(Util.getNanum(getActivity()));
 
 		tv = (TextView) rootView.findViewById(R.id.write_story_dt);
@@ -115,6 +117,18 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 
 		// 클릭이벤트 설정
 		rootView.findViewById(R.id.send_story_btn).setOnClickListener(this);
+		
+		et.requestFocus();
+		et.setOnFocusChangeListener(new OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+			    if(!hasFocus){
+			    	hideIme();
+			    }else{
+			    	showIme();
+			    }
+			   }
+			});
 
 		return rootView;
 	}
@@ -128,7 +142,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		switch (v.getId()) {
 		case R.id.send_story_btn:
 			// 입력한 문자 체크로직
-			EditText et = (EditText) getView().findViewById(R.id.story_content);
+			et = (EditText) getView().findViewById(R.id.story_content);
 			String content = et.getText().toString(); // 이야기 내용
 
 			// 입력값이 없으면 처리중단
@@ -171,11 +185,10 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		//전송이 시작되면 플래그값을 바꾼다.
 		sendingFlag = true;
 		
-		EditText et = (EditText) getView().findViewById(R.id.story_content);
+		et = (EditText) getView().findViewById(R.id.story_content);
 		final String content = et.getText().toString(); // 이야기 내용
-		InputMethodManager imm = (InputMethodManager) context
-				.getSystemService(Service.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
+		
+		hideIme();		
 		
 		//페이드아웃 애니메이션
 		Animation sa = new AlphaAnimation(1.0f, 0.0f);
@@ -199,6 +212,28 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		 * getSherlockActivity(). Context.
 		 */
 		new SendStoryTask(new AfterSendStoryTask()).execute(content, getSherlockActivity());
+	}
+	
+	public void hideIme(){
+		et = (EditText) getView().findViewById(R.id.story_content);
+		InputMethodManager imm = (InputMethodManager) context
+				.getSystemService(Service.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
+	}
+	
+	public void showIme(){
+		et = (EditText) getView().findViewById(R.id.story_content);
+		InputMethodManager imm = (InputMethodManager) context
+				.getSystemService(Service.INPUT_METHOD_SERVICE);
+		imm.showSoftInput(et, 0);
+	}
+	
+	
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		hideIme();
 	}
 
 	public void onDestroy() {
@@ -342,7 +377,7 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		/**
 		 * 쓰기화면 초기화
 		 */
-		EditText et = (EditText) getView().findViewById(R.id.story_content);
+		et = (EditText) getView().findViewById(R.id.story_content);
 		et.setText("");
 
 		/**

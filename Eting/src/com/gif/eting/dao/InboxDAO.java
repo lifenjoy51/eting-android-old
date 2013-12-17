@@ -28,7 +28,7 @@ public class InboxDAO {
 	private SQLiteDatabase database;
 	private InboxDBHelper dbHelper;
 	private String[] allColumns = { InboxDBHelper.COL_IDX,
-			InboxDBHelper.COL_CONTENT, InboxDBHelper.COL_STORY_DATE };
+			InboxDBHelper.COL_CONTENT, InboxDBHelper.COL_STORY_DATE, InboxDBHelper.COL_STORY_TIME };
 
 	/**
 	 *  생성할때 dbHelper 초기화
@@ -108,6 +108,7 @@ public class InboxDAO {
 		values.put(InboxDBHelper.COL_IDX, story.getIdx());
 		values.put(InboxDBHelper.COL_CONTENT, story.getContent());
 		values.put(InboxDBHelper.COL_STORY_DATE, story.getStory_date());
+		values.put(InboxDBHelper.COL_STORY_TIME, story.getStory_time());
 		long insertedId = database.insert(InboxDBHelper.TABLE_INBOX,
 				null, values);
 		//Log.i("inbox is inserted",String.valueOf(insertedId));
@@ -156,6 +157,7 @@ public class InboxDAO {
 		story.setIdx(cursor.getLong(0));
 		story.setContent(cursor.getString(1));
 		story.setStory_date(cursor.getString(2));
+		story.setStory_time(cursor.getString(3));
 		return story;
 	}
 	

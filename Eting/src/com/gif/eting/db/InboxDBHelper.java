@@ -24,9 +24,10 @@ public class InboxDBHelper extends SQLiteOpenHelper {
 	public static final String COL_IDX = "idx";	//받아온 이야기의 고유번호
 	public static final String COL_CONTENT = "content";	//받아온 이야기 내용
 	public static final String COL_STORY_DATE = "story_date";	//받아온 이야기 날짜
+	public static final String COL_STORY_TIME = "story_time";	//받아온 이야기 시간
 
 	private static final String DATABASE_NAME = "eting_inbox.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	/**
 	 * TABLE 생성문
@@ -35,7 +36,8 @@ public class InboxDBHelper extends SQLiteOpenHelper {
 			"CREATE TABLE " + TABLE_INBOX + "(" 
 				  + COL_IDX				+ " integer primary key, " 
 				  + COL_CONTENT		+ " text, " 
-				  + COL_STORY_DATE	+ " text "
+				  + COL_STORY_DATE	+ " text, "
+				  + COL_STORY_TIME	+ " text "
 		  + ");";
 
 	/**
