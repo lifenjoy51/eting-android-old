@@ -69,7 +69,8 @@
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
             android:textColor="#555555"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:textIsSelectable="true" />
     </ScrollView>
 
     <ScrollView
