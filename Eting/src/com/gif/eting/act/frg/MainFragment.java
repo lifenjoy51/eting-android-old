@@ -31,10 +31,13 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.gif.eting.act.MainViewPagerActivity;
+import com.gif.eting.act.ReadAdminMsgActivity;
 import com.gif.eting.act.ReadInboxActivity;
 import com.gif.eting.act.SettingActivity;
 import com.gif.eting.act.view.EtingLogoView;
 import com.gif.eting.act.view.PlanetView;
+import com.gif.eting.dao.SettingDAO;
+import com.gif.eting.dto.SettingDTO;
 import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.util.Util;
@@ -54,6 +57,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	private TextView mainToday;
 	private TextView mainEtingCnt;
 	private TextView mainInboxCnt;
+	private ImageView adminMsgUfo;
+	private ImageView mainAcc1;
 
 	// 스크린크기
 	private DisplayMetrics metrics;
@@ -64,6 +69,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	private StoryService svc;
 	private InboxService is;
 	private static FrameLayout fr;
+	private boolean hasAdminMsg = false;
 	
 
 	/**
@@ -191,7 +197,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		/**
 		 * 별모양1
 		 */
-		ImageView mainAcc1 = (ImageView) rootView.findViewById(R.id.main_acc_1);
+		mainAcc1 = (ImageView) rootView.findViewById(R.id.main_acc_1);
 		// 위치조정
 		int mainAcc1X = width * 15 / 100;
 		int mainAcc1Y = height * 19 / 100;
@@ -233,6 +239,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 */
 		rootView.findViewById(R.id.main_inbox_cnt).setOnClickListener(this);
 		rootView.findViewById(R.id.setting_btn).setOnClickListener(this);
+		rootView.findViewById(R.id.admin_msg).setOnClickListener(this);
 
 		/**
 		 * 다시그리기
@@ -298,6 +305,29 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		mainInboxParams.topMargin = inboxY; // Your Y coordinate
 		mainInboxParams.gravity = Gravity.LEFT | Gravity.TOP;
 		mainInboxCnt.setLayoutParams(mainInboxParams);
+		
+		/**
+		 * 관리자 알람 우주선
+		 */
+		Drawable dr2 = Util.getAdminSpaceship(getActivity());
+		adminMsgUfo = (ImageView) rootView.findViewById(R.id.admin_msg);
+		adminMsgUfo.setBackgroundResource(R.drawable.admin_spaceship);
+
+		// 위치조정
+		int adminX = width * 19 / 100 - dr2.getIntrinsicWidth() / 2;
+		int adminY = height * 20 / 100 - dr2.getIntrinsicHeight() / 2;
+		FrameLayout.LayoutParams adminMsgParams = new FrameLayout.LayoutParams(
+				FrameLayout.LayoutParams.WRAP_CONTENT,
+				FrameLayout.LayoutParams.WRAP_CONTENT); // The WRAP_CONTENT
+														// parameters can be
+														// replaced by an
+														// absolute width and
+														// height or the
+														// FILL_PARENT option)
+		adminMsgParams.leftMargin = adminX; // Your X coordinate
+		adminMsgParams.topMargin = adminY; // Your Y coordinate
+		adminMsgParams.gravity = Gravity.LEFT | Gravity.TOP;
+		adminMsgUfo.setLayoutParams(adminMsgParams);
 
 		return rootView;
 	}
@@ -310,6 +340,11 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 * 받은편지함 관련 정보 설정(개수, 우주선)
 		 */
 		setInboxCnt();
+		
+		/**
+		 * 관리자 메세지 보여주기
+		 */
+		setAdminMessage();
 	}
 
 	/**
@@ -333,6 +368,13 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 			 */
 			startActivity(new Intent(getActivity(), SettingActivity.class));
 			break;
+		
+		case R.id.admin_msg:
+			if(hasAdminMsg){
+				startActivity(new Intent(getActivity(), ReadAdminMsgActivity.class)); // 팝업				
+			}
+			break;
+			
 
 		}
 
@@ -390,6 +432,76 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 			mainInboxCnt.setVisibility(View.GONE);
 		}
 
+	}
+	
+	/**
+	 * 관리자 알람메세지를 보여주기
+	 */
+	public void setAdminMessage(){
+		SettingDAO settingDao = new SettingDAO(getActivity().getApplicationContext());
+    	SettingDTO sdto;    	
+    	
+    	settingDao.open();
+    	sdto = settingDao.getsettingInfo("adminMsg");
+    	settingDao.close();
+    	
+    	//TODO 임시처리    	
+    	/*settingDao.open();
+    	
+    	settingDao.delsetting("adminMsgId");
+    	settingDao.delsetting("adminMsg");
+    	
+    	sdto = new SettingDTO();    	
+    	sdto.setKey("adminMsgId");
+    	sdto.setValue("1");
+    	settingDao.inssetting(sdto);
+    	
+    	sdto = new SettingDTO();    	
+    	sdto.setKey("adminMsg");
+    	String content = "안녕하세요 저희는 eting을 만든 학생들입니다 :) \n"
++"다음 eting 업데이트를 앞두고, 업데이트 방향에 도움이 될 여러분들의 의견을 받고자 합니다. 바쁘시지만 1~2분 동안 시간내 주시길 부탁드려요 ! \n"
++"http://me2.do/xxE5hDdF \n"
++" \n"
++"eting을 사용해 주셔서 감사합니다 \n"
++"더욱더 발전하는 eting이 되겠습니다 \n"
++"오늘도 eting 하세요 :-)";
+    	sdto.setValue(content);
+    	settingDao.inssetting(sdto);
+    	
+    	settingDao.close();*/
+    	
+    	//메세지 알림 우주선 보이기
+    	if(sdto != null){
+    		hasAdminMsg = true;
+    		
+    		//행성이미지 숨기고
+    		mainAcc1.setVisibility(View.GONE);
+    		
+    		//애니메이션 시작
+			adminMsgUfo.setVisibility(View.GONE);
+			adminMsgUfo.invalidate();
+			
+			new Handler() {
+			}.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					Animation ani = AnimationUtils.loadAnimation(getActivity(), R.anim.main_ufo);
+					adminMsgUfo.startAnimation(ani);
+					adminMsgUfo.setVisibility(View.VISIBLE);
+					adminMsgUfo.bringToFront();
+				}
+			}, 1000);
+			
+    	}else{
+    		hasAdminMsg = false;
+    		
+    		//애니메이션 없애고
+    		adminMsgUfo.clearAnimation();
+    		adminMsgUfo.setVisibility(View.GONE);
+    		
+    		//행성이미지 살리고
+    		mainAcc1.setVisibility(View.VISIBLE);
+    	}
 	}
 
 	/**

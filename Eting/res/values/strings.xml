@@ -52,5 +52,6 @@
     <string name="delete_completed">It has been saved.</string>
     <string name="enter_email_plz"> Please enter your email.</string>
     <string name="enter_comment_plz"> Please enter comment.</string>
+    <string name="admin_message">admin_message</string>
 
 </resources>

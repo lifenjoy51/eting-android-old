@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.gif.eting"
-    android:versionCode="4"
-    android:versionName="1.0.3" >
+    android:versionCode="5"
+    android:versionName="1.0.4" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -111,6 +111,16 @@
         <activity
             android:name="com.gif.eting.act.FeedbackActivity"
             android:screenOrientation="portrait" >
+        </activity>
+        
+         <!-- 알림메시지 읽기 화면
+        windowSoftInputMode="adjustPan" 화면 쪼그라드는거 방지-->
+        <activity
+            android:name="com.gif.eting.act.ReadAdminMsgActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent"
+            android:windowSoftInputMode="stateHidden|adjustPan" >
         </activity>
         
         

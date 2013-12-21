@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:layout_margin="20dp"
+    android:background="@drawable/inbox_bg_body"
+    android:orientation="vertical" >
+
+    <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <AutoCompleteTextView
+            android:id="@+id/autotext"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:nextFocusLeft="@id/autotext"
+            android:nextFocusUp="@id/autotext" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/inbox_bg_top"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/popup_date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="40dp"
+        android:gravity="left|center"
+        android:textColor="#555555"
+        android:textSize="24sp" />
+
+    <ScrollView
+        android:id="@+id/popup_content_scroll_area"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/admin_msg_control_area"
+		android:background="@android:color/white"
+        android:layout_below="@+id/popup_date" >
+
+        <TextView
+            android:id="@+id/popup_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|top"
+            android:lineSpacingExtra="5dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:textColor="#555555"
+            android:textSize="17sp"
+            android:textIsSelectable="true"
+            android:focusable="true"
+            android:clickable="true"
+            android:autoLink="web"
+            android:linksClickable="true" />
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/admin_msg_control_area"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="20dp"
+        android:background="@drawable/feedback_bg" >
+
+        <EditText
+            android:id="@+id/msg_comment"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/feedback_name"
+            android:ems="8"
+            android:hint="@string/enter_you_name"
+            android:maxLength="150"
+            android:singleLine="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="#555555"
+            android:textColorHint="#BBBBBB" >
+        </EditText>
+
+        <Button
+            android:id="@+id/admin_msg_confirm_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/inbox_btn_selector" />
+    </LinearLayout>
+
+</RelativeLayout>

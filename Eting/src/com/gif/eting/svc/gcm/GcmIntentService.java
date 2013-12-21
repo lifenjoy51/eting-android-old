@@ -14,6 +14,7 @@ import android.util.Log;
 import com.gif.eting.R;
 import com.gif.eting.act.IntroActivity;
 import com.gif.eting.dao.SettingDAO;
+import com.gif.eting.dto.SettingDTO;
 import com.gif.eting.svc.StoryService;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -59,18 +60,34 @@ public class GcmIntentService extends IntentService {
             	 */            	
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
                 // Post notification of received message.
-                //TODO 환경설정값에 따라서 메세지를 보여줌
-                String storyId = extras.getString("story_id");
-                String stamps = extras.getString("stamps");	//,로 이어져있음
-                String comment = extras.getString("comment");
                 
-                StoryService svc = new StoryService(this);
-                svc.updStoryStamp(storyId, stamps, comment);
-                                
-                sendNotification(storyId);
-                Log.i(TAG, "Received: " + extras.toString());
+                String storyId = extras.getString("story_id");
+                
+                //다른사람 코멘트일때
+                if("".equals(storyId)){
+                    String stamps = extras.getString("stamps");	//,로 이어져있음
+                    String comment = extras.getString("comment");
+                    
+                    StoryService svc = new StoryService(this);
+                    svc.updStoryStamp(storyId, stamps, comment);
+                                    
+                    sendNotification(storyId);
+                    Log.i(TAG, "Received: " + extras.toString());
+                    
+                }else{	//관리자 메세지일때
+                	String msgId = extras.getString("msgId");
+                	String content = extras.getString("content");
+                	saveAdminMessage(msgId, content);
+                	
+                	String isNoti = extras.getString("isNoti");
+                	if("Y".equals(isNoti)){
+                		//관리자 알람일 때에는 그냥 이팅만 켠다.
+                		makeNotification("");
+                	}
+                }
             }
         }
+        
         // Release the wake lock provided by the WakefulBroadcastReceiver.
         GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
@@ -92,8 +109,6 @@ public class GcmIntentService extends IntentService {
     		return;
     	}
     	
-    	
-    	
     	//지워진 이야기면 끝내기
     	StoryService svc = new StoryService(this);
     	try{
@@ -102,24 +117,24 @@ public class GcmIntentService extends IntentService {
         	Log.i("check story", e.toString());
         	return;
     	}
-    	
-    	/**
-		 * 스탬프찍힌 이야기 리스트 받아오기
-		 * 
-		 * execute의 파라미터가 실제 넘겨줄 자료들.
-		 * parameter[0] = this. Context.
-		 */
-		//new CheckStampedStoryTask(null).execute(this);
 		
-        mNotificationManager = (NotificationManager)
+    	makeNotification(storyId, "eting!");
+        
+    }
+    
+    public void makeNotification(String storyId, String content){
+    	mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Intent intent;
         
 		intent = new Intent(this, IntroActivity.class);
 
-		intent.putExtra("GCM", true);
-		intent.putExtra("storyId", storyId);
+		//다른사람이 등록한 코멘트 알림일때만 로직 실행.
+		if(!"".equals(storyId)){ 			
+	 		intent.putExtra("GCM", true);
+	 		intent.putExtra("storyId", storyId);
+		}
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -132,7 +147,7 @@ public class GcmIntentService extends IntentService {
         .setContentTitle("Eting")
         .setStyle(new NotificationCompat.BigTextStyle()
         .bigText("Eting!"))
-        .setContentText("Eting!!")
+        .setContentText(content)
         .setAutoCancel(true);
         
         //TODO 진동기능 설정값으로 줘야하나?
@@ -140,6 +155,34 @@ public class GcmIntentService extends IntentService {
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-        
     }
+    
+    /**
+     * 푸쉬알림 보내기
+     * 
+     * @param storyId
+     */
+    public void makeNotification(String storyId){
+    	makeNotification(storyId, "");
+    }
+    
+    //관리자 알림 메세지 저장
+    public void saveAdminMessage(String msgId, String content){
+    	SettingDAO settingDao = new SettingDAO(getApplicationContext());
+    	settingDao.open();
+    	SettingDTO sdto;
+    	
+    	sdto = new SettingDTO();    	
+    	sdto.setKey("adminMsgId");
+    	sdto.setValue(msgId);    	
+    	settingDao.inssetting(sdto);
+    	
+    	sdto = new SettingDTO();    	
+    	sdto.setKey("adminMsg");
+    	sdto.setValue(content);
+    	settingDao.inssetting(sdto);
+    	
+    	settingDao.close();
+    }
+    
 }

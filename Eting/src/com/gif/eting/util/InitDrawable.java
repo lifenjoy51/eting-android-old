@@ -57,6 +57,10 @@ public class InitDrawable extends AsyncTask<Object, String, Drawable> {
 		case R.drawable.bg_1:
 			Util.mainBg = context.getResources().getDrawable(res);
 			break;
+			
+		case R.drawable.admin_spaceship:
+			Util.adminSpaceship = context.getResources().getDrawable(res);
+			break;
 
 		default:
 			break;

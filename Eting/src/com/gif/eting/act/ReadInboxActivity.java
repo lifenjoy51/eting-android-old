@@ -118,7 +118,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 			storyTime = storyTime.substring(0, 5);
 		}
 		
-		String storyDateTime = storyDate + "\t" + storyTime;
+		String storyDateTime = storyDate + "\t\t" + storyTime;
 		
 		//스크린크기
 		DisplayMetrics metrics = getResources().getDisplayMetrics();

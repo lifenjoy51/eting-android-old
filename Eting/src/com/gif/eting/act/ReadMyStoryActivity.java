@@ -112,7 +112,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			
 			
 			
-			String storyDateTime = storyDate + "\t" + storyHHMM;
+			String storyDateTime = storyDate + "\t\t" + storyHHMM;
 			
 			TextView storyDateView = (TextView) findViewById(R.id.mystory_content_top);
 			storyDateView.setText(storyDateTime);

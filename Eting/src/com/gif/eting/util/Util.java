@@ -35,6 +35,7 @@ public class Util {
 	public static Drawable mainBg;
 
 	public static Drawable spaceship;
+	public static Drawable adminSpaceship;
 	public static Drawable main_acc_2;
 	public static Drawable intro_ufo;
 
@@ -55,6 +56,7 @@ public class Util {
 		new InitDrawable(cnt).execute(context, R.drawable.main_cloud_4);
 
 		new InitDrawable(cnt).execute(context, R.drawable.spaceship);
+		new InitDrawable(cnt).execute(context, R.drawable.admin_spaceship);
 		new InitDrawable(cnt).execute(context, R.drawable.main_acc_2);
 		new InitDrawable(cnt).execute(context, R.drawable.intro_ufo);
 
@@ -206,6 +208,16 @@ public class Util {
 		}
 		Log.d("used", "mainBg used");
 		return mainBg;
+	}
+	
+	public static Drawable getAdminSpaceship(Context context) {
+		if (adminSpaceship== null) {
+			Log.d("cached", "adminSpaceship created");
+			adminSpaceship = context.getResources()
+					.getDrawable(R.drawable.admin_spaceship);
+		}
+		Log.d("used", "adminSpaceship used");
+		return adminSpaceship;
 	}
 
 }
