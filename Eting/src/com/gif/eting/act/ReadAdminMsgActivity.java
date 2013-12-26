@@ -186,20 +186,18 @@ public class ReadAdminMsgActivity extends Activity implements OnClickListener {
 						R.string.cannot_connect_to_internet, Toast.LENGTH_LONG);
 				toast.show();
 
-			} else {
-
-				adminMsgDao.open();
-				adminMsgDao.delAdminMsg(adminMsgId);
-				adminMsgDao.close();
-
-				// 정상으로 전송되었을 때.
-				InputMethodManager imm = (InputMethodManager) context
-						.getSystemService(Service.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
-
-				finish();
-
 			}
+			
+			// 정상으로 전송되었을 때.
+			InputMethodManager imm = (InputMethodManager) context
+					.getSystemService(Service.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
+
+			finish();
+
+			adminMsgDao.open();
+			adminMsgDao.delAdminMsg(adminMsgId);
+			adminMsgDao.close();
 		}
 
 	}

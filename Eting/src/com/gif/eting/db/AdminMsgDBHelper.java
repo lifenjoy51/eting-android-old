@@ -24,13 +24,13 @@ public class AdminMsgDBHelper extends SQLiteOpenHelper {
 	public static final String COL_MSG_CONTENT = "msg_content"; // 메세지 내용
 
 	private static final String DATABASE_NAME = "eting_admin_msg.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	/**
 	 *  TABLE 생성문
 	 */
 	private static final String DATABASE_CREATE = "CREATE TABLE " + TABLE_SETTING
-			+ "(" + COL_MSG_ID + " integer, " + COL_MSG_CONTENT + " text " + ");";
+			+ "(" + COL_MSG_ID + " integer primary key, " + COL_MSG_CONTENT + " text " + ");";
 
 	/**
 	 *  Constructor

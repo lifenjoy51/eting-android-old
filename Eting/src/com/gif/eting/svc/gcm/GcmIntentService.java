@@ -69,8 +69,6 @@ public class GcmIntentService extends IntentService {
                 
                 String type = extras.getString("type");
                 
-                
-                
                 //다른사람 코멘트일때
                 if("Stamp".equals(type)){
                 	String storyId = extras.getString("story_id");
@@ -93,7 +91,7 @@ public class GcmIntentService extends IntentService {
                 		//관리자 알람일 때에는 그냥 이팅만 켠다.
                 		makeNotification("", content);
                 	}
-                }else if("Inbox".equals(type)){	//관리자 메세지일때
+                }else if("Inbox".equals(type)){	//받은 이야기일때
                 	
         			/**
         			 * 서버에서 받아온 다른사람의 이야기를 처리하는 부분

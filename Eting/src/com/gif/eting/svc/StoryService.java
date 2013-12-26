@@ -83,6 +83,30 @@ public class StoryService {
 				this.saveMyStoryToPhone(myStoryDto); // 폰DB에 내 이야기 저장
 			}
 
+			/**
+			 * 서버에서 받아온 다른사람의 이야기를 처리하는 부분
+			 */
+			if (!json.isNull("recievedStory")) {
+				JSONObject recievedStory = json.getJSONObject("recievedStory");
+
+				// 받아온 이야기
+				StoryDTO recievedStoryDto = new StoryDTO();
+				
+				String recievedStoryId = recievedStory.getString("story_id");
+				String recievedContent = recievedStory.getString("content");
+				String recievedStoryDate = recievedStory.getString("story_date");
+				String recievedStoryTime = recievedStory.getString("story_time");
+				
+				recievedStoryDto.setIdx(Long.parseLong(recievedStoryId));
+				recievedStoryDto.setContent(recievedContent);
+				recievedStoryDto.setStory_date(recievedStoryDate);
+				recievedStoryDto.setStory_time(recievedStoryTime);
+				
+				//Log.i("returned recieved story", recievedStoryDto.getIdx() + recievedStoryDto.getContent() + recievedStoryDto.getStory_date());
+				
+				this.saveRecievedStoryToPhone(recievedStoryDto); // 폰DB에 받아온 이야기 저장
+			}
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

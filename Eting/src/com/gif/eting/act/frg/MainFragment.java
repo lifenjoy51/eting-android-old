@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -438,7 +439,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 			}.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					Animation ani = AnimationUtils.loadAnimation(getActivity(), R.anim.main_ufo);
+					Animation ani = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.main_ufo);
 					adminMsgUfo.startAnimation(ani);
 					adminMsgUfo.setVisibility(View.VISIBLE);
 					adminMsgUfo.bringToFront();
