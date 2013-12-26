@@ -2,6 +2,7 @@ package com.gif.eting.act.frg;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import android.app.AlertDialog;
@@ -13,9 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -30,20 +29,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.gif.eting.act.MainViewPagerActivity;
+import com.gif.eting.R;
 import com.gif.eting.act.ReadAdminMsgActivity;
 import com.gif.eting.act.ReadInboxActivity;
 import com.gif.eting.act.SettingActivity;
 import com.gif.eting.act.view.EtingLogoView;
 import com.gif.eting.act.view.PlanetView;
-import com.gif.eting.dao.SettingDAO;
-import com.gif.eting.dto.SettingDTO;
+import com.gif.eting.dao.AdminMsgDAO;
+import com.gif.eting.dto.AdminMsgDTO;
 import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.util.Util;
-import com.gif.eting.R;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 
 /**
  * 메인화면
@@ -52,7 +48,6 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
  * 
  */
 public class MainFragment extends SherlockFragment implements OnClickListener {
-	private ViewPager mPager = MainViewPagerActivity.mPager;
 
 	private TextView mainToday;
 	private TextView mainEtingCnt;
@@ -85,15 +80,6 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	 * 생성자
 	 */
 	public MainFragment() {
-	}
-
-	/**
-	 * ViewPager setter
-	 * 
-	 * @param mPager
-	 */
-	public void setViewPager(ViewPager mPager) {
-		this.mPager = mPager;
 	}
 
 	@Override
@@ -245,15 +231,6 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 * 다시그리기
 		 */
 		rootView.refreshDrawableState();
-
-		/**
-		 * gcm test
-		 */
-		int gcmChk = GooglePlayServicesUtil
-				.isGooglePlayServicesAvailable(getActivity()
-						.getApplicationContext());
-		ConnectionResult cr = new ConnectionResult(gcmChk, null);
-		//System.out.println(cr.toString());
 
 		/**
 		 * 내 이야기개수 설정
@@ -438,40 +415,16 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	 * 관리자 알람메세지를 보여주기
 	 */
 	public void setAdminMessage(){
-		SettingDAO settingDao = new SettingDAO(getActivity().getApplicationContext());
-    	SettingDTO sdto;    	
+    	AdminMsgDAO adminMsgDAO = new AdminMsgDAO(getActivity().getApplicationContext());
+    	adminMsgDAO.open();
     	
-    	settingDao.open();
-    	sdto = settingDao.getsettingInfo("adminMsg");
-    	settingDao.close();
+    	List<AdminMsgDTO> msgDto;
+    	msgDto = adminMsgDAO.getAdminMsgList();
     	
-    	//TODO 임시처리    	
-    	/*settingDao.open();
-    	
-    	settingDao.delsetting("adminMsgId");
-    	settingDao.delsetting("adminMsg");
-    	
-    	sdto = new SettingDTO();    	
-    	sdto.setKey("adminMsgId");
-    	sdto.setValue("1");
-    	settingDao.inssetting(sdto);
-    	
-    	sdto = new SettingDTO();    	
-    	sdto.setKey("adminMsg");
-    	String content = "안녕하세요 저희는 eting을 만든 학생들입니다 :) \n"
-+"다음 eting 업데이트를 앞두고, 업데이트 방향에 도움이 될 여러분들의 의견을 받고자 합니다. 바쁘시지만 1~2분 동안 시간내 주시길 부탁드려요 ! \n"
-+"http://me2.do/xxE5hDdF \n"
-+" \n"
-+"eting을 사용해 주셔서 감사합니다 \n"
-+"더욱더 발전하는 eting이 되겠습니다 \n"
-+"오늘도 eting 하세요 :-)";
-    	sdto.setValue(content);
-    	settingDao.inssetting(sdto);
-    	
-    	settingDao.close();*/
+    	adminMsgDAO.close();
     	
     	//메세지 알림 우주선 보이기
-    	if(sdto != null){
+		if (msgDto.size() > 0) {
     		hasAdminMsg = true;
     		
     		//행성이미지 숨기고

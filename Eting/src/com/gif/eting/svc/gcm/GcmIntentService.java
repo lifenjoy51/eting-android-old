@@ -1,5 +1,8 @@
 package com.gif.eting.svc.gcm;
 
+import org.json.JSONObject;
+
+import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -13,8 +16,11 @@ import android.util.Log;
 
 import com.gif.eting.R;
 import com.gif.eting.act.IntroActivity;
+import com.gif.eting.dao.AdminMsgDAO;
+import com.gif.eting.dao.InboxDAO;
 import com.gif.eting.dao.SettingDAO;
-import com.gif.eting.dto.SettingDTO;
+import com.gif.eting.dto.AdminMsgDTO;
+import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -61,10 +67,13 @@ public class GcmIntentService extends IntentService {
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
                 // Post notification of received message.
                 
-                String storyId = extras.getString("story_id");
+                String type = extras.getString("type");
+                
+                
                 
                 //다른사람 코멘트일때
-                if("".equals(storyId)){
+                if("Stamp".equals(type)){
+                	String storyId = extras.getString("story_id");
                     String stamps = extras.getString("stamps");	//,로 이어져있음
                     String comment = extras.getString("comment");
                     
@@ -74,7 +83,7 @@ public class GcmIntentService extends IntentService {
                     sendNotification(storyId);
                     Log.i(TAG, "Received: " + extras.toString());
                     
-                }else{	//관리자 메세지일때
+                }else if("Admin".equals(type)){	//관리자 메세지일때
                 	String msgId = extras.getString("msgId");
                 	String content = extras.getString("content");
                 	saveAdminMessage(msgId, content);
@@ -82,8 +91,30 @@ public class GcmIntentService extends IntentService {
                 	String isNoti = extras.getString("isNoti");
                 	if("Y".equals(isNoti)){
                 		//관리자 알람일 때에는 그냥 이팅만 켠다.
-                		makeNotification("");
+                		makeNotification("", content);
                 	}
+                }else if("Inbox".equals(type)){	//관리자 메세지일때
+                	
+        			/**
+        			 * 서버에서 받아온 다른사람의 이야기를 처리하는 부분
+        			 */
+
+    				// 받아온 이야기
+    				StoryDTO recievedStoryDto = new StoryDTO();
+    				String recievedStoryId = extras.getString("story_id");
+    				String recievedContent = extras.getString("content");
+    				String recievedStoryDate = extras.getString("story_date");
+    				String recievedStoryTime = extras.getString("story_time");
+    				recievedStoryDto.setIdx(Long.parseLong(recievedStoryId));
+    				recievedStoryDto.setContent(recievedContent);
+    				recievedStoryDto.setStory_date(recievedStoryDate);
+    				recievedStoryDto.setStory_time(recievedStoryTime);
+    				
+    				InboxDAO inboxDao = new InboxDAO(getApplicationContext());
+    				inboxDao.open();	//열고		
+    				inboxDao.insStory(recievedStoryDto);	//입력하고
+    				inboxDao.close();	//닫고
+                	
                 }
             }
         }
@@ -98,17 +129,6 @@ public class GcmIntentService extends IntentService {
     private void sendNotification(String storyId) {
     	Log.i("sendNotification", storyId);
     	
-    	SettingDAO settingDao = new SettingDAO(getApplicationContext());
-    	
-    	settingDao.open();
-    	Object alarm = settingDao.getsettingInfo("push_alarm");
-    	settingDao.close();
-    	
-    	//알람설정 off면 끝내기
-    	if(alarm!=null){
-    		return;
-    	}
-    	
     	//지워진 이야기면 끝내기
     	StoryService svc = new StoryService(this);
     	try{
@@ -122,7 +142,20 @@ public class GcmIntentService extends IntentService {
         
     }
     
-    public void makeNotification(String storyId, String content){
+    @SuppressLint("InlinedApi")
+	public void makeNotification(String storyId, String content){ 	
+    	
+    	SettingDAO settingDao = new SettingDAO(getApplicationContext());
+    	
+    	settingDao.open();
+    	Object alarm = settingDao.getsettingInfo("push_alarm");
+    	settingDao.close();
+    	
+    	//알람설정 off면 끝내기
+    	if(alarm!=null){
+    		return;
+    	}
+    	
     	mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -166,23 +199,22 @@ public class GcmIntentService extends IntentService {
     	makeNotification(storyId, "");
     }
     
-    //관리자 알림 메세지 저장
+    /**
+     * 관리자 알림 메세지 저장
+     * @param msgId
+     * @param content
+     */
     public void saveAdminMessage(String msgId, String content){
-    	SettingDAO settingDao = new SettingDAO(getApplicationContext());
-    	settingDao.open();
-    	SettingDTO sdto;
+    	AdminMsgDAO adminMsgDAO = new AdminMsgDAO(getApplicationContext());
+    	adminMsgDAO.open();
+    	AdminMsgDTO msgDto;
     	
-    	sdto = new SettingDTO();    	
-    	sdto.setKey("adminMsgId");
-    	sdto.setValue(msgId);    	
-    	settingDao.inssetting(sdto);
+    	msgDto = new AdminMsgDTO();    	
+    	msgDto.setMsgId(msgId);
+    	msgDto.setMsgContent(content);
+    	adminMsgDAO.insAdminMsg(msgDto);
     	
-    	sdto = new SettingDTO();    	
-    	sdto.setKey("adminMsg");
-    	sdto.setValue(content);
-    	settingDao.inssetting(sdto);
-    	
-    	settingDao.close();
+    	adminMsgDAO.close();
     }
     
 }

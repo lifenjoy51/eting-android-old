@@ -10,20 +10,18 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gif.eting.R;
-import com.gif.eting.dao.SettingDAO;
-import com.gif.eting.dto.SettingDTO;
+import com.gif.eting.dao.AdminMsgDAO;
+import com.gif.eting.dto.AdminMsgDTO;
 import com.gif.eting.util.HttpUtil;
 import com.gif.eting.util.Util;
 
@@ -56,9 +54,9 @@ public class ReadAdminMsgActivity extends Activity implements OnClickListener {
 	private EditText et;
 
 	/**
-	 * SettingDAO settingDao
+	 * AdminMsgDAO adminMsgDao
 	 */
-	SettingDAO settingDao;
+	AdminMsgDAO adminMsgDao;
 
 	private Context context;
 
@@ -81,18 +79,16 @@ public class ReadAdminMsgActivity extends Activity implements OnClickListener {
 		et = (EditText) findViewById(R.id.msg_comment);
 		et.setTypeface(Util.getNanum(getApplicationContext()));
 
-		settingDao = new SettingDAO(context);
-		SettingDTO sdto;
+		adminMsgDao = new AdminMsgDAO(context);
+		AdminMsgDTO sdto;
 
-		settingDao.open();
+		adminMsgDao.open();
 
-		sdto = settingDao.getsettingInfo("adminMsgId");
-		adminMsgId = sdto.getValue();
+		sdto = adminMsgDao.getAdminMsgList().get(0);
+		adminMsgId = sdto.getMsgId();
+		String content = sdto.getMsgContent();
 
-		sdto = settingDao.getsettingInfo("adminMsg");
-		String content = sdto.getValue();
-
-		settingDao.close();
+		adminMsgDao.close();
 
 		TextView contentView = (TextView) findViewById(R.id.popup_content);
 		contentView.setTypeface(Util.getNanum(getApplicationContext()));
@@ -190,12 +186,11 @@ public class ReadAdminMsgActivity extends Activity implements OnClickListener {
 						R.string.cannot_connect_to_internet, Toast.LENGTH_LONG);
 				toast.show();
 
-			} else if ("Success".equals(result)) {
+			} else {
 
-				settingDao.open();
-				settingDao.delsetting("adminMsgId");
-				settingDao.delsetting("adminMsg");
-				settingDao.close();
+				adminMsgDao.open();
+				adminMsgDao.delAdminMsg(adminMsgId);
+				adminMsgDao.close();
 
 				// 정상으로 전송되었을 때.
 				InputMethodManager imm = (InputMethodManager) context
@@ -204,8 +199,6 @@ public class ReadAdminMsgActivity extends Activity implements OnClickListener {
 
 				finish();
 
-			} else {
-				// ???
 			}
 		}
 
