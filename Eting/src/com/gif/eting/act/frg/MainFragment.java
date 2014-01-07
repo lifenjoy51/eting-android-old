@@ -397,7 +397,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 			}.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					Animation ani = AnimationUtils.loadAnimation(getActivity(),
+					Animation ani = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),
 							R.anim.main_ufo);
 					mainInboxCnt.startAnimation(ani);
 					mainInboxCnt.setVisibility(View.VISIBLE);
