@@ -98,10 +98,10 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		
 		//폰트설정
 		et = (EditText) rootView.findViewById(R.id.story_content);
-		et.setTypeface(Util.getNanum(getActivity()));
+		//et.setTypeface(Util.getNanum(getActivity()));
 
 		tv = (TextView) rootView.findViewById(R.id.write_story_dt);
-		tv.setTypeface(Util.getNanum(getActivity()), Typeface.BOLD);
+		//tv.setTypeface(Util.getNanum(getActivity()), Typeface.BOLD);
 		
 		/*send_textview = (TextView) rootView.findViewById(R.id.send_textview);
 		send_textview.setTypeface(Util.getNanum(getActivity()));

@@ -42,10 +42,10 @@ public class PasswordResetActivity extends Activity implements
 		setting_pw2 = (EditText) findViewById(R.id.setting_pw2);
 		password_textView = (TextView) findViewById(R.id.password_textView);
 
-		origin_pwd.setTypeface(Util.getNanum(getApplicationContext()));
-		setting_pw.setTypeface(Util.getNanum(getApplicationContext()));
-		setting_pw2.setTypeface(Util.getNanum(getApplicationContext()));
-		password_textView.setTypeface(Util.getNanum(getApplicationContext()));
+		//origin_pwd.setTypeface(Util.getNanum(getApplicationContext()));
+		//setting_pw.setTypeface(Util.getNanum(getApplicationContext()));
+		//setting_pw2.setTypeface(Util.getNanum(getApplicationContext()));
+		//password_textView.setTypeface(Util.getNanum(getApplicationContext()));
 		password_textView.setPaintFlags(password_textView.getPaintFlags()
 				| Paint.FAKE_BOLD_TEXT_FLAG);
 

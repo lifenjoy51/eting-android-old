@@ -157,13 +157,16 @@ public class MainViewPagerActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-
+		
+		SnowFactory.isActive = false;
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		
+		SnowFactory.isActive = true;
 	}
 
 	/**

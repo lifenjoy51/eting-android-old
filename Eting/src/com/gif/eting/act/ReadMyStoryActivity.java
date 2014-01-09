@@ -116,10 +116,10 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			
 			TextView storyDateView = (TextView) findViewById(R.id.mystory_content_top);
 			storyDateView.setText(storyDateTime);
-			storyDateView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
+			//storyDateView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
 			
 			TextView contentView = (TextView) findViewById(R.id.popup_content);
-			contentView.setTypeface(Util.getNanum(getApplicationContext()));
+			//contentView.setTypeface(Util.getNanum(getApplicationContext()));
 			contentView.setText(content);
 			
 			/**
@@ -237,7 +237,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 				//System.out.println("onTaskComplete = "+list);
 				String sender = list.get(0).getSender();
 				TextView contentView = (TextView) findViewById(R.id.popup_stamp_sender);
-				contentView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
+				//contentView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
 				
 				contentView.setText("PS. "+sender);
 			}else{
@@ -273,7 +273,7 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			stampView.setBackgroundResource(R.drawable.feedback);
 			stampView.setTextSize(15);
 			stampView.setTextColor(Color.parseColor("#555555"));
-			stampView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
+			//stampView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
 
 			LinearLayout.LayoutParams stampParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.WRAP_CONTENT,

@@ -77,7 +77,7 @@ public class ReadAdminMsgActivity extends Activity implements OnClickListener {
 		 * 짧은이야기 적는 부분
 		 */
 		et = (EditText) findViewById(R.id.msg_comment);
-		et.setTypeface(Util.getNanum(getApplicationContext()));
+		//et.setTypeface(Util.getNanum(getApplicationContext()));
 
 		adminMsgDao = new AdminMsgDAO(context);
 		AdminMsgDTO sdto;
@@ -91,7 +91,7 @@ public class ReadAdminMsgActivity extends Activity implements OnClickListener {
 		adminMsgDao.close();
 
 		TextView contentView = (TextView) findViewById(R.id.popup_content);
-		contentView.setTypeface(Util.getNanum(getApplicationContext()));
+		//contentView.setTypeface(Util.getNanum(getApplicationContext()));
 		contentView.setText(content);
 		contentView.setMovementMethod(LinkMovementMethod.getInstance());
 		

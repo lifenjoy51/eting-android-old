@@ -17,6 +17,7 @@ public class SnowFactory {
 	public static int height;
 	private static Context context;
 	private static Queue<Snow> snowQ;
+	public static boolean isActive = true;
 
 	/**
 	 * 변수모음
@@ -63,7 +64,9 @@ public class SnowFactory {
 
 	static class SnowHandler extends Handler {
 		public void handleMessage(Message msg) {
-			makeSnow();
+			if(isActive){
+				makeSnow();
+			}
 			hdlr.sendMessageDelayed(new Message(), interval);
 		}
 	}
@@ -83,4 +86,6 @@ public class SnowFactory {
 			fr.removeView(removedSnow);
 		}
 	}
+	
+	
 }

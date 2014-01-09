@@ -122,7 +122,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			 * 구분선 날짜
 			 */
 			TextView seperatorDate = (TextView) v.findViewById(R.id.mylist_item_date);
-			seperatorDate.setTypeface(Util.getNanum(getContext()),Typeface.BOLD);
+			//seperatorDate.setTypeface(Util.getNanum(getContext()),Typeface.BOLD);
 			if (seperatorDate != null) {
 				seperatorDate.setText(storyDate);
 			} 
@@ -157,7 +157,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			 * 이야기 작성일자
 			 */
 			TextView mystoryDate = (TextView) v.findViewById(R.id.mylist_item_date);
-			mystoryDate.setTypeface(Util.getNanum(getContext()), Typeface.BOLD);
+			//mystoryDate.setTypeface(Util.getNanum(getContext()), Typeface.BOLD);
 			if (mystoryDate != null) {
 				mystoryDate.setText(storyDate);
 			}
@@ -166,7 +166,7 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			 * 이야기 내용
 			 */
 			TextView mystoryContent = (TextView) v.findViewById(R.id.mylist_item_content);
-			mystoryContent.setTypeface(Util.getNanum(getContext()));
+			//mystoryContent.setTypeface(Util.getNanum(getContext()));
 			if (mystoryContent != null) {
 				String content = storyContent;
 				content = content.replaceAll("\n", " ");

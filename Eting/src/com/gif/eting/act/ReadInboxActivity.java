@@ -99,7 +99,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		 * 짧은이야기 적는 부분
 		 */
 		et = (EditText) findViewById(R.id.stamp_sender);
-		et.setTypeface(Util.getNanum(getApplicationContext()));
+		//et.setTypeface(Util.getNanum(getApplicationContext()));
 		
 		//Service초기화
 		inboxService = new InboxService(this.getApplicationContext());
@@ -126,11 +126,11 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		int height = metrics.heightPixels;
 		
 		TextView contentView = (TextView) findViewById(R.id.popup_content);
-		contentView.setTypeface(Util.getNanum(getApplicationContext()));
+		//contentView.setTypeface(Util.getNanum(getApplicationContext()));
 		contentView.setText(content);
 		
 		TextView storyDateView = (TextView) findViewById(R.id.popup_date);
-		storyDateView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
+		//storyDateView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
 		storyDateView.setText(storyDateTime);
 
 		//버튼이벤트 삽입
@@ -162,7 +162,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 			stampView.setBackgroundResource(R.drawable.feedback);
 			stampView.setTextSize(15);
 			stampView.setTextColor(Color.parseColor("#999999"));
-			stampView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
+			//stampView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
 			stampView.setOnClickListener(this);
 			
 			LinearLayout.LayoutParams stampParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT); //The WRAP_CONTENT parameters can be replaced by an absolute width and height or the FILL_PARENT option)

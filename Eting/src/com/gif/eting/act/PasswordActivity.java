@@ -58,10 +58,10 @@ public class PasswordActivity extends Activity implements OnClickListener {
 		// setting_save_btn.setVisibility(View.INVISIBLE);
 		// setting_save_pw_btn.setVisibility(View.VISIBLE);
 
-		origin_pwd.setTypeface(Util.getNanum(getApplicationContext()));
-		setting_pw.setTypeface(Util.getNanum(getApplicationContext()));
-		setting_pw2.setTypeface(Util.getNanum(getApplicationContext()));
-		password_textView.setTypeface(Util.getNanum(getApplicationContext()));
+		//origin_pwd.setTypeface(Util.getNanum(getApplicationContext()));
+		//setting_pw.setTypeface(Util.getNanum(getApplicationContext()));
+		//setting_pw2.setTypeface(Util.getNanum(getApplicationContext()));
+		//password_textView.setTypeface(Util.getNanum(getApplicationContext()));
 		password_textView.setPaintFlags(password_textView.getPaintFlags()
 				| Paint.FAKE_BOLD_TEXT_FLAG);
 

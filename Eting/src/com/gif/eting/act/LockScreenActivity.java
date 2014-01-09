@@ -52,7 +52,7 @@ public class LockScreenActivity extends Activity implements OnClickListener  {
 		
 		// 암호입력필드
 		EditText et = (EditText) findViewById(R.id.lockScreenPassword);
-		et.setTypeface(Util.getNanum(getApplicationContext()));
+		//et.setTypeface(Util.getNanum(getApplicationContext()));
 		et.clearComposingText();
 		
 		lockScreenButton = (ImageView) findViewById(R.id.lockScreenButton);

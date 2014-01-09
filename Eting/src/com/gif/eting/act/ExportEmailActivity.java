@@ -45,8 +45,8 @@ public class ExportEmailActivity extends Activity implements OnClickListener {
 		email_textView = (TextView) findViewById(R.id.email_textView);
 //		cancel_btn = (ImageView) findViewById(R.id.cancel_btn);
 		
-		email_address.setTypeface(Util.getNanum(getApplicationContext()));
-		email_textView.setTypeface(Util.getNanum(getApplicationContext()));
+		//email_address.setTypeface(Util.getNanum(getApplicationContext()));
+		//email_textView.setTypeface(Util.getNanum(getApplicationContext()));
 		email_textView.setPaintFlags(email_textView.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 		email_address.setHintTextColor(Color.parseColor("#bbbbbb"));
 		// emailAddress = email_address.getText().toString();

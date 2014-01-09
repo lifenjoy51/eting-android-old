@@ -15,8 +15,7 @@ public class InitFont extends AsyncTask<Object, String, Object> {
 	@Override
 	protected Object doInBackground(Object... params) {
 		Context context = (Context) params[0];
-		Util.nanum = Typeface.createFromAsset(context.getAssets(),
-				"fonts/NanumBarunGothic.ttf");
+		//Util.nanum = Typeface.createFromAsset(context.getAssets(),"fonts/NanumBarunGothic.ttf");
 
 		return null;
 	}

@@ -62,7 +62,7 @@ public class SettingActivity extends Activity implements OnClickListener {
     	}
 
 		// 글꼴
-		setting_textView.setTypeface(Util.getNanum(getApplicationContext()));
+		//setting_textView.setTypeface(Util.getNanum(getApplicationContext()));
 		setting_textView.setPaintFlags(setting_textView.getPaintFlags()
 				| Paint.FAKE_BOLD_TEXT_FLAG);
 		

@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.gif.eting.R;
+import com.gif.eting.act.MainViewPagerActivity;
 import com.gif.eting.act.ReadAdminMsgActivity;
 import com.gif.eting.act.ReadInboxActivity;
 import com.gif.eting.act.SettingActivity;
@@ -55,6 +57,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	private TextView mainInboxCnt;
 	private ImageView adminMsgUfo;
 	private ImageView mainAcc1;
+	private PlanetView pv;
 
 	// 스크린크기
 	private DisplayMetrics metrics;
@@ -107,11 +110,13 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		/**
 		 * 돌아가는 동그라미 애니메이션
 		 */
-		fr.addView(new PlanetView(getActivity()));
+		pv = new PlanetView(getActivity());
+		pv.setId(R.drawable.main_planet);
+		fr.addView(pv);
 
 		/**
 		 * 로고이미지
-		 */
+		 */ 
 		fr.addView(new EtingLogoView(getActivity()));
 
 		/**
@@ -132,7 +137,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 */
 		mainToday = (TextView) rootView.findViewById(R.id.main_today);
 
-		mainToday.setTypeface(Util.getNanum(getActivity()));
+		//mainToday.setTypeface(Util.getNanum(getActivity()));
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd",
 				Locale.KOREA);
@@ -227,6 +232,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		rootView.findViewById(R.id.main_inbox_cnt).setOnClickListener(this);
 		rootView.findViewById(R.id.setting_btn).setOnClickListener(this);
 		rootView.findViewById(R.id.admin_msg).setOnClickListener(this);
+		pv.setOnClickListener(this);
 
 		/**
 		 * 다시그리기
@@ -237,7 +243,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 * 내 이야기개수 설정
 		 */
 		mainEtingCnt = (TextView) rootView.findViewById(R.id.main_eting_cnt);
-		mainEtingCnt.setTypeface(Util.getNanum(getActivity()));
+		//mainEtingCnt.setTypeface(Util.getNanum(getActivity()));
 		mainEtingCnt.setPaintFlags(mainEtingCnt.getPaintFlags()
 				| Paint.FAKE_BOLD_TEXT_FLAG);
 		svc = new StoryService(getActivity());
@@ -263,7 +269,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		 */
 		Drawable dr = Util.getSpaceship(getActivity());
 		mainInboxCnt = (TextView) rootView.findViewById(R.id.main_inbox_cnt);
-		mainInboxCnt.setTypeface(Util.getNanum(getActivity()), Typeface.BOLD);
+		//mainInboxCnt.setTypeface(Util.getNanum(getActivity()), Typeface.BOLD);
 		is = new InboxService(getActivity());
 		mainInboxCnt.setBackgroundResource(R.drawable.spaceship);
 		mainInboxCnt.setGravity(Gravity.CENTER);
@@ -350,6 +356,14 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		case R.id.admin_msg:
 			if(hasAdminMsg){
 				startActivity(new Intent(getActivity(), ReadAdminMsgActivity.class)); // 팝업				
+			}
+			break;
+			
+		case R.drawable.main_planet:
+			//원을 누르면 쓰기페이지로 이동
+			final ViewPager mPager = MainViewPagerActivity.mPager;
+			if (mPager != null) {
+				mPager.setCurrentItem(2);
 			}
 			break;
 			

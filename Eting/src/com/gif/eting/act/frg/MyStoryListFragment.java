@@ -160,7 +160,7 @@ public class MyStoryListFragment  extends SherlockFragment{
 			 * 텍스트
 			 */
 			TextView storListAramText = (TextView) rootView.findViewById(R.id.story_list_alarm_text);
-			storListAramText.setTypeface(Util.getNanum(getActivity()));
+			//storListAramText.setTypeface(Util.getNanum(getActivity()));
 			storListAramText.setTextColor(Color.parseColor("#555555"));
 			
 			
