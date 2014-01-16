@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.gif.eting.R;
 import com.gif.eting.act.view.StampView;
+import com.gif.eting.dao.InboxDAO;
 import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.InboxService;
@@ -35,6 +37,7 @@ import com.gif.eting.svc.StampService;
 import com.gif.eting.svc.task.ReportStroyTask;
 import com.gif.eting.svc.task.SendStampTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
+import com.gif.eting.util.HttpUtil;
 import com.gif.eting.util.Util;
 
 /**
@@ -136,6 +139,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		//버튼이벤트 삽입
 		findViewById(R.id.inbox_confirm_btn).setOnClickListener(this);		
 		findViewById(R.id.report_btn).setOnClickListener(this);		
+		findViewById(R.id.pass_btn).setOnClickListener(this);		
 		
 		/**
 		 * 스탬프입력창
@@ -202,10 +206,18 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		if(v.getId()==R.id.inbox_confirm_btn){
 			Log.d("et length", String.valueOf(et.getText().toString().length()));
 			if(stamps.size()==0){
+				
+				//스탬프 없으면 자동스탬프
+				stamps.add("1");
+				
+				/*
 				Toast toast = Toast.makeText(context, R.string.select_stamp_plz,
 						Toast.LENGTH_SHORT);
 				toast.show();
 				return;
+				*/
+				
+				
 			}else if(et.getText().toString().length() < 2){
 				Toast toast = Toast.makeText(context, R.string.enter_comment_plz,
 						Toast.LENGTH_SHORT);
@@ -272,6 +284,34 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 								}
 
 							}).setNegativeButton(R.string.no, null).show();
+
+		}else if (v.getId() == R.id.pass_btn) {
+			// Ask the user if they want to quit
+						new AlertDialog.Builder(this)
+								.setIcon(android.R.drawable.ic_dialog_alert)
+								.setTitle(R.string.pass_title)
+								.setMessage(R.string.pass_message)
+								.setPositiveButton(R.string.yes,
+										new DialogInterface.OnClickListener() {
+
+											@Override
+											public void onClick(DialogInterface dialog,
+													int which) {
+
+												// 전송상태 나타냄
+												progressDialog = ProgressDialog.show(
+														ReadInboxActivity.this,
+														"",
+														getResources().getString(
+																R.string.app_name), true,
+														true);
+												// 신고기능
+												passStory();
+												// 돌아가기
+												finish();
+											}
+
+										}).setNegativeButton(R.string.no, null).show();
 
 		}
 		
@@ -385,6 +425,60 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 			} else {
 				// ???
 			}
+		}
+	}
+	
+	/**
+	 * 이야기 패스기능
+	 */
+	private void passStory(){
+		new PassStroyTask().execute();
+	}
+	
+	class PassStroyTask extends AsyncTask<Object, String, String> {
+		
+		private String storyId;
+		
+		/**
+		 * 생성자로 콜백을 받아온다.
+		 * 
+		 * @param callback
+		 */
+		public PassStroyTask(){
+		}
+		
+		/**
+		 * 실제 실행되는 부분
+		 */
+		@Override
+		protected String doInBackground(Object... params) {
+
+				String urlStr = Util.serverContext+"/passStory";
+				
+				this.storyId = String.valueOf(inboxStoryIdx);
+				String param = "story_id=" + storyId;	//파라미터 첫번째값 storyId
+				
+				String response = HttpUtil.doPost(urlStr, param);	//Http전송 
+				//System.out.println(this.getClass().getName() + " = " + response);
+				return response;
+		}
+
+		/**
+		 * 작업이 끝나면 자동으로 실행된다.
+		 */
+		@Override
+		protected void onPostExecute(String result) {
+			//이야기 삭제
+			StoryDTO inboxStory = new StoryDTO();
+			inboxStory.setIdx(Long.parseLong(storyId));
+	
+			InboxDAO inboxDao = new InboxDAO(context);
+			
+			// 스탬프찍은 이야기 삭제
+			inboxDao.open();
+			inboxDao.delStory(inboxStory);
+			inboxDao.close();
+			
 		}
 	}
 

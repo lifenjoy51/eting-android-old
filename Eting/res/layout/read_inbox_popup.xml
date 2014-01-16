@@ -49,15 +49,15 @@
             android:layout_alignParentRight="true"
         	android:layout_marginTop="40dp"
         	android:layout_marginBottom="10dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/report_btn_selector" />
 
     <ScrollView
         android:id="@+id/popup_content_scroll_area"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/inbox_stamp_scroll_area"
-            android:background="@android:color/white"
+        android:layout_above="@+id/pass_area"
+        android:background="@android:color/white"
         android:layout_below="@+id/popup_date" >
 
         <TextView
@@ -72,6 +72,30 @@
             android:textSize="17sp"
             android:textIsSelectable="true" />
     </ScrollView>
+    
+    
+    
+    <LinearLayout
+        android:id="@+id/pass_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/inbox_stamp_scroll_area"
+        android:orientation="horizontal"
+        android:background="@android:color/white" >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </ImageView>
+
+		<Button
+            android:id="@+id/pass_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/pass_btn_selector"
+             />   
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/inbox_stamp_scroll_area"

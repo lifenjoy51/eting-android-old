@@ -10,6 +10,7 @@ import com.gif.eting.dao.InboxDAO;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.util.AsyncTaskCompleteListener;
 import com.gif.eting.util.HttpUtil;
+import com.gif.eting.util.Installation;
 import com.gif.eting.util.Util;
 
 /**
@@ -47,6 +48,9 @@ public class SendStampTask extends AsyncTask<Object, String, String> {
 			
 			this.storyId = (String) params[0];
 			String param = "story_id=" + storyId;	//파라미터 첫번째값 storyId
+			
+			String phoneId = Installation.id(context);	//기기 고유값
+			param += "&phone_id=" + phoneId;
 			
 			@SuppressWarnings("unchecked")
 			List<String> stampIds = (List<String>)params[1];	//파라미터 두번째값 stamp들 #형식 유의

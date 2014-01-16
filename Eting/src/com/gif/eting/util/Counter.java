@@ -14,7 +14,7 @@ public class Counter {
 
 	public void setCnt() {
 		Counter.cnt++;
-		if(Counter.cnt>=10){
+		if(Counter.cnt>=11){
 			listner.onEvent(cnt);
 		}
 	}

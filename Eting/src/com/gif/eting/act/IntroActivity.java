@@ -110,7 +110,7 @@ public class IntroActivity extends Activity implements CounterListener{
 		 * CheckStampTask 파라미터는 CheckStampTask 수행되고 나서 실행될 콜백이다. execute의 파라미터가
 		 * 실제 넘겨줄 자료들. parameter[0] = this. Context.
 		 */
-		new CheckStampTask(new AfterCheckStampTask()).execute(this);
+		//new CheckStampTask(new AfterCheckStampTask()).execute(this);
 
 		/**
 		 * 스탬프찍힌 이야기 리스트 받아오기

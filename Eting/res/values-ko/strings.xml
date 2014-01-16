@@ -52,5 +52,7 @@
     <string name="delete_completed">삭제되었습니다.</string>
     <string name="enter_email_plz">이메일주소를 입력해주세요.</string>
     <string name="enter_comment_plz">코멘트를 입력해주세요.</string>
+    <string name="pass_title">넘기기</string>
+    <string name="pass_message">이 메세지를 다른 사람에게 넘기겠습니까?</string>
 
 </resources>

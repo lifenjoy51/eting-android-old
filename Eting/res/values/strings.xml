@@ -53,5 +53,7 @@
     <string name="enter_email_plz"> Please enter your email.</string>
     <string name="enter_comment_plz"> Please enter comment.</string>
     <string name="admin_message">admin_message</string>
+    <string name="pass_title">pass</string>
+    <string name="pass_message">Do you want to pass this message?</string>
 
 </resources>

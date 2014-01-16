@@ -370,9 +370,11 @@ public class WriteMyStoryFragment extends SherlockFragment implements
 		/**
 		 * 전송완료 메세지
 		 */
-		Toast toast = Toast.makeText(getActivity(), R.string.send_completed,
-				Toast.LENGTH_SHORT);
-		toast.show();
+		if (getActivity() != null) {
+			Toast toast = Toast.makeText(getActivity(),
+					R.string.send_completed, Toast.LENGTH_SHORT);
+			toast.show();
+		}
 
 		/**
 		 * 쓰기화면 초기화
