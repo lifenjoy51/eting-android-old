@@ -44,6 +44,8 @@ public class SendStampTask extends AsyncTask<Object, String, String> {
 	@Override
 	protected String doInBackground(Object... params) {
 
+			this.context = (Context) params[2];	//파라미터 세번째값 context
+		
 			String urlStr = Util.serverContext+"/saveStamp";
 			
 			this.storyId = (String) params[0];
@@ -55,7 +57,6 @@ public class SendStampTask extends AsyncTask<Object, String, String> {
 			@SuppressWarnings("unchecked")
 			List<String> stampIds = (List<String>)params[1];	//파라미터 두번째값 stamp들 #형식 유의
 			
-			this.context = (Context) params[2];	//파라미터 세번째값 context
 			
 			String sender =(String) params[3];	//파라미터 네번째값 sender
 			

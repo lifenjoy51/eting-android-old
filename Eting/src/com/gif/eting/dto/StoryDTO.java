@@ -11,6 +11,7 @@ public class StoryDTO {
 	 * 고유번호
 	 */
 	private long idx;
+	private String story_id;
 
 	/**
 	 * 이야기 내용
@@ -41,6 +42,16 @@ public class StoryDTO {
 	 * 피드백
 	 */
 	private String comment;
+	
+	
+
+	public String getStory_id() {
+		return story_id;
+	}
+
+	public void setStory_id(String story_id) {
+		this.story_id = story_id;
+	}
 
 	public String getStamps() {
 		return stamps;

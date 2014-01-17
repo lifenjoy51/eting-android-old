@@ -45,7 +45,9 @@ public class UfoWritePageView extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		mDrawable.draw(canvas);
+		if(mDrawable != null){
+			mDrawable.draw(canvas);
+		}
 		invalidate();
 	}
 

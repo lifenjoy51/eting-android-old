@@ -25,6 +25,7 @@ import com.gif.eting.R;
 import com.gif.eting.act.view.UfoView;
 import com.gif.eting.svc.PasswordService;
 import com.gif.eting.svc.task.CheckStampTask;
+import com.gif.eting.svc.task.CheckStampedStoryTask;
 import com.gif.eting.svc.task.RegistrationTask;
 import com.gif.eting.util.AsyncTaskCompleteListener;
 import com.gif.eting.util.Counter;
@@ -110,15 +111,7 @@ public class IntroActivity extends Activity implements CounterListener{
 		 * CheckStampTask 파라미터는 CheckStampTask 수행되고 나서 실행될 콜백이다. execute의 파라미터가
 		 * 실제 넘겨줄 자료들. parameter[0] = this. Context.
 		 */
-		//new CheckStampTask(new AfterCheckStampTask()).execute(this);
-
-		/**
-		 * 스탬프찍힌 이야기 리스트 받아오기
-		 * 
-		 * CheckStampedStoryTask 파라미터는 CheckStampedStoryTask 수행되고 나서 실행될 콜백이다.
-		 * execute의 파라미터가 실제 넘겨줄 자료들. parameter[0] = this. Context.
-		 */
-		//new CheckStampedStoryTask(new AfterCheckStampedStoryTask()).execute(this);
+		new CheckStampTask(new AfterCheckStampTask()).execute(this);
 
 		/**
 		 * GCM 등록체크
@@ -139,6 +132,15 @@ public class IntroActivity extends Activity implements CounterListener{
 				sendRegistrationIdToBackend(); // TODO 임시로 만들어놓은거.
 			}
 		} else {
+
+			/**
+			 * 스탬프찍힌 이야기 리스트 받아오기
+			 * 
+			 * CheckStampedStoryTask 파라미터는 CheckStampedStoryTask 수행되고 나서 실행될 콜백이다.
+			 * execute의 파라미터가 실제 넘겨줄 자료들. parameter[0] = this. Context.
+			 */
+			new CheckStampedStoryTask(new AfterCheckStampedStoryTask()).execute(this);
+			
 			Log.i(TAG, "No valid Google Play Services APK found.");
 		}
 		
@@ -198,7 +200,6 @@ public class IntroActivity extends Activity implements CounterListener{
 	 * SendStoryTask수행 후 실행되는 콜백 애니메이션이 3초이상 지속되고 스탬프 동기화를 마치고 스탬프찍힌 이야기를 검사하면
 	 * 이동한다!
 	 */
-	@SuppressWarnings("unused")
 	private class AfterCheckStampedStoryTask implements
 			AsyncTaskCompleteListener<String> {
 

@@ -1,15 +1,11 @@
 package com.gif.eting.svc.task;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.util.AsyncTaskCompleteListener;
@@ -78,7 +74,6 @@ public class CheckStampedStoryTask extends AsyncTask<Object, String, String> {
 				callback.onTaskComplete("HttpUtil_Error");	
 			
 		}else{
-			StringBuffer stamps = new StringBuffer();
 			
 			try {
 				JSONObject json = new JSONObject(result);
@@ -86,11 +81,14 @@ public class CheckStampedStoryTask extends AsyncTask<Object, String, String> {
 				if (!json.isNull("stampedStoryList")) {				
 					StoryService svc = new StoryService(context);
 					JSONArray stampedStoryList = json.getJSONArray("stampedStoryList");
-					List<String> list = new ArrayList<String>();
 					for(int i=0; i<stampedStoryList.length(); i++){
-						list.add(stampedStoryList.getString(i));
+						JSONObject commentedStory = stampedStoryList.getJSONObject(i);
+						String stampedStory = commentedStory.getString("story_id");
+						String stamps = commentedStory.getString("stamps");;
+						String comment = commentedStory.getString("comment");;
+						svc.updStoryStamp(stampedStory, stamps, comment);
 					}
-					svc.updStoryStampYn(list);
+					
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -98,7 +96,7 @@ public class CheckStampedStoryTask extends AsyncTask<Object, String, String> {
 				
 				// 호출한 클래스 콜백
 				if (callback != null)
-					callback.onTaskComplete(stamps.toString());	
+					callback.onTaskComplete("");	
 				
 			}
 			

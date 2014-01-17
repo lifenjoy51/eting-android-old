@@ -58,6 +58,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	private ImageView adminMsgUfo;
 	private ImageView mainAcc1;
 	private PlanetView pv;
+	private EtingLogoView elv;
 
 	// 스크린크기
 	private DisplayMetrics metrics;
@@ -117,7 +118,9 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		/**
 		 * 로고이미지
 		 */ 
-		fr.addView(new EtingLogoView(getActivity()));
+		elv = new EtingLogoView(getActivity());
+		elv.setId(R.drawable.eting_logo);
+		fr.addView(elv);
 
 		/**
 		 * 프레임 레이아웃 앞으로 보내기
@@ -232,7 +235,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		rootView.findViewById(R.id.main_inbox_cnt).setOnClickListener(this);
 		rootView.findViewById(R.id.setting_btn).setOnClickListener(this);
 		rootView.findViewById(R.id.admin_msg).setOnClickListener(this);
-		pv.setOnClickListener(this);
+		elv.setOnClickListener(this);
 
 		/**
 		 * 다시그리기
@@ -359,7 +362,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 			}
 			break;
 			
-		case R.drawable.main_planet:
+		case R.drawable.eting_logo:
 			//원을 누르면 쓰기페이지로 이동
 			final ViewPager mPager = MainViewPagerActivity.mPager;
 			if (mPager != null) {

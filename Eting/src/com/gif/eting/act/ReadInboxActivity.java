@@ -218,7 +218,9 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 				*/
 				
 				
-			}else if(et.getText().toString().length() < 2){
+			}
+			
+			if(et.getText().toString().length() < 2){
 				Toast toast = Toast.makeText(context, R.string.enter_comment_plz,
 						Toast.LENGTH_SHORT);
 				toast.show();
