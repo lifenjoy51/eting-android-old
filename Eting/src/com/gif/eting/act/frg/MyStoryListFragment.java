@@ -113,7 +113,9 @@ public class MyStoryListFragment  extends SherlockFragment{
 		for(StoryDTO story : myStoryList){
 			String tempMonth = "";
 			if(story.getStory_date() != null){
-				tempMonth = story.getStory_date().substring(0,7);
+				if(story.getStory_date().length() > 0){
+					tempMonth = story.getStory_date().substring(0,7);
+				}
 				//Log.i("temp month = ", tempMonth);
 			}
 			if(!chkDate.equals(tempMonth)){
