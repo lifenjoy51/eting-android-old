@@ -25,7 +25,7 @@ public class StampDBHelper extends SQLiteOpenHelper {
 	public static final String COL_NAME= "stamp_name";
 
 	private static final String DATABASE_NAME = "eting_stamp.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	/**
 	 *  TABLE 생성문

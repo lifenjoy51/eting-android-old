@@ -187,10 +187,10 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			if (star != null) {
 				if("R".equals(stampYn)){
 					//읽은상태
-					star.setImageResource(R.drawable.star_2);
+					star.setImageResource(R.drawable.star_3);
 				}else if("Y".equals(stampYn)){
 					//여기가 안읽은 상태
-					star.setImageResource(R.drawable.star_3);
+					star.setImageResource(R.drawable.star_2);
 					//star.setAlpha(0.5f);
 				}else{
 					star.setImageResource(R.drawable.star_1);
