@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Locale;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,6 +44,9 @@ import com.gif.eting.dao.AdminMsgDAO;
 import com.gif.eting.dto.AdminMsgDTO;
 import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StoryService;
+import com.gif.eting.util.AsyncTaskCompleteListener;
+import com.gif.eting.util.HttpUtil;
+import com.gif.eting.util.Installation;
 import com.gif.eting.util.Util;
 
 /**
@@ -228,6 +233,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		mainAcc2Params.topMargin = mainAcc2Y; // Your Y coordinate
 		mainAcc2Params.gravity = Gravity.LEFT | Gravity.TOP;
 		mainAcc2.setLayoutParams(mainAcc2Params);
+		mainAcc2.bringToFront();
 
 		/**
 		 * 클릭이벤트 설정
@@ -235,7 +241,9 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		rootView.findViewById(R.id.main_inbox_cnt).setOnClickListener(this);
 		rootView.findViewById(R.id.setting_btn).setOnClickListener(this);
 		rootView.findViewById(R.id.admin_msg).setOnClickListener(this);
-		elv.setOnClickListener(this);
+		rootView.findViewById(R.id.main_acc_2).setOnClickListener(this);
+		rootView.findViewById(R.drawable.eting_logo).setOnClickListener(this);
+		//elv.setOnClickListener(this);
 
 		/**
 		 * 다시그리기
@@ -340,6 +348,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 
+		System.out.println("onclick \t "+v.getId());
 		switch (v.getId()) {
 
 		case R.id.main_inbox_cnt:
@@ -354,6 +363,11 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 			 * 설정화면으로 이동
 			 */
 			startActivity(new Intent(getActivity(), SettingActivity.class));
+			break;
+		
+		case R.id.main_acc_2:
+			//메세지 저장
+			getStoryFromServer();
 			break;
 		
 		case R.id.admin_msg:
@@ -371,7 +385,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 			break;
 			
 
-		}
+		}		
 
 	}
 
@@ -534,6 +548,67 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	public void setRepeat() {
 		hdler = new MyHandler();
 		hdler.sendMessageDelayed(new Message(), delayTime);
+	}
+	
+	//서버에서 이야기를 하나 받아온다!
+	public void getStoryFromServer(){
+		//10개가 넘지 않으면?
+		/**
+		 * 받은편지함 개수 설정
+		 */
+		int inboxCnt = is.getInboxCnt();
+		
+		if(inboxCnt == 0){
+			new GetStoryTask().execute();
+		}
+	}
+	
+	class GetStoryTask extends AsyncTask<Object, String, String> {
+		
+		/**
+		 * 생성자로 콜백을 받아온다.
+		 * 
+		 * @param callback
+		 */
+		public GetStoryTask(){
+		}
+
+		/**
+		 * 실제 실행되는 부분
+		 */
+		@Override
+		protected String doInBackground(Object... params) {
+
+				String phoneId = Installation.id(getActivity().getApplicationContext());	//기기 고유값
+				String param = "phone_id=" + phoneId;	//서버에 전송할 파라미터 조립
+				String urlStr = Util.serverContext+"/getRandomStory";
+				
+				String response = HttpUtil.doPost(urlStr, param);	//Http전송 
+				return response;
+		}	
+		
+		/**
+		 * 작업이 끝나면 자동으로 실행된다.
+		 */
+		@Override
+		protected void onPostExecute(String result) {
+			String returnString = "Success";
+			if("HttpUtil_Error".equals(result)){
+				returnString = "HttpUtil_Error";
+			}else if("UnknownHostException".equals(result)){
+				returnString = "UnknownHostException";
+			}else{
+				// 폰DB에 저장
+				StoryService storyService = new StoryService(getActivity().getApplicationContext());
+				storyService.saveToPhoneDB(result);
+				
+				/**
+				 * 받은편지함 관련 정보 설정(개수, 우주선)
+				 */
+				setInboxCnt();
+			}
+		}
+
 	}
 
 }

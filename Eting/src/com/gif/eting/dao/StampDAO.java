@@ -26,7 +26,7 @@ public class StampDAO {
 	private SQLiteDatabase database;
 	private StampDBHelper dbHelper;
 	private String[] allColumns = { StampDBHelper.COL_IDX,
-			StampDBHelper.COL_NAME, StampDBHelper.COL_TYPE, StampDBHelper.COL_ORDER, StampDBHelper.COL_URL };
+			StampDBHelper.COL_NAME };
 
 	/**
 	 * 생성할때 dbHelper 초기화

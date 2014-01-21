@@ -23,9 +23,6 @@ public class StampDBHelper extends SQLiteOpenHelper {
 	 */
 	public static final String COL_IDX = "stamp_idx";
 	public static final String COL_NAME= "stamp_name";
-	public static final String COL_TYPE = "stamp_type";
-	public static final String COL_ORDER = "stamp_order";
-	public static final String COL_URL = "stamp_url";
 
 	private static final String DATABASE_NAME = "eting_stamp.db";
 	private static final int DATABASE_VERSION = 1;
@@ -36,10 +33,7 @@ public class StampDBHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_CREATE = "CREATE TABLE "
 			+ TABLE_STAMP_MASTER + "(" 
 			+ COL_IDX + " integer primary key, "	//[0]
-			+ COL_NAME + " text not null, " 	//[1]
-			+ COL_TYPE + " text not null, "	//[2]
-			+ COL_ORDER + " integer, "	//[3]
-			+ COL_URL + " text "	//[4]
+			+ COL_NAME + " text not null " 	//[1]
 			+ ");";
 
 	/**
