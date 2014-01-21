@@ -84,9 +84,10 @@ public class CheckStampedStoryTask extends AsyncTask<Object, String, String> {
 					for(int i=0; i<stampedStoryList.length(); i++){
 						JSONObject commentedStory = stampedStoryList.getJSONObject(i);
 						String stampedStory = commentedStory.getString("story_id");
-						String stamps = commentedStory.getString("stamps");;
-						String comment = commentedStory.getString("comment");;
-						svc.updStoryStamp(stampedStory, stamps, comment);
+						String stamps = commentedStory.getString("stamps");
+						String comment = commentedStory.getString("comment");
+						String commentId = commentedStory.getString("comment_id");
+						svc.updStoryStamp(stampedStory, stamps, comment, commentId);
 					}
 					
 				}

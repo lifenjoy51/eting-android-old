@@ -8,7 +8,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.gif.eting.db.SettingDBHelper;
 import com.gif.eting.dto.SettingDTO;
@@ -70,10 +69,6 @@ public class SettingDAO {
 		}
 		// Make sure to close the cursor
 		cursor.close();
-
-		for (SettingDTO setting : settingList) {
-			//Log.i("setting setting list", setting.getKey() + setting.getValue());
-		}
 
 		return settingList;
 	}

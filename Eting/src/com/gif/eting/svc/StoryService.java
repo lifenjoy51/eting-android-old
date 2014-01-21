@@ -192,11 +192,21 @@ public class StoryService {
 	 * 스탬프찍힌 이야기 업데이트 (단건)
 	 * @param stampedStoryList
 	 */
-	public void updStoryStamp(String stampedStory, String stamps, String comment){
+	public void updStoryStamp(String stampedStory, String stamps, String comment, String commentId){
 		storyDao.open();
-		storyDao.updStoryStamp(stampedStory, stamps, comment);
+		storyDao.updStoryStamp(stampedStory, stamps, comment, commentId);
 		storyDao.close();
 		
+	}
+	
+	/**
+	 * 스탬프 읽은상태로 변환
+	 * @param storyId
+	 */
+	public void updStoryStampRead(String storyId){
+		storyDao.open();
+		storyDao.updStoryStampRead(storyId);
+		storyDao.close();
 	}
 	
 	/**
@@ -230,7 +240,7 @@ public class StoryService {
 			for(String stampId : st){
 				StampDTO stamp = stSvc.getStamp(stampId);
 				stamp.setStory_id(idx);
-				stamp.setSender(comment);
+				stamp.setComment(comment);
 				list.add(stamp);
 			}
 		}

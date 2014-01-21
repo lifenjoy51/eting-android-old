@@ -91,7 +91,8 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		storyService = new StoryService(this.getApplicationContext());
 		
 		try{
-
+			//읽음 표시
+			storyService.updStoryStampRead(storyIdx);
 			StoryDTO myStory = storyService.getMyStory(storyIdx);	//해당하는 이야기 받아오기
 			String content = myStory.getContent();
 			
@@ -235,11 +236,11 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		if (list != null) {
 			if (list.size() > 0) {
 				//System.out.println("onTaskComplete = "+list);
-				String sender = list.get(0).getSender();
-				TextView contentView = (TextView) findViewById(R.id.popup_stamp_sender);
+				String comment = list.get(0).getComment();
+				TextView contentView = (TextView) findViewById(R.id.popup_stamp_comment);
 				//contentView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
 				
-				contentView.setText("PS. "+sender);
+				contentView.setText("PS. "+comment);
 			}else{
 				ScrollView stampAreaView = (ScrollView) findViewById(R.id.mystory_stamp_scroll_area); // 스탬프영역
 				stampAreaView.setVisibility(View.GONE);					

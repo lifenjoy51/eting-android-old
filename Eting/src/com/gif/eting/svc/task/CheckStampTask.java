@@ -96,9 +96,6 @@ public class CheckStampTask extends AsyncTask<Object, String, String> {
 						//저장
 						stampDto.setStamp_id(stamp.getString("stamp_id"));
 						stampDto.setStamp_name(stamp.getString("stamp_name"));
-						stampDto.setStamp_type(stamp.getString("stamp_type"));
-						stampDto.setStamp_order(stamp.getString("stamp_order"));
-						stampDto.setStamp_url(stamp.getString("stamp_url"));
 						
 						
 						list.add(stampDto);

@@ -8,10 +8,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.gif.eting.db.InboxDBHelper;
-import com.gif.eting.db.StoryDBHelper;
 import com.gif.eting.dto.StoryDTO;
 
 /**
@@ -71,10 +69,6 @@ public class InboxDAO {
 		}
 		// Make sure to close the cursor
 		cursor.close();
-
-		for (StoryDTO story : storyList) {
-			//Log.i("inbox story list",story.getIdx() + story.getContent() + story.getStory_date());
-		}
 		
 		return storyList;
 	}

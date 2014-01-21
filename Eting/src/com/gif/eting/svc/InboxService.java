@@ -35,7 +35,10 @@ public class InboxService {
 
 		StoryDTO returnedStory;
 		if (inboxStoryList.size() > 0) {
-			returnedStory = inboxStoryList.get(0);
+			//System.out.println(inboxStoryList.size()-1);
+			int r = (int) (Math.random()*(inboxStoryList.size()));
+			//System.out.println(r);
+			returnedStory = inboxStoryList.get(r);
 		} else {
 			// TODO 받은이야기가 없을때 어떤 로직을?
 			returnedStory = new StoryDTO();

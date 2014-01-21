@@ -185,8 +185,11 @@ public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 			 */
 			ImageView star = (ImageView) v.findViewById(R.id.star);
 			if (star != null) {
-				if("Y".equals(stampYn)){
+				if("R".equals(stampYn)){
 					star.setImageResource(R.drawable.star_2);
+				}else if("Y".equals(stampYn)){
+					star.setImageResource(R.drawable.star_2);
+					//star.setAlpha(0.5f);
 				}else{
 					star.setImageResource(R.drawable.star_1);
 				}

@@ -8,7 +8,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.gif.eting.db.StoryDBHelper;
 import com.gif.eting.dto.StoryDTO;
@@ -72,11 +71,6 @@ public class StoryDAO {
 		
 		// Make sure to close the cursor
 		cursor.close();
-
-		//확인용 로그
-		for (StoryDTO story : storyList) {
-			//Log.i("my story list",story.getIdx() + story.getContent() + story.getStory_date());
-		}
 		
 		return storyList;
 	}
@@ -162,12 +156,32 @@ public class StoryDAO {
 	 * @param comment
 	 * @return
 	 */
-	public Integer updStoryStamp(String storyId, String stamps, String comment) {
+	public Integer updStoryStamp(String storyId, String stamps, String comment,String commentId) {
 		long idx = Long.parseLong(storyId);
 		ContentValues values = new ContentValues();
 		values.put(StoryDBHelper.COL_STAMP_YN, "Y");
 		values.put(StoryDBHelper.COL_STAMPS, stamps);
 		values.put(StoryDBHelper.COL_COMMENT, comment);
+		values.put(StoryDBHelper.COL_COMMENT_ID, commentId);
+		int rtn = database.update(StoryDBHelper.TABLE_STORY_MASTER, values,
+				StoryDBHelper.COL_IDX + " = " + idx, null);
+		//Log.i("updStoryStampYn is updated",String.valueOf(rtn));
+
+		return rtn;
+	}
+	
+	/**
+	 * 스탬프 읽은 상태로 
+	 * 
+	 * @param storyId
+	 * @param stamps
+	 * @param comment
+	 * @return
+	 */
+	public Integer updStoryStampRead(String storyId) {
+		long idx = Long.parseLong(storyId);
+		ContentValues values = new ContentValues();
+		values.put(StoryDBHelper.COL_STAMP_YN, "R");
 		int rtn = database.update(StoryDBHelper.TABLE_STORY_MASTER, values,
 				StoryDBHelper.COL_IDX + " = " + idx, null);
 		//Log.i("updStoryStampYn is updated",String.valueOf(rtn));

@@ -28,9 +28,10 @@ public class StoryDBHelper extends SQLiteOpenHelper {
 	public static final String COL_STAMP_YN= "stamp_yn";
 	public static final String COL_STAMPS= "stamps";
 	public static final String COL_COMMENT= "comment";
+	public static final String COL_COMMENT_ID= "comment_id";
 
 	private static final String DATABASE_NAME = "eting_mystory.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 
 	/**
 	 *  TABLE 생성문
@@ -43,7 +44,8 @@ public class StoryDBHelper extends SQLiteOpenHelper {
 			+ COL_STORY_TIME + " text, "
 			+ COL_STAMP_YN + " text, "
 			+ COL_STAMPS + " text, "
-			+ COL_COMMENT + " text "
+			+ COL_COMMENT + " text, "
+			+ COL_COMMENT_ID + " integer "
 			+ ");";
 
 	/**
@@ -78,17 +80,26 @@ public class StoryDBHelper extends SQLiteOpenHelper {
 				+ COL_STORY_TIME + " text, "
 				+ COL_STAMP_YN + " text, "
 				+ COL_STAMPS + " text, "
-				+ COL_COMMENT + " text "
+				+ COL_COMMENT + " text, "
+				+ COL_COMMENT_ID + " integer "
 				+ ");";
-		
-		final String OLD_TO_TEMP = "INSERT INTO "+TABLE_STORY_MASTER_TEMP
-				+" ( "+COL_IDX+", "+COL_CONTENT+", "+COL_STORY_DATE+", "+COL_STORY_TIME+", "+COL_STAMP_YN+") "
-				+" SELECT "+COL_IDX+", "+COL_CONTENT+", "+COL_STORY_DATE+", "+COL_STORY_TIME+", "+COL_STAMP_YN+" FROM " + TABLE_STORY_MASTER;
-		
-		final String TEMP_TO_NEW = "INSERT INTO "+TABLE_STORY_MASTER
-				+" ( "+COL_IDX+", "+COL_CONTENT+", "+COL_STORY_DATE+", "+COL_STORY_TIME+", "+COL_STAMP_YN+") "
-				+" SELECT "+COL_IDX+", "+COL_CONTENT+", "+COL_STORY_DATE+", "+COL_STORY_TIME+", "+COL_STAMP_YN+" FROM " + TABLE_STORY_MASTER_TEMP;
-		
+
+		final String OLD_TO_TEMP = "INSERT INTO " + TABLE_STORY_MASTER_TEMP
+				+ " ( " + COL_IDX + ", " + COL_CONTENT + ", " + COL_STORY_DATE
+				+ ", " + COL_STORY_TIME + ", " + COL_STAMP_YN + ","
+				+ COL_STAMPS + ", " + COL_COMMENT + " ) " + " SELECT "
+				+ COL_IDX + ", " + COL_CONTENT + ", " + COL_STORY_DATE + ", "
+				+ COL_STORY_TIME + ", " + COL_STAMP_YN + " , " + COL_STAMPS
+				+ ", " + COL_COMMENT + "  FROM " + TABLE_STORY_MASTER;
+
+		final String TEMP_TO_NEW = "INSERT INTO " + TABLE_STORY_MASTER + " ( "
+				+ COL_IDX + ", " + COL_CONTENT + ", " + COL_STORY_DATE + ", "
+				+ COL_STORY_TIME + ", " + COL_STAMP_YN + " , " + COL_STAMPS
+				+ ", " + COL_COMMENT + " ) " + " SELECT " + COL_IDX + ", "
+				+ COL_CONTENT + ", " + COL_STORY_DATE + ", " + COL_STORY_TIME
+				+ ", " + COL_STAMP_YN + " , " + COL_STAMPS + ", " + COL_COMMENT
+				+ " FROM " + TABLE_STORY_MASTER_TEMP;
+
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORY_MASTER_TEMP);		
 		db.execSQL(CREATE_TEMP_TABLE);		
 		db.execSQL(OLD_TO_TEMP);		

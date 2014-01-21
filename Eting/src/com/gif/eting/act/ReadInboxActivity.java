@@ -75,7 +75,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 	/**
 	 * 보낸사람
 	 */
-	private String sender;
+	private String comment;
 	
 	/**
 	 * 코멘트
@@ -101,7 +101,7 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		/**
 		 * 짧은이야기 적는 부분
 		 */
-		et = (EditText) findViewById(R.id.stamp_sender);
+		et = (EditText) findViewById(R.id.stamp_comment);
 		//et.setTypeface(Util.getNanum(getApplicationContext()));
 		
 		//Service초기화
@@ -326,8 +326,8 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		/**
 		 * 보낸이 설정
 		 */
-		et = (EditText) findViewById(R.id.stamp_sender);
-		sender = et.getText().toString();
+		et = (EditText) findViewById(R.id.stamp_comment);
+		comment = et.getText().toString();
 		
 		/**
 		 * 서버로 스탬프 전송
@@ -337,9 +337,9 @@ public class ReadInboxActivity extends Activity implements OnClickListener{
 		 * parameter[0] = inboxStoryIdx. 받은이야기 고유번호
 		 * parameter[1] = stamps. 전송할 스탬프들
 		 * parameter[2] = getApplicationContext(). Context.
-		 * parameter[3] = sender. 보낸사람 이름(별명).
+		 * parameter[3] = comment. 보낸사람 이름(별명).
 		 */
-		new SendStampTask(new AfterSendStampTask()).execute(String.valueOf(inboxStoryIdx), stamps, getApplicationContext(), sender);
+		new SendStampTask(new AfterSendStampTask()).execute(String.valueOf(inboxStoryIdx), stamps, getApplicationContext(), comment);
 	}
 
 	/**

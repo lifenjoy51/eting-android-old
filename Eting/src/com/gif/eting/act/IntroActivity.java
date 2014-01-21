@@ -74,7 +74,7 @@ public class IntroActivity extends Activity implements CounterListener{
 	GoogleCloudMessaging gcm;
 	AtomicInteger msgId = new AtomicInteger();
 	static Context context;
-	String regid;
+	String regid = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -127,11 +127,21 @@ public class IntroActivity extends Activity implements CounterListener{
 
 			if ("".equals(regid)) {
 				registerInBackground();
-				isFirst = true;
+				
+				SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+				isFirst = sharedPref.getBoolean("isFirst", true);
+				if(isFirst){
+					SharedPreferences.Editor editor = sharedPref.edit();
+					editor.putBoolean("isFirst", false);
+					editor.commit();
+				}
+
+				
 			} else {
 				sendRegistrationIdToBackend(); // TODO 임시로 만들어놓은거.
 			}
 		} else {
+			sendRegistrationIdToBackend();
 
 			/**
 			 * 스탬프찍힌 이야기 리스트 받아오기

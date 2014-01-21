@@ -8,7 +8,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.gif.eting.db.StampDBHelper;
 import com.gif.eting.dto.StampDTO;
@@ -71,11 +70,6 @@ public class StampDAO {
 		
 		// Make sure to close the cursor
 		cursor.close();
-
-		//확인용 로그
-		for (StampDTO stamp : stampList) {
-			//Log.i("my stamp list", stamp.getStamp_id() + stamp.getStamp_name() + stamp.getStamp_url());
-		}
 		
 		return stampList;
 	}
@@ -109,9 +103,6 @@ public class StampDAO {
 		ContentValues values = new ContentValues();
 		values.put(StampDBHelper.COL_IDX, stamp.getStamp_id());
 		values.put(StampDBHelper.COL_NAME, stamp.getStamp_name());
-		values.put(StampDBHelper.COL_TYPE, stamp.getStamp_type());
-		values.put(StampDBHelper.COL_ORDER, stamp.getStamp_order());
-		values.put(StampDBHelper.COL_URL, stamp.getStamp_url());
 		long insertedId = database.insert(StampDBHelper.TABLE_STAMP_MASTER,
 				null, values);
 		//Log.i("stamp is inserted",String.valueOf(insertedId));
@@ -128,9 +119,6 @@ public class StampDAO {
 		String idx = stamp.getStamp_id();
 		ContentValues values = new ContentValues();
 		values.put(StampDBHelper.COL_NAME, stamp.getStamp_name());
-		values.put(StampDBHelper.COL_TYPE, stamp.getStamp_type());
-		values.put(StampDBHelper.COL_ORDER, stamp.getStamp_order());
-		values.put(StampDBHelper.COL_URL, stamp.getStamp_url());
 		int rtn = database.update(StampDBHelper.TABLE_STAMP_MASTER, values,
 				StampDBHelper.COL_IDX + " = " + idx, null);
 		//Log.i("stamp is updated",String.valueOf(rtn));
@@ -181,9 +169,6 @@ public class StampDAO {
 		StampDTO stamp = new StampDTO(); // 객체 초기화
 		stamp.setStamp_id(cursor.getString(0));
 		stamp.setStamp_name(cursor.getString(1));
-		stamp.setStamp_type(cursor.getString(2));
-		stamp.setStamp_order(cursor.getString(3));
-		stamp.setStamp_url(cursor.getString(4));
 		return stamp;
 	}	
 	

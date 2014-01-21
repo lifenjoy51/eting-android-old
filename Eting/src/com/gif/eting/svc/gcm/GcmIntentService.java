@@ -74,9 +74,10 @@ public class GcmIntentService extends IntentService {
                 	String storyId = extras.getString("story_id");
                     String stamps = extras.getString("stamps");	//,로 이어져있음
                     String comment = extras.getString("comment");
+                    String commentId = extras.getString("comment_id");
                     
                     StoryService svc = new StoryService(this);
-                    svc.updStoryStamp(storyId, stamps, comment);
+                    svc.updStoryStamp(storyId, stamps, comment, commentId);
                                     
                     sendNotification(storyId);
                     Log.i(TAG, "Received: " + extras.toString());

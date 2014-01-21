@@ -49,7 +49,7 @@
     </LinearLayout>
     
    	<ImageView
-        android:id="@+id/popup_stamp_sender_bottom"
+        android:id="@+id/popup_stamp_comment_bottom"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/mystory_btn_area"
@@ -59,10 +59,10 @@
        />    
 
     <TextView
-        android:id="@+id/popup_stamp_sender"
+        android:id="@+id/popup_stamp_comment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/popup_stamp_sender_bottom"
+        android:layout_above="@id/popup_stamp_comment_bottom"
         android:background="@android:color/white"
         android:paddingLeft="10dp"
         android:paddingTop="5dp"
@@ -73,7 +73,7 @@
         android:id="@+id/mystory_stamp_scroll_area"
         android:layout_width="fill_parent"
         android:layout_height="80sp"
-        android:layout_above="@id/popup_stamp_sender"
+        android:layout_above="@id/popup_stamp_comment"
         android:background="@android:color/white"
         android:overScrollMode="never" >
 
