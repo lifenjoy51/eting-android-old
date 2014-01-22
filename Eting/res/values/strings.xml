@@ -33,7 +33,7 @@
     <string name="no">no</string>
     <string name="write_story_validate">You cannot write just one letter.</string>
     <string name="write_story_input">Please write your story.</string>
-    <string name="enter_you_name">p.s.</string>
+    <string name="enter_you_name">p.s.\n</string>
     <string name="delete_story">Delete your eting</string>
     <string name="really_delete_story">Do you really want to delete your eting?</string>
     <string name="report_title">report</string>

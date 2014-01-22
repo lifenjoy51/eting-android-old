@@ -102,7 +102,7 @@
         android:layout_width="fill_parent"
         android:layout_height="80sp"
         android:layout_above="@+id/inbox_control_area"
-        android:background="@android:color/white" >
+        android:background="@drawable/alarm_bg03" >
 
         <LinearLayout
             android:id="@+id/inbox_stamp_area"
@@ -118,34 +118,30 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:paddingTop="20dp"
-        android:background="@drawable/feedback_bg" >
+        android:background="@drawable/alarm_bg04" >
 
         <EditText
             android:id="@+id/stamp_comment"
             android:layout_width="0dip"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/feedback_name"
             android:ems="8"
             android:hint="@string/enter_you_name"
-            android:maxLength="150"
-            android:singleLine="true"
+            android:textAlignment="textStart"
+            android:maxLength="250"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
             android:textColor="#555555"
-            android:textColorHint="#BBBBBB" >
+            android:textColorHint="#BBBBBB"
+            android:minLines="3"
+            android:maxLines="3"
+            android:background="@android:color/transparent">
         </EditText>
 
         <Button
             android:id="@+id/inbox_confirm_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="20dp"
             android:background="@drawable/inbox_btn_selector" />
     </LinearLayout>
 
