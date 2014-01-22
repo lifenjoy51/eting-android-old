@@ -115,7 +115,11 @@ public class StoryDTO {
 	}
 
 	public String getCommentId() {
-		return commentId;
+		if(commentId == null){
+			return "";
+		}else{
+			return commentId;
+		}
 	}
 
 	public void setCommentId(String commentId) {

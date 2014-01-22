@@ -55,5 +55,10 @@
     <string name="admin_message">admin_message</string>
     <string name="pass_title">pass</string>
     <string name="pass_message">Do you want to pass this message?</string>
+    
+    <string name="comment_report">comment report</string>
+    <string name="really_comment_report">Do you really want to report your comment?</string>
+    <string name="comment_del">delete comment</string>
+    <string name="really_comment_del">Do you really want to delete your comment?</string>
 
 </resources>

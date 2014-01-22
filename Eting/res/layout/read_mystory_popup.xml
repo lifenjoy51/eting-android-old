@@ -89,7 +89,7 @@
 
     <LinearLayout
         android:id="@+id/comment_area"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -127,15 +127,24 @@
             android:layout_marginRight="4dp"
             android:background="@drawable/line" />
 
-        <TextView
-            android:id="@+id/popup_stamp_comment"
+        <ScrollView
+            android:id="@+id/popup_stamp_scroll_area"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70sp"
             android:background="@android:color/white"
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp"
-            android:textColor="#999999"
-            android:textSize="16sp" />
+            android:overScrollMode="never"
+            android:paddingBottom="5dp" >
+
+            <TextView
+                android:id="@+id/popup_stamp_comment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:textColor="#999999"
+                android:textSize="16sp" />
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/comment_btn_area"

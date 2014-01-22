@@ -54,5 +54,10 @@
     <string name="enter_comment_plz">코멘트를 입력해주세요.</string>
     <string name="pass_title">넘기기</string>
     <string name="pass_message">이 메세지를 다른 사람에게 넘기겠습니까?</string>
+    
+    <string name="comment_report">답장 신고</string>
+    <string name="really_comment_report">이 답장을 신고하시겠습니까?</string>
+    <string name="comment_del">답장 삭제</string>
+    <string name="really_comment_del">이 답장을 삭제하시겠습니까?</string>
 
 </resources>

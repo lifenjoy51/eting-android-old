@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,10 +27,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gif.eting.act.view.StampView;
+import com.gif.eting.dao.InboxDAO;
 import com.gif.eting.dto.StampDTO;
 import com.gif.eting.dto.StoryDTO;
 import com.gif.eting.svc.StoryService;
 import com.gif.eting.util.AsyncTaskCompleteListener;
+import com.gif.eting.util.HttpUtil;
 import com.gif.eting.util.Util;
 import com.gif.eting.R;
 
@@ -44,7 +47,8 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 	private StoryService storyService;
 	private String storyIdx;
 	private Context context;
-	
+	private String commentId;	
+	private String comment;	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +98,10 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			//읽음 표시
 			storyService.updStoryStampRead(storyIdx);
 			StoryDTO myStory = storyService.getMyStory(storyIdx);	//해당하는 이야기 받아오기
+			
+			//코멘트아이디
+			commentId = myStory.getCommentId();
+			
 			String content = myStory.getContent();
 			
 			String storyDate = myStory.getStory_date();
@@ -164,6 +172,8 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			//클릭이벤트 설정
 			findViewById(R.id.del_btn).setOnClickListener(this);
 			findViewById(R.id.check_btn).setOnClickListener(this);
+			findViewById(R.id.comment_report_btn).setOnClickListener(this);
+			findViewById(R.id.comment_del_btn).setOnClickListener(this);
 		}catch(Exception e){
 			//Log.i("read my story activity error", e.toString());
 			e.printStackTrace();
@@ -221,6 +231,58 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 									finish();								}
 
 							}).setNegativeButton(R.string.no, null).show();
+			/**
+			 * 코멘트 신고 기능
+			 */
+		}else if(v.getId()==R.id.comment_report_btn){
+			// Ask the user if they want to quit
+			new AlertDialog.Builder(this)
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setTitle(R.string.comment_report)
+					.setMessage(R.string.really_comment_report)
+					.setPositiveButton(R.string.yes,
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									
+									//삭제버튼을 클릭했을 때
+									onReportOrDeleteComment("R");
+									
+									//신고 후 로직
+									Toast.makeText(context, R.string.report_completed, Toast.LENGTH_SHORT).show();
+									
+									//돌아가기
+									finish();								}
+
+							}).setNegativeButton(R.string.no, null).show();
+			/**
+			 * 코멘트 삭제기능
+			 */
+		}else if(v.getId()==R.id.comment_del_btn){
+			// Ask the user if they want to quit
+			new AlertDialog.Builder(this)
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setTitle(R.string.comment_del)
+					.setMessage(R.string.really_comment_del)
+					.setPositiveButton(R.string.yes,
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									
+									//삭제버튼을 클릭했을 때
+									onReportOrDeleteComment("D");
+									
+									//삭제 후 로직
+									Toast.makeText(context, R.string.delete_completed, Toast.LENGTH_SHORT).show();
+									
+									//돌아가기
+									finish();								}
+
+							}).setNegativeButton(R.string.no, null).show();
 		}else if(v.getId()==R.id.check_btn){
 			finish();
 		}
@@ -236,11 +298,11 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 		if (list != null) {
 			if (list.size() > 0) {
 				//System.out.println("onTaskComplete = "+list);
-				String comment = list.get(0).getComment();
+				comment = list.get(0).getComment();
 				TextView contentView = (TextView) findViewById(R.id.popup_stamp_comment);
 				//contentView.setTypeface(Util.getNanum(getApplicationContext()), Typeface.BOLD);
 				
-				contentView.setText("PS. "+comment);
+				contentView.setText("P.S. "+comment);
 			}else{
 				LinearLayout comment_area = (LinearLayout) findViewById(R.id.comment_area); // 스탬프영역
 				comment_area.setVisibility(View.GONE);		/*			
@@ -314,4 +376,53 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		return stampInnerLayout;
 	}
+	
+	/**
+	 * 답글 삭제 or 신고 시 로직
+	 * @param flag
+	 */
+	private void onReportOrDeleteComment(String flag){
+		storyService.deleteComment(storyIdx);
+	
+		//삭제한 이야기 서버로 전송~~ 신고인지 삭제인지 값에 맞게!!
+		new ResendStroyTask().execute(flag);
+	}
+	
+	 class ResendStroyTask extends AsyncTask<Object, String, String> {
+			
+			/**
+			 * 생성자로 콜백을 받아온다.
+			 * 
+			 * @param callback
+			 */
+			public ResendStroyTask(){
+			}
+			
+			/**
+			 * 실제 실행되는 부분
+			 */
+			@Override
+			protected String doInBackground(Object... params) {
+
+					String urlStr = Util.serverContext+"/reportComment";
+					
+					String param = "comment_id=" + commentId;	//코멘트 번호
+					param += "&comment=" + comment;	//코멘트 내용
+					param += "&story_id=" + storyIdx;	//코멘트 내용
+					param += "&flag=" + String.valueOf(params[0]);	//신고인지 삭제인지
+					
+					String response = HttpUtil.doPost(urlStr, param);	//Http전송 
+					//System.out.println(this.getClass().getName() + " = " + response);
+					return response;
+			}
+
+			/**
+			 * 작업이 끝나면 자동으로 실행된다.
+			 */
+			@Override
+			protected void onPostExecute(String result) {
+				
+			}
+
+		}
 }

@@ -211,6 +211,17 @@ public class StoryService {
 	}
 	
 	/**
+	 * 코멘트 삭제
+	 * @param storyId
+	 */
+	public int deleteComment(String storyId){
+		storyDao.open();
+		int result = storyDao.deleteComment(storyId);
+		storyDao.close();
+		return result;
+	}
+	
+	/**
 	 * 내 이야기 개수
 	 * 
 	 * @return
@@ -235,10 +246,11 @@ public class StoryService {
 		String comment = myStory.getComment();
 		
 		List<StampDTO> list = new ArrayList<StampDTO>();
-		if(stamps!=null){
+		if(stamps!=null && stamps != ""){
 			StampService stSvc = new StampService(context);
 			String[] st = stamps.split(",");
 			for(String stampId : st){
+				if("".equals(stampId)) continue;
 				StampDTO stamp = stSvc.getStamp(stampId);
 				stamp.setStory_id(idx);
 				stamp.setComment(comment);

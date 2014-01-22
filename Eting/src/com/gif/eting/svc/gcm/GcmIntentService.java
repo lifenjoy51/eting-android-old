@@ -75,12 +75,18 @@ public class GcmIntentService extends IntentService {
                     String stamps = extras.getString("stamps");	//,로 이어져있음
                     String comment = extras.getString("comment");
                     String commentId = extras.getString("comment_id");
-                    
-                    StoryService svc = new StoryService(this);
-                    int result = svc.updStoryStamp(storyId, stamps, comment, commentId);
-                    if(result>0){
-                        sendNotification(storyId);
-                    }
+					try {
+
+						StoryService svc = new StoryService(this);
+						int result = svc.updStoryStamp(storyId, stamps,
+								comment, commentId);
+						if (result > 0) {
+							sendNotification(storyId);
+						}
+					} catch (Exception e) {
+						Log.i("stamped story", e.toString());
+						return;
+					}
                     Log.i(TAG, "Received: " + extras.toString());
                     
                 }else if("Admin".equals(type)){	//관리자 메세지일때

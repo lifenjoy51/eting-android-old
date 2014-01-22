@@ -160,11 +160,7 @@ public class StoryDAO {
 		// 코멘트ID가있으면 엄데이트 금지!
 		if (this.getStoryInfo(storyId) != null) {
 			String pCommentId = this.getStoryInfo(storyId).getCommentId();
-			if(pCommentId != null){
-				System.out.println("pCommentId");
-				System.out.println(pCommentId);
-			}
-			if (pCommentId != null && pCommentId != "") {
+			if (!"".equals(pCommentId)) {
 				return 0;
 			}
 		}
@@ -198,6 +194,28 @@ public class StoryDAO {
 				StoryDBHelper.COL_STAMP_YN + " = ?   AND "
 						+ StoryDBHelper.COL_IDX + " = " + idx, v);
 		//Log.i("updStoryStampYn is updated",String.valueOf(rtn));
+
+		return rtn;
+	}	
+	
+	/**
+	 * 답글 삭제기능
+	 * 
+	 * @param storyId
+	 * @param stamps
+	 * @param comment
+	 * @return
+	 */
+	public Integer deleteComment(String storyId) {
+		long idx = Long.parseLong(storyId);
+		ContentValues values = new ContentValues();
+		values.put(StoryDBHelper.COL_STAMP_YN, "N");
+		values.put(StoryDBHelper.COL_STAMPS, "");
+		values.put(StoryDBHelper.COL_COMMENT, "");
+		values.put(StoryDBHelper.COL_COMMENT_ID, "");
+		int rtn = database.update(StoryDBHelper.TABLE_STORY_MASTER, values,
+				StoryDBHelper.COL_IDX + " = " + idx, null);
+		// Log.i("updStoryStampYn is updated",String.valueOf(rtn));
 
 		return rtn;
 	}
