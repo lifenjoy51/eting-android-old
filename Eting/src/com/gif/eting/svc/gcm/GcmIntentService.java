@@ -77,9 +77,10 @@ public class GcmIntentService extends IntentService {
                     String commentId = extras.getString("comment_id");
                     
                     StoryService svc = new StoryService(this);
-                    svc.updStoryStamp(storyId, stamps, comment, commentId);
-                                    
-                    sendNotification(storyId);
+                    int result = svc.updStoryStamp(storyId, stamps, comment, commentId);
+                    if(result>0){
+                        sendNotification(storyId);
+                    }
                     Log.i(TAG, "Received: " + extras.toString());
                     
                 }else if("Admin".equals(type)){	//관리자 메세지일때

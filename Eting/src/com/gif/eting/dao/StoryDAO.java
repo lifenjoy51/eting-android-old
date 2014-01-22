@@ -163,8 +163,11 @@ public class StoryDAO {
 		values.put(StoryDBHelper.COL_STAMPS, stamps);
 		values.put(StoryDBHelper.COL_COMMENT, comment);
 		values.put(StoryDBHelper.COL_COMMENT_ID, commentId);
+		String[] v = {""};
+		//코멘트ID가 없는것만 업데이트한다!!!
 		int rtn = database.update(StoryDBHelper.TABLE_STORY_MASTER, values,
-				StoryDBHelper.COL_IDX + " = " + idx, null);
+				StoryDBHelper.COL_COMMENT_ID + " = ?   AND "
+						+ StoryDBHelper.COL_IDX + " = " + idx, v);
 		//Log.i("updStoryStampYn is updated",String.valueOf(rtn));
 
 		return rtn;
@@ -182,8 +185,10 @@ public class StoryDAO {
 		long idx = Long.parseLong(storyId);
 		ContentValues values = new ContentValues();
 		values.put(StoryDBHelper.COL_STAMP_YN, "R");
+		String[] v = {"Y"};
 		int rtn = database.update(StoryDBHelper.TABLE_STORY_MASTER, values,
-				StoryDBHelper.COL_IDX + " = " + idx, null);
+				StoryDBHelper.COL_STAMP_YN + " = ?   AND "
+						+ StoryDBHelper.COL_IDX + " = " + idx, v);
 		//Log.i("updStoryStampYn is updated",String.valueOf(rtn));
 
 		return rtn;

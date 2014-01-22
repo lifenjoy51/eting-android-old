@@ -192,10 +192,11 @@ public class StoryService {
 	 * 스탬프찍힌 이야기 업데이트 (단건)
 	 * @param stampedStoryList
 	 */
-	public void updStoryStamp(String stampedStory, String stamps, String comment, String commentId){
+	public int updStoryStamp(String stampedStory, String stamps, String comment, String commentId){
 		storyDao.open();
-		storyDao.updStoryStamp(stampedStory, stamps, comment, commentId);
+		int result = storyDao.updStoryStamp(stampedStory, stamps, comment, commentId);
 		storyDao.close();
+		return result;
 		
 	}
 	
