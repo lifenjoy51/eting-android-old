@@ -161,6 +161,7 @@ public class StoryDAO {
 		if (this.getStoryInfo(storyId) != null) {
 			String pCommentId = this.getStoryInfo(storyId).getCommentId();
 			if(pCommentId != null){
+				System.out.println("pCommentId");
 				System.out.println(pCommentId);
 			}
 			if (pCommentId != null && pCommentId != "") {
