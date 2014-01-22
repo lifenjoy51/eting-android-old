@@ -27,7 +27,7 @@ public class StoryDAO {
 	private StoryDBHelper dbHelper;
 	private String[] allColumns = { StoryDBHelper.COL_IDX,
 			StoryDBHelper.COL_CONTENT, StoryDBHelper.COL_STORY_DATE,
-			StoryDBHelper.COL_STORY_TIME, StoryDBHelper.COL_STAMP_YN, StoryDBHelper.COL_STAMPS, StoryDBHelper.COL_COMMENT };
+			StoryDBHelper.COL_STORY_TIME, StoryDBHelper.COL_STAMP_YN, StoryDBHelper.COL_STAMPS, StoryDBHelper.COL_COMMENT, StoryDBHelper.COL_COMMENT_ID };
 
 	/**
 	 * 생성할때 dbHelper 초기화
@@ -157,18 +157,25 @@ public class StoryDAO {
 	 * @return
 	 */
 	public Integer updStoryStamp(String storyId, String stamps, String comment,String commentId) {
+		// 코멘트ID가있으면 엄데이트 금지!
+		if (this.getStoryInfo(storyId) != null) {
+			String pCommentId = this.getStoryInfo(storyId).getCommentId();
+			if(pCommentId != null){
+				System.out.println(pCommentId);
+			}
+			if (pCommentId != null && pCommentId != "") {
+				return 0;
+			}
+		}
 		long idx = Long.parseLong(storyId);
 		ContentValues values = new ContentValues();
 		values.put(StoryDBHelper.COL_STAMP_YN, "Y");
 		values.put(StoryDBHelper.COL_STAMPS, stamps);
 		values.put(StoryDBHelper.COL_COMMENT, comment);
 		values.put(StoryDBHelper.COL_COMMENT_ID, commentId);
-		String[] v = {""};
-		//코멘트ID가 없는것만 업데이트한다!!!
 		int rtn = database.update(StoryDBHelper.TABLE_STORY_MASTER, values,
-				StoryDBHelper.COL_COMMENT_ID + " = ?   AND "
-						+ StoryDBHelper.COL_IDX + " = " + idx, v);
-		//Log.i("updStoryStampYn is updated",String.valueOf(rtn));
+				StoryDBHelper.COL_IDX + " = " + idx, null);
+		// Log.i("updStoryStampYn is updated",String.valueOf(rtn));
 
 		return rtn;
 	}
@@ -223,6 +230,7 @@ public class StoryDAO {
 		story.setStamp_yn(cursor.getString(4));
 		story.setStamps(cursor.getString(5));
 		story.setComment(cursor.getString(6));
+		story.setCommentId(cursor.getString(7));
 		return story;
 	}
 	

@@ -1,19 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/popup_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
-    android:paddingBottom="30dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingTop="30dp" >
+    android:paddingBottom="30dp" >
+
+    <LinearLayout
+        android:id="@+id/mystory_btn_area"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:alpha="0.3"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:paddingTop="10dp" >
+
+        <ImageButton
+            android:id="@+id/check_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/check_btn_selector"
+            android:contentDescription="@string/delbtn"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/white" />
+
+        <ImageButton
+            android:id="@+id/del_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/del_btn_selector"
+            android:contentDescription="@string/delbtn" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/mystory_content_top"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/myeting_blank_b_top"
         android:contentDescription="@string/popuptitle"
         android:paddingLeft="30dp"
@@ -21,104 +52,13 @@
         android:textColor="#555555"
         android:textSize="14sp" />
 
-    <LinearLayout
-        android:id="@+id/mystory_btn_area"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal" >
-
-        <ImageButton
-            android:id="@+id/del_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_weight="5"
-            android:background="@drawable/del_btn_selector"
-            android:contentDescription="@string/delbtn" />
-
-        <ImageButton
-            android:id="@+id/check_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_weight="5"
-            android:background="@drawable/check_btn_selector"
-            android:contentDescription="@string/delbtn" />
-    </LinearLayout>
-    
-   	<ImageView
-        android:id="@+id/popup_stamp_comment_bottom"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/mystory_btn_area"
-        android:layout_marginBottom="10dp"
-       	android:background="@drawable/feed_blank_bottom"
-        android:paddingLeft="10dp"
-       />    
-
-    <TextView
-        android:id="@+id/popup_stamp_comment"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/popup_stamp_comment_bottom"
-        android:background="@android:color/white"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:textColor="#999999"
-        android:textSize="16sp" />
-    
-    <ScrollView
-        android:id="@+id/mystory_stamp_scroll_area"
-        android:layout_width="fill_parent"
-        android:layout_height="80sp"
-        android:layout_above="@id/popup_stamp_comment"
-        android:background="@android:color/white"
-        android:overScrollMode="never" >
-
-        <LinearLayout
-            android:id="@+id/mystory_stamp_area"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|top"
-            android:background="#00000000"
-            android:orientation="vertical" >
-        </LinearLayout>
-    </ScrollView>
-
-    <ImageView
-        android:id="@+id/stamp_div_line"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/mystory_stamp_scroll_area"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:background="@drawable/line" />
-
-    <ImageView
-        android:id="@+id/mystory_stamp_top"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/mystory_stamp_scroll_area"
-        android:layout_gravity="center"
-        android:background="@drawable/feed_blank_top" />
-
-    <ImageView
-        android:id="@+id/mystory_content_bottom"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/mystory_stamp_top"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/myeting_blank_b_bottom"
-        android:contentDescription="@string/popuptitle" />
-
     <ScrollView
         android:id="@+id/popup_content_scroll_area"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/mystory_content_bottom"
-        android:layout_below="@id/mystory_content_top"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_weight="1"
         android:background="@drawable/myeting_blank_b_middle"
         android:overScrollMode="never"
         android:paddingTop="10dp" >
@@ -133,8 +73,107 @@
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:textColor="#555555"
-            android:textSize="17sp"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="true"
+            android:textSize="17sp" />
     </ScrollView>
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/mystory_content_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/myeting_blank_b_bottom"
+        android:contentDescription="@string/popuptitle" />
+
+    <LinearLayout
+        android:id="@+id/comment_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/mystory_stamp_top"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/feed_blank_top" />
+
+        <ScrollView
+            android:id="@+id/mystory_stamp_scroll_area"
+            android:layout_width="fill_parent"
+            android:layout_height="50sp"
+            android:background="@android:color/white"
+            android:overScrollMode="never" >
+
+            <LinearLayout
+                android:id="@+id/mystory_stamp_area"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top"
+                android:background="#00000000"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </ScrollView>
+
+        <ImageView
+            android:id="@+id/stamp_div_line"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/line" />
+
+        <TextView
+            android:id="@+id/popup_stamp_comment"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:textColor="#999999"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/comment_btn_area"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white" />
+
+            <ImageButton
+                android:id="@+id/comment_report_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/report_btn_selector"
+                android:contentDescription="@string/delbtn" />
+
+            <ImageButton
+                android:id="@+id/comment_del_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@drawable/del_btn_selector"
+                android:contentDescription="@string/delbtn" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/popup_stamp_comment_bottom"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/feed_blank_bottom"
+            android:paddingLeft="10dp" />
+    </LinearLayout>
+
+</LinearLayout>

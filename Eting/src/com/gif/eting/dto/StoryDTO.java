@@ -43,6 +43,11 @@ public class StoryDTO {
 	 */
 	private String comment;
 	
+	/**
+	 * 피드백 식별번호
+	 */
+	private String commentId;
+	
 	
 
 	public String getStory_id() {
@@ -108,5 +113,15 @@ public class StoryDTO {
 	public void setStory_date(String story_date) {
 		this.story_date = story_date;
 	}
+
+	public String getCommentId() {
+		return commentId;
+	}
+
+	public void setCommentId(String commentId) {
+		this.commentId = commentId;
+	}
+	
+	
 
 }

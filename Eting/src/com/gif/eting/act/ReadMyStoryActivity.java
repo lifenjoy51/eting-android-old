@@ -242,10 +242,10 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 				
 				contentView.setText("PS. "+comment);
 			}else{
-				ScrollView stampAreaView = (ScrollView) findViewById(R.id.mystory_stamp_scroll_area); // 스탬프영역
-				stampAreaView.setVisibility(View.GONE);					
+				LinearLayout comment_area = (LinearLayout) findViewById(R.id.comment_area); // 스탬프영역
+				comment_area.setVisibility(View.GONE);		/*			
 				ImageView line = (ImageView) findViewById(R.id.stamp_div_line);
-				line.setVisibility(View.GONE);
+				line.setVisibility(View.GONE);*/
 				
 			}
 		}
