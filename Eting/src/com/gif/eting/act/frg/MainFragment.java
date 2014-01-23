@@ -75,6 +75,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	private InboxService is;
 	private static FrameLayout fr;
 	private boolean hasAdminMsg = false;
+	private ViewPager mPager;
 	
 
 	/**
@@ -236,16 +237,6 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		mainAcc2.bringToFront();
 
 		/**
-		 * 클릭이벤트 설정
-		 */
-		rootView.findViewById(R.id.main_inbox_cnt).setOnClickListener(this);
-		rootView.findViewById(R.id.setting_btn).setOnClickListener(this);
-		rootView.findViewById(R.id.admin_msg).setOnClickListener(this);
-		rootView.findViewById(R.id.main_acc_2).setOnClickListener(this);
-		rootView.findViewById(R.drawable.eting_logo).setOnClickListener(this);
-		//elv.setOnClickListener(this);
-
-		/**
 		 * 다시그리기
 		 */
 		rootView.refreshDrawableState();
@@ -324,6 +315,18 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		adminMsgParams.gravity = Gravity.LEFT | Gravity.TOP;
 		adminMsgUfo.setLayoutParams(adminMsgParams);
 
+		/**
+		 * 클릭이벤트 설정
+		 */
+		rootView.findViewById(R.id.main_inbox_cnt).setOnClickListener(this);
+		rootView.findViewById(R.id.setting_btn).setOnClickListener(this);
+		rootView.findViewById(R.id.admin_msg).setOnClickListener(this);
+		rootView.findViewById(R.id.main_acc_2).setOnClickListener(this);
+		rootView.findViewById(R.drawable.eting_logo).setOnClickListener(this);
+		rootView.findViewById(R.id.main_eting_cnt).setOnClickListener(this);
+		rootView.findViewById(R.drawable.eting_logo).bringToFront();
+		//elv.setOnClickListener(this);
+
 		return rootView;
 	}
 
@@ -378,16 +381,23 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 			
 		case R.drawable.eting_logo:
 			//원을 누르면 쓰기페이지로 이동
-			final ViewPager mPager = MainViewPagerActivity.mPager;
+			mPager = MainViewPagerActivity.mPager;
 			if (mPager != null) {
 				mPager.setCurrentItem(2);
 			}
 			break;
 			
-
-		}		
-
-	}
+		case R.id.main_eting_cnt:
+			//내 이팅개수를 누르면 목록으로
+			mPager = MainViewPagerActivity.mPager;
+			if (mPager != null) {
+				mPager.setCurrentItem(0);
+			}
+			break;
+		}
+		
+		
+	}	
 
 	/**
 	 * 받은편지함 개수 확인하고 열지 안열지 체크

@@ -22,7 +22,7 @@ public class Util {
 	//public static String serverContext = "http://192.168.123.123:8080/eting";
 	// //로컬
 	public static int mainRatio = 82;
-	public static long fps = 10;
+	public static long fps = 30;
 	//public static Typeface nanum;
 
 	// 캐쉬용 이미지들
