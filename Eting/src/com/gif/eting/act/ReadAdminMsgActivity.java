@@ -80,11 +80,16 @@ public class ReadAdminMsgActivity extends Activity implements OnClickListener {
 		//et.setTypeface(Util.getNanum(getApplicationContext()));
 
 		adminMsgDao = new AdminMsgDAO(context);
-		AdminMsgDTO sdto;
+		AdminMsgDTO sdto = new AdminMsgDTO();
 
 		adminMsgDao.open();
 
-		sdto = adminMsgDao.getAdminMsgList().get(0);
+		int adminListSize = adminMsgDao.getAdminMsgList().size();
+		if(adminListSize > 0){
+			sdto = adminMsgDao.getAdminMsgList().get(adminListSize-1);
+		}else{
+			finish();
+		}
 		adminMsgId = sdto.getMsgId();
 		String content = sdto.getMsgContent();
 
