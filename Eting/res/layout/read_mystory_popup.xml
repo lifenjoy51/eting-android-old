@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:alpha="0.3"
-        android:background="@android:color/white"
+        android:background="@drawable/inbox_top_bg"
         android:orientation="horizontal"
         android:paddingTop="10dp" >
 
@@ -36,7 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/del_btn_selector"
-            android:contentDescription="@string/delbtn" />
+            android:contentDescription="@string/delbtn"
+             />
     </LinearLayout>
 
     <TextView

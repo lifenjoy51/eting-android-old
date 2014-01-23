@@ -174,6 +174,8 @@ public class ReadMyStoryActivity extends Activity implements OnClickListener{
 			findViewById(R.id.check_btn).setOnClickListener(this);
 			findViewById(R.id.comment_report_btn).setOnClickListener(this);
 			findViewById(R.id.comment_del_btn).setOnClickListener(this);
+			
+			findViewById(R.id.del_btn).bringToFront();
 		}catch(Exception e){
 			//Log.i("read my story activity error", e.toString());
 			e.printStackTrace();
