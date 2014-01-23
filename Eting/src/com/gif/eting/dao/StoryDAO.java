@@ -242,6 +242,7 @@ public class StoryDAO {
 	 */
 	private StoryDTO getStoryDTO(Cursor cursor) {
 		StoryDTO story = new StoryDTO(); // 객체 초기화
+		if(cursor.getCount()==0) return story;
 		story.setIdx(cursor.getLong(0));
 		story.setContent(cursor.getString(1));
 		story.setStory_date(cursor.getString(2));
