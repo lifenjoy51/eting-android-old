@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nexters.eting"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <!-- 네트워킹 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- GCM -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoTitleBar" >
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!-- 처음화면 -->
+        <activity
+            android:name="com.nexters.eting.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 튜토리얼 -->
+        <activity
+            android:name="com.nexters.eting.TutorialActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 메인 액티비티 -->
+        <activity
+            android:name="com.nexters.eting.MainViewPagerActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+
+        <!-- 받은 이야기 보기 액티비티 -->
+        <activity
+            android:name="com.nexters.eting.ReadInboxActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+
+        <!-- 내 이야기 보기 액티비티 -->
+        <activity
+            android:name="com.nexters.eting.ReadMyStoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+        </activity>
+
+        <!-- GCM Setting -->
+        <receiver
+            android:name="com.nexters.eting.svc.gcm.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.nexters.eting" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

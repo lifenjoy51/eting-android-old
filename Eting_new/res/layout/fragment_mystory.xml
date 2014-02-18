@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical" >
+    
+    <ListView
+        android:id="@+id/myStoryListView"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:divider="@android:color/transparent"        
+        android:dividerHeight="8.0sp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="14dp"
+        android:drawSelectorOnTop="true"
+        android:listSelector="@drawable/list_blank_selected" >
+        
+    </ListView>
+
+    <FrameLayout
+        android:id="@+id/story_list_alarm_area"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone" >
+
+        <ImageView
+            android:id="@+id/story_list_alarm_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/main_acc_2" />
+
+        <TextView
+            android:id="@+id/story_list_alarm_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="5dp"
+            android:text="Empty eting\n Do eting now"
+            android:textSize="20sp" />
+
+    </FrameLayout>
+
+</RelativeLayout>
