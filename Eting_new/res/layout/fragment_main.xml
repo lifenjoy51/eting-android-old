@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_frame"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical" >
+
+    <ImageButton
+        android:id="@+id/setting_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_btn_selector"
+        android:contentDescription="@string/settingbutton"
+        android:gravity="bottom" />
+
+    <TextView
+        android:id="@+id/main_today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#555555"
+        android:textSize="42sp" />
+
+    <TextView
+        android:id="@+id/main_eting_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#777777"
+        android:textSize="28sp" />
+
+    <TextView
+        android:id="@+id/main_inbox_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/spaceship"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textColorHighlight="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/notify_ufo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/notify_ufo"
+        android:contentDescription="@string/admin_message" />
+
+    <ImageView
+        android:id="@+id/main_acc_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_acc_1"
+        android:contentDescription="@string/mainacc1" />
+
+    <ImageView
+        android:id="@+id/main_acc_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_acc_2"
+        android:contentDescription="@string/mainacc2" />
+
+</FrameLayout>

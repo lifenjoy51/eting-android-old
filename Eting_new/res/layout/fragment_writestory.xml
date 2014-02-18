@@ -1,0 +1,110 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/write_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical" >
+
+    <!-- android:background="@android:color/transparent" -->
+
+    <FrameLayout
+        android:id="@+id/background"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/transparent"
+        android:orientation="vertical" >
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/write_content_area"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:paddingBottom="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="25dp" >
+
+        <ImageView
+            android:id="@+id/write_bg_top"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/writebgtop"
+            android:scaleType="fitXY"
+            android:src="@drawable/send_bg01" />
+
+        <LinearLayout
+            android:id="@+id/write_story_dt_area"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/write_bg_top"
+            android:background="@android:color/white"
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp" >
+
+            <TextView
+                android:id="@+id/write_story_dt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:textColor="#555555"
+                android:textSize="15sp" >
+            </TextView>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/write_bg_bottom"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/writebgtop"
+            android:scaleType="fitXY"
+            android:src="@drawable/send_bg03" />
+
+        <LinearLayout
+            android:id="@+id/send_story_btn_area"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/write_bg_bottom"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" >
+
+            <ImageButton
+                android:id="@+id/send_story_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/send_btn_selector"
+                android:contentDescription="@string/sendstorybutton"
+                android:scaleType="fitXY" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/story_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/send_story_btn_area"
+            android:layout_below="@id/write_story_dt_area"
+            android:background="@drawable/send_bg02"
+            android:ems="4"
+            android:gravity="center_vertical|top|left"
+            android:inputType="textMultiLine"
+            android:lineSpacingExtra="6dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="15dp"
+            android:textColor="#555555"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

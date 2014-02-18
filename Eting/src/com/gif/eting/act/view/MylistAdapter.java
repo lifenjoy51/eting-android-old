@@ -6,7 +6,6 @@ import java.util.TreeSet;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 
 import com.gif.eting.R;
 import com.gif.eting.dto.StoryDTO;
-import com.gif.eting.util.Util;
 
 public class MylistAdapter extends ArrayAdapter<StoryDTO> {
 

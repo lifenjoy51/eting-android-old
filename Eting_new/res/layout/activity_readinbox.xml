@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:layout_margin="20dp"
+    android:orientation="vertical" >
+
+    <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <AutoCompleteTextView
+            android:id="@+id/autotext"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:nextFocusLeft="@id/autotext"
+            android:nextFocusUp="@id/autotext" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/inbox_bg_top"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/popup_date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="40dp"
+        android:gravity="left|center"
+        android:textColor="#555555"
+        android:textSize="14sp" />
+    
+     <Button
+            android:id="@+id/report_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+        	android:layout_marginTop="40dp"
+        	android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/report_btn_selector" />
+
+    <ScrollView
+        android:id="@+id/popup_content_scroll_area"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pass_area"
+        android:background="@android:color/white"
+        android:layout_below="@+id/popup_date" >
+
+        <TextView
+            android:id="@+id/popup_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|top"
+            android:lineSpacingExtra="5dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:textColor="#555555"
+            android:textSize="17sp"
+            android:textIsSelectable="true" />
+    </ScrollView>
+    
+    
+    
+    <LinearLayout
+        android:id="@+id/pass_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/inbox_emoticon_scroll_area"
+        android:orientation="horizontal"
+        android:background="@android:color/white" >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </ImageView>
+
+		<Button
+            android:id="@+id/pass_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/pass_btn_selector"
+             />   
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/inbox_emoticon_scroll_area"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/inbox_control_area"
+        android:background="@drawable/alarm_bg03" >
+
+        <LinearLayout
+            android:id="@+id/inbox_emoticon_area"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_vertical"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/inbox_control_area"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/alarm_bg04" >
+
+        <EditText
+            android:id="@+id/emoticon_reply"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:ems="8"
+            android:hint="@string/enter_you_name"
+            android:textAlignment="textStart"
+            android:maxLength="250"
+            android:paddingLeft="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="#555555"
+            android:textColorHint="#BBBBBB"
+            android:minLines="3"
+            android:maxLines="3"
+            android:background="@android:color/transparent">
+        </EditText>
+
+        <Button
+            android:id="@+id/inbox_confirm_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/inbox_btn_selector" />
+    </LinearLayout>
+
+</RelativeLayout>
