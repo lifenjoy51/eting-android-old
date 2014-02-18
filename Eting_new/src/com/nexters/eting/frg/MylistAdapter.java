@@ -133,11 +133,11 @@ public class MylistAdapter extends ArrayAdapter<Story> {
 					int thisHour = Integer.parseInt(thisHourStr);
 
 					if (thisHour < 12) {
-						v.setBackgroundResource(R.drawable.list_bg01);
+						v.setBackgroundResource(R.drawable.list_bg_p);
 					} else if (thisHour < 24) {
-						v.setBackgroundResource(R.drawable.list_bg01);
+						v.setBackgroundResource(R.drawable.list_bg_g);
 					} else {
-						v.setBackgroundResource(R.drawable.list_bg01);
+						v.setBackgroundResource(R.drawable.list_bg_b);
 					}
 
 				}
