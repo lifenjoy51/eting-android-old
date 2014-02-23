@@ -8,7 +8,15 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- GCM -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission
+        android:name="com.nexters.eting.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.nexters.eting.permission.C2D_MESSAGE" />
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -18,6 +26,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:launchMode="singleTask"
         android:theme="@android:style/Theme.NoTitleBar" >
         <meta-data
             android:name="com.google.android.gms.version"
@@ -41,6 +50,12 @@
             android:screenOrientation="portrait" >
         </activity>
 
+        <!-- 잠금화면 -->
+        <activity
+            android:name="com.nexters.eting.LockScreenActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
         <!-- 메인 액티비티 -->
         <activity
             android:name="com.nexters.eting.MainViewPagerActivity"
@@ -60,7 +75,44 @@
         <activity
             android:name="com.nexters.eting.ReadMyStoryActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent">
+            android:theme="@android:style/Theme.Translucent" >
+        </activity>
+
+        <!-- 공지메세지 액티비티 -->
+        <activity
+            android:name="com.nexters.eting.NotifyUfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+
+        <!-- ###### -->
+        <!-- 설정관련 -->
+        <!-- ###### -->
+
+
+        <!-- 설정화면 -->
+        <activity
+            android:name="com.nexters.eting.SettingActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 만든이 소개 화면 -->
+        <activity
+            android:name="com.nexters.eting.AboutUsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 이팅 백업 화면 -->
+        <activity
+            android:name="com.nexters.eting.BackupActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- 비밀번호 설정 화면 -->
+        <activity
+            android:name="com.nexters.eting.PasswordActivity"
+            android:screenOrientation="portrait" >
         </activity>
 
         <!-- GCM Setting -->
@@ -74,6 +126,9 @@
                 <category android:name="com.nexters.eting" />
             </intent-filter>
         </receiver>
+
+        <!-- GCM Service -->
+        <service android:name="com.nexters.eting.svc.gcm.GcmIntentService" />
     </application>
 
 </manifest>

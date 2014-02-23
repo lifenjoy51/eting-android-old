@@ -67,13 +67,20 @@ public class PasswordService {
 	 * 
 	 * @return
 	 */
-	public boolean isPassword() {
+	public boolean hasPassword() {
 		String chk = pref.getString(key, "");
 		if (Util.isEmpty(chk)) {
 			return false;
 		} else {
 			return true;
 		}
+	}
+	
+	/**
+	 * 비밀번호를 삭제한다.
+	 */
+	public void clearPassword(){
+		pref.edit().remove(key).commit();		
 	}
 
 }

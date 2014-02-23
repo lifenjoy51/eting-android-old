@@ -59,5 +59,10 @@
     <string name="really_reply_report">이 답장을 신고하시겠습니까?</string>
     <string name="reply_del">답장 삭제</string>
     <string name="really_reply_del">이 답장을 삭제하시겠습니까?</string>
+    
+    <string name="reply_title">답장</string>
+    <string name="reply_message">답장을 전송하시겠습니까?</string>
+    <string name="write_story_title">eting</string>
+    <string name="write_story_message">eting을 전송하시겠습니까?</string>
 
 </resources>

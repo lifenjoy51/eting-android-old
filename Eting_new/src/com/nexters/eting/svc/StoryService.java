@@ -129,7 +129,7 @@ public class StoryService {
 			for (String emoticon : emoticons) {
 				if ("".equals(emoticon))
 					continue;
-				Integer emoticonSrc = Emoticon.getEmoticon_map().get(emoticon);
+				Integer emoticonSrc = Emoticon.getEmoticon_press_map().get(emoticon);
 				list.add(emoticonSrc);
 			}
 		}

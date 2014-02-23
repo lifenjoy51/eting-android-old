@@ -1,9 +1,12 @@
 package com.nexters.eting;
 
-import android.app.Activity;
+import java.util.HashMap;
+import java.util.Map;
+
 import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,194 +22,156 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nexters.eting.etc.Util;
+import com.nexters.eting.etc.Const;
+import com.nexters.eting.etc.HttpUtil;
 
 /**
  * 받은편지함 읽기화면
- * 
+ *
  * @author lifenjoy51
- * 
+ *
  */
-public class NotifyUfoActivity extends Activity implements OnClickListener {
+public class NotifyUfoActivity extends BaseActivity implements OnClickListener {
+
+	/**
+	 * 알림 메세지 번호
+	 */
+	private String adminMsgId;
+
+	/**
+	 * 프로그래스 동글이
+	 */
+	private ProgressDialog progressDialog;
+
+	/**
+	 * 보낸사람
+	 */
+	private String comment;
+
+	/**
+	 * 코멘트
+	 */
+	private EditText et;
+
+	// 설정 저장소
+	SharedPreferences pref;
+
+	private Context context;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		context = getApplicationContext();
+
+		// 배경을 검게
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+		layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+		layoutParams.dimAmount = 0.3f;
+		getWindow().setAttributes(layoutParams);
+
+		// 레이아웃 설정
+		setContentView(R.layout.activity_notifyufo);
+
+		// 저장소 초기화
+		pref = context.getSharedPreferences("eting", Context.MODE_PRIVATE);
+
+		// 공지 번호와 메세지
+		String notifyContent = pref.getString("notify_ufo", "");
+
+		// 공지 내용
+		TextView contentView = (TextView) findViewById(R.id.popup_content);
+		contentView.setText(notifyContent);
+		contentView.setMovementMethod(LinkMovementMethod.getInstance());
+
+		// From Eting 부분
+		Typeface font = Typeface.createFromAsset(context.getAssets(),
+				"fonts/savoye.ttf");
+		TextView fromEting = (TextView) findViewById(R.id.from_eting);
+		fromEting.setTypeface(font);
+		fromEting.setText("From. eting");
+		fromEting.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36);
+
+		// 버튼이벤트 삽입
+		findViewById(R.id.notify_confirm_btn).setOnClickListener(this);
+
+	}
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		
+		if (v.getId() == R.id.notify_confirm_btn) {
+			Log.d("et length", String.valueOf(et.getText().toString().length()));
+
+			// 전송상태 나타냄
+			progressDialog = ProgressDialog.show(this, "", getResources()
+					.getString(R.string.app_name), true, true);
+
+			// 공지메세지 답장 전송
+			saveCommentToServer();
+		}
+
 	}
 
-//	/**
-//	 * 알림 메세지 번호
-//	 */
-//	private String adminMsgId;
-//
-//	/**
-//	 * 프로그래스 동글이
-//	 */
-//	private ProgressDialog progressDialog;
-//
-//	/**
-//	 * 보낸사람
-//	 */
-//	private String comment;
-//
-//	/**
-//	 * 코멘트
-//	 */
-//	private EditText et;
-//
-//	/**
-//	 * AdminMsgDAO adminMsgDao
-//	 */
-//	AdminMsgDAO adminMsgDao;
-//
-//	private Context context;
-//
-//	@Override
-//	protected void onCreate(Bundle savedInstanceState) {
-//
-//		super.onCreate(savedInstanceState);
-//		context = getApplicationContext();
-//		requestWindowFeature(Window.FEATURE_NO_TITLE);
-//		WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-//		layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-//		layoutParams.dimAmount = 0.7f;
-//		getWindow().setAttributes(layoutParams);
-//
-//		setContentView(R.layout.read_admin_msg_popup);
-//
-//		/**
-//		 * 짧은이야기 적는 부분
-//		 */
-//		et = (EditText) findViewById(R.id.msg_comment);
-//		//et.setTypeface(Util.getNanum(getApplicationContext()));
-//
-//		adminMsgDao = new AdminMsgDAO(context);
-//		AdminMsgDTO sdto = new AdminMsgDTO();
-//
-//		adminMsgDao.open();
-//
-//		int adminListSize = adminMsgDao.getAdminMsgList().size();
-//		if(adminListSize > 0){
-//			sdto = adminMsgDao.getAdminMsgList().get(adminListSize-1);
-//		}else{
-//			finish();
-//		}
-//		adminMsgId = sdto.getMsgId();
-//		String content = sdto.getMsgContent();
-//
-//		adminMsgDao.close();
-//
-//		TextView contentView = (TextView) findViewById(R.id.popup_content);
-//		//contentView.setTypeface(Util.getNanum(getApplicationContext()));
-//		contentView.setText(content);
-//		contentView.setMovementMethod(LinkMovementMethod.getInstance());
-//		
-//		Typeface font = Typeface.createFromAsset(context.getAssets(),"fonts/savoye.ttf");;
-//		TextView storyDateView = (TextView) findViewById(R.id.popup_date);
-//		storyDateView.setTypeface(font);
-//		storyDateView.setText("From. eting");
-//		storyDateView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36);
-//
-//		// 버튼이벤트 삽입
-//		findViewById(R.id.admin_msg_confirm_btn).setOnClickListener(this);
-//
-//	}
-//
-//	@Override
-//	public void onClick(View v) {
-//		if (v.getId() == R.id.admin_msg_confirm_btn) {
-//			Log.d("et length", String.valueOf(et.getText().toString().length()));
-//
-//			// 전송상태 나타냄
-//			progressDialog = ProgressDialog.show(this, "", getResources()
-//					.getString(R.string.app_name), true, true);
-//
-//			/**
-//			 * 다른사람 이야기에 찍은 스탬프 정보를 서버로 전송
-//			 */
-//			this.saveCommentToServer();
-//		}
-//
-//	}
-//
-//	/**
-//	 * 서버로 스탬프 전송
-//	 */
-//	private void saveCommentToServer() {
-//
-//		/**
-//		 * 보낸이 설정
-//		 */
-//		et = (EditText) findViewById(R.id.msg_comment);
-//		comment = et.getText().toString();
-//
-//		/**
-//		 * 서버로 전송
-//		 */
-//		new SendAdminMsgComment().execute();
-//	}
-//
-//	public class SendAdminMsgComment extends AsyncTask<Object, String, String> {
-//
-//		/**
-//		 * 생성자로 콜백을 받아온다.
-//		 * 
-//		 * @param callback
-//		 */
-//		public SendAdminMsgComment() {
-//		}
-//
-//		/**
-//		 * 실제 실행되는 부분
-//		 */
-//		@Override
-//		protected String doInBackground(Object... params) {
-//
-//			String urlStr = Util.serverContext + "/sendAdminMsgComment";
-//			String param = "msgId=" + adminMsgId;
-//			param += "&comment=" + comment;
-//
-//			String response = HttpUtil.doPost(urlStr, param); // Http전송
-//			return response;
-//		}
-//
-//		/**
-//		 * 작업이 끝나면 자동으로 실행된다.
-//		 */
-//		@Override
-//		protected void onPostExecute(String result) {
-//
-//			if (progressDialog != null)
-//				progressDialog.dismiss();
-//
-//			/**
-//			 * 에러처리
-//			 */
-//			if ("HttpUtil_Error".equals(result)) {
-//				Toast toast = Toast.makeText(context,
-//						R.string.error_on_transfer, Toast.LENGTH_LONG);
-//				toast.show();
-//
-//			} else if ("UnknownHostException".equals(result)) {
-//				Toast toast = Toast.makeText(context,
-//						R.string.cannot_connect_to_internet, Toast.LENGTH_LONG);
-//				toast.show();
-//
-//			}
-//			
-//			// 정상으로 전송되었을 때.
-//			InputMethodManager imm = (InputMethodManager) context
-//					.getSystemService(Service.INPUT_METHOD_SERVICE);
-//			imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
-//
-//			finish();
-//
-//			adminMsgDao.open();
-//			adminMsgDao.delAdminMsg(adminMsgId);
-//			adminMsgDao.close();
-//		}
-//
-//	}
+	/**
+	 * 서버로 스탬프 전송
+	 */
+	private void saveCommentToServer() {
+
+		// 코멘트
+		et = (EditText) findViewById(R.id.msg_comment);
+		comment = et.getText().toString();
+
+		// 서버로 전송
+		new SendAdminMsgComment().execute();
+	}
+
+	/**
+	 * 공지메세지에 대한 피드백을 서버로 전송한다.
+	 *
+	 * @author lifenjoy51
+	 *
+	 */
+	public class SendAdminMsgComment extends AsyncTask<Object, String, String> {
+
+		@Override
+		protected String doInBackground(Object... params) {
+
+			String urlStr = Const.serverContext + "/sendNotifyComment";
+
+			Map<String,String> param = new HashMap<String,String>();
+			param.put("msgId", adminMsgId);
+			param.put("comment", comment);
+
+			String response = HttpUtil.doPost(urlStr, param); // Http전송
+			return response;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+
+			if (progressDialog != null)
+				progressDialog.dismiss();
+
+			// 에러처리
+			if ("HttpUtil_Error".equals(result)) {
+				Toast.makeText(context, R.string.error_on_transfer,
+						Toast.LENGTH_LONG).show();
+			} else {
+				// 정상으로 전송되었을 때.
+				// 키보드 숨기고
+				InputMethodManager imm = (InputMethodManager) context
+						.getSystemService(Service.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
+				finish();
+
+				// 공지메세지 삭제
+				pref.edit().putString("notify_id", "").commit();
+				pref.edit().putString("notify_ufo", "").commit();
+			}
+
+		}
+
+	}
 
 }

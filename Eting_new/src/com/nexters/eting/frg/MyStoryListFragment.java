@@ -49,17 +49,7 @@ public class MyStoryListFragment  extends BaseFragment{
         MyStoryListFragment fragment = new MyStoryListFragment();
         return fragment;
     }
-
-    /**
-     * 생성자
-     */
-    public MyStoryListFragment() {
-    }
-
-    public void setViewPager(ViewPager mPager) {
-    	this.mPager = mPager;
-    }
-
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -186,12 +176,20 @@ public class MyStoryListFragment  extends BaseFragment{
     };
     
     /**
+     * Gcm으로 받은 메세지 열기
+     */
+    @Override
+    public void onGcm(Context context, String... storyId) {
+    	readMyStoryPopup(context, storyId[0]);
+    }
+    
+    /**
      * 내이야기 보기 화면 호출
      * @param storyId
      */
     public void readMyStoryPopup(Context context, String storyId){		
 		Intent intent =new Intent(context, ReadMyStoryActivity.class);
-		
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.putExtra("idx", storyId);
 		context.startActivity(intent);
     }
@@ -205,9 +203,10 @@ public class MyStoryListFragment  extends BaseFragment{
     public boolean onKeyDown(int keyCode, KeyEvent event) {
     	//Log.i("onKeyDown SUB", String.valueOf(keyCode));
     	// 메인 화면으로 이동
-    	if(mPager!=null){
-    		mPager.setCurrentItem(1);
-    	}
+		mPager = (ViewPager) getView().getParent();
+		mPager.setCurrentItem(1);
+		
         return true;
     }
+    
 }

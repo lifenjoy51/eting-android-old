@@ -1,6 +1,5 @@
 package com.nexters.eting;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -11,7 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ViewFlipper;
 
-public class TutorialActivity extends Activity implements OnTouchListener {
+public class TutorialActivity extends BaseActivity implements OnTouchListener {
 
 	private ViewFlipper viewflipper;
 	private GestureDetector gestureDetector;

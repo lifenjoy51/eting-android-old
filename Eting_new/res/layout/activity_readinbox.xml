@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center"
-    android:layout_margin="20dp"
+    android:layout_margin="25dp"
     android:orientation="vertical" >
 
     <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
@@ -22,79 +22,79 @@
             android:nextFocusUp="@id/autotext" />
     </LinearLayout>
 
-    <ImageView
+    <!-- 상단 부분 -->
+
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/inbox_emoticon_scroll_area"
         android:layout_alignParentTop="true"
-        android:background="@drawable/inbox_bg_top"
-        android:scaleType="fitCenter" />
+        android:background="@drawable/alarm_bg01"
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/popup_date"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="40dp"
-        android:gravity="left|center"
-        android:textColor="#555555"
-        android:textSize="14sp" />
-    
-     <Button
-            android:id="@+id/report_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-        	android:layout_marginTop="40dp"
-        	android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/report_btn_selector" />
-
-    <ScrollView
-        android:id="@+id/popup_content_scroll_area"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/pass_area"
-        android:background="@android:color/white"
-        android:layout_below="@+id/popup_date" >
-
-        <TextView
-            android:id="@+id/popup_content"
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="left|top"
-            android:lineSpacingExtra="5dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:textColor="#555555"
-            android:textSize="17sp"
-            android:textIsSelectable="true" />
-    </ScrollView>
-    
-    
-    
-    <LinearLayout
-        android:id="@+id/pass_area"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/inbox_emoticon_scroll_area"
-        android:orientation="horizontal"
-        android:background="@android:color/white" >
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="0"
+            android:orientation="horizontal" >
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            <!-- 날짜 시간 -->
+
+            <TextView
+                android:id="@+id/popup_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="25dp"
+                android:gravity="left|center"
+                android:textColor="#555555"
+                android:textSize="14sp" />
+
+            <!-- 신고버튼 -->
+
+            <ImageView
+                android:id="@+id/report_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@drawable/report" />
+        </LinearLayout>
+
+        <!-- 내용 -->
+
+        <ScrollView
+            android:id="@+id/popup_content_scroll_area"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
             android:layout_weight="1" >
-        </ImageView>
 
-		<Button
+            <TextView
+                android:id="@+id/popup_content"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|top"
+                android:lineSpacingExtra="5dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:textColor="#555555"
+                android:textIsSelectable="true"
+                android:textSize="17sp" />
+        </ScrollView>
+
+        <!-- 패스 버튼 -->
+
+        <Button
             android:id="@+id/pass_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/pass_btn_selector"
-             />   
+            android:layout_gravity="right"
+            android:layout_weight="0"
+            android:background="@drawable/pass_btn_selector" />
     </LinearLayout>
+
+    <!-- 이모티콘 선택 -->
 
     <ScrollView
         android:id="@+id/inbox_emoticon_scroll_area"
@@ -112,29 +112,31 @@
         </LinearLayout>
     </ScrollView>
 
+    <!-- 답글 입력부분 -->
+
     <LinearLayout
         android:id="@+id/inbox_control_area"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/alarm_bg04" >
+        android:background="@drawable/alarm_bg02" >
 
         <EditText
             android:id="@+id/emoticon_reply"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:ems="8"
             android:hint="@string/enter_you_name"
-            android:textAlignment="textStart"
             android:maxLength="250"
-            android:paddingLeft="10dp"
-            android:paddingBottom="10dp"
-            android:textColor="#555555"
-            android:textColorHint="#BBBBBB"
-            android:minLines="3"
             android:maxLines="3"
-            android:background="@android:color/transparent">
+            android:minLines="3"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:textAlignment="textStart"
+            android:textColor="#555555"
+            android:textColorHint="#BBBBBB" >
         </EditText>
 
         <Button

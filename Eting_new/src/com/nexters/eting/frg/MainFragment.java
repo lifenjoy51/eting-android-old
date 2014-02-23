@@ -224,16 +224,14 @@ public class MainFragment extends BaseFragment implements OnClickListener {
 
 		case R.drawable.eting_logo:
 			// 원을 누르면 쓰기페이지로 이동
-			if (mPager != null) {
-				mPager.setCurrentItem(2);
-			}
+			mPager = (ViewPager) getView().getParent();
+			mPager.setCurrentItem(2);
 			break;
 
 		case R.id.main_eting_cnt:
 			// 내 이팅개수를 누르면 목록으로
-			if (mPager != null) {
-				mPager.setCurrentItem(0);
-			}
+			mPager = (ViewPager) getView().getParent();
+			mPager.setCurrentItem(0);
 			break;
 		}
 

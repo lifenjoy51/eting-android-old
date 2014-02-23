@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:layout_margin="40dp"
+    android:orientation="vertical" >
+
+    <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <AutoCompleteTextView
+            android:id="@+id/autotext"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:nextFocusLeft="@id/autotext"
+            android:nextFocusUp="@id/autotext" />
+    </LinearLayout>
+
+    <!-- 상단 스프링 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/alarm_bg01"
+        android:orientation="vertical" >
+
+        <!-- from이팅 -->
+
+        <TextView
+            android:id="@+id/from_eting"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="0"
+            android:gravity="left|center"
+            android:textColor="#555555"
+            android:textSize="14sp" />
+
+        <!-- 내용 -->
+
+        <ScrollView
+            android:id="@+id/popup_content_scroll_area"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/popup_content"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="left|top"
+                android:lineSpacingExtra="5dp"
+                android:linksClickable="true"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:textColor="#555555"
+                android:textIsSelectable="true"
+                android:textSize="17sp" />
+        </ScrollView>
+
+        <!-- 공지우주선 답장 -->
+
+        <LinearLayout
+            android:id="@+id/notify_control_area"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/alarm_bg02">
+
+            <EditText
+                android:id="@+id/msg_comment"
+                android:layout_width="0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:ems="8"
+                android:maxLength="250"
+                android:maxLines="3"
+                android:minLines="3"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:textAlignment="textStart"
+                android:textColor="#555555"
+                android:textColorHint="#BBBBBB" >
+            </EditText>
+
+            <Button
+                android:id="@+id/notify_confirm_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="@drawable/inbox_btn_selector" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

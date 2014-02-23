@@ -7,8 +7,10 @@ import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -30,6 +32,19 @@ public class Util {
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		width = metrics.widthPixels;
 		height = metrics.heightPixels;
+	}
+	
+	/**
+	 * 서버에 등록된 기기 고유번호를 불러온다.
+	 * @param context
+	 * @return
+	 */
+	public static String DeviceId(Context context){
+		SharedPreferences prefs = context.getSharedPreferences("eting",
+				Context.MODE_PRIVATE);
+		String deviceId = prefs.getString("device_id", "");
+		Log.d("HTTP", "deviceId = "+deviceId);
+		return deviceId;
 	}
 	
 	/**
@@ -138,7 +153,7 @@ public class Util {
 	 * @return
 	 */
 	public static boolean isEmpty(String str) {
-		if (str == null || str == "") {
+		if (str == null || "".equals(str) || "null".equals(str)) {
 			return true;
 		} else {
 			return false;

@@ -1,38 +1,40 @@
 package com.nexters.eting.svc.gcm;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.nexters.eting.task.RegistrationTask;
+import com.nexters.eting.etc.Const;
+import com.nexters.eting.etc.HttpUtil;
 
 public class GcmInitService {
 
-	private Context context;
+	private final Context context;
 	private GoogleCloudMessaging gcm;
 
 	// 앱등록아이디
-	private String SENDER_ID = "112355150629";
+	private final String SENDER_ID = "112355150629";
 	// 기기등록아이디
 	public String regId;
 	// 저장소
-	private SharedPreferences prefs;
-	// 등록여부
-	public boolean isReg = false;
+	private final SharedPreferences prefs;
 
 	/**
 	 * 생성자
-	 * 
+	 *
 	 * @param context
 	 */
 	public GcmInitService(Context context) {
 		this.context = context;
-		//설정정보를 담기 위한 저장소 초기화
+		// 설정정보를 담기 위한 저장소 초기화
 		prefs = context.getSharedPreferences("gcm_preferences",
 				Context.MODE_PRIVATE);
 	}
@@ -52,18 +54,19 @@ public class GcmInitService {
 
 	/**
 	 * Google play servce 작동 확인
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean checkPlayServices() {
 		int resultCode = GooglePlayServicesUtil
 				.isGooglePlayServicesAvailable(context);
 		if (resultCode != ConnectionResult.SUCCESS) {
-			// TODO GCM등록 에러 시 어떻게 처리하나? 서버에 정보 전송!!?!
+			// 에러메세지
+			String errorMsg = GooglePlayServicesUtil.getErrorString(resultCode);
+			// 에러메세지를 서버로 전송
+			new SendErrorTask().execute(errorMsg);
 			if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-				// TODO 사용자가 복구 가능한 에러??
-			}else{				
-				// TODO 복구 불가능 에러??
+				Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show();
 			}
 			return false;
 		}
@@ -74,29 +77,46 @@ public class GcmInitService {
 	 * GCM을 등록한다. (기기)
 	 */
 	public void registerInBackground() {
-		new AsyncTask<Void, Void, String>() {
-			@Override
-			protected String doInBackground(Void... params) {
-				String msg = "";
-				try {
-					if (gcm == null) {
-						gcm = GoogleCloudMessaging.getInstance(context);
-					}
-					// GCM등록 후 기기 등록아이디를 가져온다.
-					regId = gcm.register(SENDER_ID);
-					// 등록 아이디를 저장한다.
-					prefs.edit().putString("registration_id", regId).commit();
-					// 등록 성공
-					isReg = true;
-					// 서버에 등록
-					new RegistrationTask().execute(regId, context);
-				} catch (IOException ex) {
-					ex.printStackTrace();
-					// TODO GCM등록 실패시 어떻게 해야하나??
-					// TODO RegID가 등록되지 않으면 분명히 여길 드른다...
-				}
-				return msg;
+		try {
+			if (gcm == null) {
+				gcm = GoogleCloudMessaging.getInstance(context);
 			}
-		}.execute(null, null, null);
+			// GCM등록 후 기기 등록아이디를 가져온다.
+			regId = gcm.register(SENDER_ID);
+			// 등록 아이디를 저장한다.
+			prefs.edit().putString("registration_id", regId).commit();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			// TODO GCM등록 실패시 어떻게 해야하나??
+			// TODO RegID가 등록되지 않으면 분명히 여길 드른다...
+		}
+	}
+
+	/**
+	 * 등록번호
+	 *
+	 * @return
+	 */
+	public String getRegId() {
+		return prefs.getString("registration_id", "");
+	}
+
+	/**
+	 * 에러메세지 전송
+	 */
+	public class SendErrorTask extends AsyncTask<Object, String, String> {
+
+		@Override
+		protected String doInBackground(Object... params) {
+
+			// 에러내용을 서버에 전송
+			String url = Const.serverContext + "/sendNotifyComment";
+			Map<String, String> param = new HashMap<String, String>();
+			param.put("msgId", "0");
+			param.put("comment", (String) params[0]);
+
+			return HttpUtil.doPost(url, param);
+		}
+
 	}
 }

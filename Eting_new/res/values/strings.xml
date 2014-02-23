@@ -60,5 +60,11 @@
     <string name="really_reply_report">Do you really want to report your reply?</string>
     <string name="reply_del">delete reply</string>
     <string name="really_reply_del">Do you really want to delete your reply?</string>
+    
+    <string name="reply_title">reply</string>
+    <string name="reply_message">Do you want to send this reply?</string>
+    
+    <string name="write_story_title">eting</string>
+    <string name="write_story_message">Do you want to send this eting?</string>
 
 </resources>

@@ -1,6 +1,8 @@
 package com.nexters.eting.task;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,12 +21,12 @@ import com.nexters.eting.svc.StoryService;
 /**
  * 답변이 달린 메세지를 받아온다.
  * AsyncTask를 상속받았기에 Main쓰레드와 별도로 실행된다.
- * 
+ *
  * @author lifenjoy51
  *
  */
 public class GetRepliedStoryTask extends AsyncTask<Object, String, String> {
-	
+
 	private Context context;
 
 	/**
@@ -33,47 +35,51 @@ public class GetRepliedStoryTask extends AsyncTask<Object, String, String> {
 	@Override
 	protected String doInBackground(Object... params) {
 
-			this.context = (Context) params[0];	//파라미터 두번째값 context
-			String phoneId = Installation.id(context);	//기기 고유값
-			
+			this.context = (Context) params[0];	//파라미터 context
+			String deviceId = Util.DeviceId(context);	//기기 고유값
+
+			//작성한 이야기들을 모두 불러와서
 			StoryService storySvc = new StoryService(context);
 			List<Story> storyList = storySvc.getMyStoryList();
-			StringBuffer sb=  new StringBuffer(); 
+			StringBuffer sb=  new StringBuffer();
 			for(Story story : storyList){
 				String replyId = story.getReply_id();
+				//답글이 없는 이야기 정보만 가져와서
 				if(Util.isEmpty(replyId)){
 					sb.append(story.getStory_id());
 					sb.append(",");
 				}
 			}
-			
+
+			//서버에 전송하기 위해 가다듬고
 			String storyIdList = "";
 			if(sb.lastIndexOf(",") > 0){
 				storyIdList = sb.substring(0, sb.lastIndexOf(","));
 			}
-			
-			System.out.println(storyIdList);
-			
-			String param = "phone_id=" + phoneId +"&story_list=" +storyIdList;	//서버에 전송할 파라미터 조립
+
+			//서버에 전송할 파라미터 조립
+			Map<String,String> param = new HashMap<String,String>();
+			param.put("device_id", deviceId);
+			param.put("device_uuid", Installation.id(context));
+			param.put("story_list", storyIdList);
 			String urlStr = Const.serverContext+"/getReplyList";
-			
-			String response = HttpUtil.doPost(urlStr, param);	//Http전송 
-			System.out.println(this.getClass().getName() + " = " + response);
+
+			//Http전송
+			String response = HttpUtil.doPost(urlStr, param);
 			return response;
-	}	
-	
+	}
+
 	/**
 	 * 작업이 끝나면 자동으로 실행된다.
 	 */
 	@Override
 	protected void onPostExecute(String result) {
-		//System.out.println(result);
-		
+
 		try {
 			JSONObject json = new JSONObject(result);
 
 			//답글정보를 저장한다.
-			if (!json.isNull("ReplyList")) {				
+			if (!json.isNull("ReplyList")) {
 				StoryService svc = new StoryService(context);
 				JSONArray stampedStoryList = json.getJSONArray("ReplyList");
 				for(int i=0; i<stampedStoryList.length(); i++){
@@ -82,17 +88,17 @@ public class GetRepliedStoryTask extends AsyncTask<Object, String, String> {
 					String emoticon_list = repliedStory.getString("emoticon_list");
 					String reply_content = repliedStory.getString("reply_content");
 					String reply_id = repliedStory.getString("reply_id");
-					
+
 					svc.updStoryReply(story_id, emoticon_list, reply_content, reply_id);
 				}
-				
+
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}finally{
-			
+
 		}
-		
+
 	}
 
 }
