@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nexters.eting"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    package="com.gif.eting"
+    android:versionCode="20"
+    android:versionName="2.0" >
 
     <!-- 네트워킹 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,10 +13,10 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <permission
-        android:name="com.nexters.eting.permission.C2D_MESSAGE"
+        android:name="com.gif.eting.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.nexters.eting.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.gif.eting.permission.C2D_MESSAGE" />
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -34,7 +34,7 @@
 
         <!-- 처음화면 -->
         <activity
-            android:name="com.nexters.eting.SplashActivity"
+            android:name="com.gif.eting.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name" >
             <intent-filter>
@@ -46,26 +46,26 @@
 
         <!-- 튜토리얼 -->
         <activity
-            android:name="com.nexters.eting.TutorialActivity"
+            android:name="com.gif.eting.TutorialActivity"
             android:screenOrientation="portrait" >
         </activity>
 
         <!-- 잠금화면 -->
         <activity
-            android:name="com.nexters.eting.LockScreenActivity"
+            android:name="com.gif.eting.LockScreenActivity"
             android:screenOrientation="portrait" >
         </activity>
 
         <!-- 메인 액티비티 -->
         <activity
-            android:name="com.nexters.eting.MainViewPagerActivity"
+            android:name="com.gif.eting.MainViewPagerActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" >
         </activity>
 
         <!-- 받은 이야기 보기 액티비티 -->
         <activity
-            android:name="com.nexters.eting.ReadInboxActivity"
+            android:name="com.gif.eting.ReadInboxActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent"
             android:windowSoftInputMode="adjustResize" >
@@ -73,14 +73,14 @@
 
         <!-- 내 이야기 보기 액티비티 -->
         <activity
-            android:name="com.nexters.eting.ReadMyStoryActivity"
+            android:name="com.gif.eting.ReadMyStoryActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" >
         </activity>
 
         <!-- 공지메세지 액티비티 -->
         <activity
-            android:name="com.nexters.eting.NotifyUfoActivity"
+            android:name="com.gif.eting.NotifyUfoActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent"
             android:windowSoftInputMode="adjustResize" >
@@ -93,42 +93,42 @@
 
         <!-- 설정화면 -->
         <activity
-            android:name="com.nexters.eting.SettingActivity"
+            android:name="com.gif.eting.SettingActivity"
             android:screenOrientation="portrait" >
         </activity>
 
         <!-- 만든이 소개 화면 -->
         <activity
-            android:name="com.nexters.eting.AboutUsActivity"
+            android:name="com.gif.eting.AboutUsActivity"
             android:screenOrientation="portrait" >
         </activity>
 
         <!-- 이팅 백업 화면 -->
         <activity
-            android:name="com.nexters.eting.BackupActivity"
+            android:name="com.gif.eting.BackupActivity"
             android:screenOrientation="portrait" >
         </activity>
 
         <!-- 비밀번호 설정 화면 -->
         <activity
-            android:name="com.nexters.eting.PasswordActivity"
+            android:name="com.gif.eting.PasswordActivity"
             android:screenOrientation="portrait" >
         </activity>
 
         <!-- GCM Setting -->
         <receiver
-            android:name="com.nexters.eting.svc.gcm.GcmBroadcastReceiver"
+            android:name="com.gif.eting.svc.gcm.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <category android:name="com.nexters.eting" />
+                <category android:name="com.gif.eting" />
             </intent-filter>
         </receiver>
 
         <!-- GCM Service -->
-        <service android:name="com.nexters.eting.svc.gcm.GcmIntentService" />
+        <service android:name="com.gif.eting.svc.gcm.GcmIntentService" />
     </application>
 
 </manifest>

@@ -7,18 +7,18 @@ import android.util.Log;
 
 /**
  * 이야기를 저장할 Sqlite DB 테이블
- * 
+ *
  * @author lifenjoy51
- * 
+ *
  */
 public class StoryDBHelper extends SQLiteOpenHelper {
 
 	public static final String TABLE_STORY_MASTER = "mystory"; // TABLE이름
 
 	/**
-	 * 컬럼정보 
-	 * COL_IDX 고유번호 
-	 * COL_CONTENT 이야기 내용 
+	 * 컬럼정보
+	 * COL_IDX 고유번호
+	 * COL_CONTENT 이야기 내용
 	 * COL_STORY_DATE 이야기 작성일자
 	 */
 	public static final String COL_IDX = "idx";
@@ -37,9 +37,9 @@ public class StoryDBHelper extends SQLiteOpenHelper {
 	 *  TABLE 생성문
 	 */
 	private static final String DATABASE_CREATE = "CREATE TABLE "
-			+ TABLE_STORY_MASTER + "(" 
+			+ TABLE_STORY_MASTER + "("
 			+ COL_IDX + " integer primary key, "
-			+ COL_CONTENT + " text not null, " 
+			+ COL_CONTENT + " text not null, "
 			+ COL_STORY_DATE + " text, "
 			+ COL_STORY_TIME + " text, "
 			+ COL_STAMP_YN + " text, "
@@ -73,9 +73,9 @@ public class StoryDBHelper extends SQLiteOpenHelper {
 		 */
 		final String TABLE_STORY_MASTER_TEMP = "mystory_temp"; // TABLE이름
 		final String CREATE_TEMP_TABLE = "CREATE TABLE "
-				+ TABLE_STORY_MASTER_TEMP + "(" 
+				+ TABLE_STORY_MASTER_TEMP + "("
 				+ COL_IDX + " integer primary key, "
-				+ COL_CONTENT + " text not null, " 
+				+ COL_CONTENT + " text not null, "
 				+ COL_STORY_DATE + " text, "
 				+ COL_STORY_TIME + " text, "
 				+ COL_STAMP_YN + " text, "
@@ -100,14 +100,14 @@ public class StoryDBHelper extends SQLiteOpenHelper {
 				+ ", " + COL_STAMP_YN + " , " + COL_STAMPS + ", " + COL_COMMENT
 				+ " FROM " + TABLE_STORY_MASTER_TEMP;
 
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORY_MASTER_TEMP);		
-		db.execSQL(CREATE_TEMP_TABLE);		
-		db.execSQL(OLD_TO_TEMP);		
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORY_MASTER);		
-		db.execSQL(DATABASE_CREATE);			
-		db.execSQL(TEMP_TO_NEW);		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORY_MASTER_TEMP);
-		
+		db.execSQL(CREATE_TEMP_TABLE);
+		db.execSQL(OLD_TO_TEMP);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORY_MASTER);
+		db.execSQL(DATABASE_CREATE);
+		db.execSQL(TEMP_TO_NEW);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_STORY_MASTER_TEMP);
+
 	}
 
 }

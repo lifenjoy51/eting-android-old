@@ -55,11 +55,4 @@
         android:background="@drawable/main_acc_1"
         android:contentDescription="@string/mainacc1" />
 
-    <ImageView
-        android:id="@+id/main_acc_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/main_acc_2"
-        android:contentDescription="@string/mainacc2" />
-
 </FrameLayout>

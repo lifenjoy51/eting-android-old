@@ -10,9 +10,27 @@
         android:layout_gravity="center"
         android:scaleType="fitXY"
         android:src="@drawable/about_bg" />
-	<ImageView 
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="center"
-	    android:src="@drawable/about_text"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/about_text" />
+
+    <ImageView
+        android:id="@+id/mogi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:src="@drawable/mogi"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/kaonashi"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:src="@drawable/kaonashi"
+        android:visibility="invisible" />
+
 </FrameLayout>
