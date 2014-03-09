@@ -133,8 +133,8 @@
             android:maxLines="3"
             android:minLines="3"
             android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:textAlignment="textStart"
+            android:paddingLeft="20dp"
+            android:textAlignment="viewStart"
             android:textColor="#555555"
             android:textColorHint="#BBBBBB" >
         </EditText>

@@ -70,7 +70,7 @@ public class ReadInboxActivity extends BaseActivity implements OnClickListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
 		layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-		layoutParams.dimAmount = 0.6f;
+		layoutParams.dimAmount = 0.2f;
 		getWindow().setAttributes(layoutParams);
 
 		// 레이아웃 설정

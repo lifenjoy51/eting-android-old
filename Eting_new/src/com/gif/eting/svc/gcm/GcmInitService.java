@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.gif.eting.etc.Const;
 import com.gif.eting.etc.HttpUtil;
+import com.gif.eting.etc.Installation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -113,8 +114,14 @@ public class GcmInitService {
 			// 에러내용을 서버에 전송
 			String url = Const.serverContext + "/sendNotifyComment";
 			Map<String, String> param = new HashMap<String, String>();
+
+			String msg = (String) params[0];
+
+			//기기 고유 UUID
+			String deviceUUID = Installation.id(context);
+
 			param.put("msgId", "0");
-			param.put("comment", (String) params[0]);
+			param.put("comment", deviceUUID.concat("_").concat(msg));
 
 			return HttpUtil.doPost(url, param);
 		}

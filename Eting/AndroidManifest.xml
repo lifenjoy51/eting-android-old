@@ -58,7 +58,7 @@
         <activity
             android:name="com.gif.eting.act.MainViewPagerActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" >
+            android:windowSoftInputMode="adjustResize|adjustPan" >
         </activity>
         
             <!-- 

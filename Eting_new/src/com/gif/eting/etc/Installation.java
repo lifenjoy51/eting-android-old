@@ -7,10 +7,11 @@ import java.io.RandomAccessFile;
 import java.util.UUID;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 /**
  * 기기 고유번호를 찍어주는 유틸
- * 
+ *
  * @author lifenjoy51
  *
  */
@@ -26,12 +27,19 @@ public class Installation {
 					writeInstallationFile(installation);
 				sID = readInstallationFile(installation);
 			} catch (Exception e) {
-				//TODO 기기UUID가 생성되지 않을 때 어떻게하나?
-				//임시로 현재시간을 key값으로 등록.
-				long time = System.currentTimeMillis();
-				long nano = System.nanoTime();
-				String uuid = String.valueOf(time)+String.valueOf(nano);
-				sID = String.format("%36s", uuid).replace(' ', '0');
+				SharedPreferences prefs = context.getSharedPreferences("eting",
+						Context.MODE_PRIVATE);
+				String savedSID = prefs.getString("sid", "");
+				if(Util.isEmpty(savedSID)){
+					//임시로 현재시간을 key값으로 등록.
+					long time = System.currentTimeMillis();
+					long nano = System.nanoTime();
+					String uuid = String.valueOf(time)+String.valueOf(nano);
+					sID = String.format("%36s", uuid).replace(' ', '0');
+					prefs.edit().putString("sid", sID).commit();
+				}else{
+					sID = savedSID;
+				}
 			}
 		}
 		return sID;

@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 
 import com.gif.eting.R;
@@ -23,7 +22,7 @@ public class StarView extends View {
 	private Drawable mDrawable;
 	private final Context context;
 	private long lastPushTime;
-	private final static int interval = 10000;
+	private final static int interval = 5000;
 	public boolean isReady = false;
 
 	public StarView(Context context) {
@@ -64,7 +63,7 @@ public class StarView extends View {
 		long current = System.currentTimeMillis();
 		// 마지막 이야기를 받은 시간으로부터 경과 시간
 		long timeFromLastGettingEting = current - lastPushTime;
-		Log.i("time", String.valueOf(timeFromLastGettingEting));
+		//Log.i("time", String.valueOf(timeFromLastGettingEting));
 
 		// 맨처음 이미지는 star_icon01
 		if (timeFromLastGettingEting > interval * 5) { // star_icon03
