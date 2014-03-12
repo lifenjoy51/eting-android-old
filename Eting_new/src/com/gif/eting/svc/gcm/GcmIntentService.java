@@ -12,12 +12,12 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.gif.eting.R;
 import com.gif.eting.SplashActivity;
 import com.gif.eting.dao.InboxDAO;
 import com.gif.eting.obj.Story;
 import com.gif.eting.svc.StoryService;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 /**
  * This {@code IntentService} does the actual handling of the GCM message.
@@ -68,7 +68,7 @@ public class GcmIntentService extends IntentService {
 
 	/**
 	 * 답글 저장
-	 * 
+	 *
 	 * @param extras
 	 */
 	private void handleReply(Bundle extras) {
@@ -94,7 +94,7 @@ public class GcmIntentService extends IntentService {
 
 	/**
 	 * 공지메세지
-	 * 
+	 *
 	 * @param extras
 	 */
 	private void handleNotify(Bundle extras) {
@@ -103,9 +103,12 @@ public class GcmIntentService extends IntentService {
 		String content = extras.getString("content");
 		saveAdminMessage(msgId, content);
 
-		String isNoti = extras.getString("isNoti");
+		// 알림여부
+		SharedPreferences pref = getSharedPreferences("eting",
+				Context.MODE_PRIVATE);
+		boolean isAlarm = pref.getBoolean("push_alarm", true);
 		// 관리자 알람일 때에는 그냥 이팅만 켠다.
-		if ("Y".equals(isNoti)) {
+		if (isAlarm) {
 			makeNotification("");
 		}
 	}
@@ -132,7 +135,7 @@ public class GcmIntentService extends IntentService {
 
 	/**
 	 * 푸쉬알림
-	 * 
+	 *
 	 * @param storyId
 	 * @param content
 	 */
@@ -192,7 +195,7 @@ public class GcmIntentService extends IntentService {
 
 	/**
 	 * 관리자 알림 메세지 저장
-	 * 
+	 *
 	 * @param msgId
 	 * @param content
 	 */
