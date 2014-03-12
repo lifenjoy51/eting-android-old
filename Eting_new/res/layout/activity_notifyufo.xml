@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_gravity="center"
-    android:layout_margin="40dp"
+    android:layout_margin="25dp"
     android:orientation="vertical" >
 
     <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
