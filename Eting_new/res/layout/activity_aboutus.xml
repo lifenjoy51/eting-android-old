@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
         android:src="@drawable/mogi"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/kaonashi"
@@ -31,6 +31,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:src="@drawable/kaonashi"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
 </FrameLayout>

@@ -188,7 +188,7 @@ public class GcmIntentService extends IntentService {
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 				this)
-				.setSmallIcon(R.drawable.icon_1024)
+				.setSmallIcon(R.drawable.icon_192)
 				.setContentTitle("Eting")
 				.setStyle(
 						new NotificationCompat.BigTextStyle().bigText("Eting!"))
