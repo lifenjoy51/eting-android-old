@@ -67,7 +67,7 @@ public class GcmInitService {
 			// 에러메세지를 서버로 전송
 			new SendErrorTask().execute(errorMsg);
 			if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-				Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show();
+				//Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show();
 			}
 			return false;
 		}
