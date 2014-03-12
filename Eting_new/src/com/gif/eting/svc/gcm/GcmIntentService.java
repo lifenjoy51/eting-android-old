@@ -15,6 +15,7 @@ import android.util.Log;
 import com.gif.eting.R;
 import com.gif.eting.SplashActivity;
 import com.gif.eting.dao.InboxDAO;
+import com.gif.eting.etc.Util;
 import com.gif.eting.obj.Story;
 import com.gif.eting.svc.StoryService;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -107,9 +108,14 @@ public class GcmIntentService extends IntentService {
 		SharedPreferences pref = getSharedPreferences("eting",
 				Context.MODE_PRIVATE);
 		boolean isAlarm = pref.getBoolean("push_alarm", true);
+
 		// 관리자 알람일 때에는 그냥 이팅만 켠다.
-		if (isAlarm) {
-			makeNotification("");
+		String isNoti = extras.getString("isNoti");
+		// 관리자 알람일 때에는 그냥 이팅만 켠다.
+		if ("Y".equals(isNoti)) {
+			if (isAlarm) {
+				makeNotification("");
+			}
 		}
 	}
 
@@ -148,7 +154,9 @@ public class GcmIntentService extends IntentService {
 			svc.getMyStory(storyId);
 		} catch (Exception e) {
 			Log.i("check story", e.toString());
-			return;
+			if (!Util.isEmpty(storyId)) {
+				return;
+			}
 		}
 
 		// 알림여부
@@ -180,7 +188,7 @@ public class GcmIntentService extends IntentService {
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 				this)
-				.setSmallIcon(R.drawable.ic_launcher)
+				.setSmallIcon(R.drawable.icon_1024)
 				.setContentTitle("Eting")
 				.setStyle(
 						new NotificationCompat.BigTextStyle().bigText("Eting!"))
