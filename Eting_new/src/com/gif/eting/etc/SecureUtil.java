@@ -3,9 +3,11 @@ package com.gif.eting.etc;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import android.util.Base64;
+
 /**
  * 암호화처리
- * 
+ *
  * @author lifenjoy51
  *
  */
@@ -13,10 +15,11 @@ public class SecureUtil {
 
 	/**
 	 * SHA256 해쉬값을 리턴한다.
+	 *
 	 * @param str
 	 * @return
 	 */
-	static public String toSHA256(String str) {
+	public static String toSHA256(String str) {
 		String SHA = "";
 		try {
 			MessageDigest sh = MessageDigest.getInstance("SHA-256");
@@ -34,6 +37,18 @@ public class SecureUtil {
 			SHA = null;
 		}
 		return SHA;
+	}
+
+	public static String encode(String in) {
+		byte[] b = Base64.encode(in.getBytes(), Base64.URL_SAFE);
+		String out = new String(b);
+		return out;
+	}
+
+	public static String decode(String in) {
+		byte[] b = Base64.decode(in.getBytes(), Base64.URL_SAFE);
+		String out = new String(b);
+		return out;
 	}
 
 }

@@ -87,7 +87,6 @@ public class SplashActivity extends Activity {
 			//기기등록 고고씽
 			new RegistrationTask().execute(context);
 		}
-
 		// 처음 실행 여부 체크
 		isFirst = pref.getBoolean("isFirst", true);
 		if (isFirst) {
@@ -95,11 +94,13 @@ public class SplashActivity extends Activity {
 		}else{
 			//처음 실행이 아닌 경우에
 			//GCM 등록 실패시
+			@SuppressWarnings("unused")
 			String regId = gcmInitService.getRegId();
-			if(Util.isEmpty(regId)){
+			//if(Util.isEmpty(regId)){
 				//TODO 서버에서 답글이 달린 이야기만 받아온다.
+				//TODO 무조건 실행!!! 14.03.28
 				new GetRepliedStoryTask().execute(context);
-			}
+			//}
 		}
 
 		//GCM으로 받은경우 페이지이동
@@ -118,6 +119,10 @@ public class SplashActivity extends Activity {
 			}
 		}, 3000);
 
+		//TODO 임시코드!!
+		//String img = "http://eting.cafe24.com/manager/images/tomcat.gif";
+		//String c = SecureUtil.encode(img);
+		//pref.edit().putString("notify_ufo", "안녕하세요? #eting!"+c).commit();
 	}
 
 	/**

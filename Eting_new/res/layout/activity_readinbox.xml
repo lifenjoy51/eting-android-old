@@ -63,6 +63,12 @@
         </LinearLayout>
 
         <!-- 내용 -->
+        
+		<ImageView
+            android:id="@+id/inbox_img"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
 
         <ScrollView
             android:id="@+id/popup_content_scroll_area"
@@ -129,7 +135,6 @@
             android:background="@android:color/transparent"
             android:ems="8"
             android:hint="@string/enter_you_name"
-            android:maxLength="250"
             android:maxLines="3"
             android:minLines="3"
             android:paddingBottom="10dp"

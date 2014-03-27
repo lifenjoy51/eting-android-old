@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,10 +27,12 @@ import android.widget.Toast;
 import com.gif.eting.dao.InboxDAO;
 import com.gif.eting.etc.Const;
 import com.gif.eting.etc.HttpUtil;
+import com.gif.eting.etc.SecureUtil;
 import com.gif.eting.etc.Util;
 import com.gif.eting.obj.Emoticon;
 import com.gif.eting.obj.Story;
 import com.gif.eting.svc.InboxService;
+import com.gif.eting.task.DownloadImageTask;
 import com.gif.eting.view.EmoticonView;
 
 /**
@@ -143,6 +146,21 @@ public class ReadInboxActivity extends BaseActivity implements OnClickListener {
 
 		// 보여줄 형식
 		String storyDateTime = storyDate + "\t\t" + storyTime;
+
+		//이미지 넣기
+		ImageView inboxImg = (ImageView) findViewById(R.id.inbox_img);
+		if(content.contains(Const.imgTag)){
+			String imgUrl = content.substring(
+					content.indexOf(Const.imgTag) + Const.imgTag.length(), content.length());
+			String realUrl = SecureUtil.decode(imgUrl);
+			new DownloadImageTask(inboxImg).execute(realUrl);
+			inboxImg.setVisibility(View.VISIBLE);
+
+			//내용에선 지운다.
+			content = content.substring(0, content.indexOf(Const.imgTag));
+		}else{
+			inboxImg.setVisibility(View.GONE);
+		}
 
 		// 내용을 보여주고
 		TextView contentView = (TextView) findViewById(R.id.popup_content);

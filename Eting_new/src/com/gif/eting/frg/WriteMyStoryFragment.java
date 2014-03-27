@@ -260,6 +260,13 @@ public class WriteMyStoryFragment extends BaseFragment implements
 				// 에러났을 때 초기화
 				resetSendingStory();
 
+			}else if ("Error".equals(result)) {
+				Toast.makeText(getActivity(), R.string.error_on_transfer,
+						Toast.LENGTH_LONG).show();
+
+				// 에러났을 때 초기화
+				resetSendingStory();
+
 			} else if ("UnknownHostException".equals(result)) {
 				Toast.makeText(getActivity(),
 						R.string.cannot_connect_to_internet, Toast.LENGTH_LONG)

@@ -28,8 +28,8 @@
         android:id="@+id/notify_ufo_top"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_above="@+id/notify_control_area"
+        android:layout_alignParentTop="true"
         android:background="@drawable/alarm_bg01"
         android:orientation="vertical" >
 
@@ -49,6 +49,12 @@
 
         <!-- 내용 -->
 
+        <ImageView
+            android:id="@+id/notify_img"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp" />
+
         <ScrollView
             android:id="@+id/popup_content_scroll_area"
             android:layout_width="fill_parent"
@@ -66,9 +72,9 @@
                 android:lineSpacingExtra="5dp"
                 android:linksClickable="true"
                 android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:textIsSelectable="true"
+                android:paddingRight="25dp"                
                 android:textColor="#555555"
+                android:textIsSelectable="true"
                 android:textSize="17sp" />
         </ScrollView>
     </LinearLayout>

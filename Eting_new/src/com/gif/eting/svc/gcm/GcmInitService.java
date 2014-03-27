@@ -7,7 +7,6 @@ import java.util.Map;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import com.gif.eting.etc.Const;
 import com.gif.eting.etc.HttpUtil;
@@ -42,12 +41,13 @@ public class GcmInitService {
 
 	/**
 	 * GCM 초기화
+	 * @throws GcmInitException
 	 */
-	public void initGcm() {
+	public void initGcm() throws GcmInitException {
 		if (checkPlayServices()) {
 			gcm = GoogleCloudMessaging.getInstance(context);
-			regId = prefs.getString("registration_id", "");
-			if ("".equals(regId)) {
+			regId = prefs.getString("registration_id", "0");
+			if ("0".equals(regId)) {
 				registerInBackground();
 			}
 		}
@@ -57,8 +57,9 @@ public class GcmInitService {
 	 * Google play servce 작동 확인
 	 *
 	 * @return
+	 * @throws Exception
 	 */
-	public boolean checkPlayServices() {
+	public boolean checkPlayServices() throws GcmInitException {
 		int resultCode = GooglePlayServicesUtil
 				.isGooglePlayServicesAvailable(context);
 		if (resultCode != ConnectionResult.SUCCESS) {
@@ -67,6 +68,7 @@ public class GcmInitService {
 			// 에러메세지를 서버로 전송
 			new SendErrorTask().execute(errorMsg);
 			if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+				throw new GcmInitException(errorMsg);
 				//Toast.makeText(context, errorMsg, Toast.LENGTH_LONG).show();
 			}
 			return false;

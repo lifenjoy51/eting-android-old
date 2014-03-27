@@ -18,11 +18,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gif.eting.etc.Const;
 import com.gif.eting.etc.HttpUtil;
+import com.gif.eting.etc.SecureUtil;
+import com.gif.eting.task.DownloadImageTask;
 
 /**
  * 받은편지함 읽기화면
@@ -71,7 +74,23 @@ public class NotifyUfoActivity extends BaseActivity implements OnClickListener {
 		et = (EditText) findViewById(R.id.msg_comment);
 
 		// 공지 번호와 메세지
+		adminMsgId = pref.getString("notify_id", "1");
 		String notifyContent = pref.getString("notify_ufo", "");
+
+		//이미지 넣기
+		ImageView notifyImg = (ImageView) findViewById(R.id.notify_img);
+		if(notifyContent.contains(Const.imgTag)){
+			String imgUrl = notifyContent.substring(
+					notifyContent.indexOf(Const.imgTag) + Const.imgTag.length(), notifyContent.length());
+			String realUrl = SecureUtil.decode(imgUrl);
+			new DownloadImageTask(notifyImg).execute(realUrl);
+			notifyImg.setVisibility(View.VISIBLE);
+
+			//내용에선 지운다.
+			notifyContent = notifyContent.substring(0, notifyContent.indexOf(Const.imgTag));
+		}else{
+			notifyImg.setVisibility(View.GONE);
+		}
 
 		// 공지 내용
 		TextView contentView = (TextView) findViewById(R.id.popup_content);
@@ -88,6 +107,7 @@ public class NotifyUfoActivity extends BaseActivity implements OnClickListener {
 
 		// 버튼이벤트 삽입
 		findViewById(R.id.notify_confirm_btn).setOnClickListener(this);
+
 
 	}
 

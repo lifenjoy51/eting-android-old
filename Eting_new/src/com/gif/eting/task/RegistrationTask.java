@@ -6,10 +6,12 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.gif.eting.etc.Const;
 import com.gif.eting.etc.HttpUtil;
 import com.gif.eting.etc.Installation;
+import com.gif.eting.svc.gcm.GcmInitException;
 import com.gif.eting.svc.gcm.GcmInitService;
 
 /**
@@ -22,6 +24,8 @@ public class RegistrationTask extends AsyncTask<Object, String, String> {
 	// Context
 	private Context context;
 	private String regId;
+	private boolean flag = false;
+	private String errorMsg = "";
 
 	/**
 	 * 실제 실행되는 부분
@@ -35,7 +39,12 @@ public class RegistrationTask extends AsyncTask<Object, String, String> {
 		//GCM초기화!!!
 		//TODO GCM을 등록한 이후 서버에 기기를 등록하려면 이곳에서 GCM을 초기화 해야한다.
 		GcmInitService gcmInitService = new GcmInitService(context);
-		gcmInitService.initGcm();
+		try {
+			gcmInitService.initGcm();
+		} catch (GcmInitException e) {
+			flag = true;
+			errorMsg = e.getMessage();
+		}
 
 		regId = gcmInitService.getRegId();
 
@@ -52,12 +61,15 @@ public class RegistrationTask extends AsyncTask<Object, String, String> {
 		return response;
 	}
 
+
 	/**
 	 * 작업이 끝나면 자동으로 실행된다.
 	 */
 	@Override
 	protected void onPostExecute(String result) {
-
+		if(flag){
+			Toast.makeText(context, "Google Play 서비스를 업데이트 해주세요! \n".concat(errorMsg), Toast.LENGTH_LONG*2).show();
+		}
 		try {
 			JSONObject json = new JSONObject(result);
 			String deviceId = json.getString("device_id");
