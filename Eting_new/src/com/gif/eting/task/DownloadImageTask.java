@@ -8,13 +8,22 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.gif.eting.etc.AsyncTaskCompleteListener;
+
 
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 	ImageView bmImage;
+	AsyncTaskCompleteListener<String> callback;
 
 	public DownloadImageTask(ImageView bmImage) {
 	    this.bmImage = bmImage;
+	}
+
+	public DownloadImageTask(ImageView bmImage, AsyncTaskCompleteListener<String> callback) {
+		this.bmImage = bmImage;
+		this.callback = callback;
+
 	}
 
 	@Override
@@ -34,6 +43,10 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 	@Override
 	protected void onPostExecute(Bitmap result) {
 	    bmImage.setImageBitmap(result);
+
+	    if(callback != null){
+	    	callback.onTaskComplete("");
+	    }
 	}
 
 }

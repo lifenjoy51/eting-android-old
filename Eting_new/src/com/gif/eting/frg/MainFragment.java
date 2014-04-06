@@ -22,16 +22,19 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gif.eting.AdViewActivity;
 import com.gif.eting.NotifyUfoActivity;
 import com.gif.eting.R;
 import com.gif.eting.ReadInboxActivity;
 import com.gif.eting.SettingActivity;
+import com.gif.eting.etc.AsyncTaskCompleteListener;
 import com.gif.eting.etc.Const;
 import com.gif.eting.etc.HttpUtil;
 import com.gif.eting.etc.Installation;
 import com.gif.eting.etc.Util;
 import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StoryService;
+import com.gif.eting.task.DownloadImageTask;
 import com.gif.eting.view.EtingLogoView;
 import com.gif.eting.view.PlanetView;
 import com.gif.eting.view.StarView;
@@ -43,7 +46,7 @@ import com.gif.eting.view.StarView;
  *
  */
 @SuppressLint("HandlerLeak")
-public class MainFragment extends BaseFragment implements OnClickListener {
+public class MainFragment extends BaseFragment implements OnClickListener, AsyncTaskCompleteListener<String> {
 
 	private TextView mainToday;
 	private TextView mainEtingCnt;
@@ -53,6 +56,7 @@ public class MainFragment extends BaseFragment implements OnClickListener {
 	private PlanetView pv;
 	private EtingLogoView elv;
 	private StarView sv;
+	private ImageView adIcon;
 
 	// 기타 전역변수
 	private StoryService storySvc;
@@ -134,7 +138,6 @@ public class MainFragment extends BaseFragment implements OnClickListener {
 		// 별모양2 누르면 이야기를 받아온다.
 		sv = new StarView(getActivity());
 		sv.setId(R.drawable.star_icon01);
-		sv.bringToFront();
 		fr.addView(sv);
 
 		// #####
@@ -157,6 +160,12 @@ public class MainFragment extends BaseFragment implements OnClickListener {
 		settingBtn.bringToFront();
 		Util.setPosition(settingBtn, 84, 82);
 
+		// #####
+		// 광고!!!
+		// #####
+		adIcon = (ImageView) rootView.findViewById(R.id.ad_icon);
+		drawAd();
+
 		// ##########
 		// 클릭이벤트 설정
 		// ##########
@@ -165,13 +174,22 @@ public class MainFragment extends BaseFragment implements OnClickListener {
 		rootView.findViewById(R.id.notify_ufo).setOnClickListener(this);
 		rootView.findViewById(R.drawable.eting_logo).setOnClickListener(this);
 		rootView.findViewById(R.id.main_eting_cnt).setOnClickListener(this);
-		rootView.findViewById(R.drawable.eting_logo).bringToFront();
+		rootView.findViewById(R.id.ad_icon).setOnClickListener(this);
 		elv.setOnClickListener(this);
 		sv.setOnClickListener(this);
+
+		//앞으로 보낸다..
+		rootView.findViewById(R.drawable.eting_logo).bringToFront();
 
 		// 프레임 레이아웃 앞으로 보내기
 		// TODO 왜??
 		fr.bringToFront();
+
+		//광고도 앞으로
+		adIcon.bringToFront();
+
+		//별 아이콘 가장 앞으로
+		sv.bringToFront();
 
 		// 다시그리기
 		// TODO 왜 다시그리지??
@@ -236,6 +254,13 @@ public class MainFragment extends BaseFragment implements OnClickListener {
 			mPager = (ViewPager) getView().getParent();
 			mPager.setCurrentItem(0);
 			break;
+
+		case R.id.ad_icon:
+			// 광고 클릭시!!
+			showAd();
+			break;
+
+
 		}
 
 	}
@@ -409,6 +434,27 @@ public class MainFragment extends BaseFragment implements OnClickListener {
 			}
 		}
 
+	}
+
+	/**
+	 * 광고 아이콘을 보여준다..
+	 */
+	private void drawAd() {
+		String iconUrl = pref.getString("ad_icon_url", "");
+		new DownloadImageTask(adIcon, this).execute(iconUrl);
+	}
+
+	/**
+	 * 광고를 연다.
+	 */
+	private void showAd() {
+		startActivity(new Intent(getActivity(), AdViewActivity.class)); // 팝업
+	}
+
+	@Override
+	public void onTaskComplete(String result) {
+		//끝나고 실행..
+		Util.setPosition(adIcon, 20, 60);
 	}
 
 }

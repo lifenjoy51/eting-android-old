@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gif.eting.etc.AD;
+import com.gif.eting.etc.AdUtil;
 import com.gif.eting.obj.Story;
 import com.gif.eting.svc.StoryService;
 
@@ -44,7 +44,7 @@ public class BackupActivity extends BaseActivity implements OnClickListener {
 		send_email.setOnClickListener(this);
 
 		// ad
-		AD.ad(this);
+		AdUtil.ad(this);
 	}
 
 	@Override

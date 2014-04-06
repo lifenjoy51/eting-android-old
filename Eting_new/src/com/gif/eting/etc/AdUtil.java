@@ -9,7 +9,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
-public class AD {
+public class AdUtil {
 
 	public static void ad(Context context) {
 

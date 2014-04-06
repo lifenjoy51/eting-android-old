@@ -55,4 +55,10 @@
         android:background="@drawable/main_acc_1"
         android:contentDescription="@string/mainacc1" />
 
+    <ImageView
+        android:id="@+id/ad_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/adIcon" />
+
 </FrameLayout>

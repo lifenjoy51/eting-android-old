@@ -7,7 +7,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.gif.eting.etc.AD;
+import com.gif.eting.etc.AdUtil;
 
 public class MypageActivity extends BaseActivity implements OnClickListener,
 		OnSeekBarChangeListener {
@@ -44,7 +44,7 @@ public class MypageActivity extends BaseActivity implements OnClickListener,
 		mSeekBar.setOnSeekBarChangeListener(this);
 
 		// ad
-		AD.ad(this);
+		AdUtil.ad(this);
 	}
 
 	/**

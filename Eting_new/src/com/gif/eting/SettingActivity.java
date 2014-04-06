@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gif.eting.etc.AD;
+import com.gif.eting.etc.AdUtil;
 
 public class SettingActivity extends BaseActivity implements OnClickListener {
 
@@ -74,7 +74,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		super.onPostCreate(savedInstanceState);
 
 		// ad
-		AD.ad(this);
+		AdUtil.ad(this);
 	}
 
 

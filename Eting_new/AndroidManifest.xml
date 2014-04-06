@@ -90,6 +90,14 @@
             android:theme="@android:style/Theme.Translucent"
             android:windowSoftInputMode="adjustResize" >
         </activity>
+        
+        <!-- 광고 액티비티 -->
+        <activity
+            android:name="com.gif.eting.AdViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
 
         <!-- ###### -->
         <!-- 설정관련 -->

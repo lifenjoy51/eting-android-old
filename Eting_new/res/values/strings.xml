@@ -66,5 +66,6 @@
     
     <string name="write_story_title">eting</string>
     <string name="write_story_message">Do you want to send this eting?</string>
+    <string name="adIcon">광고용 아이콘</string>
 
 </resources>
