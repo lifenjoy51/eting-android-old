@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.gif.eting.etc.AD;
 import com.gif.eting.etc.Util;
 import com.gif.eting.svc.PasswordService;
 
@@ -51,6 +52,8 @@ public class PasswordActivity extends BaseActivity implements OnClickListener {
 		findViewById(R.id.setting_save_btn).setOnClickListener(this);
 		password_check.setOnClickListener(this);
 
+		// ad
+		AD.ad(this);
 	}
 
 	/**

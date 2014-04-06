@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gif.eting"
-    android:versionCode="24"
-    android:versionName="2.0.3" >
-    
+    android:versionCode="25"
+    android:versionName="2.0.4" >
+
     <!-- 네트워킹 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!-- GCM -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-	<uses-permission android:name="android.permission.VIBRATE"/>
-	
-	<!-- 읽기쓰기는 어디에? -->
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- 읽기쓰기는 어디에? -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <permission
         android:name="com.gif.eting.permission.C2D_MESSAGE"
@@ -119,6 +120,13 @@
             android:screenOrientation="portrait" >
         </activity>
 
+        <!-- 마이페이지 화면 -->
+        <activity
+            android:name="com.gif.eting.MypageActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <!-- ######## -->
         <!-- GCM Setting -->
         <receiver
             android:name="com.gif.eting.svc.gcm.GcmBroadcastReceiver"
@@ -133,6 +141,11 @@
 
         <!-- GCM Service -->
         <service android:name="com.gif.eting.svc.gcm.GcmIntentService" />
+
+        <!-- AD Activity -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
     </application>
 
 </manifest>

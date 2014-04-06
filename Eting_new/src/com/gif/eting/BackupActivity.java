@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gif.eting.etc.AD;
 import com.gif.eting.obj.Story;
 import com.gif.eting.svc.StoryService;
 
@@ -41,6 +42,9 @@ public class BackupActivity extends BaseActivity implements OnClickListener {
 		email_address.setHintTextColor(Color.parseColor("#bbbbbb"));
 
 		send_email.setOnClickListener(this);
+
+		// ad
+		AD.ad(this);
 	}
 
 	@Override
