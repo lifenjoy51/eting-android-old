@@ -35,7 +35,7 @@ public class StarView extends View {
 		lastPushTime = sharedPref.getLong("clickTime", 0);
 
 		// 이미지 초기화
-		mDrawable = getImage(R.drawable.star_icon01);
+		mDrawable = getImage(R.drawable.star1);
 		// 위치설정
 		Util.setPosition(this, mDrawable.getIntrinsicWidth(),
 				mDrawable.getIntrinsicHeight(), 85, 65);
@@ -67,21 +67,21 @@ public class StarView extends View {
 
 		// 맨처음 이미지는 star_icon01
 		if (timeFromLastGettingEting > interval * 5) { // star_icon03
-			mDrawable = getImage(R.drawable.star_icon03);
+			mDrawable = getImage(R.drawable.star6);
 			this.invalidate();
 			// 이팅 받을 준비 완료
 			isReady = true;
 		} else if (timeFromLastGettingEting > interval * 4) { // star_icon02
-			mDrawable = getImage(R.drawable.star_icon02);
+			mDrawable = getImage(R.drawable.star5);
 			this.invalidate();
 		} else if (timeFromLastGettingEting > interval * 3) { // star_icon01_4
-			mDrawable = getImage(R.drawable.star_icon01_4);
+			mDrawable = getImage(R.drawable.star4);
 			this.invalidate();
 		} else if (timeFromLastGettingEting > interval * 2) { // star_icon01_3
-			mDrawable = getImage(R.drawable.star_icon01_3);
+			mDrawable = getImage(R.drawable.star3);
 			this.invalidate();
 		} else if (timeFromLastGettingEting > interval * 1) { // star_icon01_2
-			mDrawable = getImage(R.drawable.star_icon01_2);
+			mDrawable = getImage(R.drawable.star2);
 			this.invalidate();
 		}
 	}
@@ -90,7 +90,7 @@ public class StarView extends View {
 	 * 별 초기화
 	 */
 	public void initView() {
-		mDrawable = getImage(R.drawable.star_icon01);
+		mDrawable = getImage(R.drawable.star1);
 		lastPushTime = System.currentTimeMillis();
 		isReady = false;
 

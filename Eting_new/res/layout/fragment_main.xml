@@ -18,15 +18,15 @@
         android:id="@+id/main_today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#5d5d5d"
-        android:textSize="28sp" />
+        android:textColor="#777777"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/main_eting_cnt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#323232"
-        android:textSize="42sp" />
+        android:textColor="#5d5d5d"
+        android:textSize="36sp" />
 
     <TextView
         android:id="@+id/main_inbox_cnt"

@@ -141,7 +141,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
 
 		// 별모양2 누르면 이야기를 받아온다.
 		sv = new StarView(getActivity());
-		sv.setId(R.drawable.star_icon01);
+		sv.setId(R.drawable.star1);
 		fr.addView(sv);
 
 		// #####
@@ -159,12 +159,12 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
 		mainToday = (TextView) rootView.findViewById(R.id.main_today);
 		mainToday.setText(Util.getDate("."));
 		//Util.setPosition(mainToday, 10, 81);
-		Util.setPosition(mainToday, 10, 74);
+		Util.setPosition(mainToday, 10, 76);
 
 		// 설정아이콘
 		View settingBtn = rootView.findViewById(R.id.setting_btn);
 		settingBtn.bringToFront();
-		Util.setPosition(settingBtn, 84, 82);
+		Util.setPosition(settingBtn, 82, 81);
 
 		// #####
 		// 광고!!!
@@ -184,18 +184,8 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
 		elv.setOnClickListener(this);
 		sv.setOnClickListener(this);
 
-		//앞으로 보낸다..
-		rootView.findViewById(R.drawable.eting_logo).bringToFront();
-
-		// 프레임 레이아웃 앞으로 보내기
-		// TODO 왜??
-		fr.bringToFront();
-
-		//광고도 앞으로
-		adIcon.bringToFront();
-
-		//별 아이콘 가장 앞으로
-		sv.bringToFront();
+		//앞으로 보내고
+		bringToFront();
 
 		// 다시그리기
 		// TODO 왜 다시그리지??
@@ -219,6 +209,23 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
 		setNotifyUfo();
 	}
 
+	public void bringToFront(){
+
+		//앞으로 보낸다..
+		elv.bringToFront();
+
+		// 프레임 레이아웃 앞으로 보내기
+		// TODO 왜??
+		fr.bringToFront();
+
+		//광고도 앞으로
+		adIcon.bringToFront();
+
+		//별 아이콘 가장 앞으로
+		sv.bringToFront();
+
+	}
+
 	/**
 	 * 클릭이벤트 실행
 	 */
@@ -237,7 +244,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
 			startActivity(new Intent(getActivity(), SettingActivity.class));
 			break;
 
-		case R.drawable.star_icon01:
+		case R.drawable.star1:
 			// 메세지 저장
 			getStoryFromServer();
 			break;
@@ -347,7 +354,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
 			}.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					Animation ani = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.main_ufo);
+					Animation ani = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.notify_ufo);
 					notifyUfo.startAnimation(ani);
 					notifyUfo.setVisibility(View.VISIBLE);
 					notifyUfo.bringToFront();
@@ -363,7 +370,8 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
     		notifyUfo.setVisibility(View.GONE);
 
     		//행성이미지 살리고
-    		mainAcc1.setVisibility(View.VISIBLE);
+    		//mainAcc1.setVisibility(View.VISIBLE);
+    		mainAcc1.setVisibility(View.GONE);
     	}
 	}
 
@@ -460,6 +468,7 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
 	 */
 	private void showAd() {
 		startActivity(new Intent(getActivity(), AdViewActivity.class)); // 팝업
+		adIcon.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -468,6 +477,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
 		int adPosX = (int) (Math.random()*10 +10);
 		int adPosY = (int) (Math.random()*10 +60);
 		Util.setPosition(adIcon, adPosX, adPosY);
+
+		//순서정리
+		bringToFront();
 	}
 
 }

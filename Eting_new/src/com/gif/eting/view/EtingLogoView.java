@@ -11,13 +11,13 @@ import com.gif.eting.etc.Util;
 
 /**
  * 움직이는 구름
- * 
+ *
  * @author lifenjoy51
- * 
+ *
  */
 @SuppressLint("ViewConstructor")
 public class EtingLogoView extends View {
-	private Drawable mDrawable;
+	private final Drawable mDrawable;
 
 	public EtingLogoView(Context context) {
 		super(context);
@@ -26,7 +26,7 @@ public class EtingLogoView extends View {
 		mDrawable = CachedBitmap.getEtingLogo(context);
 
 		// 로고이미지 크기를 조절한다.
-		int size = Util.width * 42 / 100; // 42% 에 해당하는 크기
+		int size = Util.width * 40 / 100; // 42% 에 해당하는 크기
 		mDrawable.setBounds(0, 0, size, size);
 
 		// 위치설정

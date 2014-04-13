@@ -63,21 +63,21 @@ public class Emoticon {
 
 		// 이모티콘 눌리지 않은 모습. 회색.
 		emoticon_map = new HashMap<String, Integer>();
-		emoticon_map.put("1", R.drawable.emoticon_01_press);
-		emoticon_map.put("2", R.drawable.emoticon_05_press);
-		emoticon_map.put("3", R.drawable.emoticon_03_press);
-		emoticon_map.put("4", R.drawable.emoticon_04_press);
-		//emoticon_map.put("5", R.drawable.emoticon_05_press);
-		emoticon_map.put("6", R.drawable.emoticon_02_press);
+		emoticon_map.put("1", R.drawable.emo1);
+		emoticon_map.put("2", R.drawable.emo5);
+		emoticon_map.put("3", R.drawable.emo3);
+		emoticon_map.put("4", R.drawable.emo4);
+		emoticon_map.put("5", R.drawable.emo5);
+		emoticon_map.put("6", R.drawable.emo2);
 
 		// 이모티콘 눌렀을때 모습. 색깔이 있는 상태.
 		emoticon_press_map = new HashMap<String, Integer>();
-		emoticon_press_map.put("1", R.drawable.emoticon_01);
-		emoticon_press_map.put("2", R.drawable.emoticon_05);
-		emoticon_press_map.put("3", R.drawable.emoticon_03);
-		emoticon_press_map.put("4", R.drawable.emoticon_04);
-		emoticon_press_map.put("5", R.drawable.emoticon_05);
-		emoticon_press_map.put("6", R.drawable.emoticon_02);
+		emoticon_press_map.put("1", R.drawable.emo1_press);
+		emoticon_press_map.put("2", R.drawable.emo5_press);
+		emoticon_press_map.put("3", R.drawable.emo3_press);
+		emoticon_press_map.put("4", R.drawable.emo4_press);
+		emoticon_press_map.put("5", R.drawable.emo5_press);
+		emoticon_press_map.put("6", R.drawable.emo2_press);
 	}
 
 }
