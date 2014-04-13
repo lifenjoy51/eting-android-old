@@ -119,7 +119,11 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
 
 		// 받은편지함 개수 설정
 		mainInboxCnt = (TextView) rootView.findViewById(R.id.main_inbox_cnt);
-		Util.setPosition(mainInboxCnt, R.drawable.spaceship, 76, 13);
+		//Util.setPosition(mainInboxCnt, R.drawable.spaceship, 76, 13);
+		//위치 랜덤으로
+		int inboxPosX = (int) (Math.random()*10 +70);
+		int inboxPosY = (int) (Math.random()*10 +10);
+		Util.setPosition(mainInboxCnt, R.drawable.spaceship, inboxPosX, inboxPosY);
 
 		// #####
 		// 중간 UI
@@ -148,12 +152,14 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
 		mainEtingCnt = (TextView) rootView.findViewById(R.id.main_eting_cnt);
 		mainEtingCnt.setPaintFlags(mainEtingCnt.getPaintFlags()
 				| Paint.FAKE_BOLD_TEXT_FLAG);
-		Util.setPosition(mainEtingCnt, 10, 74);
+		//Util.setPosition(mainEtingCnt, 10, 74);
+		Util.setPosition(mainEtingCnt, 10, 81);
 
 		// 현재날짜
 		mainToday = (TextView) rootView.findViewById(R.id.main_today);
 		mainToday.setText(Util.getDate("."));
-		Util.setPosition(mainToday, 10, 81);
+		//Util.setPosition(mainToday, 10, 81);
+		Util.setPosition(mainToday, 10, 74);
 
 		// 설정아이콘
 		View settingBtn = rootView.findViewById(R.id.setting_btn);
@@ -288,6 +294,11 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
 		//받은편지함 개수 설정
 		int inboxCnt = inboxSvc.getInboxCnt();
 		mainInboxCnt.setText(String.valueOf(inboxCnt));
+
+		//위치 랜덤으로
+		int inboxPosX = (int) (Math.random()*10 +70);
+		int inboxPosY = (int) (Math.random()*10 +10);
+		Util.setPosition(mainInboxCnt, R.drawable.spaceship, inboxPosX, inboxPosY);
 
 		// 받은편지함 처리
 		if (inboxCnt > 0) {
@@ -454,7 +465,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
 	@Override
 	public void onTaskComplete(String result) {
 		//끝나고 실행..
-		Util.setPosition(adIcon, 20, 60);
+		int adPosX = (int) (Math.random()*10 +10);
+		int adPosY = (int) (Math.random()*10 +60);
+		Util.setPosition(adIcon, adPosX, adPosY);
 	}
 
 }

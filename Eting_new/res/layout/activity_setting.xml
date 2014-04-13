@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="50dp"
+            android:layout_marginRight="60dp"
             android:src="@drawable/setting_icon" />
 
         <TextView
@@ -84,12 +84,14 @@
                 android:layout_marginBottom="15dp"
                 android:src="@drawable/setting_btn_aboutus_selector" />
 
+            <!-- 현재는 막아둠 -->
             <ImageView
                 android:id="@+id/mypage_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:src="@drawable/setting_btn_aboutus_selector" />
+                android:src="@drawable/setting_btn_aboutus_selector"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 

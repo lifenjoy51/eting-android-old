@@ -54,30 +54,30 @@ public class Emoticon {
 	private static void init() {
 		// 이모티콘 목록. 변경이 없을것 같아 하드코딩했다.
 		emoticon_list = new ArrayList<String>();
-		emoticon_list.add("1");
-		emoticon_list.add("2");
-		emoticon_list.add("3");
-		emoticon_list.add("4");
-		emoticon_list.add("5");
-		emoticon_list.add("6");
+		emoticon_list.add("1");	//좋아요
+		emoticon_list.add("2");	//힘내요
+		emoticon_list.add("3");	//싫어요
+		emoticon_list.add("4");	//나빠요
+		//emoticon_list.add("5");	//기운내요 - 힘내요
+		emoticon_list.add("6");	//잘될거예요
 
 		// 이모티콘 눌리지 않은 모습. 회색.
 		emoticon_map = new HashMap<String, Integer>();
-		emoticon_map.put("1", R.drawable.emotion_icon01);
-		emoticon_map.put("2", R.drawable.emotion_icon04);
-		emoticon_map.put("3", R.drawable.emotion_icon03);
-		emoticon_map.put("4", R.drawable.emotion_icon06);
-		emoticon_map.put("5", R.drawable.emotion_icon05);
-		emoticon_map.put("6", R.drawable.emotion_icon02);
+		emoticon_map.put("1", R.drawable.emoticon_01_press);
+		emoticon_map.put("2", R.drawable.emoticon_05_press);
+		emoticon_map.put("3", R.drawable.emoticon_03_press);
+		emoticon_map.put("4", R.drawable.emoticon_04_press);
+		//emoticon_map.put("5", R.drawable.emoticon_05_press);
+		emoticon_map.put("6", R.drawable.emoticon_02_press);
 
 		// 이모티콘 눌렀을때 모습. 색깔이 있는 상태.
 		emoticon_press_map = new HashMap<String, Integer>();
-		emoticon_press_map.put("1", R.drawable.emotion_icon01_press);
-		emoticon_press_map.put("2", R.drawable.emotion_icon04_press);
-		emoticon_press_map.put("3", R.drawable.emotion_icon03_press);
-		emoticon_press_map.put("4", R.drawable.emotion_icon06_press);
-		emoticon_press_map.put("5", R.drawable.emotion_icon05_press);
-		emoticon_press_map.put("6", R.drawable.emotion_icon02_press);
+		emoticon_press_map.put("1", R.drawable.emoticon_01);
+		emoticon_press_map.put("2", R.drawable.emoticon_05);
+		emoticon_press_map.put("3", R.drawable.emoticon_03);
+		emoticon_press_map.put("4", R.drawable.emoticon_04);
+		emoticon_press_map.put("5", R.drawable.emoticon_05);
+		emoticon_press_map.put("6", R.drawable.emoticon_02);
 	}
 
 }

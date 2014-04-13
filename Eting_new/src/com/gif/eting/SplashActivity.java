@@ -209,7 +209,7 @@ public class SplashActivity extends Activity {
 		protected void onPostExecute(String result) {
 			try {
 				//TODO 임시값
-				result = "{\"device\":{\"age\":\"\",\"device_group\":\"\",\"device_id\":\"\",\"device_uuid\":\"\",\"eting_type\":\"\",\"gender\":\"\",\"os\":\"A\",\"phone_id\":\"\",\"prohibit_type\":\"\",\"reg_date\":\"\",\"reg_id\":\"\"},\"ad\":{\"ad_content\":\"\\\"eting하느라 눈 많이 아프지? \n 내가 고쳐줄게\\\" \n\n\n eting을 위한 \n 하늘안과 라식/라색 70% 이벤트 \",\"ad_desc\":\"이팅 이벤트 테스트\",\"ad_en_dt\":\"2014-04-14\",\"ad_icon_url\":\"http://pixabay.com/static/uploads/photo/2013/07/13/13/18/animal-160760_150.png\",\"ad_id\":\"1\",\"ad_img_url\":\"http://eting.cdn3.cafe24.com/sky_eye_ad.png\",\"ad_link_msg\":\"순식간에 확인하기\",\"ad_link_url\":\"https://play.google.com/store/apps/details?id=com.gif.eting\",\"ad_st_dt\":\"2014-04-06\",\"ad_title\":\"Eting Event\"}}";
+				//result = "{\"device\":{\"age\":\"\",\"device_group\":\"\",\"device_id\":\"\",\"device_uuid\":\"\",\"eting_type\":\"\",\"gender\":\"\",\"os\":\"A\",\"phone_id\":\"\",\"prohibit_type\":\"\",\"reg_date\":\"\",\"reg_id\":\"\"},\"ad\":{\"ad_content\":\"\\\"eting하느라 눈 많이 아프지? \n 내가 고쳐줄게\\\" \n\n\n eting을 위한 \n 하늘안과 라식/라색 70% 이벤트 \",\"ad_desc\":\"이팅 이벤트 테스트\",\"ad_en_dt\":\"2014-04-14\",\"ad_icon_url\":\"http://pixabay.com/static/uploads/photo/2013/07/13/13/18/animal-160760_150.png\",\"ad_id\":\"1\",\"ad_img_url\":\"http://eting.cdn3.cafe24.com/sky_eye_ad.png\",\"ad_link_msg\":\"순식간에 확인하기\",\"ad_link_url\":\"https://play.google.com/store/apps/details?id=com.gif.eting\",\"ad_st_dt\":\"2014-04-06\",\"ad_title\":\"Eting Event\"}}";
 
 				JSONObject obj = new JSONObject(result);
 				JSONObject ad = obj.getJSONObject("ad");
