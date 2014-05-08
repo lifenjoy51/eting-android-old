@@ -30,7 +30,6 @@ import com.gif.eting.SettingActivity;
 import com.gif.eting.etc.AsyncTaskCompleteListener;
 import com.gif.eting.etc.Const;
 import com.gif.eting.etc.HttpUtil;
-import com.gif.eting.etc.Installation;
 import com.gif.eting.etc.Util;
 import com.gif.eting.svc.InboxService;
 import com.gif.eting.svc.StoryService;
@@ -429,10 +428,9 @@ public class MainFragment extends BaseFragment implements OnClickListener, Async
 		@Override
 		protected String doInBackground(Object... params) {
 
-			String phoneId = Installation.id(getActivity()
-					.getApplicationContext()); // 기기 고유값
-			String param = "phone_id=" + phoneId; // 서버에 전송할 파라미터 조립
-			String urlStr = Const.serverContext + "/getRandomStory";
+			String deviceId = Util.DeviceId(getActivity().getApplicationContext()); // 기기 고유값
+			String param = "device_id=" + deviceId; // 서버에 전송할 파라미터 조립
+			String urlStr = Const.serverContext + "/getStory";
 
 			String response = HttpUtil.doPost(urlStr, param); // Http전송
 			System.out.println(response);

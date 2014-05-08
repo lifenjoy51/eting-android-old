@@ -412,7 +412,11 @@ public class ReadInboxActivity extends BaseActivity implements OnClickListener {
 
 			// url 파라미터 조립
 			String urlStr = Const.serverContext + "/reportStory";
-			String param = "story_id=" + inboxStoryIdx;
+			String deviceId = Util.DeviceId(context); // 기기 고유값
+
+			Map<String,String> param = new HashMap<String,String>();
+			param.put("story_id", inboxStoryIdx);
+			param.put("device_id", deviceId);
 
 			// Http전송
 			String response = HttpUtil.doPost(urlStr, param);
@@ -492,7 +496,11 @@ public class ReadInboxActivity extends BaseActivity implements OnClickListener {
 
 			// URL, 파라미터.
 			String urlStr = Const.serverContext + "/passStory";
-			String param = "story_id=" + inboxStoryIdx;
+			String deviceId = Util.DeviceId(context); // 기기 고유값
+
+			Map<String,String> param = new HashMap<String,String>();
+			param.put("story_id", inboxStoryIdx);
+			param.put("device_id", deviceId);
 
 			// Http전송
 			String response = HttpUtil.doPost(urlStr, param);

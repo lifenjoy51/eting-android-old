@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.gif.eting.etc.Const;
 import com.gif.eting.etc.HttpUtil;
@@ -201,12 +203,37 @@ public class SplashActivity extends Activity {
 		@Override
 		protected String doInBackground(Object... params) {
 			String urlStr = Const.serverContext + "/getAd";
-			String response = HttpUtil.doPost(urlStr, ""); // Http전송
+			String deviceId = Util.DeviceId(context); // 기기 고유값
+			String param = "device_id=" + deviceId; // 서버에 전송할 파라미터 조립
+
+			String response = HttpUtil.doPost(urlStr, param); // Http전송
 			return response;
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
+
+			if (!"HttpUtil_Error".equals(result)) {
+				final Toast tag = Toast.makeText(context,
+						" 서버가 죽음 ㅠ.ㅠ \n 개발자도 죽음 ㅜ_ㅜ \n 조금만 기다려주세요! \n 언능 살려놓을게요!", Toast.LENGTH_SHORT);
+
+				tag.show();
+
+				new CountDownTimer(5000, 1000) {
+
+					@Override
+					public void onTick(long millisUntilFinished) {
+						tag.show();
+					}
+
+					@Override
+					public void onFinish() {
+						tag.show();
+					}
+
+				}.start();
+			}
+
 			try {
 				//TODO 임시값
 				//result = "{\"device\":{\"age\":\"\",\"device_group\":\"\",\"device_id\":\"\",\"device_uuid\":\"\",\"eting_type\":\"\",\"gender\":\"\",\"os\":\"A\",\"phone_id\":\"\",\"prohibit_type\":\"\",\"reg_date\":\"\",\"reg_id\":\"\"},\"ad\":{\"ad_content\":\"\\\"eting하느라 눈 많이 아프지? \n 내가 고쳐줄게\\\" \n\n\n eting을 위한 \n 하늘안과 라식/라색 70% 이벤트 \",\"ad_desc\":\"이팅 이벤트 테스트\",\"ad_en_dt\":\"2014-04-14\",\"ad_icon_url\":\"http://pixabay.com/static/uploads/photo/2013/07/13/13/18/animal-160760_150.png\",\"ad_id\":\"1\",\"ad_img_url\":\"http://eting.cdn3.cafe24.com/sky_eye_ad.png\",\"ad_link_msg\":\"순식간에 확인하기\",\"ad_link_url\":\"https://play.google.com/store/apps/details?id=com.gif.eting\",\"ad_st_dt\":\"2014-04-06\",\"ad_title\":\"Eting Event\"}}";

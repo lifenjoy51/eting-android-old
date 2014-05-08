@@ -123,7 +123,7 @@ public class GcmInitService {
 			String deviceUUID = Installation.id(context);
 
 			param.put("msgId", "0");
-			param.put("comment", deviceUUID.concat("_").concat(msg));
+			param.put("comment", deviceUUID.concat(" _ ").concat(msg));
 
 			return HttpUtil.doPost(url, param);
 		}

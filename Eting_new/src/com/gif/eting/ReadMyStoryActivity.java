@@ -390,12 +390,15 @@ public class ReadMyStoryActivity extends BaseActivity implements
 				urlStr = Const.serverContext + "/reportReply";
 			}
 
+			String deviceId = Util.DeviceId(context); // 기기 고유값
+
 			// 파라미터
 
 			Map<String,String> param = new HashMap<String,String>();
 			param.put("reply_id", replyId);
 			param.put("story_id", storyId);
 			param.put("reply_content", replyContent);
+			param.put("device_id", deviceId);
 
 			// Http전송
 			String response = HttpUtil.doPost(urlStr, param);
