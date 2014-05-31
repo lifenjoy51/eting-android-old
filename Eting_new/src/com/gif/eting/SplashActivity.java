@@ -213,7 +213,7 @@ public class SplashActivity extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 
-			if (!"HttpUtil_Error".equals(result)) {
+			if ("HttpUtil_Error".equals(result)) {
 				final Toast tag = Toast.makeText(context,
 						" 서버가 죽음 ㅠ.ㅠ \n 개발자도 죽음 ㅜ_ㅜ \n 조금만 기다려주세요! \n 언능 살려놓을게요!", Toast.LENGTH_SHORT);
 
